@@ -5,7 +5,7 @@ gem 'rails', '~> 4.2.8'
 gem 'pg'
 
 gem 'devise'
-gem 'omniauth'
+gem 'omniauth', '1.3.2'
 # 1.3.1 specified as 1.4.0 is broken for now
 gem 'omniauth-oauth2', '1.3.1'
 gem 'paperclip'

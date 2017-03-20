@@ -1,29 +1,32 @@
-<h2>Sign up</h2>
+<div class="block-center mt-xl wd-xl">
+  <div class="panel panel-dark panel-flat">
+    <div class="panel-heading text-center">
+      <img src="<%= image_path('logo_apidae_mono.svg') %>" alt="logo apidae" class="wd-xs" />
+    </div>
+    <div class="panel-body">
+      <h4 class="text-center mt-sm">Créer un compte ApidaeJEP</h4>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'mb-lg'}) do |f| %>
+          <%= devise_error_messages! %>
+          <div class="form-group has-feedback">
+            <%= f.label :email, 'Adresse email', class: 'text-muted' %>
+            <%= f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'Adresse email' %>
+            <span class="fa fa-envelope form-control-feedback text-muted"></span>
+          </div>
+          <div class="form-group has-feedback">
+            <%= f.label :password, 'Mot de passe', class: 'text-muted' %>
+            <%= f.password_field :password, class: 'form-control', autocomplete: 'off', placeholder: 'Mot de passe' %>
+            <span class="fa fa-lock form-control-feedback text-muted"></span>
+          </div>
+          <div class="form-group has-feedback">
+            <%= f.label :password_confirmation, 'Confirmation du mot de passe', class: 'text-muted' %>
+            <%= f.password_field :password_confirmation, class: 'form-control', autocomplete: 'off', placeholder: 'Mot de passe' %>
+            <span class="fa fa-lock form-control-feedback text-muted"></span>
+          </div>
+          <%= f.submit 'Créer mon compte', class: 'btn btn-block btn-primary mt-lg text-uppercase' %>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
+          <p class="pt-lg text-center">Vous avez déjà un compte ?</p>
+          <%= link_to 'Connexion', root_path, class: 'btn btn-block btn-info text-uppercase' %>
+      <% end %>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "users/shared/links" %>
+</div>

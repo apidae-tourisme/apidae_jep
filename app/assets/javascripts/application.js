@@ -10,3 +10,5 @@
 //= require moment/min/moment-with-locales.min
 //--- Datetimepicker
 //= require eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min
+//--- Chosen
+//= require chosen_v1.2.0/chosen.jquery.min

@@ -12,6 +12,8 @@ class User::ProgramsController < User::UserController
   end
 
   def update
+    @program.update(program_params)
+    redirect_to url_for(action: :edit), notice: 'La programmation a bien été mise à jour.'
   end
 
   def destroy
@@ -21,5 +23,9 @@ class User::ProgramsController < User::UserController
 
   def set_program
     @program = Program.find(params[:id])
+  end
+
+  def program_params
+    params.require(:program).permit!
   end
 end

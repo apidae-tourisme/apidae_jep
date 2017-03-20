@@ -6,8 +6,8 @@ a.text-white:hover, a.text-white:focus {
   height: 200px;
 }
 
-form .opening_pickers .datepicker .input-group-addon:last-child {
-  border-left: 1px solid #dde6e9;
-  border-radius: 4px;
+form .mdy > label:after {
+  display: inline;
+  content: " * ";
+  font-weight: bold;
 }
-

@@ -32,7 +32,9 @@
           var datepickers = $(".datepicker");
           datepickers.datetimepicker({
               locale: 'fr',
-              format: 'DD/MM/YYYY HH:mm',
+              minDate: '2017-09-16',
+              format: 'LLLL',
+              allowInputToggle: true,
               sideBySide: true,
               icons: {
                   time: 'fa fa-clock-o',
@@ -50,21 +52,12 @@
               $(this).find("th.picker-switch").removeAttr('data-action');
           });
 
-          $(".opening_pickers").each(function () {
-              var pickers = $(this).find(".input-group.datepicker");
-              datepickers.first().on('dp.change', function (e) {
-                  var currentEndDate = pickers.last().data("DateTimePicker").date();
-                  var newStartDate = moment($(this).find("input").val(), 'DD/MM/YYYY HH:mm');
-                  if(currentEndDate == undefined || currentEndDate.diff(newStartDate) < 0) {
-                      pickers.last().data("DateTimePicker").date($(this).find("input").val());
-                  }
-              })
-          });
-
           var timepickers = $(".datetimepicker");
           timepickers.datetimepicker({
               locale: 'fr',
+              minDate: '2017-09-16',
               format: 'HH:mm',
+              allowInputToggle: true,
               sideBySide: true,
               icons: {
                   time: 'fa fa-clock-o',
@@ -91,6 +84,7 @@
         $(".item_map").each(function() {
             initMap($(this).attr('id'), 7, 5);
         });
+        $(".chosen-select.no-max").chosen({width: '95%'});
       });
   </script>
 <% end %>

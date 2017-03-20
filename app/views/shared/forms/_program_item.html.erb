@@ -7,24 +7,24 @@
       </div>
       <div class="panel-wrapper collapse in">
         <div class="panel-body">
-          <div class="form-group mt">
+          <div class="form-group mt mdy">
             <label class="col-sm-3 control-label mt-lg">Type de l'offre</label>
             <div class="col-sm-9">
               <label class="radio-inline c-radio mh">
-                <%= item_form.radio_button :item_type, 'visite'  %>
+                <%= item_form.radio_button :item_type, ITEM_VISITE %>
                 <span class="fa fa-circle mt mr"></span><i class="fa fa-3x fa-institution mb-sm"></i><br/>Visite d'un site</label>
               <label class="radio-inline c-radio mh">
-                <%= item_form.radio_button :item_type, 'parcours'  %>
+                <%= item_form.radio_button :item_type, ITEM_PARCOURS  %>
                 <span class="fa fa-circle mt mr"></span><i class="fa fa-3x fa-map-signs mb-sm"></i><br/>Parcours</label>
               <label class="radio-inline c-radio mh">
-                <%= item_form.radio_button :item_type, 'animation'  %>
+                <%= item_form.radio_button :item_type, ITEM_ANIMATION  %>
                 <span class="fa fa-circle mt mr"></span><i class="fa fa-3x fa-microphone mb-sm"></i><br/>Animation</label>
               <label class="radio-inline c-radio mh">
-                <%= item_form.radio_button :item_type, 'exposition'  %>
+                <%= item_form.radio_button :item_type, ITEM_EXPOSITION %>
                 <span class="fa fa-circle mt mr"></span><i class="fa fa-3x fa-photo mb-sm"></i><br/>Exposition</label>
             </div>
           </div>
-          <div class="form-group mb-xl">
+          <div class="form-group mb-xl mdy">
             <label class="col-sm-3 control-label">Titre de l'offre</label>
             <div class="col-sm-9">
               <%= item_form.text_field :title, class: 'form-control', placeholder: "Titre de l'offre #{i + 1}" %>
@@ -32,13 +32,13 @@
           </div>
           <fieldset>
             <legend class="text-uppercase text-primary">Lieu / emplacement</legend>
-            <div class="form-group mt">
+            <div class="form-group mt mdy">
               <label class="col-sm-3 control-label">Nom du lieu</label>
               <div class="col-sm-9">
                 <%= item_form.text_field :main_place, class: 'form-control' %>
               </div>
             </div>
-            <div class="form-group mt">
+            <div class="form-group mt mdy">
               <label class="col-sm-3 control-label">Adresse</label>
               <div class="col-sm-9">
                 <%= item_form.text_field :main_address, class: 'form-control' %>
@@ -78,11 +78,19 @@
             <legend class="text-uppercase text-primary">Détails / description</legend>
             <div class="form-group mt">
               <label class="col-sm-3 control-label">Thèmes</label>
-              <div class="col-sm-9"><%= item_form.select :themes, [], {}, class: 'form-control' %></div>
+              <div class="col-sm-9">
+                <%= item_form.select :themes, themes, {}, multiple: 'multiple',
+                                     class: 'form-control chosen-select no-max',
+                                     'data-placeholder' => "Thèmes de l'offre" %>
+              </div>
             </div>
             <div class="form-group mt">
               <label class="col-sm-3 control-label">Caractéristiques</label>
-              <div class="col-sm-9"><%= item_form.select :criteria, [], {}, class: 'form-control' %></div>
+              <div class="col-sm-9">
+                <%= item_form.select :criteria, criteria, {}, multiple: 'multiple',
+                                     class: 'form-control chosen-select no-max',
+                                     'data-placeholder' => "Caractéristiques de l'offre" %>
+              </div>
             </div>
             <div class="form-group mt-lg">
               <label class="col-sm-3 control-label">Description</label>
@@ -92,7 +100,11 @@
             </div>
             <div class="form-group mt">
               <label class="col-sm-3 control-label">Accessibilité</label>
-              <div class="col-sm-9"><%= item_form.select :accessibility, [], {}, class: 'form-control' %></div>
+              <div class="col-sm-9">
+                <%= item_form.select :accessibility, accessibility, {}, multiple: 'multiple',
+                                     class: 'form-control chosen-select no-max',
+                                     'data-placeholder' => "Critères d'accessibilité" %>
+              </div>
             </div>
             <div class="form-group mt">
               <label class="col-sm-3 control-label">Organisateurs associés</label>
@@ -110,6 +122,39 @@
               <%= link_to_add_association('Ajouter une ouverture', item_form, :item_openings, class: 'btn btn-primary',
                                           partial: 'shared/forms/item_opening_fields',
                                           wrap_object: Proc.new {|opening| default_opening(opening)}) %>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend class="text-uppercase text-primary">Tarifs / réservations</legend>
+            <div class="form-group mdy">
+              <div class="col-sm-12">
+                <label class="radio-inline c-radio mh">
+                  <%= item_form.radio_button :free, true %>
+                  <span class="fa fa-circle"></span>Accès gratuit</label>
+                <label class="radio-inline c-radio mh">
+                  <%= item_form.radio_button :free, false  %>
+                  <span class="fa fa-circle"></span>Accès payant</label>
+              </div>
+            </div>
+            <div class="form-group mt">
+              <div class="col-sm-12">
+                <%= item_form.text_area :rates_desc, class: 'form-control', rows: 3, placeholder: 'Informations sur les tarifs' %>
+              </div>
+            </div>
+            <div class="form-group mt-xl">
+              <div class="col-sm-12">
+                <label class="radio-inline c-radio mh">
+                  <%= item_form.radio_button :booking, false %>
+                  <span class="fa fa-circle"></span>Pas de réservation</label>
+                <label class="radio-inline c-radio mh">
+                  <%= item_form.radio_button :booking, true  %>
+                  <span class="fa fa-circle"></span>Réservation</label>
+              </div>
+            </div>
+            <div class="form-group mt">
+              <div class="col-sm-12">
+                <%= item_form.text_area :booking_details, class: 'form-control', rows: 3, placeholder: 'Informations sur la réservation' %>
+              </div>
             </div>
           </fieldset>
         </div>
