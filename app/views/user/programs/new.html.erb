@@ -1,0 +1,6 @@
+<div class="pull-right">
+  <%= link_to '<span class="btn-label"><i class="fa fa-plus"></i></span>Nouvelle offre'.html_safe,
+              new_user_prog_item_path(@program.id), class: 'btn btn-info btn-labeled', remote: true %>
+</div>
+<div class="content-heading">Nouvelle programmation</div>
+<%= render 'form' %>

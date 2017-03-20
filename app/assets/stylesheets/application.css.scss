@@ -1,0 +1,16 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * --- Angle Main Stylesheet
+ * 
+ *= require angle/app
+ *
+ *
+ *= require fonts
+ *= require vendor.assets
+ * --- Datetimepicker
+ *= require eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min
+ *= require leaflet
+ *= require apidae_jep
+ */

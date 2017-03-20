@@ -1,0 +1,96 @@
+<div id="program_form">
+  <p class="help-block">Les champs marqués d'un <strong>*</strong> sont obligatoires.</p>
+  <%= form_for([:user, @program], html: {class: 'mt-xl form-horizontal'}) do |f| %>
+      <fieldset>
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Titre général des offres</label>
+          <div class="col-sm-7"><%= f.text_field :title, class: 'form-control' %></div>
+          <div class="col-sm-2"><%= f.submit 'Enregistrer', class: 'btn btn-primary' %></div>
+        </div>
+      </fieldset>
+  <% end %>
+
+  <div id="program_items_forms">
+    <% @program.program_items.each_with_index do |item, i| %>
+        <%= render 'shared/forms/program_item', item: item, i: i %>
+    <% end %>
+  </div>
+</div>
+
+<% content_for :body_area do %>
+  <script>
+      function initMap(container, zoom, minZoom) {
+          var map = L.map(container, {zoom: zoom, minZoom: minZoom, scrollWheelZoom: 'center'}).setView([45.740410, 4.816417]);
+          L.tileLayer('https://api.mapbox.com/v4/mapbox.outdoors/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiamVhbmJhcHRpc3RldmlsYWluIiwiYSI6ImZiMTJmMDdjODI5NDRiYTcyMDgzNGJmOTA5NjU0NDg1In0.b6l-11X_ZtS_83CsFu-v9Q', {
+              attribution: '&copy; Mapbox &copy; OpenStreetMap',
+              detectRetina: true
+          }).addTo(map);
+          return map;
+      }
+
+      function initDatepickers() {
+          var datepickers = $(".datepicker");
+          datepickers.datetimepicker({
+              locale: 'fr',
+              format: 'DD/MM/YYYY HH:mm',
+              sideBySide: true,
+              icons: {
+                  time: 'fa fa-clock-o',
+                  date: 'fa fa-calendar',
+                  up: 'fa fa-chevron-up',
+                  down: 'fa fa-chevron-down',
+                  previous: 'fa fa-chevron-left',
+                  next: 'fa fa-chevron-right',
+                  today: 'fa fa-crosshairs',
+                  clear: 'fa fa-trash'
+              }
+          });
+          datepickers.on('dp.show dp.update', function () {
+              $(this).find("th.picker-switch").removeAttr('title');
+              $(this).find("th.picker-switch").removeAttr('data-action');
+          });
+
+          $(".opening_pickers").each(function () {
+              var pickers = $(this).find(".input-group.datepicker");
+              datepickers.first().on('dp.change', function (e) {
+                  var currentEndDate = pickers.last().data("DateTimePicker").date();
+                  var newStartDate = moment($(this).find("input").val(), 'DD/MM/YYYY HH:mm');
+                  if(currentEndDate == undefined || currentEndDate.diff(newStartDate) < 0) {
+                      pickers.last().data("DateTimePicker").date($(this).find("input").val());
+                  }
+              })
+          });
+
+          var timepickers = $(".datetimepicker");
+          timepickers.datetimepicker({
+              locale: 'fr',
+              format: 'HH:mm',
+              sideBySide: true,
+              icons: {
+                  time: 'fa fa-clock-o',
+                  date: 'fa fa-calendar',
+                  up: 'fa fa-chevron-up',
+                  down: 'fa fa-chevron-down',
+                  previous: 'fa fa-chevron-left',
+                  next: 'fa fa-chevron-right',
+                  today: 'fa fa-crosshairs',
+                  clear: 'fa fa-trash'
+              }
+          });
+          timepickers.on('dp.show dp.update', function () {
+              $(this).find("th.picker-switch").removeAttr('title');
+              $(this).find("th.picker-switch").removeAttr('data-action');
+          });
+      }
+
+      $(function() {
+        initDatepickers();
+        $("#item_openings").on("cocoon:after-insert", function (e, opening) {
+            initDatepickers();
+        });
+        $(".item_map").each(function() {
+            initMap($(this).attr('id'), 7, 5);
+        });
+      });
+  </script>
+<% end %>

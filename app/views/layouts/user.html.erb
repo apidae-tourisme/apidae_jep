@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="ApidaeJEP">
+    <title>ApidaeJEP</title>
+    <%= stylesheet_link_tag 'base' %>
+    <%= stylesheet_link_tag 'application', media: 'all', id: 'maincss' %>
+    <%= csrf_meta_tags %>
+</head>
+
+<body>
+<div class="wrapper">
+    <header class="topnavbar-wrapper">
+        <%= render partial: 'layouts/partials/user/topnavbar' %>
+    </header>
+    <aside class="aside">
+        <%= render partial: 'layouts/partials/user/sidebar' %>
+    </aside>
+    <aside class="offsidebar hide">
+        <%= render partial: 'layouts/partials/user/offsidebar' %>
+    </aside>
+    <section>
+        <div class="content-wrapper">
+            <%= yield %>
+        </div>
+    </section>
+    <footer>
+        <%= render partial: 'layouts/partials/user/footer' %>
+    </footer>
+</div>
+<%= javascript_include_tag 'base' %>
+<%= javascript_include_tag 'application' %>
+
+<%= yield :body_area %>
+
+<% if notice %>
+    <script>
+        $.notify("<%= notice %>", "success");
+    </script>
+<% end %>
+
+</body>
+
+</html>

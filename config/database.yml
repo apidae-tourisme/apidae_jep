@@ -1,0 +1,25 @@
+pg: &pg
+  adapter: postgresql
+  encoding: unicode
+  pool: 10
+  timeout: 5000
+
+development:
+  <<: *pg
+  database: apidae_jep_dev
+  username: pg_local
+  password: pg_local
+
+test:
+  <<: *pg
+  database: apidae_jep_test
+  username: pg_local
+  password: pg_local
+
+
+production:
+  <<: *pg
+  host: postgresql-jep.alwaysdata.net
+  database:
+  username:
+  password:

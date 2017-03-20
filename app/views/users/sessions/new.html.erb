@@ -1,0 +1,38 @@
+<div class="block-center mt-xl wd-xl">
+  <div class="panel panel-dark panel-flat">
+    <div class="panel-heading text-center">
+      <img src="<%= image_path('logo_apidae_mono.svg') %>" alt="logo apidae" class="wd-xs" />
+    </div>
+    <div class="panel-body">
+      <h4 class="text-center mt-sm">Bienvenue sur ApidaeJEP</h4>
+      <p class="text-center pv">Veuillez vous identifier pour saisir vos évènements.</p>
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'mb-lg'}) do |f| %>
+          <div class="form-group has-feedback">
+            <%= f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'Adresse email' %>
+            <span class="fa fa-envelope form-control-feedback text-muted"></span>
+          </div>
+          <div class="form-group has-feedback">
+            <%= f.password_field :password, class: 'form-control', autocomplete: 'off', placeholder: 'Mot de passe' %>
+            <span class="fa fa-lock form-control-feedback text-muted"></span>
+          </div>
+          <div class="clearfix">
+            <% if devise_mapping.rememberable? -%>
+              <div class="checkbox c-checkbox pull-left mt0">
+                <label>
+                  <%= f.check_box :remember_me %>
+                  <span class="fa fa-check"></span>Se souvenir de moi</label>
+                </label>
+              </div>
+            <% end -%>
+            <div class="pull-right"><%= link_to 'Mot de passe oublié ?', new_password_path(resource_name) %></div>
+          </div>
+          <%= f.submit 'Connexion', class: 'btn btn-block btn-primary mt-lg text-uppercase' %>
+      <% end %>
+      <p class="pt-lg text-center">Vous avez un compte Apidae ?</p>
+      <%= link_to 'Se connecter avec Apidae', '/oauth/auth/apidae', class: 'btn btn-block btn-danger text-uppercase' %>
+
+      <p class="pt-lg mt-lg text-center">Vous n'avez pas de compte ?</p>
+      <%= link_to 'Créer un compte', new_registration_path(resource_name), class: 'btn btn-block btn-inverse text-uppercase' %><br />
+    </div>
+  </div>
+</div>

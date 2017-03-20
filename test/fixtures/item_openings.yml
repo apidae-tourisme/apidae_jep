@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  program_item_id: 1
+  type: 
+  frequency: 1
+  duration: 1
+  start_date: 2017-03-20
+  end_date: 2017-03-20
+  start_time: 2017-03-20 10:53:53
+  end_time: 2017-03-20 10:53:53
+
+two:
+  program_item_id: 1
+  type: 
+  frequency: 1
+  duration: 1
+  start_date: 2017-03-20
+  end_date: 2017-03-20
+  start_time: 2017-03-20 10:53:53
+  end_time: 2017-03-20 10:53:53

@@ -1,0 +1,6 @@
+<div class="pull-right">
+  <%= link_to '<span class="btn-label"><i class="fa fa-plus"></i></span>Nouvelle offre'.html_safe,
+              new_user_program_program_item_path(@program.id), class: 'btn btn-primary btn-labeled', remote: true %>
+</div>
+<div class="content-heading">Modifier la programmation</div>
+<%= render 'form' %>

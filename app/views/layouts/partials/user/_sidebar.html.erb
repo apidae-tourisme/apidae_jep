@@ -1,0 +1,12 @@
+<div class="aside-inner">
+  <nav class="sidebar" data-sidebar-anyclick-close="">
+    <ul class="nav">
+      <li class="<%= 'active' if controller?('dashboard') %>">
+        <a href="<%= url_for(controller: 'user/dashboard', action: 'index') %>" title="Tableau de bord">
+          <em class="icon-speedometer"></em>
+          <span>Tableau de bord</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>

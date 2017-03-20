@@ -1,0 +1,182 @@
+<div class="pull-right">
+  <%= link_to '<span class="btn-label"><i class="fa fa-plus"></i></span>Nouvelle programmation'.html_safe,
+              user_programs_path, method: :post, class: 'btn btn-info btn-labeled' %>
+</div>
+<h3>Tableau de bord</h3>
+<div class="row">
+  <div class="col-md-3 pr-sm">
+    <div class="panel widget bg-inverse">
+      <div class="row row-table">
+        <div class="col-xs-4 text-center bg-inverse-dark pv-lg">
+          <em class="icon-note fa-2x"></em>
+        </div>
+        <div class="col-xs-8 pv-lg">
+          <div class="h1 m0 text-bold">2</div>
+          <div class="text-uppercase">brouillons</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 ph-sm">
+    <div class="panel widget bg-warning">
+      <div class="row row-table">
+        <div class="col-xs-4 text-center bg-warning-dark pv-lg">
+          <em class="icon-hourglass fa-2x"></em>
+        </div>
+        <div class="col-xs-8 pv-lg">
+          <div class="h1 m0 text-bold">3</div>
+          <div class="text-uppercase">en validation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 ph-sm">
+    <div class="panel widget bg-success">
+      <div class="row row-table">
+        <div class="col-xs-4 text-center bg-success-dark pv-lg">
+          <em class="icon-like fa-2x"></em>
+        </div>
+        <div class="col-xs-8 pv-lg">
+          <div class="h1 m0 text-bold">2</div>
+          <div class="text-uppercase">validées</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 pl-sm">
+    <div class="panel widget bg-danger">
+      <div class="row row-table">
+        <div class="col-xs-4 text-center bg-danger-dark pv-lg">
+          <em class="icon-dislike fa-2x"></em>
+        </div>
+        <div class="col-xs-8 pv-lg">
+          <div class="h1 m0 text-bold">1</div>
+          <div class="text-uppercase">rejetée</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-12">
+    <div id="accordion" role="tablist" aria-multiselectable="true" class="panel-group">
+      <div class="panel panel-primary">
+        <div id="headingOne" role="tab" class="panel-heading">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class="collapsed text-white center-block">
+            Programmation 1
+            <div class="pull-right">
+              <span class="label label-inverse">1 brouillon</span>
+              <span class="label label-warning">1 en cours</span>
+              <span class="label label-success">2 validées</span>
+              <span class="label label-danger">1 rejetée</span>
+            </div>
+          </a>
+        </div>
+        <div id="collapseOne" role="tabpanel" aria-labelledby="headingOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+          <div class="panel-body">
+            <table class="table">
+              <tbody>
+              <tr>
+                <td>
+                  <strong>Offre 1</strong>
+                </td>
+                <td>
+                  Titre de l'offre 1
+                  <div class="pull-right"><span class="label label-inverse">brouillon</span></div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Offre 2</strong>
+                </td>
+                <td>
+                  Titre de l'offre 2
+                  <div class="pull-right"><span class="label label-success">validée</span></div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Offre 3</strong>
+                </td>
+                <td>
+                  Titre de l'offre 3
+                  <div class="pull-right"><span class="label label-success">validée</span></div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Offre 4</strong>
+                </td>
+                <td>
+                  Titre de l'offre 4
+                  <div class="pull-right"><span class="label label-danger">rejetée</span></div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Offre 5</strong>
+                </td>
+                <td>
+                  Titre de l'offre 5
+                  <div class="pull-right"><span class="label label-warning">en cours</span></div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="panel-footer text-center">
+            <a href="#" class="btn btn-default">Voir les détails</a>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-primary">
+        <div id="headingTwo" role="tab" class="panel-heading">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" class="collapsed text-white center-block">
+            Programmation 2
+            <div class="pull-right">
+              <span class="label label-inverse">1 brouillon</span>
+              <span class="label label-warning">2 en cours</span>
+            </div>
+          </a>
+        </div>
+        <div id="collapseTwo" role="tabpanel" aria-labelledby="headingTwo" class="panel-collapse collapse" aria-expanded="false">
+          <div class="panel-body">
+            <table class="table">
+              <tbody>
+              <tr>
+                <td>
+                  <strong>Offre 1</strong>
+                </td>
+                <td>
+                  Titre de l'offre 1
+                  <div class="pull-right"><span class="label label-inverse">brouillon</span></div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Offre 2</strong>
+                </td>
+                <td>
+                  Titre de l'offre 2
+                  <div class="pull-right"><span class="label label-warning">en cours</span></div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Offre 3</strong>
+                </td>
+                <td>
+                  Titre de l'offre 3
+                  <div class="pull-right"><span class="label label-warning">en cours</span></div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="panel-footer text-center">
+            <a href="#" class="btn btn-default">Voir les détails</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

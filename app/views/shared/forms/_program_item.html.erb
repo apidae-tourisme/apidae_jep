@@ -1,0 +1,124 @@
+<%= form_for([:user, @program, item], remote: true, namespace: "item_#{i}", html: {class: 'form-horizontal'}) do |item_form| %>
+    <div class="panel panel-primary">
+      <div class="panel-heading"><strong>Offre <%= i + 1 %></strong>
+        <a href="#" data-tool="panel-collapse" class="pull-right">
+          <em class="fa fa-minus"></em>
+        </a>
+      </div>
+      <div class="panel-wrapper collapse in">
+        <div class="panel-body">
+          <div class="form-group mt">
+            <label class="col-sm-3 control-label mt-lg">Type de l'offre</label>
+            <div class="col-sm-9">
+              <label class="radio-inline c-radio mh">
+                <%= item_form.radio_button :item_type, 'visite'  %>
+                <span class="fa fa-circle mt mr"></span><i class="fa fa-3x fa-institution mb-sm"></i><br/>Visite d'un site</label>
+              <label class="radio-inline c-radio mh">
+                <%= item_form.radio_button :item_type, 'parcours'  %>
+                <span class="fa fa-circle mt mr"></span><i class="fa fa-3x fa-map-signs mb-sm"></i><br/>Parcours</label>
+              <label class="radio-inline c-radio mh">
+                <%= item_form.radio_button :item_type, 'animation'  %>
+                <span class="fa fa-circle mt mr"></span><i class="fa fa-3x fa-microphone mb-sm"></i><br/>Animation</label>
+              <label class="radio-inline c-radio mh">
+                <%= item_form.radio_button :item_type, 'exposition'  %>
+                <span class="fa fa-circle mt mr"></span><i class="fa fa-3x fa-photo mb-sm"></i><br/>Exposition</label>
+            </div>
+          </div>
+          <div class="form-group mb-xl">
+            <label class="col-sm-3 control-label">Titre de l'offre</label>
+            <div class="col-sm-9">
+              <%= item_form.text_field :title, class: 'form-control', placeholder: "Titre de l'offre #{i + 1}" %>
+            </div>
+          </div>
+          <fieldset>
+            <legend class="text-uppercase text-primary">Lieu / emplacement</legend>
+            <div class="form-group mt">
+              <label class="col-sm-3 control-label">Nom du lieu</label>
+              <div class="col-sm-9">
+                <%= item_form.text_field :main_place, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="form-group mt">
+              <label class="col-sm-3 control-label">Adresse</label>
+              <div class="col-sm-9">
+                <%= item_form.text_field :main_address, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="form-group mt">
+              <label class="col-sm-3 control-label">Point de rendez-vous</label>
+              <div class="col-sm-9">
+                <%= item_form.text_field :alt_place, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="pa-sm mt-lg">
+              <div id="<%= "item_map_#{i}" %>" class="item_map"></div>
+            </div>
+            <div class="form-group mt-lg">
+              <label class="col-sm-3 control-label">Accès en transports en commun</label>
+              <div class="col-sm-9">
+                <%= item_form.text_area :main_transports, class: 'form-control', rows: 3 %>
+              </div>
+            </div>
+            <div class="form-group mt">
+              <label class="col-sm-3 control-label">Nature du lieu</label>
+              <div class="col-sm-9"><%= item_form.select :building_types, [], {}, class: 'form-control' %></div>
+            </div>
+            <div class="form-group mt">
+              <label class="col-sm-3 control-label">Epoque</label>
+              <div class="col-sm-9"><%= item_form.select :building_types, [], {}, class: 'form-control' %></div>
+            </div>
+            <div class="form-group mt-lg">
+              <label class="col-sm-3 control-label">Description du lieu</label>
+              <div class="col-sm-9">
+                <%= item_form.text_area :place_desc, class: 'form-control', rows: 3 %>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend class="text-uppercase text-primary">Détails / description</legend>
+            <div class="form-group mt">
+              <label class="col-sm-3 control-label">Thèmes</label>
+              <div class="col-sm-9"><%= item_form.select :themes, [], {}, class: 'form-control' %></div>
+            </div>
+            <div class="form-group mt">
+              <label class="col-sm-3 control-label">Caractéristiques</label>
+              <div class="col-sm-9"><%= item_form.select :criteria, [], {}, class: 'form-control' %></div>
+            </div>
+            <div class="form-group mt-lg">
+              <label class="col-sm-3 control-label">Description</label>
+              <div class="col-sm-9">
+                <%= item_form.text_area :description, class: 'form-control', rows: 3 %>
+              </div>
+            </div>
+            <div class="form-group mt">
+              <label class="col-sm-3 control-label">Accessibilité</label>
+              <div class="col-sm-9"><%= item_form.select :accessibility, [], {}, class: 'form-control' %></div>
+            </div>
+            <div class="form-group mt">
+              <label class="col-sm-3 control-label">Organisateurs associés</label>
+              <div class="col-sm-9">
+                <%= item_form.text_field :event_planners, class: 'form-control' %>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset id="item_openings">
+            <legend class="text-uppercase text-primary">Horaires / ouverture</legend>
+            <%= item_form.fields_for :item_openings do |opening| %>
+                <%= render 'shared/forms/item_opening_fields', f: opening %>
+            <% end %>
+            <div class="links">
+              <%= link_to_add_association('Ajouter une ouverture', item_form, :item_openings, class: 'btn btn-primary',
+                                          partial: 'shared/forms/item_opening_fields',
+                                          wrap_object: Proc.new {|opening| default_opening(opening)}) %>
+            </div>
+          </fieldset>
+        </div>
+        <%= item_form.hidden_field :program_id %>
+        <%= item_form.hidden_field :status %>
+        <div class="panel-footer text-right">
+          <%= item_form.submit 'Enregistrer comme brouillon', class: 'btn btn-inverse' %>
+          <%= item_form.submit 'Transmettre pour validation', class: 'btn btn-primary ml' %>
+        </div>
+      </div>
+    </div>
+<% end %>

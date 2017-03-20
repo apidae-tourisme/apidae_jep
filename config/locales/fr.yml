@@ -1,0 +1,328 @@
+fr:
+  errors:
+    messages:
+      already_in_use: 'Cette adresse e-mail est déjà utilisée.'
+      not_email: 'Veuillez saisir une adresse e-mail valide.'
+      apidae_account: 'Cette adresse e-mail est déjà associée à un compte utilisateur Apidae.'
+  devise:
+    mailer:
+      reset_password_instructions:
+        subject: "Instructions de réinitialisation de mot de passe"
+        request_reset_link_msg: "Nous avons reçu une demande de réinitialisation de votre mot de passe. Pour finaliser cette demande, suivez le lien ci-dessous."
+        password_change_link: "Changer mon mot de passe"
+        ignore_mail_msg: "Si vous n'êtes pas à l'origine de cette demande, veuillez ignorer cet e-mail."
+        no_changes_msg: "Votre mot de passe ne changera pas tant que vous n'accédez pas au lien ci-dessus pour en créer un nouveau."
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            password:
+              too_short: 'Le mot de passe saisi est trop court (minimum 6 caractères)'
+            password_confirmation:
+              confirmation: 'Les deux mots de passe saisis ne correspondent pas.'
+  user:
+    fields:
+      name: 'Nom'
+      email: 'Email'
+      provider: 'Authentification'
+      role: 'Fonction'
+      telephone: 'Téléphone'
+      last_sign_in_at: 'Dernière connexion'
+  legal_entity:
+    fields:
+      name: 'Nom'
+      address: 'Adresse'
+      postal_code: 'Code postal'
+      town: 'Commune'
+      email: 'Email'
+      telephone: 'Téléphone'
+      website: 'Site web'
+      external_id: 'Identifiant Apidae'
+  event:
+    fields:
+      place_name: 'Nom du lieu'
+      place_description: 'Descriptif du lieu'
+      place_starting_point: 'Lieu de départ'
+      event_planners: 'Organisateurs et partenaires'
+      building_ages: 'Epoques'
+      building_types: 'Catégories'
+      town: 'Commune'
+      postal_code: 'Code postal'
+      latitude: 'Latitude'
+      longitude: 'Longitude'
+      address: 'Adresse'
+      public_transports: 'Accès en transports en commun'
+      accessibility: 'Accessibilité'
+      audience: 'Public'
+      name: 'Nom'
+      description: 'Description courte'
+      details: 'Description longue'
+      caracs: "Caractéristiques de l'évènement"
+      openings: 'Ouvertures'
+      free: 'Gratuit'
+      rates_desc: 'Détail des tarifs'
+      booking: 'Réservation'
+      booking_details: 'Informations sur la réservation'
+      telephone: 'Téléphone'
+      email: 'Email'
+      website: 'Site web'
+  event_action:
+    status:
+      registered: 'Enregistrée'
+      cancelled: 'Annulée'
+      pending_jep: 'Validation JEP'
+      pending_apidae: 'Validation Apidae'
+      rejected_jep: 'Rejetée JEP'
+      rejected_apidae: 'Rejetée Apidae'
+      complete: 'Publiée'
+    fields:
+      place:
+        header: "Lieu de l'évènement"
+        name: 'Nom du lieu'
+        town: 'Commune'
+        postal_code: 'Code postal'
+        latitude: 'Latitude'
+        longitude: 'Longitude'
+        address: 'Adresse'
+        summary: 'Descriptif du lieu'
+        extraInfo: 'Accès en transports en commun'
+        startingPoint: 'Lieu de départ'
+      description:
+        header: "Descriptif de l'évènement"
+        name: "Titre de l'évènement"
+        planners: 'Organisateurs et partenaires'
+        shortDescription: 'Description courte'
+        longDescription: 'Description longue'
+        accessibility: 'Accessibilité'
+        audience: 'Public'
+        aud: 'Public'
+      building:
+        header: 'Edifice, parc ou jardin'
+        ages: 'Epoques'
+        types: "Catégories"
+      categories:
+        header: "Caractéristiques de l'évènement"
+      openings:
+        header: 'Ouvertures'
+        openings: "Périodes d'ouverture"
+      rates:
+        header: 'Tarifs'
+        free: 'Gratuit'
+        description: 'Détail des tarifs'
+      booking:
+        header: 'Réservations'
+        booking: 'Réservation'
+        info: 'Informations sur la réservation'
+      contact:
+        header: 'Informations de contact'
+        phone: 'Téléphone'
+        email: 'Adresse email'
+        website: 'Site web'
+        bookingPhone: 'Téléphone (réservations)'
+        bookingEmail: 'Adresse email (réservations)'
+        bookingWebsite: 'Site web (réservations)'
+      picturesMetadata:
+        header: 'Images'
+  member:
+    grandlyon: 'Grand Lyon'
+    isere: 'Isère'
+  export:
+    grandlyon:
+      demonstration: 'Démonstration'
+      atelier: 'Atelier'
+      jeux: 'Jeux'
+      concert: 'Concert'
+      conference: 'Conférence'
+      exposition: 'Exposition'
+      projection: 'Projection'
+      spectacle: 'Spectacle'
+      degustation: 'Dégustation'
+      theatre: 'Théâtre'
+      contes_lecture: 'Contes, lecture'
+      sur_eau: "Sur l'eau"
+      en_velo: 'En vélo'
+      1ere_ouverture: '1ère ouverture'
+      coup_de_coeur: 'Coup de coeur'
+      jeune_public: 'Jeune public'
+      en_bus: 'En bus'
+      parcours_exterieur: 'Parcours extérieur'
+      visite_edifice_parc_jardin: "Visite d'un édifice ou d'un parc / jardin"
+      visite_guidee: 'Visite guidée'
+      instituts_culturels_europeens: 'Instituts culturels européens'
+      maison_des_champs: 'Maison des champs'
+      parcours_1: 'Parcours 1 Lieux de la citoyenneté'
+      parcours_2: 'Parcours 2 Les initiatives citoyennes'
+      parcours_3: 'Parcours 3 La fabrique de la ville'
+      parcours_4: 'Parcours 4 Sport'
+      parcours_5: 'Parcours 5 Danse'
+      parcours_6: 'Parcours 6 Matrimoine'
+      patrimoine_industriel: 'Patrimoine industriel'
+      point_info: 'Point info'
+      remparts_de_lyon: 'Remparts de Lyon'
+      deficience_auditive: 'Personnes malentendantes ou sourdes'
+      deficience_visuelle: 'Personnes malvoyantes ou non voyantes'
+      fauteuil_roulant_avec_aide: 'Personnes à mobilité réduite (accès partiel)'
+      fauteuil_roulant_en_autonomie: 'Personnes à mobilité réduite (accès total)'
+      theme_2016_patrimoine_citoyennete: 'Thème JEP 2016 : Patrimoine et citoyenneté'
+      prehistoire: 'Préhistoire'
+      antiquite: 'Antiquité'
+      6e: 'VIe'
+      7e: 'VIIe'
+      8e: 'VIIIe'
+      9e: 'IXe'
+      10e: 'Xe'
+      11e: 'XIe'
+      12e: 'XIIe'
+      13e: 'XIIIe'
+      14e: 'XIVe'
+      15e: 'XVe'
+      16e: 'XVIe'
+      17e: 'XVIIe'
+      18e: 'XVIIIe'
+      19e: 'XIXe'
+      20e: 'XXe'
+      21e: 'XXIe'
+    isere:
+      demonstration: 'Démonstration'
+      atelier: 'Atelier'
+      jeux: 'Jeux'
+      concert: 'Concert'
+      conference: 'Conférence'
+      exposition: 'Exposition'
+      projection: 'Projection'
+      spectacle: 'Spectacle'
+      degustation: 'Dégustation'
+      theatre: 'Théâtre'
+      contes_lecture: 'Contes, lecture'
+      sur_eau: "Sur l'eau"
+      en_velo: 'En vélo'
+      1ere_ouverture: '1ère ouverture'
+      coup_de_coeur: 'Coup de coeur'
+      en_bus: 'En bus'
+      parcours_exterieur: 'Parcours extérieur'
+      visite_edifice_parc_jardin: "Visite d'un édifice ou d'un parc / jardin"
+      visite_guidee: 'Visite guidée'
+      instituts_culturels_europeens: 'Instituts culturels européens'
+      maison_des_champs: 'Maison des champs'
+      parcours_1: 'Parcours 1'
+      parcours_2: 'Parcours 2'
+      parcours_3: 'Parcours 3'
+      parcours_4: 'Parcours 4'
+      parcours_5: 'Parcours 5'
+      parcours_6: 'Parcours 6'
+      patrimoine_industriel: 'Patrimoine industriel'
+      point_info: 'Point info'
+      remparts_de_lyon: 'Remparts de Lyon'
+      deficience_auditive: 'Personnes malentendantes ou sourdes'
+      deficience_visuelle: 'Personnes malvoyantes ou non voyantes'
+      fauteuil_roulant_avec_aide: 'Personnes à mobilité réduite (accès partiel)'
+      fauteuil_roulant_en_autonomie: 'Personnes à mobilité réduite (accès total)'
+      theme_2016_patrimoine_citoyennete: 'Thème JEP 2016 : Patrimoine et citoyenneté'
+  date:
+    abbr_day_names:
+    - dim
+    - lun
+    - mar
+    - mer
+    - jeu
+    - ven
+    - sam
+    abbr_month_names:
+    -
+    - jan.
+    - fév.
+    - mar.
+    - avr.
+    - mai
+    - juin
+    - juil.
+    - août
+    - sept.
+    - oct.
+    - nov.
+    - déc.
+    day_names:
+    - dimanche
+    - lundi
+    - mardi
+    - mercredi
+    - jeudi
+    - vendredi
+    - samedi
+    month_names:
+    -
+    - janvier
+    - février
+    - mars
+    - avril
+    - mai
+    - juin
+    - juillet
+    - août
+    - septembre
+    - octobre
+    - novembre
+    - décembre
+    order:
+    - :day
+    - :month
+    - :year
+    formats:
+      default: "%d/%m/%Y"
+      short: "%e %b"
+      long: "%A %e %B %Y"
+      js: "%Y-%m-%d"
+  datetime:
+    formats:
+      default: "%d/%m/%Y %H:%M"
+      short: "%H:%M"
+    distance_in_words:
+      about_x_hours:
+        one: environ une heure
+        other: environ %{count} heures
+      about_x_months:
+        one: environ un mois
+        other: environ %{count} mois
+      about_x_years:
+        one: environ un an
+        other: environ %{count} ans
+      almost_x_years:
+        one: presqu'un an
+        other: presque %{count} ans
+      half_a_minute: une demi-minute
+      less_than_x_minutes:
+        zero: moins d'une minute
+        one: moins d'une minute
+        other: moins de %{count} minutes
+      less_than_x_seconds:
+        zero: moins d'une seconde
+        one: moins d'une seconde
+        other: moins de %{count} secondes
+      over_x_years:
+        one: plus d'un an
+        other: plus de %{count} ans
+      x_days:
+        one: 1 jour
+        other: "%{count} jours"
+      x_minutes:
+        one: 1 minute
+        other: "%{count} minutes"
+      x_months:
+        one: 1 mois
+        other: "%{count} mois"
+      x_seconds:
+        one: 1 seconde
+        other: "%{count} secondes"
+  time:
+    formats:
+      default: "%e %B %Y à %H:%M"
+      detailed: "%e %B %Y à %H:%M"
+      js: "%Y-%m-%d"
+      notime: "%d/%m/%Y"
+      withtime: "Le %d/%m/%Y à %H:%M"
+      date_detailed: "%d/%m/%Y"
+      full: "%A %e %B %Y à %H:%M"
+      reference: "%d%m%y-%H%M%S"
+
+
