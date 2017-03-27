@@ -20,7 +20,7 @@
 <% content_for :body_area do %>
   <script>
       function initMap(container, zoom, minZoom) {
-          var map = L.map(container, {zoom: zoom, minZoom: minZoom, scrollWheelZoom: 'center'}).setView([45.740410, 4.816417]);
+          var map = L.map(container, {zoom: zoom, minZoom: minZoom, scrollWheelZoom: false}).setView([45.740410, 4.816417]);
           L.tileLayer('https://api.mapbox.com/v4/mapbox.outdoors/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiamVhbmJhcHRpc3RldmlsYWluIiwiYSI6ImZiMTJmMDdjODI5NDRiYTcyMDgzNGJmOTA5NjU0NDg1In0.b6l-11X_ZtS_83CsFu-v9Q', {
               attribution: '&copy; Mapbox &copy; OpenStreetMap',
               detectRetina: true
@@ -78,7 +78,7 @@
 
       $(function() {
         initDatepickers();
-        $("#item_openings").on("cocoon:after-insert", function (e, opening) {
+        $(".item_openings").on("cocoon:after-insert", function (e, opening) {
             initDatepickers();
         });
         $(".item_map").each(function() {

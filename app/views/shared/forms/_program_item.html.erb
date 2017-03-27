@@ -1,4 +1,5 @@
-<%= form_for([:user, @program, item], remote: true, namespace: "item_#{i}", html: {class: 'form-horizontal'}) do |item_form| %>
+<%= form_for([:user, @program, item], remote: true, authenticity_token: true, namespace: "item_#{i}",
+             html: {multipart: true, class: 'form-horizontal'}) do |item_form| %>
     <div class="panel panel-primary">
       <div class="panel-heading"><strong>Offre <%= i + 1 %></strong>
         <a href="#" data-tool="panel-collapse" class="pull-right">
@@ -113,7 +114,7 @@
               </div>
             </div>
           </fieldset>
-          <fieldset id="item_openings">
+          <fieldset class="item_openings">
             <legend class="text-uppercase text-primary">Horaires / ouverture</legend>
             <%= item_form.fields_for :item_openings do |opening| %>
                 <%= render 'shared/forms/item_opening_fields', f: opening %>
@@ -157,12 +158,24 @@
               </div>
             </div>
           </fieldset>
+          <fieldset class="item_photos">
+            <legend class="text-uppercase text-primary">Photos</legend>
+            <%= item_form.fields_for :attached_files do |file_form| %>
+                <%= render 'shared/forms/attached_file_fields', f: file_form %>
+            <% end %>
+            <div class="links">
+              <%= link_to_add_association('Ajouter une photo', item_form, :attached_files, class: 'btn btn-primary',
+                                          partial: 'shared/forms/attached_file_fields') %>
+            </div>
+          </fieldset>
         </div>
         <%= item_form.hidden_field :program_id %>
         <%= item_form.hidden_field :status %>
         <div class="panel-footer text-right">
-          <%= item_form.submit 'Enregistrer comme brouillon', class: 'btn btn-inverse' %>
-          <%= item_form.submit 'Transmettre pour validation', class: 'btn btn-primary ml' %>
+          <%= item_form.submit 'Enregistrer comme brouillon', class: 'btn btn-inverse',
+                               onclick: "$('#item_#{i}_program_item_status').val('#{ProgramItem::STATUS_DRAFT}')" %>
+          <%= item_form.submit 'Transmettre pour validation', class: 'btn btn-primary ml',
+                               onclick: "$('#item_#{i}_program_item_status').val('#{ProgramItem::STATUS_PENDING}')" %>
         </div>
       </div>
     </div>

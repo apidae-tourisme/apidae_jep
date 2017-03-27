@@ -124,6 +124,17 @@ fr:
         bookingWebsite: 'Site web (réservations)'
       picturesMetadata:
         header: 'Images'
+  program_item:
+    status:
+      draft: 'brouillon'
+      pending: 'en cours'
+      validated: 'validée'
+      rejected: 'rejetée'
+    color:
+      draft: 'inverse'
+      pending: 'warning'
+      validated: 'success'
+      rejected: 'danger'
   member:
     grandlyon: 'Grand Lyon'
     isere: 'Isère'

@@ -31,6 +31,19 @@
         <%= render partial: 'layouts/partials/user/footer' %>
     </footer>
 </div>
+<div id="modal_window" tabindex="-1" role="dialog" aria-labelledby="modal_title" aria-hidden="true" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-inverse">
+        <button type="button" data-dismiss="modal" aria-label="Fermer" class="close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 id="modal_title" class="modal-title"></h4>
+      </div>
+      <div id="modal_body"></div>
+    </div>
+  </div>
+</div>
 <%= javascript_include_tag 'base' %>
 <%= javascript_include_tag 'application' %>
 <script>

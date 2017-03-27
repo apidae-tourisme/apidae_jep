@@ -1,11 +1,9 @@
-// This is a manifest file that'll be compiled into base.js, which will include all the files
-// listed below.
-
 //--- Modernizr
 //= require modernizr/modernizr.custom
 //---jQuery
 //= require jquery2
 //= require jquery_ujs
+//= require jquery.remotipart
 //--- Bootstrap
 //= require bootstrap/dist/js/bootstrap
 //--- Storage API

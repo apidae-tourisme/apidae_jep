@@ -61,125 +61,53 @@
   <h3 class="ph pt-xl">Mes programmations</h3>
 
   <div class="col-xs-12">
-    <div id="accordion" role="tablist" aria-multiselectable="true" class="panel-group">
+  <% if @programs.any? %>
+    <div id="accordion" role="tablist" class="panel-group">
+      <% @programs.each_with_index do |prog, i| %>
       <div class="panel panel-primary">
-        <div id="headingOne" role="tab" class="panel-heading">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class="collapsed text-white center-block">
-            Programmation 1
-            <div class="pull-right">
-              <span class="label label-inverse">1 brouillon</span>
-              <span class="label label-warning">1 en cours</span>
-              <span class="label label-success">2 validées</span>
-              <span class="label label-danger">1 rejetée</span>
-            </div>
+        <div id="<%= "heading_#{i}" %>" role="tab" class="panel-heading">
+          <a data-toggle="collapse" data-parent="#accordion" href="#<%= "collapse_#{i}" %>" class="text-white center-block">
+            <%= "Programmation #{i + 1}#{(' - ' + prog.title) unless prog.title.blank?}" %>
+            <!--<div class="pull-right">-->
+              <!--<span class="label label-inverse">1 brouillon</span>-->
+              <!--<span class="label label-warning">1 en cours</span>-->
+              <!--<span class="label label-success">2 validées</span>-->
+              <!--<span class="label label-danger">1 rejetée</span>-->
+            <!--</div>-->
           </a>
         </div>
-        <div id="collapseOne" role="tabpanel" aria-labelledby="headingOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+        <div id="<%= "collapse_#{i}" %>" role="tabpanel" class="panel-collapse collapse <%= 'in' if i == 0 %>">
           <div class="panel-body">
             <table class="table">
               <tbody>
-              <tr>
-                <td>
-                  <strong>Offre 1</strong>
-                </td>
-                <td>
-                  Titre de l'offre 1
-                  <div class="pull-right"><span class="label label-inverse">brouillon</span></div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Offre 2</strong>
-                </td>
-                <td>
-                  Titre de l'offre 2
-                  <div class="pull-right"><span class="label label-success">validée</span></div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Offre 3</strong>
-                </td>
-                <td>
-                  Titre de l'offre 3
-                  <div class="pull-right"><span class="label label-success">validée</span></div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Offre 4</strong>
-                </td>
-                <td>
-                  Titre de l'offre 4
-                  <div class="pull-right"><span class="label label-danger">rejetée</span></div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Offre 5</strong>
-                </td>
-                <td>
-                  Titre de l'offre 5
-                  <div class="pull-right"><span class="label label-warning">en cours</span></div>
-                </td>
-              </tr>
+              <% prog.program_items.each_with_index do |item, j| %>
+                <tr>
+                  <td>
+                    <strong><%= "Offre #{j + 1}" %></strong>
+                  </td>
+                  <td>
+                    <%= item.title %>
+                    <div class="pull-right"><span class="label label-<%= t "program_item.color.#{item.status}" %>"><%= t "program_item.status.#{item.status}" %></span></div>
+                  </td>
+                </tr>
+              <% end %>
               </tbody>
             </table>
           </div>
           <div class="panel-footer text-center">
-            <a href="#" class="btn btn-default">Voir les détails</a>
+            <%= link_to 'Voir les détails', edit_user_program_path(prog), class: 'btn btn-default' %>
           </div>
         </div>
       </div>
-      <div class="panel panel-primary">
-        <div id="headingTwo" role="tab" class="panel-heading">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" class="collapsed text-white center-block">
-            Programmation 2
-            <div class="pull-right">
-              <span class="label label-inverse">1 brouillon</span>
-              <span class="label label-warning">2 en cours</span>
-            </div>
-          </a>
-        </div>
-        <div id="collapseTwo" role="tabpanel" aria-labelledby="headingTwo" class="panel-collapse collapse" aria-expanded="false">
-          <div class="panel-body">
-            <table class="table">
-              <tbody>
-              <tr>
-                <td>
-                  <strong>Offre 1</strong>
-                </td>
-                <td>
-                  Titre de l'offre 1
-                  <div class="pull-right"><span class="label label-inverse">brouillon</span></div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Offre 2</strong>
-                </td>
-                <td>
-                  Titre de l'offre 2
-                  <div class="pull-right"><span class="label label-warning">en cours</span></div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Offre 3</strong>
-                </td>
-                <td>
-                  Titre de l'offre 3
-                  <div class="pull-right"><span class="label label-warning">en cours</span></div>
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="panel-footer text-center">
-            <a href="#" class="btn btn-default">Voir les détails</a>
-          </div>
-        </div>
-      </div>
+      <% end %>
     </div>
+  <% else %>
+  <p>
+    Aucune programmation saisie pour le moment.<br/>
+    <br/>
+    <%= link_to '<span class="btn-label"><i class="fa fa-plus"></i></span>Créer une programmation'.html_safe,
+                user_programs_path, method: :post, class: 'btn btn-info btn-labeled' %>
+  </p>
+  <% end %>
   </div>
 </div>

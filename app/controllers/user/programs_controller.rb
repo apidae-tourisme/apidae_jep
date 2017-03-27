@@ -4,6 +4,7 @@ class User::ProgramsController < User::UserController
   def create
     @program = Program.new
     @program.program_items.build(status: ProgramItem::STATUS_DRAFT)
+    @program.users << current_user
     @program.save
     redirect_to url_for(action: :edit, id: @program.id), notice: 'La programmation a bien été créée.'
   end

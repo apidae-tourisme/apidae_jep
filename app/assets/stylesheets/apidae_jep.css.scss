@@ -11,3 +11,8 @@ form .mdy > label:after {
   content: " * ";
   font-weight: bold;
 }
+
+form .item_photos img {
+  max-width: 100%;
+  max-height: 160px;
+}
