@@ -22,4 +22,8 @@ class User < ActiveRecord::Base
   def entity_address
     legal_entity.address.values.join("\n")
   end
+
+  def ordered_programs
+    programs.order(:id)
+  end
 end

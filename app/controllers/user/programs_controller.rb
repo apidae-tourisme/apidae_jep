@@ -1,12 +1,18 @@
 class User::ProgramsController < User::UserController
   before_action :set_program, only: [:edit, :update, :destroy]
 
-  def create
+  def new
     @program = Program.new
-    @program.program_items.build(status: ProgramItem::STATUS_DRAFT)
+  end
+
+  def create
+    @program = Program.new(program_params)
     @program.users << current_user
-    @program.save
-    redirect_to url_for(action: :edit, id: @program.id), notice: 'La programmation a bien été créée.'
+    if @program.save
+      redirect_to url_for(action: :edit, id: @program.id), notice: 'La programmation a bien été créée.'
+    else
+      render :new, notice: 'Une erreur est survenue lors de la création de la programmation.'
+    end
   end
 
   def edit

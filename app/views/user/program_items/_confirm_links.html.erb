@@ -1,4 +1,4 @@
-<div class="modal-body">
+<div class="panel-body">
   <% if @item.draft? %>
     <p class="text-center">
       Votre brouillon a bien été enregistré. Pensez à le compléter ultérieurement puis à le soumettre afin
@@ -11,11 +11,9 @@
     </p>
   <% end %>
 </div>
-<div class="modal-footer">
+<div class="panel-footer text-right">
   <%= link_to '<span class="btn-label"><i class="fa fa-plus"></i></span>Ajouter une offre'.html_safe,
-              edit_user_program_path(@program), class: 'btn btn-success btn-labeled' %>
+              new_user_program_program_item_path(@program), class: 'btn btn-success btn-labeled' %>
   <%= link_to '<span class="btn-label"><i class="fa fa-dashboard"></i></span>Tableau de bord'.html_safe,
               url_for(controller: 'user/dashboard', action: :index), class: 'btn btn-info btn-labeled' %>
-  <%= link_to '<span class="btn-label"><i class="fa fa-close"></i></span>Fermer'.html_safe,
-              edit_user_program_path(@program), class: 'btn btn-inverse btn-labeled' %>
 </div>

@@ -11,7 +11,7 @@
     <%= csrf_meta_tags %>
 </head>
 
-<body>
+<body class="aside-collapsed">
 <div class="wrapper">
     <header class="topnavbar-wrapper">
         <%= render partial: 'layouts/partials/user/topnavbar' %>
@@ -34,13 +34,13 @@
 <div id="modal_window" tabindex="-1" role="dialog" aria-labelledby="modal_title" aria-hidden="true" class="modal fade">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header bg-inverse">
+      <div class="modal-header bg-gray-dark">
         <button type="button" data-dismiss="modal" aria-label="Fermer" class="close">
           <span aria-hidden="true">&times;</span>
         </button>
         <h4 id="modal_title" class="modal-title"></h4>
       </div>
-      <div id="modal_body"></div>
+      <div id="modal_body" class="modal-body"></div>
     </div>
   </div>
 </div>
@@ -48,6 +48,16 @@
 <%= javascript_include_tag 'application' %>
 <script>
   moment.locale('fr');
+  $(".help_button").click(function() {
+      var modalWindow = $("#modal_window");
+      var helpText = $(this).parents(".form-group").find(".help-block").text();
+      var fieldLabel = $(this).parents("label").text();
+      if(helpText.length > 0) {
+          modalWindow.find("#modal_title").append(fieldLabel);
+          modalWindow.find("#modal_body").append('<p class="pre">' + helpText + '</p>');
+          modalWindow.modal();
+      }
+  });
 </script>
 
 <%= yield :body_area %>

@@ -1,7 +1,7 @@
 //--- Admin template
 //= require_tree ./angle/
 //= require leaflet
-//= require leaflet-draw
+//= require lib/leaflet-geocoder-mapzen
 //= require ./lib/cocoon
 //--- Moment
 //= require moment/min/moment-with-locales.min

@@ -1,6 +1,7 @@
 class User::ProgramItemsController < User::UserController
   before_action :set_program
-  before_action :set_program_item, only: [:edit, :update, :destroy]
+  before_action :set_program_item, only: [:edit, :update, :destroy, :confirm, :reorder, :select_program, :save_program,
+                                          :duplicate]
 
   def new
     @item = ProgramItem.new(program_id: @program.id)
@@ -8,17 +9,60 @@ class User::ProgramItemsController < User::UserController
 
   def create
     @item = ProgramItem.new(item_params)
-    @item.save
+    @item.ordering = @program.program_items.count
+    if @item.save && @item.update(reference: @item.id, rev: 1)
+      redirect_to confirm_user_program_program_item_url(@program.id, @item)
+    else
+      render :new, notice: "Une erreur est survenue lors de la création de l'offre."
+    end
   end
 
   def edit
   end
 
   def update
-    @item.update(item_params)
+    if @item.update(item_params)
+      redirect_to confirm_user_program_program_item_url(@program.id, @item)
+    else
+      render :edit, notice: "Une erreur est survenue lors de la mise à jour de l'offre."
+    end
   end
 
   def destroy
+  end
+
+  def confirm
+  end
+
+  def reorder
+    unless params[:direction].blank?
+      ProgramItem.change_order(@item, params[:direction])
+    end
+    redirect_to edit_user_program_url(@program), notice: "L'offre a bien été mise à jour."
+  end
+
+  def select_program
+    @programs = Program.joins("INNER JOIN programs_users ON programs_users.program_id = programs.id")
+                    .where("programs_users.user_id = ?", current_user.id).collect {|p| [p.title, p.id]}
+  end
+
+  def save_program
+    if @item.update(item_params)
+      redirect_to edit_user_program_url(@item.program), notice: "L'offre a bien déplacée dans sa nouvelle programmation."
+    else
+      redirect_to edit_user_program_url(@program), notice: "Une erreur est survenue au cours du déplacement de l'offre."
+    end
+  end
+
+  def duplicate
+    @new_item = @item.dup
+    @new_item.external_id = nil
+    @new_item.status = ProgramItem::STATUS_DRAFT
+    if @new_item.save && @new_item.update(reference: @new_item.id, rev: 1)
+      redirect_to edit_user_program_url(@program), notice: "L'offre a bien été dupliquée."
+    else
+      render :edit, notice: "Une erreur est survenue lors de la duplication de l'offre."
+    end
   end
 
   private

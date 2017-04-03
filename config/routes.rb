@@ -28,7 +28,13 @@ Rails.application.routes.draw do
   namespace :user, path: 'saisie' do
     scope(path_names: {new: 'creer', edit: 'modifier'}) do
       resources :programs, path: 'programmations' do
-        resources :program_items, path: 'offres'
+        resources :program_items, path: 'offres' do
+          get 'confirm', on: :member
+          post 'duplicate', on: :member, as: 'duplicate'
+          patch 'reorder', on: :member, as: 'reorder'
+          get 'select_program', on: :member, as: 'select'
+          patch 'save_program', on: :member, as: 'save'
+        end
       end
     end
   end

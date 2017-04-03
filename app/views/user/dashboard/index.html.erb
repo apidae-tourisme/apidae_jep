@@ -1,6 +1,6 @@
 <div class="pull-right">
   <%= link_to '<span class="btn-label"><i class="fa fa-plus"></i></span>Nouvelle programmation'.html_safe,
-              user_programs_path, method: :post, class: 'btn btn-info btn-labeled' %>
+              new_user_program_path, class: 'btn btn-info btn-labeled' %>
 </div>
 <h3>Tableau de bord</h3>
 <div class="row">
@@ -11,7 +11,7 @@
           <em class="icon-note fa-2x"></em>
         </div>
         <div class="col-xs-8 pv-lg">
-          <div class="h1 m0 text-bold">2</div>
+          <div class="h1 m0 text-bold"><%= ProgramItem.draft.count %></div>
           <div class="text-uppercase">brouillons</div>
         </div>
       </div>
@@ -24,7 +24,7 @@
           <em class="icon-hourglass fa-2x"></em>
         </div>
         <div class="col-xs-8 pv-lg">
-          <div class="h1 m0 text-bold">3</div>
+          <div class="h1 m0 text-bold"><%= ProgramItem.validated.count %></div>
           <div class="text-uppercase">en validation</div>
         </div>
       </div>
@@ -37,7 +37,7 @@
           <em class="icon-like fa-2x"></em>
         </div>
         <div class="col-xs-8 pv-lg">
-          <div class="h1 m0 text-bold">2</div>
+          <div class="h1 m0 text-bold"><%= ProgramItem.validated.count %></div>
           <div class="text-uppercase">validées</div>
         </div>
       </div>
@@ -50,7 +50,7 @@
           <em class="icon-dislike fa-2x"></em>
         </div>
         <div class="col-xs-8 pv-lg">
-          <div class="h1 m0 text-bold">1</div>
+          <div class="h1 m0 text-bold"><%= ProgramItem.rejected.count %></div>
           <div class="text-uppercase">rejetée</div>
         </div>
       </div>
@@ -62,41 +62,34 @@
 
   <div class="col-xs-12">
   <% if @programs.any? %>
-    <div id="accordion" role="tablist" class="panel-group">
       <% @programs.each_with_index do |prog, i| %>
       <div class="panel panel-primary">
-        <div id="<%= "heading_#{i}" %>" role="tab" class="panel-heading">
-          <a data-toggle="collapse" data-parent="#accordion" href="#<%= "collapse_#{i}" %>" class="text-white center-block">
-            <%= "Programmation #{i + 1}#{(' - ' + prog.title) unless prog.title.blank?}" %>
-            <!--<div class="pull-right">-->
-              <!--<span class="label label-inverse">1 brouillon</span>-->
-              <!--<span class="label label-warning">1 en cours</span>-->
-              <!--<span class="label label-success">2 validées</span>-->
-              <!--<span class="label label-danger">1 rejetée</span>-->
-            <!--</div>-->
-          </a>
+        <div class="panel-heading">
+            <%= prog.label(i + 1) %>
+            <div class="pull-right">
+              <%= link_to 'Voir les détails', edit_user_program_path(prog), class: 'btn btn-labeled btn-default ml' %>
+            </div>
         </div>
-        <div id="<%= "collapse_#{i}" %>" role="tabpanel" class="panel-collapse collapse <%= 'in' if i == 0 %>">
-          <div class="panel-body">
-            <table class="table">
-              <tbody>
-              <% prog.program_items.each_with_index do |item, j| %>
-                <tr>
-                  <td>
-                    <strong><%= "Offre #{j + 1}" %></strong>
-                  </td>
-                  <td>
-                    <%= item.title %>
-                    <div class="pull-right"><span class="label label-<%= t "program_item.color.#{item.status}" %>"><%= t "program_item.status.#{item.status}" %></span></div>
-                  </td>
-                </tr>
-              <% end %>
-              </tbody>
-            </table>
-          </div>
-          <div class="panel-footer text-center">
-            <%= link_to 'Voir les détails', edit_user_program_path(prog), class: 'btn btn-default' %>
-          </div>
+        <div class="panel-body">
+          <table class="table">
+            <tbody>
+            <% prog.program_items.each do |item| %>
+              <tr>
+                <td>
+                  <i class="fa fa-2x <%= item_icon(item) %>"></i>
+                </td>
+                <td class="vam">
+                  <%= item.title %>
+                  <div class="pull-right">
+                    <span class="label label-<%= t "program_item.color.#{item.status}" %>"><%= t "program_item.status.#{item.status}" %></span>
+                    <%= link_to '<em class="fa icon-note"></em/>'.html_safe, edit_user_program_program_item_path(prog.id, item),
+                                class: 'btn btn-outline btn-sm btn-primary ml-lg' %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
         </div>
       </div>
       <% end %>

@@ -135,6 +135,11 @@ fr:
       pending: 'warning'
       validated: 'success'
       rejected: 'danger'
+    type:
+      visite: "Visite d'un site"
+      parcours: "Parcours"
+      animation: "Animation"
+      exposition: "Exposition"
   member:
     grandlyon: 'Grand Lyon'
     isere: 'Isère'

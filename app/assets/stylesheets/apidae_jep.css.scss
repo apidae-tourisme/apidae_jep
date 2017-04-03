@@ -1,9 +1,44 @@
+.pre {
+  white-space: pre-line;
+}
+
+.vam {
+  vertical-align: middle;
+}
+
+nav.topnavbar .navbar-header .brand-logo-collapsed {
+  padding: 14px 8px;
+}
+
+#user_navbar {
+  line-height: 60px;
+}
+
+#modal_window .modal-dialog > .modal-content {
+  overflow: hidden;
+}
+
 a.text-white:hover, a.text-white:focus {
   color: white;
 }
 
-.item_map {
-  height: 200px;
+form .help_button {
+  background-color: transparent;
+}
+
+form #item_map {
+  height: 400px;
+}
+
+#item_map .leaflet-marker-icon {
+  background-color: transparent;
+  border: none;
+  text-align: center;
+}
+
+#item_map .leaflet-marker-icon .fa-map-marker {
+  color: #e53075;
+  font-size: 32px;
 }
 
 form .mdy > label:after {
@@ -15,4 +50,31 @@ form .mdy > label:after {
 form .item_photos img {
   max-width: 100%;
   max-height: 160px;
+}
+
+#program_items picture.lateral-picture {
+  height: 160px;
+  line-height: 160px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  overflow: hidden;
+}
+
+#program_items h3 {
+  padding-right: 200px;
+}
+
+#program_items .item_actions {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+#program_items .item_actions .dropdown-menu {
+  right: 0;
+  left: auto;
+}
+
+#program_items .panel.widget {
+  overflow: visible;
 }

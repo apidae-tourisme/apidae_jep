@@ -2,7 +2,7 @@ class User::DashboardController < User::UserController
   before_action :set_user
 
   def index
-    @programs = @user.programs
+    @programs = @user.ordered_programs
   end
 
   private

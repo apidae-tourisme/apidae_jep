@@ -1,11 +1,26 @@
 <div class="aside-inner">
   <nav class="sidebar" data-sidebar-anyclick-close="">
     <ul class="nav">
-      <li class="<%= 'active' if controller?('dashboard') %>">
+      <li class="<%= 'active' if controller?('user/dashboard') %>">
         <a href="<%= url_for(controller: 'user/dashboard', action: 'index') %>" title="Tableau de bord">
           <em class="icon-speedometer"></em>
           <span>Tableau de bord</span>
         </a>
+      </li>
+      <li class="<%= 'active' if controller?('user/programs', 'user/program_items') %>">
+        <a href="#programs" title="Programmations" data-toggle="collapse" class="collapsed">
+          <em class="icon-calendar"></em>
+          <span>Programmations</span>
+        </a>
+        <ul id="programs" class="nav sidebar-subnav collapse">
+          <li class="sidebar-subnav-header">Programmations</li>
+          <% current_user.ordered_programs.each_with_index do |p, i| %>
+              <li>
+                <%= link_to "<span class='pre'>#{p.label(i + 1)}</span>".html_safe, edit_user_program_path(p),
+                            title: p.label(i + 1) %>
+              </li>
+          <% end %>
+        </ul>
       </li>
     </ul>
   </nav>

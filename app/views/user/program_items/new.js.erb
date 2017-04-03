@@ -1,3 +1,0 @@
-<% item_index = @program.program_items.count %>
-$("#program_items_forms").append("<%= j(render 'shared/forms/program_item', item: @item, i: item_index) %>");
-initMap('<%= "item_map_#{item_index}" %>', 7, 5);

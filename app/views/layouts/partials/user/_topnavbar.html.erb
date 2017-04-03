@@ -1,41 +1,17 @@
 <nav role="navigation" class="navbar topnavbar">
-   <div class="navbar-header">
-      <a href="#/" class="navbar-brand">
-         <div class="brand-logo">
-            <h3 class="mt-sm text-white">ApidaeJEP</h3>
-         </div>
-         <div class="brand-logo-collapsed">
-           <img src="<%= image_path('logo_apidae_mono.svg') %>" alt="logo apidae" />
-         </div>
-      </a>
-   </div>
-   <div class="nav-wrapper">
-      <ul class="nav navbar-nav">
-         <li>
-            <a href="#" data-trigger-resize="" data-toggle-state="aside-collapsed" class="hidden-xs">
-               <em class="fa fa-navicon"></em>
-            </a>
-            <a href="#" data-toggle-state="aside-toggled" data-no-persist="true" class="visible-xs sidebar-toggle">
-               <em class="fa fa-navicon"></em>
-            </a>
-         </li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-         <!--<li>-->
-            <!--<a href="#" data-search-open="">-->
-               <!--<em class="icon-magnifier"></em>-->
-            <!--</a>-->
-         <!--</li>-->
-        <li>
-          <%= link_to '<em class="icon-logout"></em>'.html_safe, destroy_user_session_path, method: :delete, title: 'Déconnexion' %>
-        </li>
-      </ul>
-   </div>
-   <!--<form role="search" action="search.html" class="navbar-form">-->
-      <!--<div class="form-group has-feedback">-->
-         <!--<input type="text" placeholder="Type and hit enter ..." class="form-control" />-->
-         <!--<div data-search-dismiss="" class="fa fa-times form-control-feedback"></div>-->
-      <!--</div>-->
-      <!--<button type="submit" class="hidden btn btn-default">Submit</button>-->
-   <!--</form>-->
+  <div class="navbar-header">
+    <a href="/" class="navbar-brand">
+      <div class="brand-logo-collapsed">
+        <img src="<%= image_path('logo_apidae_mono.svg') %>" alt="logo apidae"/>
+      </div>
+    </a>
+  </div>
+  <div id="user_navbar" class="nav-wrapper text-md text-center">
+    <span class="text-white">ApidaeJEP - Espace organisateur</span>
+    <ul class="nav navbar-nav navbar-right">
+      <li>
+        <%= link_to '<em class="icon-logout"></em>'.html_safe, destroy_user_session_path, method: :delete, title: 'Déconnexion' %>
+      </li>
+    </ul>
+  </div>
 </nav>

@@ -1,0 +1,4 @@
+$("#modal_window").find("#modal_title").html("Sélectionner la nouvelle programmation");
+$("#modal_window").find("#modal_body").html("<%= j(render 'edit_program_form') %>");
+$("#modal_window").modal();
+$("#modal_window").drags({handle: '.modal-header'});
