@@ -24,7 +24,7 @@
           <em class="icon-hourglass fa-2x"></em>
         </div>
         <div class="col-xs-8 pv-lg">
-          <div class="h1 m0 text-bold"><%= ProgramItem.validated.count %></div>
+          <div class="h1 m0 text-bold"><%= ProgramItem.pending.count %></div>
           <div class="text-uppercase">en validation</div>
         </div>
       </div>
@@ -75,7 +75,7 @@
             <tbody>
             <% prog.program_items.each do |item| %>
               <tr>
-                <td>
+                <td class="wd-xxs">
                   <i class="fa fa-2x <%= item_icon(item) %>"></i>
                 </td>
                 <td class="vam">

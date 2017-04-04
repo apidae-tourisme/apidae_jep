@@ -1,0 +1,31 @@
+<div id="edit_opening" class="modal-body">
+  <fieldset>
+    <div class="row">
+      <div class="col-sm-6 text-center text-md"><strong>Début</strong></div>
+      <div class="col-sm-6 text-center text-md"><strong>Fin</strong></div>
+    </div>
+  </fieldset>
+  <fieldset>
+    <div class="form-group">
+      <div id="edit_start_date" class="col-sm-6"><%= date_select_tag :starts_at, id: 'starts_at' %></div>
+      <div class="col-sm-6"><%= date_select_tag :ends_at, id: 'ends_at' %></div>
+    </div>
+  </fieldset><fieldset>
+  <div class="row">
+    <div class="col-sm-6 text-center text-md"><strong>Durée</strong></div>
+    <div class="col-sm-6 text-center text-md"><strong>Fréquence</strong></div>
+  </div>
+</fieldset>
+  <fieldset>
+    <div class="form-group">
+      <div class="col-sm-6"><%= time_select_tag :duration, id: 'duration' %></div>
+      <div class="col-sm-6"><%= time_select_tag :frequency, id: 'frequency' %></div>
+    </div>
+  </fieldset>
+</div>
+<div class="modal-footer text-right">
+  <%= link_to 'Annuler', '#', class: 'btn btn-inverse' %>
+  <%= link_to 'Valider', '#', class: 'btn btn-primary' %>
+</div>
+
+

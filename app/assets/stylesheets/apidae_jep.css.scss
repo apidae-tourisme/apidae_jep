@@ -6,6 +6,14 @@
   vertical-align: middle;
 }
 
+.text-std {
+  font-size: 20px;
+}
+
+.mauto {
+  margin: auto;
+}
+
 nav.topnavbar .navbar-header .brand-logo-collapsed {
   padding: 14px 8px;
 }
@@ -77,4 +85,8 @@ form .item_photos img {
 
 #program_items .panel.widget {
   overflow: visible;
+}
+
+#edit_opening #edit_start_date {
+  border-right: 1px dashed #3a3f51;
 }

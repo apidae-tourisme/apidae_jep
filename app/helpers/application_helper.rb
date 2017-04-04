@@ -6,6 +6,18 @@ module ApplicationHelper
   def action?(*action)
     action.include?(params[:action])
   end
+
+  def date_select_tag(method, html_options = {})
+    content_tag(:div, :class => 'input-group date datepicker') do
+      text_field('opening', method, {class: 'hidden'}.merge(html_options))
+    end
+  end
+
+  def time_select_tag(method, html_options = {})
+    content_tag(:div, :class => 'input-group date datetimepicker mauto') do
+      text_field('opening', method, {class: 'hidden'}.merge(html_options))
+    end
+  end
 end
 
 module ActionView

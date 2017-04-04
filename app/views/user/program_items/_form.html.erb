@@ -123,12 +123,12 @@
         </div>
       </fieldset>
       <fieldset class="item_openings">
-        <legend class="text-uppercase text-primary">Horaires / ouverture</legend>
+        <legend class="text-uppercase text-primary mb0">Horaires / ouverture</legend>
         <%= item_form.fields_for :item_openings do |opening| %>
             <%= render 'shared/forms/item_opening_fields', f: opening %>
         <% end %>
         <div class="links">
-          <%= link_to_add_association('Ajouter une ouverture', item_form, :item_openings, class: 'btn btn-primary',
+          <%= link_to_add_association('Ajouter une ouverture', item_form, :item_openings, class: 'btn btn-primary mt',
                                       partial: 'shared/forms/item_opening_fields',
                                       wrap_object: Proc.new { |opening| default_opening(opening) }) %>
         </div>
@@ -247,14 +247,15 @@
             return map;
         }
 
-        function initDatepickers() {
-            var datepickers = $(".datepicker");
+        function initDatepickers(wrapperElt) {
+            var datepickers = $(wrapperElt).find(".datepicker");
             datepickers.datetimepicker({
                 locale: 'fr',
                 minDate: '2017-09-16',
-                format: 'LLLL',
+                format: 'DD/MM/YYYY HH:mm',
                 allowInputToggle: true,
                 sideBySide: true,
+                inline: true,
                 icons: {
                     time: 'fa fa-clock-o',
                     date: 'fa fa-calendar',
@@ -271,13 +272,14 @@
                 $(this).find("th.picker-switch").removeAttr('data-action');
             });
 
-            var timepickers = $(".datetimepicker");
+            var timepickers = $(wrapperElt).find(".datetimepicker");
             timepickers.datetimepicker({
                 locale: 'fr',
                 minDate: '2017-09-16',
                 format: 'HH:mm',
                 allowInputToggle: true,
                 sideBySide: true,
+                inline: true,
                 icons: {
                     time: 'fa fa-clock-o',
                     date: 'fa fa-calendar',
@@ -302,8 +304,35 @@
             }
         });
 
+        function bindOpeningsActions() {
+            $(".item_openings").find(".nested-fields").each(function() {
+              var src = $(this);
+              var identifier = $(this).find("textarea").attr("id").split("program_item_item_openings_attributes_")[1].split("_")[0];
+              var newIdentifier = parseInt(identifier) + 1;
+
+              $(this).find("a.clone_opening").click(function() {
+                  $(src.clone().wrap('<p/>').parent().html().replace(new RegExp(identifier, 'g'), newIdentifier)).insertAfter(src);
+              });
+              $(this).find("a.edit_opening").click(function() {
+                  displayOpeningModal("program_item_item_openings_attributes_" + identifier);
+              })
+            });
+        }
+
+        function displayOpeningModal(identifier) {
+            $("#lg_modal").find("#lg_modal_title").html("Modifier la période d'ouverture");
+            $("#lg_modal").find("#lg_modal_body").html("<%= j(render 'edit_opening_form') %>");
+            $("#lg_modal").modal();
+            $("#lg_modal").drags({handle: '.modal-header'});
+            $("#starts_at").val(moment($("#" + identifier + "_starts_at").val()).format('DD/MM/YYYY HH:mm'));
+            $("#ends_at").val($("#" + identifier + "_ends_at").val());
+            $("#duration").val($("#" + identifier + "_duration").val());
+            $("#frequency").val($("#" + identifier + "_frequency").val());
+            initDatepickers("#lg_modal");
+        }
+
         $(function() {
-            initDatepickers();
+            bindOpeningsActions();
             $(".item_openings").on("cocoon:after-insert", function (e, opening) {
                 initDatepickers();
             });
@@ -313,6 +342,9 @@
             bindDragToLatLng(marker);
             <% end %>
             $(".chosen-select.no-max").chosen({width: '95%'});
+            $(".item_openings").on("cocoon:after-insert", function (e, elt) {
+                bindOpeningsActions();
+            });
         });
     </script>
 <% end %>
