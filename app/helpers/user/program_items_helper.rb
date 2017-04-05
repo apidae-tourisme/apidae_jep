@@ -17,4 +17,8 @@ module User::ProgramItemsHelper
         ["Maison, appartement, atelier de personnes célèbres"], ["Archives"]
     ]
   end
+
+  def accessibility_values
+    ['pmr_total', 'pmr_partiel', 'malentendant', 'malvoyant', 'non_accessible']
+  end
 end

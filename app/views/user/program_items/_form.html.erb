@@ -46,7 +46,7 @@
         <div class="form-group mt">
           <label class="col-sm-3 control-label">Point de rendez-vous</label>
           <div class="col-sm-9 p0">
-            <%= item_form.text_field :alt_place, class: 'form-control' %>
+            <%= item_form.text_field :alt_place, class: 'form-control', placeholder: 'Si différent du lieu' %>
           </div>
         </div>
         <div class="form-group mt-lg">
@@ -93,7 +93,7 @@
                                  'data-placeholder' => "Thèmes de l'offre" %>
           </div>
         </div>
-        <div class="form-group mt">
+        <div class="form-group mt-lg">
           <label class="col-sm-3 control-label">Caractéristiques</label>
           <div class="col-sm-9">
             <%= item_form.select :criteria, criteria, {}, multiple: 'multiple',
@@ -107,15 +107,19 @@
             <%= item_form.text_area :description, class: 'form-control', rows: 3 %>
           </div>
         </div>
-        <div class="form-group mt">
-          <label class="col-sm-3 control-label">Accessibilité</label>
+        <div class="form-group mt-lg">
+          <label class="col-sm-3 control-label mdy">Accessibilité</label>
           <div class="col-sm-9">
-            <%= item_form.select :accessibility, accessibility, {}, multiple: 'multiple',
-                                 class: 'form-control chosen-select no-max',
-                                 'data-placeholder' => "Critères d'accessibilité" %>
+            <% accessibility_values.each do |acc| %>
+                <label class="checkbox-inline c-checkbox ml0 mr-lg">
+                  <%= check_box_tag 'program_item[accessibility][]', acc,
+                      (@item.accessibility && @item.accessibility.include?(acc)) %>
+                  <span class="fa fa-check"></span><%= t "program_item.accessibility.#{acc}" %>
+                </label>
+            <% end %>
           </div>
         </div>
-        <div class="form-group mt">
+        <div class="form-group mt-lg">
           <label class="col-sm-3 control-label">Organisateurs associés</label>
           <div class="col-sm-9">
             <%= item_form.text_field :event_planners, class: 'form-control' %>
@@ -173,6 +177,27 @@
         <div class="links">
           <%= link_to_add_association('Ajouter une photo', item_form, :attached_files, class: 'btn btn-primary',
                                       partial: 'shared/forms/attached_file_fields') %>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend class="text-uppercase text-primary">Informations et renseignements</legend>
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Téléphone</label>
+          <div class="col-sm-9">
+            <%= item_form.text_field :telephone, class: 'form-control' %>
+          </div>
+        </div>
+        <div class="form-group mt-lg">
+          <label class="col-sm-3 control-label">Email</label>
+          <div class="col-sm-9">
+            <%= item_form.text_field :email, class: 'form-control' %>
+          </div>
+        </div>
+        <div class="form-group mt-lg">
+          <label class="col-sm-3 control-label">Site web</label>
+          <div class="col-sm-9">
+            <%= item_form.text_field :website, class: 'form-control', placeholder: 'http://' %>
+          </div>
         </div>
       </fieldset>
       <%= item_form.hidden_field :program_id %>
@@ -380,6 +405,15 @@
                     }
                 });
             }
+            $("#edit_opening_form").submit(function(evt) {
+                if($("#starts_at").val()) {
+                    $("#edit_opening_error").html("");
+                    return true;
+                } else {
+                    $("#edit_opening_error").html('<p class="text-center text-bold">Veuillez saisir une date de début</p>');
+                    return false;
+                }
+            })
         }
 
         $(function() {

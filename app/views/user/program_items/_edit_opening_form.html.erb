@@ -1,5 +1,7 @@
-<%= form_tag(opening_user_program_program_item_path(@program.id, @item), method: :patch, remote: true) do |f| %>
+<%= form_tag(opening_user_program_program_item_path(@program.id, @item), method: :patch, remote: true,
+             id: 'edit_opening_form') do |f| %>
     <div id="edit_opening" class="modal-body bg-gray-light ph-xl">
+      <div id="edit_opening_error"></div>
       <div class="row">
         <div class="col-sm-6 text-center text-md"><strong>Début*</strong></div>
         <div class="col-sm-6 text-center text-md"><strong>Fin</strong></div>
@@ -24,7 +26,7 @@
     </div>
     <%= hidden_field_tag 'prefix', '', id: 'prefix' %>
     <div class="modal-footer text-right">
-      <%= link_to 'Annuler', '#', class: 'btn btn-inverse', onclick: '$("#lg_modal .close").click(); return false' %>
+      <%= link_to 'Annuler', '#', class: 'btn btn-inverse', onclick: '$("#lg_modal .close").click(); return false;' %>
       <%= button_tag 'Valider', type: 'submit', class: 'btn btn-primary' %>
     </div>
 <% end %>

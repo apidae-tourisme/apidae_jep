@@ -140,6 +140,12 @@ fr:
       parcours: "Parcours"
       animation: "Animation"
       exposition: "Exposition"
+    accessibility:
+      pmr_total: "Personnes à mobilité réduite (accès total)"
+      pmr_partiel: "Personnes à mobilité réduite (accès partiel)"
+      malentendant: "Personnes malentendantes ou sourdes"
+      malvoyant: "Personnes malvoyantes ou non voyantes"
+      non_accessible: "Non accessible en fauteuil roulant"
   member:
     grandlyon: 'Grand Lyon'
     isere: 'Isère'

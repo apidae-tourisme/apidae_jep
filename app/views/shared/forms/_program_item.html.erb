@@ -14,22 +14,16 @@
       </div>
       <div class="col-xs-9 ph-xl">
         <div class="item_actions">
+          <%= link_to '<em class="icon-note"></em>'.html_safe,
+                        edit_user_program_program_item_path(@program.id, item), class: 'btn btn-primary', title: 'Modifier' %>
+          <%= link_to '<em class="icon-docs"></em>'.html_safe,
+                      duplicate_user_program_program_item_path(@program.id, item), method: :post,
+                      class: 'btn btn-primary', title: 'Dupliquer' %>
           <div class="btn-group">
-            <button type="button" class="text-capitalize btn btn-<%= t "program_item.color.#{item.status}" %>"><%= t "program_item.status.#{item.status}" %></button>
-            <button type="button" data-toggle="dropdown" class="btn dropdown-toggle btn-<%= t "program_item.color.#{item.status}" %>">
-              <span class="caret"></span>
-              <span class="sr-only">actions</span>
+            <button type="button" data-toggle="dropdown" class="btn dropdown-toggle btn-default">
+              <em class="fa icon-share-alt"></em>
             </button>
             <ul role="menu" class="dropdown-menu">
-              <li>
-                <%= link_to '<em class="icon-note pr-sm"></em>Modifier'.html_safe,
-                            edit_user_program_program_item_path(@program.id, item) %>
-              </li>
-              <li>
-                <%= link_to '<em class="icon-docs pr-sm"></em>Dupliquer'.html_safe,
-                            duplicate_user_program_program_item_path(@program.id, item), method: :post %>
-              </li>
-              <li class="divider"></li>
               <li>
                 <%= link_to '<em class="icon-arrow-up-circle pr-sm"></em>Déplacer vers le haut'.html_safe,
                             reorder_user_program_program_item_path(@program.id, item, direction: 'up'), method: :patch %>
