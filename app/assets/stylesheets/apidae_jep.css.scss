@@ -14,6 +14,10 @@
   margin: auto;
 }
 
+.w100 {
+  width: 100%;
+}
+
 nav.topnavbar .navbar-header .brand-logo-collapsed {
   padding: 14px 8px;
 }
@@ -87,6 +91,63 @@ form .item_photos img {
   overflow: visible;
 }
 
+// datetime picker custom styling
 #edit_opening #edit_start_date {
-  border-right: 1px dashed #3a3f51;
+  border-right: 15px solid #e4eaec;
+}
+
+#edit_opening #edit_end_date {
+  border-left: 15px solid #e4eaec;
+}
+
+#edit_opening .timepicker-picker table td.separator {
+  display: none;
+}
+
+#edit_opening ul .timepicker-picker table td.separator {
+  display: table-cell;
+  width: 15px;
+  opacity: 0;
+}
+
+#edit_opening .timepicker-picker table td:first-child:after {
+  display: inline-block;
+  margin-right: -30px;
+  width: 30px;
+  content: '\00A0';
+}
+
+#edit_opening .timepicker-picker table tr:nth-child(2) td:first-child:after {
+  content: 'h';
+  font-size: 1.6em;
+}
+
+#edit_opening .timepicker-picker .timepicker-hour,
+#edit_opening .timepicker-picker .timepicker-minute,
+#edit_opening .timepicker-picker .timepicker-second {
+  font-size: 1.6em;
+}
+
+#edit_opening .bootstrap-datetimepicker-widget a[data-action] {
+  padding: 0;
+}
+
+#edit_opening div.row > div.timepicker > div.timepicker-picker:before {
+  display: block;
+  content: 'Horaire';
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#edit_opening li.picker-switch td > a > span.icon-trash {
+  height: 2em;
+  line-height: 2em;
+}
+
+#edit_opening li.picker-switch td > a > span.icon-trash:after {
+  display: inline-block;
+  margin-left: 5px;
+  content: 'Supprimer';
+  font-family: "Source Sans Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 }

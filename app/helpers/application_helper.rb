@@ -8,13 +8,13 @@ module ApplicationHelper
   end
 
   def date_select_tag(method, html_options = {})
-    content_tag(:div, :class => 'input-group date datepicker') do
+    content_tag(:div, :class => 'input-group date datepicker w100') do
       text_field('opening', method, {class: 'hidden'}.merge(html_options))
     end
   end
 
   def time_select_tag(method, html_options = {})
-    content_tag(:div, :class => 'input-group date datetimepicker mauto') do
+    content_tag(:div, :class => 'input-group date datetimepicker mauto bg-white p') do
       text_field('opening', method, {class: 'hidden'}.merge(html_options))
     end
   end

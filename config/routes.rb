@@ -29,11 +29,12 @@ Rails.application.routes.draw do
     scope(path_names: {new: 'creer', edit: 'modifier'}) do
       resources :programs, path: 'programmations' do
         resources :program_items, path: 'offres' do
-          get 'confirm', on: :member
+          get 'confirm', on: :member, path: 'confirmation'
           post 'duplicate', on: :member, as: 'duplicate'
           patch 'reorder', on: :member, as: 'reorder'
           get 'select_program', on: :member, as: 'select'
           patch 'save_program', on: :member, as: 'save'
+          patch 'set_opening', on: :member, as: 'opening'
         end
       end
     end

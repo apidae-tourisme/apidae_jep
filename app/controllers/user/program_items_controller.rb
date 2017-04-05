@@ -65,6 +65,18 @@ class User::ProgramItemsController < User::UserController
     end
   end
 
+  def set_opening
+    unless params[:prefix].blank?
+      opening = opening_params
+      @prefix = params[:prefix]
+      @starts_at = opening[:starts_at]
+      @ends_at = opening[:ends_at]
+      @duration = parse_duration(opening[:duration])
+      @frequency = parse_duration(opening[:frequency])
+      @as_text = ItemOpening.new(opening_params.merge(duration: @duration, frequency: @frequency)).as_text
+    end
+  end
+
   private
 
   def item_params
@@ -77,5 +89,17 @@ class User::ProgramItemsController < User::UserController
 
   def set_program_item
     @item = ProgramItem.find(params[:id])
+  end
+
+  def opening_params
+    params.require(:opening).permit!
+  end
+
+  def parse_duration(duration)
+    if duration && duration.include?(':')
+      duration.split(':')[0].to_i * 3600 + duration.split(':')[1].to_i * 60
+    else
+      ''
+    end
   end
 end

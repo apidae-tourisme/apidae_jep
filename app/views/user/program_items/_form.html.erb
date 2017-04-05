@@ -129,8 +129,7 @@
         <% end %>
         <div class="links">
           <%= link_to_add_association('Ajouter une ouverture', item_form, :item_openings, class: 'btn btn-primary mt',
-                                      partial: 'shared/forms/item_opening_fields',
-                                      wrap_object: Proc.new { |opening| default_opening(opening) }) %>
+                                      partial: 'shared/forms/item_opening_fields') %>
         </div>
       </fieldset>
       <fieldset>
@@ -247,54 +246,83 @@
             return map;
         }
 
-        function initDatepickers(wrapperElt) {
-            var datepickers = $(wrapperElt).find(".datepicker");
-            datepickers.datetimepicker({
-                locale: 'fr',
-                minDate: '2017-09-16',
-                format: 'DD/MM/YYYY HH:mm',
-                allowInputToggle: true,
-                sideBySide: true,
-                inline: true,
-                icons: {
-                    time: 'fa fa-clock-o',
-                    date: 'fa fa-calendar',
-                    up: 'fa fa-chevron-up',
-                    down: 'fa fa-chevron-down',
-                    previous: 'fa fa-chevron-left',
-                    next: 'fa fa-chevron-right',
-                    today: 'fa fa-crosshairs',
-                    clear: 'fa fa-trash'
-                }
-            });
-            datepickers.on('dp.show dp.update', function () {
-                $(this).find("th.picker-switch").removeAttr('title');
-                $(this).find("th.picker-switch").removeAttr('data-action');
-            });
+        var pickerTooltips = {
+            today: "Aujourd'hui",
+            clear: "Supprimer",
+            close: "Fermer",
+            selectMonth: "Sélectionner un mois",
+            prevMonth: "Mois précédent",
+            nextMonth: "Mois suivant",
+            selectYear: "Sélectionner une année",
+            prevYear: "Année précédent",
+            nextYear: "Année suivant",
+            selectDecade: "Sélectionner une décennie",
+            prevDecade: "Décennie précédente",
+            nextDecade: "Décennie suivante",
+            prevCentury: "Siècle précédent",
+            nextCentury: 'Siècle suivant'
+        };
 
-            var timepickers = $(wrapperElt).find(".datetimepicker");
-            timepickers.datetimepicker({
+        function pickerIcons(clearClass) {
+            return {
+                time: 'fa fa-clock-o',
+                date: 'fa fa-calendar',
+                up: 'fa fa-chevron-up',
+                down: 'fa fa-chevron-down',
+                previous: 'fa fa-chevron-left',
+                next: 'fa fa-chevron-right',
+                today: 'fa fa-crosshairs',
+                clear: 'fa text-bold icon-trash clear_picker ' + clearClass
+            };
+        }
+
+        function displayAsEmpty(picker, date) {
+            if(!date) {
+                picker.find("span.timepicker-hour").text('--');
+                picker.find("span.timepicker-minute").text('--');
+            }
+        }
+
+        function initDateTimePicker(wrapperElt) {
+            var datepicker = $("#" + wrapperElt).find(".datepicker");
+            datepicker.datetimepicker({
                 locale: 'fr',
-                minDate: '2017-09-16',
-                format: 'HH:mm',
-                allowInputToggle: true,
+                viewDate: '2017-09-16',
+                defaultDate: false,
+                useCurrent: false,
+                format: 'YYYY-MM-DD HH:mm',
                 sideBySide: true,
                 inline: true,
-                icons: {
-                    time: 'fa fa-clock-o',
-                    date: 'fa fa-calendar',
-                    up: 'fa fa-chevron-up',
-                    down: 'fa fa-chevron-down',
-                    previous: 'fa fa-chevron-left',
-                    next: 'fa fa-chevron-right',
-                    today: 'fa fa-crosshairs',
-                    clear: 'fa fa-trash'
-                }
+                showClear: true,
+                toolbarPlacement: 'bottom',
+                icons: pickerIcons(wrapperElt),
+                tooltips: pickerTooltips
             });
-            timepickers.on('dp.show dp.update', function () {
-                $(this).find("th.picker-switch").removeAttr('title');
-                $(this).find("th.picker-switch").removeAttr('data-action');
+            datepicker.on('dp.change', function(evt) {
+                displayAsEmpty(datepicker, evt.date);
             });
+            displayAsEmpty(datepicker, datepicker.find("input.hidden").val());
+        }
+
+        function initTimePicker(wrapperElt) {
+            var timepicker = $("#" + wrapperElt).find(".datetimepicker");
+            timepicker.datetimepicker({
+                locale: 'fr',
+                viewDate: '2017-09-16',
+                defaultDate: false,
+                useCurrent: false,
+                format: 'HH:mm',
+                sideBySide: true,
+                inline: true,
+                showClear: true,
+                toolbarPlacement: 'bottom',
+                icons: pickerIcons(wrapperElt),
+                tooltips: pickerTooltips
+            });
+            timepicker.on('dp.change', function(evt) {
+                displayAsEmpty(timepicker, evt.date);
+            });
+            displayAsEmpty(timepicker, timepicker.find("input.hidden").val());
         }
 
         L.Marker = L.Marker.extend({
@@ -304,38 +332,58 @@
             }
         });
 
+        function parseTempIdentifier(elt) {
+          return elt.find("textarea").attr("id").split("program_item_item_openings_attributes_")[1].split("_")[0];
+        }
+
         function bindOpeningsActions() {
             $(".item_openings").find(".nested-fields").each(function() {
               var src = $(this);
-              var identifier = $(this).find("textarea").attr("id").split("program_item_item_openings_attributes_")[1].split("_")[0];
-              var newIdentifier = parseInt(identifier) + 1;
+              var identifier = parseTempIdentifier($(this));
+              var newIdentifier = new Date().getTime();
 
               $(this).find("a.clone_opening").click(function() {
-                  $(src.clone().wrap('<p/>').parent().html().replace(new RegExp(identifier, 'g'), newIdentifier)).insertAfter(src);
+                  var srcHtml = src.clone().wrap('<p/>').parent().html();
+                  var cloneHtml = srcHtml.replace(new RegExp('_' + identifier + '_', 'g'), '_' + newIdentifier + '_')
+                      .replace(new RegExp('\\[' + identifier + '\\]', 'g'), '[' + newIdentifier + ']');
+                  $(cloneHtml).insertAfter(src);
+                  bindOpeningsActions();
               });
               $(this).find("a.edit_opening").click(function() {
-                  displayOpeningModal("program_item_item_openings_attributes_" + identifier);
+                  displayOpeningModal(identifier);
               })
             });
         }
 
-        function displayOpeningModal(identifier) {
+        function displayOpeningModal(identifier, clearOnDismiss) {
+            var openingId = "program_item_item_openings_attributes_" + identifier;
             $("#lg_modal").find("#lg_modal_title").html("Modifier la période d'ouverture");
             $("#lg_modal").find("#lg_modal_body").html("<%= j(render 'edit_opening_form') %>");
             $("#lg_modal").modal();
             $("#lg_modal").drags({handle: '.modal-header'});
-            $("#starts_at").val(moment($("#" + identifier + "_starts_at").val()).format('DD/MM/YYYY HH:mm'));
-            $("#ends_at").val($("#" + identifier + "_ends_at").val());
-            $("#duration").val($("#" + identifier + "_duration").val());
-            $("#frequency").val($("#" + identifier + "_frequency").val());
-            initDatepickers("#lg_modal");
+            $("#starts_at").val($("#" + openingId + "_starts_at").val() ? moment($("#" + openingId + "_starts_at").val()).format('YYYY-MM-DD HH:mm') : '');
+            $("#ends_at").val($("#" + openingId + "_ends_at").val() ? moment($("#" + openingId + "_ends_at").val()).format('YYYY-MM-DD HH:mm') : '');
+            var duration = $("#" + openingId + "_duration").val();
+            $("#duration").val(duration ? moment(duration * 1000).utc().format('HH:mm') : '');
+            var frequency = $("#" + openingId + "_frequency").val();
+            $("#frequency").val(frequency ? moment(frequency * 1000).utc().format('HH:mm') : '');
+            $("#prefix").val(openingId);
+            initDateTimePicker("edit_start_date");
+            initDateTimePicker("edit_end_date");
+            initTimePicker("edit_duration");
+            initTimePicker("edit_frequency");
+            if(clearOnDismiss) {
+                $("#lg_modal").on('hide.bs.modal', function() {
+                    var startsAt = $("#" + $(this).find("#prefix").val() + "_starts_at");
+                    if(!startsAt.val()) {
+                        startsAt.parents("fieldset.nested-fields")[0].remove();
+                    }
+                });
+            }
         }
 
         $(function() {
             bindOpeningsActions();
-            $(".item_openings").on("cocoon:after-insert", function (e, opening) {
-                initDatepickers();
-            });
             var map = initMap('item_map', 8, 6);
             <% if @item.main_lat && @item.main_lng %>
             var marker = L.marker([<%= @item.main_lat %>, <%= @item.main_lng %>], {draggable: true}).addTo(map);
@@ -343,7 +391,9 @@
             <% end %>
             $(".chosen-select.no-max").chosen({width: '95%'});
             $(".item_openings").on("cocoon:after-insert", function (e, elt) {
+                var tmpIdentifier = parseTempIdentifier($(elt));
                 bindOpeningsActions();
+                displayOpeningModal(tmpIdentifier, true);
             });
         });
     </script>
