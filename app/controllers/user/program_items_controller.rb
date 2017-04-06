@@ -4,7 +4,7 @@ class User::ProgramItemsController < User::UserController
                                           :duplicate]
 
   def new
-    @item = ProgramItem.new(program_id: @program.id)
+    @item = ProgramItem.new(program_id: @program.id, item_type: ITEM_VISITE, free: true, booking: false)
   end
 
   def create
@@ -75,6 +75,10 @@ class User::ProgramItemsController < User::UserController
       @frequency = parse_duration(opening[:frequency])
       @as_text = ItemOpening.new(opening_params.merge(duration: @duration, frequency: @frequency)).as_text
     end
+  end
+
+  def update_form
+    @item_type = params[:item_type]
   end
 
   private

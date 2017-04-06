@@ -18,7 +18,34 @@ module User::ProgramItemsHelper
     ]
   end
 
-  def accessibility_values
-    ['pmr_total', 'pmr_partiel', 'malentendant', 'malvoyant', 'non_accessible']
+  def themes
+    THEMES[GRAND_LYON].collect { |t| [t, t.parameterize] }
+  end
+
+  def criteria(item_type, selected)
+    options = ''
+    crits = CRITERIA[GRAND_LYON][item_type]
+    if crits.is_a?(Hash)
+      crits.each_pair do |k, v|
+        options += generate_optgroup(k, v, selected)
+      end
+    else
+      options = generate_options(crits, selected)
+    end
+    options.html_safe
+  end
+
+  def accessibility
+    ACCESSIBILITY[GRAND_LYON]
+  end
+
+  def generate_optgroup(label, options, selected)
+    '<optgroup label="' + label + '">' + generate_options(options, selected) + '</optgroup>'
+  end
+
+  def generate_options(options, selected)
+    options.collect {
+        |opt| '<option value="' + opt.parameterize + '"' + (selected && selected.include?(opt.parameterize) ? ' selected' : '') + '>' + opt + '</option>'
+    }.join('')
   end
 end

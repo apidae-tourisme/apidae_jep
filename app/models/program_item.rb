@@ -19,9 +19,12 @@ class ProgramItem < ActiveRecord::Base
   store :location_data, accessors: [:main_place, :main_lat, :main_lng, :main_address, :main_town,
                                     :main_postal_code, :main_transports, :alt_place, :alt_lat, :alt_lng, :alt_address,
                                     :alt_town, :alt_postal_code, :alt_transports], coder: JSON
-  store :rates_data, accessors: [:free, :rates_desc, :booking, :booking_details], coder: JSON
+  store :rates_data, accessors: [:free, :rates_desc, :booking, :booking_details, :booking_telephone, :booking_email, :booking_website], coder: JSON
   store :opening_data, accessors: [:openings], coder: JSON
   store :contact_data, accessors: [:telephone, :email, :website], coder: JSON
+
+  validates_presence_of :item_type, :title, :main_place, :main_address, :main_town, :main_postal_code, :main_transports,
+                        :description, :accessibility, :item_openings
 
   def self.change_order(item, direction)
     ordered_items = item.program.ordered_items

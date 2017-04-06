@@ -1,13 +1,13 @@
-<%= form_for([:user, @program, @item], html: {multipart: true, class: 'form-horizontal'}) do |item_form| %>
+<%= form_for([:user, @program, @item], html: {multipart: true, id: 'program_item_form', class: 'form-horizontal'}) do |item_form| %>
   <div class="panel panel-default">
     <div class="panel-body">
       <p class="help-block">Les champs marqués d'un <strong>*</strong> sont obligatoires.</p>
       <fieldset>
         <legend class="text-uppercase text-primary">Informations générales</legend>
         <div class="form-group mdy">
-          <label class="col-sm-3 control-label mt-lg">Type de l'offre <%= help_button %></label>
+          <label class="col-sm-3 control-label mt-lg">Type de l'offre</label>
           <%= help_content("Texte d'aide pour le champ type de l'offre") %>
-          <div class="col-sm-9">
+          <div id="item_types" class="col-sm-9">
             <% ITEM_TYPES.each do |t| %>
                 <label class="radio-inline c-radio mh">
                   <%= item_form.radio_button :item_type, t %>
@@ -18,10 +18,10 @@
           </div>
         </div>
         <div class="form-group mt-lg mdy">
-          <label class="col-sm-3 control-label">Titre de l'offre <%= help_button %></label>
+          <label class="col-sm-3 control-label">Titre de l'offre</label>
           <%= help_content("Texte d'aide pour le champ titre de l'offre") %>
           <div class="col-sm-9">
-            <%= item_form.text_field :title, class: 'form-control', placeholder: "Titre de l'offre" %>
+            <%= item_form.text_field :title, class: 'form-control required', placeholder: "Titre de l'offre" %>
           </div>
         </div>
       </fieldset>
@@ -29,57 +29,69 @@
         <legend class="text-uppercase text-primary">Lieu / emplacement</legend>
         <div class="row">
           <div class="col-sm-6">
-        <div class="form-group mdy">
-          <label class="col-sm-3 control-label">Nom du lieu</label>
-          <div class="col-sm-9 p0">
-            <%= item_form.text_field :main_place, class: 'form-control' %>
+            <div class="form-group mdy">
+              <label class="col-sm-4 control-label">Nom du lieu</label>
+              <div class="col-sm-8 p0">
+                <%= item_form.text_field :main_place, class: 'form-control required', placeholder: 'Renseigner ou rechercher sur la carte' %>
+              </div>
+            </div>
+            <div class="form-group mt-lg mdy">
+              <label class="col-sm-4 control-label">Adresse</label>
+              <div class="col-sm-8 p0">
+                <%= item_form.text_field :main_address, class: 'form-control required' %>
+              </div>
+            </div>
+            <div class="form-group mt-lg mdy">
+              <label class="col-sm-4 control-label">Commune</label>
+              <div class="col-sm-8 p0">
+                <%= item_form.text_field :main_town, class: 'form-control required' %>
+              </div>
+            </div>
+            <div class="form-group mt-lg mdy">
+              <label class="col-sm-4 control-label">Code postal</label>
+              <div class="col-sm-8 p0">
+                <%= item_form.text_field :main_postal_code, class: 'form-control required' %>
+              </div>
+            </div>
+            <%= item_form.hidden_field :main_lat %>
+            <%= item_form.hidden_field :main_lng %>
+            <div class="form-group mt">
+              <label class="col-sm-4 control-label">Point de rendez-vous</label>
+              <div class="col-sm-8 p0">
+                <%= item_form.text_field :alt_place, class: 'form-control', placeholder: 'Si différent du lieu' %>
+              </div>
+            </div>
+            <div class="form-group mt-lg mdy">
+              <label class="col-sm-4 control-label">Accès en transports en commun et indications d'accès</label>
+              <div class="col-sm-8 p0">
+                <%= item_form.text_area :main_transports, class: 'form-control required', rows: 3 %>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div id="item_map"></div>
           </div>
         </div>
-        <div class="form-group mt mdy">
-          <label class="col-sm-3 control-label">Adresse</label>
-          <div class="col-sm-9 p0">
-            <%= item_form.text_field :main_address, class: 'form-control' %>
-          </div>
-        </div>
-        <%= item_form.hidden_field :main_lat %>
-        <%= item_form.hidden_field :main_lng %>
-        <div class="form-group mt">
-          <label class="col-sm-3 control-label">Point de rendez-vous</label>
-          <div class="col-sm-9 p0">
-            <%= item_form.text_field :alt_place, class: 'form-control', placeholder: 'Si différent du lieu' %>
-          </div>
-        </div>
-        <div class="form-group mt-lg">
-          <label class="col-sm-3 control-label">Accès en transports en commun</label>
-          <div class="col-sm-9 p0">
-            <%= item_form.text_area :main_transports, class: 'form-control', rows: 3 %>
-          </div>
-        </div>
-        <div class="form-group mt">
-          <label class="col-sm-3 control-label">Nature du lieu</label>
-          <div class="col-sm-9 p0">
+      </fieldset>
+      <fieldset>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Nature du lieu</label>
+          <div class="col-sm-4 p0">
             <%= item_form.select :building_types, building_types, {}, multiple: 'multiple',
                                  class: 'form-control chosen-select no-max',
                                  'data-placeholder' => "Types de lieu" %>
           </div>
-        </div>
-        <div class="form-group mt">
-          <label class="col-sm-3 control-label">Epoque</label>
-          <div class="col-sm-9 p0">
+          <label class="col-sm-2 control-label">Epoque</label>
+          <div class="col-sm-4 pl0">
             <%= item_form.select :building_ages, building_ages, {}, multiple: 'multiple',
                                  class: 'form-control chosen-select no-max',
                                  'data-placeholder' => "Epoques" %>
           </div>
         </div>
         <div class="form-group mt-lg">
-          <label class="col-sm-3 control-label">Description du lieu</label>
-          <div class="col-sm-9 p0">
+          <label class="col-sm-2 control-label">Description du lieu</label>
+          <div class="col-sm-10 pl0">
             <%= item_form.text_area :place_desc, class: 'form-control', rows: 3 %>
-          </div>
-        </div>
-          </div>
-          <div class="col-sm-6">
-            <div id="item_map"></div>
           </div>
         </div>
       </fieldset>
@@ -95,26 +107,25 @@
         </div>
         <div class="form-group mt-lg">
           <label class="col-sm-3 control-label">Caractéristiques</label>
-          <div class="col-sm-9">
-            <%= item_form.select :criteria, criteria, {}, multiple: 'multiple',
-                                 class: 'form-control chosen-select no-max',
-                                 'data-placeholder' => "Caractéristiques de l'offre" %>
+          <div id="item_caracs" class="col-sm-9">
+            <%= select_tag 'program_item[criteria][]', criteria(@item.item_type, @item.criteria), multiple: 'multiple',
+                           class: 'form-control chosen-select no-max', 'data-placeholder' => "Caractéristiques de l'offre" %>
           </div>
         </div>
-        <div class="form-group mt-lg">
+        <div class="form-group mt-lg mdy">
           <label class="col-sm-3 control-label">Description</label>
           <div class="col-sm-9">
-            <%= item_form.text_area :description, class: 'form-control', rows: 3 %>
+            <%= item_form.text_area :description, class: 'form-control required', rows: 3 %>
           </div>
         </div>
-        <div class="form-group mt-lg">
+        <div class="form-group mt-lg mdy">
           <label class="col-sm-3 control-label mdy">Accessibilité</label>
           <div class="col-sm-9">
-            <% accessibility_values.each do |acc| %>
+            <% accessibility.each do |acc| %>
                 <label class="checkbox-inline c-checkbox ml0 mr-lg">
-                  <%= check_box_tag 'program_item[accessibility][]', acc,
-                      (@item.accessibility && @item.accessibility.include?(acc)) %>
-                  <span class="fa fa-check"></span><%= t "program_item.accessibility.#{acc}" %>
+                  <%= check_box_tag 'program_item[accessibility][]', acc.parameterize,
+                      (@item.accessibility && @item.accessibility.include?(acc.parameterize)) %>
+                  <span class="fa fa-check"></span><%= acc %>
                 </label>
             <% end %>
           </div>
@@ -127,7 +138,7 @@
         </div>
       </fieldset>
       <fieldset class="item_openings">
-        <legend class="text-uppercase text-primary mb0">Horaires / ouverture</legend>
+        <legend class="text-uppercase text-primary mb0 openings">Horaires / ouverture</legend>
         <%= item_form.fields_for :item_openings do |opening| %>
             <%= render 'shared/forms/item_opening_fields', f: opening %>
         <% end %>
@@ -138,7 +149,7 @@
       </fieldset>
       <fieldset>
         <legend class="text-uppercase text-primary">Tarifs / réservations</legend>
-        <div class="form-group mdy">
+        <div id="free_toggle" class="form-group mdy">
           <div class="col-sm-12">
             <label class="radio-inline c-radio mh">
               <%= item_form.radio_button :free, true %>
@@ -148,12 +159,12 @@
               <span class="fa fa-circle"></span>Accès payant</label>
           </div>
         </div>
-        <div class="form-group mt">
+        <div class="form-group mt free_toggle">
           <div class="col-sm-12">
             <%= item_form.text_area :rates_desc, class: 'form-control', rows: 3, placeholder: 'Informations sur les tarifs' %>
           </div>
         </div>
-        <div class="form-group mt-xl">
+        <div id="booking_toggle" class="form-group mt-xl">
           <div class="col-sm-12">
             <label class="radio-inline c-radio mh">
               <%= item_form.radio_button :booking, false %>
@@ -163,9 +174,27 @@
               <span class="fa fa-circle"></span>Réservation</label>
           </div>
         </div>
-        <div class="form-group mt">
+        <div class="form-group mt booking_toggle">
           <div class="col-sm-12">
             <%= item_form.text_area :booking_details, class: 'form-control', rows: 3, placeholder: 'Informations sur la réservation' %>
+          </div>
+        </div>
+        <div class="form-group mt-lg booking_toggle">
+          <label class="col-sm-3 control-label">Téléphone (réservations)</label>
+          <div class="col-sm-9">
+            <%= item_form.text_field :booking_telephone, class: 'form-control' %>
+          </div>
+        </div>
+        <div class="form-group mt-lg booking_toggle">
+          <label class="col-sm-3 control-label">Email (réservations)</label>
+          <div class="col-sm-9">
+            <%= item_form.text_field :booking_email, class: 'form-control email' %>
+          </div>
+        </div>
+        <div class="form-group mt-lg booking_toggle">
+          <label class="col-sm-3 control-label">Site web (réservations)</label>
+          <div class="col-sm-9">
+            <%= item_form.text_field :booking_website, class: 'form-control url', placeholder: 'http://' %>
           </div>
         </div>
       </fieldset>
@@ -190,13 +219,13 @@
         <div class="form-group mt-lg">
           <label class="col-sm-3 control-label">Email</label>
           <div class="col-sm-9">
-            <%= item_form.text_field :email, class: 'form-control' %>
+            <%= item_form.text_field :email, class: 'form-control email' %>
           </div>
         </div>
         <div class="form-group mt-lg">
           <label class="col-sm-3 control-label">Site web</label>
           <div class="col-sm-9">
-            <%= item_form.text_field :website, class: 'form-control', placeholder: 'http://' %>
+            <%= item_form.text_field :website, class: 'form-control url', placeholder: 'http://' %>
           </div>
         </div>
       </fieldset>
@@ -216,7 +245,9 @@
     <script>
         function updateFormFields(feature) {
             $("#program_item_main_place").val(feature.properties.name);
-            $("#program_item_main_address").val([feature.properties.street, feature.properties.postalcode, feature.properties.locality].join(' '));
+            $("#program_item_main_address").val([feature.properties.housenumber, feature.properties.street].join(' '));
+            $("#program_item_main_postal_code").val(feature.properties.postalcode);
+            $("#program_item_main_town").val(feature.properties.locality);
             $("#program_item_main_lat").val(feature.geometry.coordinates[1]);
             $("#program_item_main_lng").val(feature.geometry.coordinates[0]);
         }
@@ -245,7 +276,7 @@
                 overrideBbox: true,
                 markers: {draggable: true},
                 textStrings: {
-                    INPUT_PLACEHOLDER: 'Rechercher sur la carte',
+                    INPUT_PLACEHOLDER: 'Rechercher un lieu ou une adresse',
                     INPUT_TITLE_ATTRIBUTE: 'Rechercher',
                     RESET_TITLE_ATTRIBUTE: 'Réinitialiser',
                     NO_RESULTS: 'Aucun résultat',
@@ -261,11 +292,16 @@
             var geocoder = L.control.geocoder('mapzen-NY5Wumy', geocoderOptions);
             geocoder.on('select', function (e) {
                 updateFormFields(e.feature);
+                var markers = [];
                 map.eachLayer(function(layer) {
                     if(layer.options.draggable) {
+                        markers.push(layer);
                         bindDragToLatLng(layer);
                     }
                 });
+                if(markers.length > 1) {
+                    map.removeLayer(markers[0]);
+                }
             });
             geocoder.addTo(map);
             return map;
@@ -416,6 +452,21 @@
             })
         }
 
+        function toggleDisplay(selector, val) {
+            var elt = $("#" + selector).find("input:checked");
+            if(elt.val() && elt.val() == val) {
+                $("." + selector).show();
+            } else {
+                $("." + selector).hide();
+            }
+        }
+
+        function setUpToggle(selector, val) {
+            $("#" + selector).find("input").change(function() {
+                toggleDisplay(selector, val);
+            });
+        }
+
         $(function() {
             bindOpeningsActions();
             var map = initMap('item_map', 8, 6);
@@ -429,6 +480,57 @@
                 bindOpeningsActions();
                 displayOpeningModal(tmpIdentifier, true);
             });
+            $("#item_types").find("input[type=radio]").change(function() {
+              $.ajax({
+                  url: '<%= update_form_user_program_program_items_path(@program.id) %>',
+                  method: 'GET',
+                  data: {
+                      item_type: $(this).val()
+                  }
+              });
+            });
+            setUpToggle("free_toggle", "false");
+            toggleDisplay("free_toggle", "false");
+            setUpToggle("booking_toggle", "true");
+            toggleDisplay("booking_toggle", "true");
+
+            $.extend($.validator.messages, {
+                required: "champ requis",
+                email: "adresse email invalide",
+                url: "adresse web invalide"
+            });
+
+            $.validator.addMethod('opening_presence', function(value, element) {
+                console.log('length : ' + $("fieldset.opening").length);
+                return $("fieldset.opening").length > 0;
+            }, "champ requis");
+
+            $("#program_item_form").validate({
+                errorPlacement: function errorPlacement(error, element) {
+                    if(element.is("input[type=checkbox]")) {
+                        element.before(error);
+                    } else if(element.is(':hidden')) {
+                        $("legend.openings").append(error);
+                    } else {
+                        element.after(error);
+                    }
+                },
+                ignore: [],
+                onfocusout: false,
+                errorElement: "small",
+                rules: {
+                    "program_item[accessibility][]": {required: true, minlength: 1},
+                    "program_item[status]": {opening_presence: true}
+                },
+                messages: {
+                    "program_item[accessibility][]": "champ requis",
+                    "program_item[status]": "veuillez saisir au moins une période d'ouverture"
+                },
+                invalidHandler: function(form, validator) {
+                    $.notify("Merci de renseigner tous les champs requis", "danger");
+                }
+            });
+
         });
     </script>
 <% end %>

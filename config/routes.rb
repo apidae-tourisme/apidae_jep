@@ -34,7 +34,8 @@ Rails.application.routes.draw do
           patch 'reorder', on: :member, as: 'reorder'
           get 'select_program', on: :member, as: 'select'
           patch 'save_program', on: :member, as: 'save'
-          patch 'set_opening', on: :member, as: 'opening'
+          patch 'set_opening', on: :collection, as: 'opening'
+          get 'update_form', on: :collection, as: 'update_form'
         end
       end
     end

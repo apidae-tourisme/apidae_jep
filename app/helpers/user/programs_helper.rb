@@ -4,18 +4,6 @@ module User::ProgramsHelper
     opening
   end
 
-  def themes
-    THEMES[GRAND_LYON].collect {|t| [t, t.parameterize]}
-  end
-
-  def criteria
-    CRITERIA[GRAND_LYON].values.flatten.uniq.collect {|t| [t, t.parameterize]}
-  end
-
-  def accessibility
-    ACCESSIBILITY[GRAND_LYON].collect {|t| [t, t.parameterize]}
-  end
-
   def item_icon(item_type)
     case item_type
       when ITEM_VISITE

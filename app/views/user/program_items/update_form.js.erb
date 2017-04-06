@@ -1,0 +1,3 @@
+$("#item_caracs").html("<%= j(render inline: select_tag('program_item[criteria][]', criteria(@item_type, []), multiple: 'multiple',
+                           class: 'form-control chosen-select no-max', 'data-placeholder' => "Caractéristiques de l'offre")) %>");
+$("#item_caracs").find(".chosen-select.no-max").chosen({width: '95%'});

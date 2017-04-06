@@ -39,7 +39,7 @@ form .help_button {
 }
 
 form #item_map {
-  height: 400px;
+  height: 360px;
 }
 
 #item_map .leaflet-marker-icon {
@@ -152,6 +152,44 @@ form .item_photos img {
   font-family: "Source Sans Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 }
 
+#program_item_form legend.openings {
+  position: relative;
+}
+
+#program_item_form legend.openings > small.error {
+  font-size: 14px;
+  right: 0;
+}
+
 #edit_opening_error {
   color: #d67c7d;
+}
+
+#program_item_form select.error + small + div.chosen-container > ul.chosen-choices,
+#program_item_form select.error + small + span.select2-container span.select2-selection,
+#program_item_form input.error, #program_item_form textarea.error {
+  background: rgb(251, 227, 228);
+  border: 1px solid #fbc2c4;
+  color: #8a1f11;
+}
+
+#program_item_form small.error {
+  position: absolute;
+  right: 25px;
+  margin: 0;
+  z-index: 999;
+  color: #f05050;
+  font-weight: bold;
+  top: 7px;
+  text-transform: none;
+}
+
+#program_item_form label.c-checkbox > small.error:first-child {
+  top: 25px;
+  right: auto;
+  left: -9em;
+}
+
+#program_item_form .datepicker small.error {
+  right: 55px;
 }
