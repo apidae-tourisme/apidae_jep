@@ -26,50 +26,55 @@
         </div>
       </fieldset>
       <fieldset>
-        <legend class="text-uppercase text-primary">Lieu / emplacement</legend>
+        <legend class="text-uppercase text-primary mb-sm">Lieu / emplacement</legend>
+        <p class="help-block" style="<%= 'display: none;' if @item.persisted? %>">
+          Veuillez saisir le nom ou l'adresse du lieu sur la carte pour commencer la saisie. Vous pouvez déplacer le marqueur sur la carte afin de préciser la localisation de l'offre.
+        </p>
         <div class="row">
           <div class="col-sm-6">
-            <div class="form-group mdy">
-              <label class="col-sm-4 control-label">Nom du lieu</label>
-              <div class="col-sm-8 p0">
-                <%= item_form.text_field :main_place, class: 'form-control required', placeholder: 'Renseigner ou rechercher sur la carte' %>
-              </div>
-            </div>
-            <div class="form-group mt-lg mdy">
-              <label class="col-sm-4 control-label">Adresse</label>
-              <div class="col-sm-8 p0">
-                <%= item_form.text_field :main_address, class: 'form-control required' %>
-              </div>
-            </div>
-            <div class="form-group mt-lg mdy">
-              <label class="col-sm-4 control-label">Commune</label>
-              <div class="col-sm-8 p0">
-                <%= item_form.text_field :main_town, class: 'form-control required' %>
-              </div>
-            </div>
-            <div class="form-group mt-lg mdy">
-              <label class="col-sm-4 control-label">Code postal</label>
-              <div class="col-sm-8 p0">
-                <%= item_form.text_field :main_postal_code, class: 'form-control required' %>
-              </div>
-            </div>
-            <%= item_form.hidden_field :main_lat %>
-            <%= item_form.hidden_field :main_lng %>
-            <div class="form-group mt">
-              <label class="col-sm-4 control-label">Point de rendez-vous</label>
-              <div class="col-sm-8 p0">
-                <%= item_form.text_field :alt_place, class: 'form-control', placeholder: 'Si différent du lieu' %>
-              </div>
-            </div>
-            <div class="form-group mt-lg mdy">
-              <label class="col-sm-4 control-label">Accès en transports en commun et indications d'accès</label>
-              <div class="col-sm-8 p0">
-                <%= item_form.text_area :main_transports, class: 'form-control required', rows: 3 %>
-              </div>
-            </div>
+            <div id="item_map"></div>
           </div>
           <div class="col-sm-6">
-            <div id="item_map"></div>
+            <div id="map_fields" style="<%= 'display: none;' unless @item.persisted? %>">
+              <div class="form-group mdy">
+                <label class="col-sm-4 control-label p0">Nom du lieu</label>
+                <div class="col-sm-8">
+                  <%= item_form.text_field :main_place, class: 'form-control required' %>
+                </div>
+              </div>
+              <div class="form-group mt-lg mdy">
+                <label class="col-sm-4 control-label p0">Adresse</label>
+                <div class="col-sm-8">
+                  <%= item_form.text_field :main_address, class: 'form-control required' %>
+                </div>
+              </div>
+              <div class="form-group mt-lg mdy">
+                <label class="col-sm-4 control-label p0">Commune</label>
+                <div class="col-sm-8">
+                  <%= item_form.text_field :main_town, class: 'form-control required' %>
+                </div>
+              </div>
+              <div class="form-group mt-lg mdy">
+                <label class="col-sm-4 control-label p0">Code postal</label>
+                <div class="col-sm-8">
+                  <%= item_form.text_field :main_postal_code, class: 'form-control required' %>
+                </div>
+              </div>
+              <%= item_form.hidden_field :main_lat %>
+              <%= item_form.hidden_field :main_lng %>
+              <div class="form-group mt">
+                <label class="col-sm-4 control-label p0">Point de rendez-vous</label>
+                <div class="col-sm-8">
+                  <%= item_form.text_field :alt_place, class: 'form-control', placeholder: 'Si différent du lieu' %>
+                </div>
+              </div>
+              <div class="form-group mt-lg mdy">
+                <label class="col-sm-4 control-label p0">Accès en transports en commun et indications d'accès</label>
+                <div class="col-sm-8">
+                  <%= item_form.text_area :main_transports, class: 'form-control required', rows: 4 %>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </fieldset>
@@ -274,9 +279,10 @@
                 position: 'topleft',
                 expanded: true,
                 overrideBbox: true,
+                fullWidth: false,
                 markers: {draggable: true},
                 textStrings: {
-                    INPUT_PLACEHOLDER: 'Rechercher un lieu ou une adresse',
+                    INPUT_PLACEHOLDER: "Saisir le nom du lieu ou son adresse",
                     INPUT_TITLE_ATTRIBUTE: 'Rechercher',
                     RESET_TITLE_ATTRIBUTE: 'Réinitialiser',
                     NO_RESULTS: 'Aucun résultat',
@@ -290,6 +296,16 @@
                 }
             };
             var geocoder = L.control.geocoder('mapzen-NY5Wumy', geocoderOptions);
+
+            function toggleMapFields(newPlace) {
+                $("#map_fields").show();
+                if(newPlace) {
+                  updateFormFields({properties:{}, geometry:{coordinates:[]}});
+                  geocoder.reset();
+                  geocoder.blur();
+                }
+            }
+
             geocoder.on('select', function (e) {
                 updateFormFields(e.feature);
                 var markers = [];
@@ -302,6 +318,21 @@
                 if(markers.length > 1) {
                     map.removeLayer(markers[0]);
                 }
+                toggleMapFields(false);
+            });
+            geocoder.on('results', function (e) {
+              if(e.results.features) {
+                  if (e.results.features.length == 0) {
+                      $("#item_map").find(".leaflet-pelias-message")
+                          .html('<em class="pr text-sm">Aucun résultat pour cette recherche.</em><button id="add_new_place" class="btn btn-labeled btn-default btn-sm"><i class="fa fa-plus pr-sm"></i>Ajouter un lieu</button>');
+                  } else {
+                      $("#item_map").find(".leaflet-pelias-results > .leaflet-pelias-list")
+                          .before('<div class="leaflet-pelias-message"><em class="pr text-sm">Le lieu ne figure pas dans la liste ?</em><button id="add_new_place" class="btn btn-labeled btn-default btn-sm"><i class="fa fa-plus pr-sm"></i>Ajouter un lieu</button></div>');
+                  }
+                  $("#add_new_place").click(function () {
+                      toggleMapFields(true);
+                  });
+              }
             });
             geocoder.addTo(map);
             return map;

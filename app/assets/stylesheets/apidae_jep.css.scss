@@ -53,6 +53,16 @@ form #item_map {
   font-size: 32px;
 }
 
+#item_map .leaflet-pelias-control.leaflet-pelias-expanded {
+  width: 360px;
+}
+
+#item_map .leaflet-pelias-results .leaflet-pelias-message {
+  padding: 4px 10px 0 10px;
+  color: #909293;
+}
+
+
 form .mdy > label:after {
   display: inline;
   content: " * ";
@@ -192,4 +202,8 @@ form .item_photos img {
 
 #program_item_form .datepicker small.error {
   right: 55px;
+}
+
+#program_item_form .chosen-choices li.search-field input[type="text"] {
+  font-family: inherit;
 }
