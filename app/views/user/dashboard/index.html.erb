@@ -1,8 +1,22 @@
-<div class="pull-right">
-  <%= link_to '<span class="btn-label"><i class="fa fa-plus"></i></span>Nouvelle programmation'.html_safe,
-              new_user_program_path, class: 'btn btn-info btn-labeled' %>
-</div>
 <h3>Tableau de bord</h3>
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h4 class="m0">Bienvenue sur ApidaeJEP !</h4>
+  </div>
+  <div class="panel-body">
+    <p class="mb0">
+      Inscrivez ici vos évènements organisés à l'occasion des Journées Européennes du Patrimoine (JEP) dans le territoire
+      de la Métropole de Lyon ou dans le département de l'Isère.
+    </p>
+    <p class="text-right text-bold">
+      Votre équipe Grand Lyon / Isère
+    </p>
+    <p class="text-right mb0">
+      <%= link_to '<span class="btn-label"><i class="fa fa-phone"></i></span>Téléphone'.html_safe, '#', class: 'btn btn-info btn-labeled' %>&nbsp;
+      <%= mail_to 'email@contact', '<span class="btn-label"><i class="fa fa-envelope"></i></span>email@contact'.html_safe, class: 'btn btn-info btn-labeled' %>
+    </p>
+  </div>
+</div>
 <div class="row">
   <div class="col-md-3 pr-sm">
     <div class="panel widget bg-inverse">
@@ -56,10 +70,20 @@
       </div>
     </div>
   </div>
+</div>
 
+<div class="pt-xl pb">
+  <div class="pull-right">
+    <%= link_to '<span class="btn-label"><i class="fa fa-plus"></i></span>Nouvelle programmation'.html_safe,
+                new_user_program_path, class: 'btn btn-info btn-labeled' %>
+  </div>
+  <h3 class="mt0">Mes programmations</h3>
+  <% unless @programs.any? %>
+    <p>Aucune programmation saisie pour le moment.</p>
+  <% end %>
+</div>
 
-  <h3 class="ph pt-xl">Mes programmations</h3>
-
+<div class="row">
   <div class="col-xs-12">
   <% if @programs.any? %>
       <% @programs.each_with_index do |prog, i| %>

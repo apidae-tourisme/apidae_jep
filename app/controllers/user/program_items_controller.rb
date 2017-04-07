@@ -58,6 +58,9 @@ class User::ProgramItemsController < User::UserController
     @new_item = @item.dup
     @new_item.external_id = nil
     @new_item.status = ProgramItem::STATUS_DRAFT
+    @item.item_openings.each do |o|
+      @new_item.item_openings << o
+    end
     if @new_item.save && @new_item.update(reference: @new_item.id, rev: 1)
       redirect_to edit_user_program_url(@program), notice: "L'offre a bien été dupliquée."
     else

@@ -9,6 +9,18 @@
         </div>
       </fieldset>
   <% end %>
+  <% if @program.persisted? %>
+  <div class="pt-lg pb">
+    <div class="pull-right">
+      <%= link_to '<span class="btn-label"><i class="fa fa-plus"></i></span>Nouvelle offre'.html_safe,
+                  new_user_program_program_item_path(@program.id), class: 'btn btn-primary btn-labeled' %>
+    </div>
+    <h3 class="mt0">Mes offres</h3>
+    <% unless @program.program_items.any? %>
+        <p>Aucune offre saisie pour le moment.</p>
+    <% end %>
+  </div>
+  <% end %>
 
   <div id="program_items" class="row">
     <% @program.ordered_items.each_with_index do |item, i| %>

@@ -50,4 +50,9 @@ class ItemOpeningTest < ActiveSupport::TestCase
     assert_equal 'Mercredi 5 Avril 2017, toutes les 10 minutes à partir de 10:00', opening_hour.as_text
   end
 
+  test 'description with start date and duration' do
+    opening_hour = ItemOpening.new(starts_at: DateTime.new(2017, 4, 5, 10, 0, 0), duration: 1.hour)
+    assert_equal 'Mercredi 5 Avril 2017 à 10:00 - Durée : 1 heure', opening_hour.as_text
+  end
+
 end
