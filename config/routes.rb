@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
 
+  namespace :user do
+  get 'account/edit'
+  end
+
+  namespace :user do
+  get 'account/update'
+  end
+
   devise_for :users,
              path: 'saisie', path_names: {sign_in: 'connexion', sign_out: 'deconnexion',
                                              password: 'reinitialiser', confirmation: 'verification',
@@ -37,6 +45,9 @@ Rails.application.routes.draw do
           patch 'set_opening', on: :collection, as: 'opening'
           get 'update_form', on: :collection, as: 'update_form'
         end
+      end
+      resource :user, controller: 'account', path: 'compte', as: 'account', only: [:edit, :update] do
+        get 'search_entity', on: :collection, as: 'search_entity'
       end
     end
   end

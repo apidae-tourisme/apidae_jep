@@ -1,0 +1,12 @@
+<div class="content-heading">Paramétrage du compte</div>
+<% unless @user.legal_entity_id %>
+<div class="panel panel-info">
+  <div class="panel-body">
+    <p class="mb0">
+      Avant de commencer votre saisie, veuillez compléter les informations concernant votre compte et votre structure
+      organisatrice ci-dessous.
+    </p>
+  </div>
+</div>
+<% end %>
+<%= render 'form' %>

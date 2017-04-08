@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   belongs_to :legal_entity
+  accepts_nested_attributes_for :legal_entity
   has_and_belongs_to_many :programs
 
   devise :database_authenticatable, :registerable, :timeoutable, :rememberable,

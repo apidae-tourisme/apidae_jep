@@ -177,13 +177,14 @@ form .item_photos img {
 
 #program_item_form select.error + small + div.chosen-container > ul.chosen-choices,
 #program_item_form select.error + small + span.select2-container span.select2-selection,
-#program_item_form input.error, #program_item_form textarea.error {
+#program_item_form input.error, #program_item_form textarea.error, #user_account_form input.error {
   background: rgb(251, 227, 228);
   border: 1px solid #fbc2c4;
   color: #8a1f11;
 }
 
-#program_item_form small.error {
+#program_item_form small.error,
+#user_account_form small.error {
   position: absolute;
   right: 25px;
   margin: 0;
@@ -206,4 +207,35 @@ form .item_photos img {
 
 #program_item_form .chosen-choices li.search-field input[type="text"] {
   font-family: inherit;
+}
+
+#user_account_form .select2.select2-container .select2-selection--single {
+  height: 36px;
+}
+
+#user_account_form .select2 .select2-selection__arrow {
+  display: none;
+}
+
+#user_account_form .select2 .select2-selection__rendered {
+  padding-left: 32px;
+  padding-right: 8px;
+  line-height: 34px;
+}
+
+#user_account_form .select2 .select2-selection__rendered::after {
+  content: "\f002";
+  font-family: 'FontAwesome';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #656565;
+  font-size: 18px;
+  line-height: 34px;
+  padding-left: 8px;
+}
+
+#entity_form {
+  min-height: 240px;
 }

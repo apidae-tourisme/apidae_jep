@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170405161359) do
+ActiveRecord::Schema.define(version: 20170408181652) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "unaccent"
 
   create_table "attached_files", force: :cascade do |t|
     t.integer  "program_item_id"
@@ -49,9 +50,10 @@ ActiveRecord::Schema.define(version: 20170405161359) do
     t.string   "phone"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "external_id"
   end
 
-  add_index "legal_entities", ["name"], name: "index_legal_entities_on_name", unique: true, using: :btree
+  add_index "legal_entities", ["name"], name: "index_legal_entities_on_name", using: :btree
   add_index "legal_entities", ["postal_code"], name: "index_legal_entities_on_postal_code", using: :btree
   add_index "legal_entities", ["town"], name: "index_legal_entities_on_town", using: :btree
 
@@ -114,6 +116,20 @@ ActiveRecord::Schema.define(version: 20170405161359) do
     t.integer "program_id"
     t.integer "user_id"
   end
+
+  create_table "towns", force: :cascade do |t|
+    t.string   "name"
+    t.string   "postal_code"
+    t.string   "insee_code"
+    t.string   "country"
+    t.string   "territory"
+    t.integer  "external_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "towns", ["name"], name: "index_towns_on_name", using: :btree
+  add_index "towns", ["postal_code"], name: "index_towns_on_postal_code", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

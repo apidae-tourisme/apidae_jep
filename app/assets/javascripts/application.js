@@ -10,5 +10,8 @@
 //--- Chosen
 //= require lib/chosen.jquery
 //= require apidae_jep
+//--- Select2
+//= require select2/dist/js/select2
+//= require select2/dist/js/i18n/fr
 //---- jQuery validate
 //= require jquery-validation/dist/jquery.validate

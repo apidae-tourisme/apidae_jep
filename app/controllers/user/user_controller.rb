@@ -6,7 +6,7 @@ class User::UserController < ApplicationController
 
   def check_entity
     if current_user && current_user.legal_entity_id.nil?
-      # redirect_to
+      redirect_to edit_user_account_path(current_user)
     end
   end
 end

@@ -307,6 +307,7 @@
             }
 
             geocoder.on('select', function (e) {
+                debugger;
                 updateFormFields(e.feature);
                 var markers = [];
                 map.eachLayer(function(layer) {
