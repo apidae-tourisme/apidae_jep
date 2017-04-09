@@ -1,6 +1,8 @@
 require 'json'
 
 class Town < ActiveRecord::Base
+  has_many :legal_entities
+
   def self.matching(pattern)
     Town.where("trim(unaccent(replace(name, '-', ' '))) ILIKE trim(unaccent(replace(?, '-', ' '))) OR trim(postal_code) ILIKE trim(?)", "%#{pattern}%", "%#{pattern}%")
   end
@@ -14,5 +16,9 @@ class Town < ActiveRecord::Base
                    country: 'fr', external_id: town_data[:id])
     end
     result
+  end
+
+  def label
+    "#{name} (#{postal_code})"
   end
 end

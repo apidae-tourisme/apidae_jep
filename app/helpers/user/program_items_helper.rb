@@ -19,12 +19,12 @@ module User::ProgramItemsHelper
   end
 
   def themes
-    THEMES[GRAND_LYON].collect { |t| [t, t.parameterize] }
+    THEMES[current_user.territory].collect { |t| [t, t.parameterize] }
   end
 
   def criteria(item_type, selected)
     options = ''
-    crits = CRITERIA[GRAND_LYON][item_type]
+    crits = CRITERIA[current_user.territory][item_type]
     if crits.is_a?(Hash)
       crits.each_pair do |k, v|
         options += generate_optgroup(k, v, selected)
@@ -36,7 +36,7 @@ module User::ProgramItemsHelper
   end
 
   def accessibility
-    ACCESSIBILITY[GRAND_LYON]
+    ACCESSIBILITY[current_user.territory]
   end
 
   def generate_optgroup(label, options, selected)

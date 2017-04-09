@@ -10,7 +10,7 @@ ITEM_TYPES = [ITEM_VISITE, ITEM_PARCOURS, ITEM_ANIMATION, ITEM_EXPOSITION]
 
 THEMES = {
     GRAND_LYON => ["Thématique 2017", "La Métropole au fil de l'eau", "Nouveauté", "En famille", "Jeunes (15-25 ans)", "Egalité"],
-    ISERE => []
+    ISERE => ["Thématique 2017", "Famille", "Réservé aux enfants", "Antiquité", "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature"]
 }
 
 CRITERIA = {
@@ -23,12 +23,23 @@ CRITERIA = {
           "Savoirs-faire" => ["Démonstration", "Dégustations"],
           "Animation participative" => ["Jeux", "Atelier"]
       },
-      ITEM_EXPOSITION => ["Exposition", "Visite guidée", "Visite libre"]
+      ITEM_EXPOSITION => ["Visite guidée", "Visite libre"]
+    },
+    ISERE => {
+        ITEM_VISITE => ["Visite guidée", "Visite libre"],
+        ITEM_PARCOURS => ["Visite guidée", "Visite libre"],
+        ITEM_ANIMATION => ["Concert", "Conférence / Débat", "Danse", "Dégustation", "Démonstration", "Goûter",
+                           "Atelier", "Jeu de piste / Chasse au trésor", "Marché", "Balade contée", "Cinéma", "Conte",
+                           "Dessin", "Loisirs créatifs", "Peinture", "Photographie"],
+        ITEM_EXPOSITION => ["Visite guidée", "Visite libre"]
     }
 }
 
 ACCESSIBILITY = {
     GRAND_LYON => ["Personnes à mobilité réduite (accès total)", "Personnes à mobilité réduite (accès partiel)",
+                   "Personnes malentendantes ou sourdes", "Personnes malvoyantes ou non voyantes",
+                   "Non accessible en fauteuil roulant"],
+    ISERE => ["Personnes à mobilité réduite (accès total)", "Personnes à mobilité réduite (accès partiel)",
                    "Personnes malentendantes ou sourdes", "Personnes malvoyantes ou non voyantes",
                    "Non accessible en fauteuil roulant"]
 }

@@ -25,7 +25,14 @@ class User::AccountController < User::UserController
 
   def search_entity
     if params[:pattern]
-      @entities = LegalEntity.matching(params[:pattern]).where('external_id IS NOT NULL')
+      @entities = LegalEntity.matching(params[:pattern]).includes(:town).where('external_id IS NOT NULL')
+    end
+  end
+
+  def towns
+    @towns = []
+    unless params[:pattern].blank?
+      @towns = Town.matching(URI.decode(params[:pattern]))
     end
   end
 

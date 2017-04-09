@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170408181652) do
+ActiveRecord::Schema.define(version: 20170409092954) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,18 +44,15 @@ ActiveRecord::Schema.define(version: 20170408181652) do
     t.string   "name"
     t.string   "email"
     t.text     "address"
-    t.string   "postal_code"
-    t.string   "town"
     t.string   "website"
     t.string   "phone"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.integer  "external_id"
+    t.string   "town_insee_code"
   end
 
   add_index "legal_entities", ["name"], name: "index_legal_entities_on_name", using: :btree
-  add_index "legal_entities", ["postal_code"], name: "index_legal_entities_on_postal_code", using: :btree
-  add_index "legal_entities", ["town"], name: "index_legal_entities_on_town", using: :btree
 
   create_table "moderators", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -128,6 +125,7 @@ ActiveRecord::Schema.define(version: 20170408181652) do
     t.datetime "updated_at",  null: false
   end
 
+  add_index "towns", ["insee_code"], name: "index_towns_on_insee_code", unique: true, using: :btree
   add_index "towns", ["name"], name: "index_towns_on_name", using: :btree
   add_index "towns", ["postal_code"], name: "index_towns_on_postal_code", using: :btree
 

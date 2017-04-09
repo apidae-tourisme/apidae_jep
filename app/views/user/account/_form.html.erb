@@ -1,5 +1,5 @@
 <%= form_for(@user, url: user_account_path(@user),
-             html: {id: 'user_account_form', class: 'form-horizontal'}) do |user_form| %>
+             html: {id: 'user_account_form', class: 'form-horizontal mb-xl pb-xl'}) do |user_form| %>
     <div class="panel panel-default">
       <div class="panel-body">
         <p class="help-block">Les champs marqués d'un <strong>*</strong> sont obligatoires.</p>
@@ -34,52 +34,53 @@
             Veuillez indiquer le nom de votre structure dans le champ de recherche ci-dessous. Vous pourrez ensuite
             modifier ses caractéristiques si nécessaire.
           </p>
-          <div id="entity_form" class="row">
-            <div class="col-sm-6">
-              <select id="search_entity" class="form-control"></select>
+          <div id="entity_form" class="form-group-lg">
+              <select id="search_entity" class="form-control col-sm-6"></select>
               <div id="add_new_entity" class="pt">
                 <em class="pr text-sm">La structure ne figure pas dans la liste ?</em>
                 <a class="btn btn-labeled btn-default btn-sm">
                   <i class="fa fa-plus pr-sm"></i>Ajouter une structure
                 </a>
               </div>
-            </div>
-            <div id="entity_form_fields" class="col-sm-6" style="<%= 'display: none;' unless @user.legal_entity_id %>">
-              <%= user_form.fields_for :legal_entity do |entity_form| %>
-                  <div class="form-group mdy">
-                    <label class="col-sm-4 control-label">Nom</label>
-                    <div class="col-sm-8">
-                      <%= entity_form.text_field :name, class: 'form-control required' %>
-                    </div>
-                  </div>
-                  <div class="form-group mt-lg mdy">
-                    <label class="col-sm-4 control-label">Adresse</label>
-                    <div class="col-sm-8">
-                      <%= entity_form.text_field :adresse1, class: 'form-control required' %>
-                    </div>
-                  </div>
-                  <div class="form-group mt-lg">
-                    <label class="col-sm-4 control-label">Téléphone</label>
-                    <div class="col-sm-8">
-                      <%= entity_form.text_field :phone, class: 'form-control' %>
-                    </div>
-                  </div>
-                  <div class="form-group mt-lg mdy">
-                    <label class="col-sm-4 control-label">Email</label>
-                    <div class="col-sm-8">
-                      <%= entity_form.text_field :email, class: 'form-control required email' %>
-                    </div>
-                  </div>
-                  <div class="form-group mt-lg">
-                    <label class="col-sm-4 control-label">Site web</label>
-                    <div class="col-sm-8">
-                      <%= entity_form.text_field :website, class: 'form-control url' %>
-                    </div>
-                  </div>
-                  <%= entity_form.hidden_field :id %>
-              <% end %>
-            </div>
           </div>
+        </fieldset>
+        <fieldset id="entity_form_fields" style="<%= 'display: none;' unless @user.legal_entity_id %>">
+          <%= user_form.fields_for :legal_entity do |entity_form| %>
+              <div class="form-group mdy">
+                <label class="col-sm-2 control-label">Nom</label>
+                <div class="col-sm-10">
+                  <%= entity_form.text_field :name, class: 'form-control required' %>
+                </div>
+              </div>
+              <div class="form-group mt-lg mdy">
+                <label class="col-sm-2 control-label">Adresse</label>
+                <div class="col-sm-4">
+                  <%= entity_form.text_field :adresse1, class: 'form-control required' %>
+                </div>
+                <label class="col-sm-2 control-label">Commune</label>
+                <div class="col-sm-4">
+                  <%= entity_form.select :town_insee_code, [], {}, class: 'form-control select_town required',
+                                         'data-placeholder' => 'Choix de la ville' %>
+                </div>
+              </div>
+              <div class="form-group mt-lg">
+                <label class="col-sm-2 control-label">Téléphone</label>
+                <div class="col-sm-4">
+                  <%= entity_form.text_field :phone, class: 'form-control' %>
+                </div>
+                <label class="col-sm-2 control-label">Email</label>
+                <div class="col-sm-4">
+                  <%= entity_form.text_field :email, class: 'form-control email' %>
+                </div>
+              </div>
+              <div class="form-group mt-lg">
+                <label class="col-sm-2 control-label">Site web</label>
+                <div class="col-sm-10">
+                  <%= entity_form.text_field :website, class: 'form-control url' %>
+                </div>
+              </div>
+              <%= entity_form.hidden_field :id %>
+          <% end %>
         </fieldset>
       </div>
       <div class="panel-footer text-right">
@@ -100,6 +101,11 @@
             $("#user_legal_entity_attributes_email").val(values.email);
             $("#user_legal_entity_attributes_website").val(values.website);
             $("#user_legal_entity_attributes_id").val(values.id);
+        }
+
+        function setTownValue(value, label) {
+            $("select.select_town").append('<option value="' + value + '">' + label + '</option>');
+            select2Elt.val(value).trigger('change');
         }
 
         var searchBox = $("#search_entity").select2({
@@ -130,6 +136,7 @@
         });
         searchBox.on('select2:select', function (evt) {
             initEntityFields(evt.params.data);
+            setTownValue(evt.params.data.town_insee_code, evt.params.data.town_label);
             $("#entity_form_fields").show();
         });
 
@@ -138,6 +145,30 @@
             $('#search_entity').val(null).trigger('change');
             $("#entity_form_fields").show();
         });
+
+        var select2Elt = $("select.select_town").select2({
+            language: "fr",
+            minimumInputLength: 2,
+            ajax: {
+                url: "<%= towns_user_account_path %>",
+                delay: 500,
+                data: function (params) {
+                    var query = {
+                        pattern: encodeURIComponent(params.term),
+                        page: params.page
+                    };
+                    return query;
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.towns
+                    };
+                }
+            }
+        });
+        <% if @user.legal_entity && @user.legal_entity.town_insee_code %>
+        setTownValue('<%= @user.legal_entity.town_insee_code %>', '<%= @user.legal_entity.town.label %>');
+        <% end %>
 
         $.extend($.validator.messages, {
             required: "champ requis",

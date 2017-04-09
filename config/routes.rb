@@ -48,6 +48,7 @@ Rails.application.routes.draw do
       end
       resource :user, controller: 'account', path: 'compte', as: 'account', only: [:edit, :update] do
         get 'search_entity', on: :collection, as: 'search_entity'
+        get 'towns', on: :collection, as: 'towns'
       end
     end
   end

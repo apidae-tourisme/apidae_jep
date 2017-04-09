@@ -209,21 +209,26 @@ form .item_photos img {
   font-family: inherit;
 }
 
-#user_account_form .select2.select2-container .select2-selection--single {
+#user_account_form .select2.select2-container .select2-selection--single,
+#user_account_form .select2-selection__arrow {
   height: 36px;
 }
 
-#user_account_form .select2 .select2-selection__arrow {
-  display: none;
-}
-
-#user_account_form .select2 .select2-selection__rendered {
-  padding-left: 32px;
-  padding-right: 8px;
+#user_account_form .select2 .select2-selection__rendered,
+#user_account_form .select2 .select2-selection__rendered::after {
   line-height: 34px;
 }
 
-#user_account_form .select2 .select2-selection__rendered::after {
+#entity_form .select2 .select2-selection__arrow {
+  display: none;
+}
+
+#entity_form .select2 .select2-selection__rendered {
+  padding-left: 32px;
+  padding-right: 8px;
+}
+
+#entity_form .select2 .select2-selection__rendered::after {
   content: "\f002";
   font-family: 'FontAwesome';
   display: block;
@@ -232,10 +237,9 @@ form .item_photos img {
   left: 0;
   color: #656565;
   font-size: 18px;
-  line-height: 34px;
   padding-left: 8px;
 }
 
-#entity_form {
-  min-height: 240px;
+#entity_form_fields .select2.select2-container {
+  width: 100% !important;
 }

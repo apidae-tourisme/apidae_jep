@@ -1,10 +1,13 @@
 class LegalEntity < ActiveRecord::Base
   store :address, accessors: [:adresse1, :adresse2, :adresse3], coder: JSON
   has_many :users
+  belongs_to :town, foreign_key: :town_insee_code, primary_key: :insee_code
 
   before_create :normalize_website_url
 
   include WritableConcern
+
+  validates_presence_of :name, :address, :town
 
   def self.matching(pattern)
     LegalEntity.where("trim(unaccent(replace(name, '-', ' '))) ILIKE trim(unaccent(replace(?, '-', ' ')))", "%#{pattern}%")
@@ -46,13 +49,32 @@ class LegalEntity < ActiveRecord::Base
                     adresse1: entity_data[:localisation][:adresse][:adresse1],
                     adresse2: entity_data[:localisation][:adresse][:adresse2],
                     adresse3: entity_data[:localisation][:adresse][:adresse3],
-                    postal_code: entity_data[:localisation][:adresse][:codePostal],
-                    town: entity_town.name,
+                    town: entity_town,
                     email: contact_info(entity_data[:informations][:moyensCommunication], 204),
                     phone: contact_info(entity_data[:informations][:moyensCommunication], 201),
                     website: contact_info(entity_data[:informations][:moyensCommunication], 205),
                     external_id: entity_data[:id])
               end
+            end
+          end
+        end
+        result = true
+      end
+      result
+    end
+  end
+
+  def self.batch_update(json_dir)
+    result = false
+    if Dir.exist?(json_dir)
+      Dir.foreach(json_dir) do |f|
+        if f.end_with?('.json')
+          json_file = File.join(json_dir, f)
+          entities_json = File.read(json_file)
+          entities_hashes = JSON.parse(entities_json, symbolize_names: true)
+          entities_hashes.each do |entity_data|
+            if entity_data[:type] == 'STRUCTURE'
+              yield(entity_data)
             end
           end
         end

@@ -27,4 +27,17 @@ class User < ActiveRecord::Base
   def ordered_programs
     programs.order(:id)
   end
+
+  def territory
+    if legal_entity_id && legal_entity.town_insee_code
+      if legal_entity.town_insee_code.start_with?('69')
+        GRAND_LYON
+      elsif legal_entity.town_insee_code.start_with?('38') || legal_entity.town_insee_code.start_with?('73') ||
+          legal_entity.town_insee_code.start_with?('26')
+        ISERE
+      else
+        raise Exception.new("Unsupported INSEE code : #{legal_entity.town_insee_code} - Cannot find corresponding JEP territory")
+      end
+    end
+  end
 end

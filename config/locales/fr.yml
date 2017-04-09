@@ -21,6 +21,9 @@ fr:
               too_short: 'Le mot de passe saisi est trop court (minimum 6 caractères)'
             password_confirmation:
               confirmation: 'Les deux mots de passe saisis ne correspondent pas.'
+  territory:
+    grand_lyon: "Métropole du Grand Lyon"
+    isere: "Département de l'Isère"
   user:
     fields:
       name: 'Nom'
