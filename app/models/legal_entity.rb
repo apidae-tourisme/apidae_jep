@@ -7,7 +7,7 @@ class LegalEntity < ActiveRecord::Base
 
   include WritableConcern
 
-  validates_presence_of :name, :address, :town
+  validates_presence_of :name, :address
 
   def self.matching(pattern)
     LegalEntity.where("trim(unaccent(replace(name, '-', ' '))) ILIKE trim(unaccent(replace(?, '-', ' ')))", "%#{pattern}%")
