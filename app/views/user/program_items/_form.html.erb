@@ -27,7 +27,7 @@
       </fieldset>
       <fieldset>
         <legend class="text-uppercase text-primary mb-sm">Lieu / emplacement</legend>
-        <p class="help-block" style="<%= 'display: none;' if @item.persisted? %>">
+        <p class="help-block">
           Veuillez saisir le nom ou l'adresse du lieu sur la carte pour commencer la saisie. Vous pouvez déplacer le marqueur sur la carte afin de préciser la localisation de l'offre.
         </p>
         <div class="row">
@@ -307,7 +307,6 @@
             }
 
             geocoder.on('select', function (e) {
-                debugger;
                 updateFormFields(e.feature);
                 var markers = [];
                 map.eachLayer(function(layer) {
