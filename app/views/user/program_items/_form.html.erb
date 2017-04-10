@@ -525,6 +525,15 @@
             setUpToggle("booking_toggle", "true");
             toggleDisplay("booking_toggle", "true");
 
+            function injectTrim(handler) {
+                return function (element, event) {
+                    if (element.tagName === "TEXTAREA" || (element.tagName === "INPUT")) {
+                        element.value = $.trim(element.value);
+                    }
+                    return handler.call(this, element, event);
+                };
+            }
+
             $.extend($.validator.messages, {
                 required: "champ requis",
                 email: "adresse email invalide",
@@ -532,7 +541,6 @@
             });
 
             $.validator.addMethod('opening_presence', function(value, element) {
-                console.log('length : ' + $("fieldset.opening").length);
                 return $("fieldset.opening").length > 0;
             }, "champ requis");
 
@@ -547,7 +555,7 @@
                     }
                 },
                 ignore: [],
-                onfocusout: false,
+                onfocusout: injectTrim($.validator.defaults.onfocusout),
                 errorElement: "small",
                 rules: {
                     "program_item[accessibility][]": {required: true, minlength: 1},

@@ -23,6 +23,10 @@ class AttachedFile < ActiveRecord::Base
   private
 
   Paperclip.interpolates :timestamp do |attachment, style|
+    if attachment.instance.created_at
     "#{attachment.instance.created_at.year}/#{attachment.instance.created_at.month}"
+    else
+      "#{Time.current.year}/#{Time.current.month}"
+    end
   end
 end
