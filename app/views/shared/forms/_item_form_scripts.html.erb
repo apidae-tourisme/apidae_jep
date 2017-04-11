@@ -1,0 +1,325 @@
+<script>
+    function updateFormFields(feature) {
+        $("#program_item_main_place").val(feature.properties.name);
+        $("#program_item_main_address").val([feature.properties.housenumber, feature.properties.street].join(' '));
+        $("#program_item_main_postal_code").val(feature.properties.postalcode);
+        $("#program_item_main_town").val(feature.properties.locality);
+        $("#program_item_main_lat").val(feature.geometry.coordinates[1]);
+        $("#program_item_main_lng").val(feature.geometry.coordinates[0]);
+    }
+
+    function bindDragToLatLng(marker) {
+        marker.on('dragend', function(e) {
+            var newLatLng = e.target._latlng;
+            $("#program_item_main_lat").val(newLatLng.lat);
+            $("#program_item_main_lng").val(newLatLng.lng);
+        });
+    }
+
+    function initMap(container, zoom, minZoom) {
+        var map = L.map(container, {zoomControl: false, zoom: zoom, minZoom: minZoom, scrollWheelZoom: false}).setView([45.740410, 4.816417]);
+        new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
+        L.tileLayer('https://api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiamVhbmJhcHRpc3RldmlsYWluIiwiYSI6ImZiMTJmMDdjODI5NDRiYTcyMDgzNGJmOTA5NjU0NDg1In0.b6l-11X_ZtS_83CsFu-v9Q', {
+            attribution: '&copy; Mapbox &copy; OpenStreetMap',
+            detectRetina: true
+        }).addTo(map);
+
+        var geocoderOptions = {
+            url: 'https://search-places.hotentic.com',
+            layers: ['venue', 'address', 'street'],
+            position: 'topleft',
+            expanded: true,
+            overrideBbox: true,
+            fullWidth: false,
+            markers: {draggable: true},
+            textStrings: {
+                INPUT_PLACEHOLDER: "Saisir le nom du lieu ou son adresse",
+                INPUT_TITLE_ATTRIBUTE: 'Rechercher',
+                RESET_TITLE_ATTRIBUTE: 'Réinitialiser',
+                NO_RESULTS: 'Aucun résultat',
+                ERROR_403: 'Autorisation requise',
+                ERROR_404: 'Le service de recherche est temporairement indisponible',
+                ERROR_408: 'Le service de recherche est temporairement indisponible',
+                ERROR_429: 'Le service de recherche est temporairement indisponible',
+                ERROR_500: 'Le service de recherche est temporairement indisponible',
+                ERROR_502: 'Le service de recherche est temporairement indisponible',
+                ERROR_DEFAULT: 'Le service de recherche est temporairement indisponible'
+            }
+        };
+        var geocoder = L.control.geocoder('mapzen-NY5Wumy', geocoderOptions);
+
+        function toggleMapFields(newPlace) {
+            $("#map_fields").show();
+            if(newPlace) {
+                updateFormFields({properties:{}, geometry:{coordinates:[]}});
+                geocoder.reset();
+                geocoder.blur();
+            }
+        }
+
+        geocoder.on('select', function (e) {
+            updateFormFields(e.feature);
+            var markers = [];
+            map.eachLayer(function(layer) {
+                if(layer.options.draggable) {
+                    markers.push(layer);
+                    bindDragToLatLng(layer);
+                }
+            });
+            if(markers.length > 1) {
+                map.removeLayer(markers[0]);
+            }
+            toggleMapFields(false);
+        });
+        geocoder.on('results', function (e) {
+            if(e.results.features) {
+                if (e.results.features.length == 0) {
+                    $("#item_map").find(".leaflet-pelias-message")
+                        .html('<em class="pr text-sm">Aucun résultat pour cette recherche.</em><button id="add_new_place" class="btn btn-labeled btn-default btn-sm"><i class="fa fa-plus pr-sm"></i>Ajouter un lieu</button>');
+                } else {
+                    $("#item_map").find(".leaflet-pelias-results > .leaflet-pelias-list")
+                        .before('<div class="leaflet-pelias-message"><em class="pr text-sm">Le lieu ne figure pas dans la liste ?</em><button id="add_new_place" class="btn btn-labeled btn-default btn-sm"><i class="fa fa-plus pr-sm"></i>Ajouter un lieu</button></div>');
+                }
+                $("#add_new_place").click(function () {
+                    toggleMapFields(true);
+                });
+            }
+        });
+        geocoder.addTo(map);
+        return map;
+    }
+
+    var pickerTooltips = {
+        today: "Aujourd'hui",
+        clear: "Supprimer",
+        close: "Fermer",
+        selectMonth: "Sélectionner un mois",
+        prevMonth: "Mois précédent",
+        nextMonth: "Mois suivant",
+        selectYear: "Sélectionner une année",
+        prevYear: "Année précédent",
+        nextYear: "Année suivant",
+        selectDecade: "Sélectionner une décennie",
+        prevDecade: "Décennie précédente",
+        nextDecade: "Décennie suivante",
+        prevCentury: "Siècle précédent",
+        nextCentury: 'Siècle suivant'
+    };
+
+    function pickerIcons(clearClass) {
+        return {
+            time: 'fa fa-clock-o',
+            date: 'fa fa-calendar',
+            up: 'fa fa-chevron-up',
+            down: 'fa fa-chevron-down',
+            previous: 'fa fa-chevron-left',
+            next: 'fa fa-chevron-right',
+            today: 'fa fa-crosshairs',
+            clear: 'fa text-bold icon-trash clear_picker ' + clearClass
+        };
+    }
+
+    function displayAsEmpty(picker, date) {
+        if(!date) {
+            picker.find("span.timepicker-hour").text('--');
+            picker.find("span.timepicker-minute").text('--');
+        }
+    }
+
+    function initDateTimePicker(wrapperElt) {
+        var datepicker = $("#" + wrapperElt).find(".datepicker");
+        datepicker.datetimepicker({
+            locale: 'fr',
+            viewDate: '2017-09-16',
+            defaultDate: false,
+            useCurrent: false,
+            format: 'YYYY-MM-DD HH:mm',
+            sideBySide: true,
+            inline: true,
+            showClear: true,
+            toolbarPlacement: 'bottom',
+            icons: pickerIcons(wrapperElt),
+            tooltips: pickerTooltips
+        });
+        datepicker.on('dp.change', function(evt) {
+            displayAsEmpty(datepicker, evt.date);
+        });
+        displayAsEmpty(datepicker, datepicker.find("input.hidden").val());
+    }
+
+    function initTimePicker(wrapperElt) {
+        var timepicker = $("#" + wrapperElt).find(".datetimepicker");
+        timepicker.datetimepicker({
+            locale: 'fr',
+            viewDate: '2017-09-16',
+            defaultDate: false,
+            useCurrent: false,
+            format: 'HH:mm',
+            sideBySide: true,
+            inline: true,
+            showClear: true,
+            toolbarPlacement: 'bottom',
+            icons: pickerIcons(wrapperElt),
+            tooltips: pickerTooltips
+        });
+        timepicker.on('dp.change', function(evt) {
+            displayAsEmpty(timepicker, evt.date);
+        });
+        displayAsEmpty(timepicker, timepicker.find("input.hidden").val());
+    }
+
+    L.Marker = L.Marker.extend({
+        options: {
+            icon: L.divIcon({html: '<i class="fa fa-map-marker"></i>', iconSize: [20, 32], iconAnchor: [10, 32],
+                popupAnchor: [0, -28]})
+        }
+    });
+
+    function parseTempIdentifier(elt) {
+        return elt.find("textarea").attr("id").split("program_item_item_openings_attributes_")[1].split("_")[0];
+    }
+
+    function bindOpeningsActions() {
+        $(".item_openings").find(".nested-fields").each(function() {
+            var src = $(this);
+            var identifier = parseTempIdentifier($(this));
+            var newIdentifier = new Date().getTime();
+
+            $(this).find("a.clone_opening").click(function() {
+                var srcHtml = src.clone().wrap('<p/>').parent().html();
+                var cloneHtml = srcHtml.replace(new RegExp('_' + identifier + '_', 'g'), '_' + newIdentifier + '_')
+                    .replace(new RegExp('\\[' + identifier + '\\]', 'g'), '[' + newIdentifier + ']');
+                $(cloneHtml).insertAfter(src);
+                bindOpeningsActions();
+            });
+            $(this).find("a.edit_opening").click(function() {
+                displayOpeningModal(identifier);
+            })
+        });
+    }
+
+    function displayOpeningModal(identifier, clearOnDismiss) {
+        var openingId = "program_item_item_openings_attributes_" + identifier;
+        $("#lg_modal").find("#lg_modal_title").html("Modifier la période d'ouverture");
+        $("#lg_modal").find("#lg_modal_body").html("<%= j(render 'edit_opening_form') %>");
+        $("#lg_modal").modal();
+        $("#lg_modal").drags({handle: '.modal-header'});
+        $("#starts_at").val($("#" + openingId + "_starts_at").val() ? moment($("#" + openingId + "_starts_at").val()).format('YYYY-MM-DD HH:mm') : '');
+        $("#ends_at").val($("#" + openingId + "_ends_at").val() ? moment($("#" + openingId + "_ends_at").val()).format('YYYY-MM-DD HH:mm') : '');
+        var duration = $("#" + openingId + "_duration").val();
+        $("#duration").val(duration ? moment(duration * 1000).utc().format('HH:mm') : '');
+        var frequency = $("#" + openingId + "_frequency").val();
+        $("#frequency").val(frequency ? moment(frequency * 1000).utc().format('HH:mm') : '');
+        $("#prefix").val(openingId);
+        initDateTimePicker("edit_start_date");
+        initDateTimePicker("edit_end_date");
+        initTimePicker("edit_duration");
+        initTimePicker("edit_frequency");
+        if(clearOnDismiss) {
+            $("#lg_modal").on('hide.bs.modal', function() {
+                var startsAt = $("#" + $(this).find("#prefix").val() + "_starts_at");
+                if(!startsAt.val()) {
+                    startsAt.parents("fieldset.nested-fields")[0].remove();
+                }
+            });
+        }
+        $("#edit_opening_form").submit(function(evt) {
+            if($("#starts_at").val()) {
+                $("#edit_opening_error").html("");
+                return true;
+            } else {
+                $("#edit_opening_error").html('<p class="text-center text-bold">Veuillez saisir une date de début</p>');
+                return false;
+            }
+        })
+    }
+
+    function toggleDisplay(selector, val) {
+        var elt = $("#" + selector).find("input:checked");
+        if(elt.val() && elt.val() == val) {
+            $("." + selector).show();
+        } else {
+            $("." + selector).hide();
+        }
+    }
+
+    function setUpToggle(selector, val) {
+        $("#" + selector).find("input").change(function() {
+            toggleDisplay(selector, val);
+        });
+    }
+
+    $(function() {
+        bindOpeningsActions();
+        var map = initMap('item_map', 8, 6);
+        <% if @item.main_lat && @item.main_lng %>
+        var marker = L.marker([<%= @item.main_lat %>, <%= @item.main_lng %>], {draggable: true}).addTo(map);
+        bindDragToLatLng(marker);
+        <% end %>
+        $(".chosen-select.no-max").chosen({width: '95%'});
+        $(".item_openings").on("cocoon:after-insert", function (e, elt) {
+            var tmpIdentifier = parseTempIdentifier($(elt));
+            bindOpeningsActions();
+            displayOpeningModal(tmpIdentifier, true);
+        });
+        $("#item_types").find("input[type=radio]").change(function() {
+            $.ajax({
+                url: '<%= update_form_path %>',
+                method: 'GET',
+                data: {
+                    item_type: $(this).val()
+                }
+            });
+        });
+        setUpToggle("free_toggle", "false");
+        toggleDisplay("free_toggle", "false");
+        setUpToggle("booking_toggle", "true");
+        toggleDisplay("booking_toggle", "true");
+
+        function injectTrim(handler) {
+            return function (element, event) {
+                if (element.tagName === "TEXTAREA" || (element.tagName === "INPUT")) {
+                    element.value = $.trim(element.value);
+                }
+                return handler.call(this, element, event);
+            };
+        }
+
+        $.extend($.validator.messages, {
+            required: "champ requis",
+            email: "adresse email invalide",
+            url: "adresse web invalide"
+        });
+
+        $.validator.addMethod('opening_presence', function(value, element) {
+            return $("fieldset.opening").length > 0;
+        }, "champ requis");
+
+        $("#program_item_form").validate({
+            errorPlacement: function errorPlacement(error, element) {
+                if(element.is("input[type=checkbox]")) {
+                    element.before(error);
+                } else if(element.is(':hidden')) {
+                    $("legend.openings").append(error);
+                } else {
+                    element.after(error);
+                }
+            },
+            ignore: [],
+            onfocusout: injectTrim($.validator.defaults.onfocusout),
+            errorElement: "small",
+            rules: {
+                "program_item[accessibility][]": {required: true, minlength: 1},
+                "program_item[status]": {opening_presence: true}
+            },
+            messages: {
+                "program_item[accessibility][]": "champ requis",
+                "program_item[status]": "veuillez saisir au moins une période d'ouverture"
+            },
+            invalidHandler: function(form, validator) {
+                $.notify("Merci de renseigner tous les champs requis", "danger");
+            }
+        });
+
+    });
+</script>

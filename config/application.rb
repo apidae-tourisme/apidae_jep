@@ -20,6 +20,9 @@ module ApidaeJep
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :fr
 
+    # Do not include all helpers in all controllers
+    config.action_controller.include_all_helpers = false
+
     # Cache store
     config.cache_store = :file_store, 'cache', {expires_in: 10.minutes}
 

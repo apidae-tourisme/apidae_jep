@@ -1,0 +1,33 @@
+<%= form_tag(opening_moderator_program_program_items_path(@program.id), method: :patch, remote: true,
+             id: 'edit_opening_form') do |f| %>
+    <div id="edit_opening" class="modal-body bg-gray-light ph-xl">
+      <div id="edit_opening_error"></div>
+      <div class="row">
+        <div class="col-sm-6 text-center text-md"><strong>Début*</strong></div>
+        <div class="col-sm-6 text-center text-md"><strong>Fin</strong></div>
+      </div>
+      <div class="form-group">
+        <div id="edit_start_date" class="col-sm-6 bg-white pv"><%= date_select_tag :starts_at, id: 'starts_at' %></div>
+        <div id="edit_end_date" class="col-sm-6 bg-white pv"><%= date_select_tag :ends_at, id: 'ends_at' %></div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6 text-center text-md mt-lg"><strong>Durée</strong></div>
+        <div class="col-sm-6 text-center text-md mt-lg"><strong>Fréquence</strong></div>
+      </div>
+      <div class="row">
+        <div id="edit_duration" class="col-sm-6">
+          <%= time_select_tag :duration, id: 'duration' %>
+        </div>
+        <div id="edit_frequency" class="col-sm-6">
+          <%= time_select_tag :frequency, id: 'frequency' %>
+        </div>
+      </div>
+    </div>
+    <%= hidden_field_tag 'prefix', '', id: 'prefix' %>
+    <div class="modal-footer text-right">
+      <%= link_to 'Annuler', '#', class: 'btn btn-inverse', onclick: '$("#lg_modal .close").click(); return false;' %>
+      <%= button_tag 'Valider', type: 'submit', class: 'btn btn-primary' %>
+    </div>
+<% end %>
+

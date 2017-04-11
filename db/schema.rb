@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170409092954) do
+ActiveRecord::Schema.define(version: 20170411113053) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,6 +99,7 @@ ActiveRecord::Schema.define(version: 20170409092954) do
     t.string   "item_type"
     t.integer  "reference"
     t.integer  "ordering"
+    t.text     "history_data"
   end
 
   add_index "program_items", ["reference"], name: "index_program_items_on_reference", using: :btree

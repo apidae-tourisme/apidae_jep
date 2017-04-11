@@ -1,0 +1,24 @@
+<div id="program_form">
+  <%= form_for([:moderator, @program], html: {class: 'mt-xl form-horizontal'}) do |f| %>
+      <fieldset>
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Titre général des offres<%= help_button %></label>
+          <%= help_content("Contenu de l'aide pour le titre des offres") %>
+          <div class="col-sm-7"><%= f.text_field :title, class: 'form-control' %></div>
+          <div class="col-sm-2"><%= f.submit 'Enregistrer', class: 'btn btn-primary' %></div>
+        </div>
+      </fieldset>
+  <% end %>
+  <div class="pt-lg pb">
+    <h3 class="mt0">Les offres</h3>
+    <% unless @program.program_items.any? %>
+        <p>Aucune offre saisie pour le moment.</p>
+    <% end %>
+  </div>
+
+  <div id="program_items" class="row">
+    <% @program.ordered_items.each_with_index do |item, i| %>
+        <%= render 'shared/forms/program_item', item: item, i: i %>
+    <% end %>
+  </div>
+</div>

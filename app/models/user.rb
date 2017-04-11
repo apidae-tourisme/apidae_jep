@@ -28,6 +28,10 @@ class User < ActiveRecord::Base
     programs.order(:id)
   end
 
+  def full_name
+    "#{first_name} #{last_name.upcase if last_name}"
+  end
+
   def territory
     if legal_entity_id && legal_entity.town_insee_code
       if legal_entity.town_insee_code.start_with?('69')
@@ -39,5 +43,9 @@ class User < ActiveRecord::Base
         raise Exception.new("Unsupported INSEE code : #{legal_entity.town_insee_code} - Cannot find corresponding JEP territory")
       end
     end
+  end
+
+  def offers
+    programs.collect {|p| p.program_items}.flatten.group_by {|pi| pi.status}
   end
 end

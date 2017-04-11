@@ -1,0 +1,8 @@
+<% if @prefix %>
+  $("#<%= @prefix %>_starts_at").val("<%= @starts_at %>");
+  $("#<%= @prefix %>_ends_at").val("<%= @ends_at %>");
+  $("#<%= @prefix %>_duration").val("<%= @duration %>");
+  $("#<%= @prefix %>_frequency").val("<%= @frequency %>");
+  $("#<%= @prefix %>_as_text").text("<%= @as_text %>");
+<% end %>
+$("#lg_modal").modal('hide');

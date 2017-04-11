@@ -25,7 +25,7 @@
           <em class="icon-note fa-2x"></em>
         </div>
         <div class="col-xs-8 pv-lg">
-          <div class="h1 m0 text-bold"><%= ProgramItem.draft.count %></div>
+          <div class="h1 m0 text-bold"><%= @offers.has_key?(ProgramItem::STATUS_DRAFT) ? @offers[ProgramItem::STATUS_DRAFT].count : 0 %></div>
           <div class="text-uppercase">brouillons</div>
         </div>
       </div>
@@ -38,7 +38,7 @@
           <em class="icon-hourglass fa-2x"></em>
         </div>
         <div class="col-xs-8 pv-lg">
-          <div class="h1 m0 text-bold"><%= ProgramItem.pending.count %></div>
+          <div class="h1 m0 text-bold"><%= @offers.has_key?(ProgramItem::STATUS_PENDING) ? @offers[ProgramItem::STATUS_PENDING].count : 0 %></div>
           <div class="text-uppercase">en validation</div>
         </div>
       </div>
@@ -51,7 +51,7 @@
           <em class="icon-like fa-2x"></em>
         </div>
         <div class="col-xs-8 pv-lg">
-          <div class="h1 m0 text-bold"><%= ProgramItem.validated.count %></div>
+          <div class="h1 m0 text-bold"><%= @offers.has_key?(ProgramItem::STATUS_VALIDATED) ? @offers[ProgramItem::STATUS_VALIDATED].count : 0 %></div>
           <div class="text-uppercase">validées</div>
         </div>
       </div>
@@ -64,8 +64,8 @@
           <em class="icon-dislike fa-2x"></em>
         </div>
         <div class="col-xs-8 pv-lg">
-          <div class="h1 m0 text-bold"><%= ProgramItem.rejected.count %></div>
-          <div class="text-uppercase">rejetée</div>
+          <div class="h1 m0 text-bold"><%= @offers.has_key?(ProgramItem::STATUS_REJECTED) ? @offers[ProgramItem::STATUS_REJECTED].count : 0 %></div>
+          <div class="text-uppercase">rejetées</div>
         </div>
       </div>
     </div>

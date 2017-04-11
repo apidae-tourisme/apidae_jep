@@ -1,4 +1,6 @@
 class ProgramItem < ActiveRecord::Base
+  include LoggableConcern
+
   belongs_to :program
   has_many :item_openings
   has_many :attached_files
@@ -52,6 +54,10 @@ class ProgramItem < ActiveRecord::Base
 
   def validated?
     status == STATUS_VALIDATED
+  end
+
+  def rejected?
+    status == STATUS_REJECTED
   end
 
   def draft?

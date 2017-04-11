@@ -1,0 +1,2 @@
+module Moderator::DashboardHelper
+end

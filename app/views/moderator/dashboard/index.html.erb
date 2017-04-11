@@ -1,0 +1,100 @@
+<h3>ApidaeJEP - Administration</h3>
+<div class="row">
+  <div class="col-md-4 ph-sm">
+    <div class="panel widget bg-warning">
+      <div class="row row-table">
+        <div class="col-xs-4 text-center bg-warning-dark pv-lg">
+          <em class="icon-hourglass fa-2x"></em>
+        </div>
+        <div class="col-xs-8 pv-lg">
+          <div class="h1 m0 text-bold"><%= ProgramItem.pending.count %></div>
+          <div class="text-uppercase">en validation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 ph-sm">
+    <div class="panel widget bg-success">
+      <div class="row row-table">
+        <div class="col-xs-4 text-center bg-success-dark pv-lg">
+          <em class="icon-like fa-2x"></em>
+        </div>
+        <div class="col-xs-8 pv-lg">
+          <div class="h1 m0 text-bold"><%= ProgramItem.validated.count %></div>
+          <div class="text-uppercase">validées</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 pl-sm">
+    <div class="panel widget bg-danger">
+      <div class="row row-table">
+        <div class="col-xs-4 text-center bg-danger-dark pv-lg">
+          <em class="icon-dislike fa-2x"></em>
+        </div>
+        <div class="col-xs-8 pv-lg">
+          <div class="h1 m0 text-bold"><%= ProgramItem.rejected.count %></div>
+          <div class="text-uppercase">rejetées</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pt-xl pb">
+  <h3 class="mt0">Offres en attente de validation</h3>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-info">
+      <div class="table-responsive panel-body">
+        <table id="pending_items" class="table table-striped table-bordered table-hover">
+          <thead class="bg-gray-darker">
+          <tr>
+            <th class="wd-xs">Référence</th>
+            <th>Date</th>
+            <th>Titre</th>
+            <th>Type</th>
+            <th>Structure</th>
+            <th class="wd-xs"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <% if @pending_items.any? %>
+              <% @pending_items.each do |item| %>
+                  <tr>
+                    <td><%= item.reference %></td>
+                    <td>
+                      <span class="hidden"><%= item.created_at.to_i %></span><%= l(item.created_at, format: :notime) %>
+                    </td>
+                    <td><%= item.title %></td>
+                    <td><span class="label label-inverse"><%= t "program_item.type.#{item.item_type}" %></span></td>
+                    <td><%= item.program.structure %></td>
+                    <td class="text-center">
+                      <%= link_to '<i class="icon-note text-md"></i>'.html_safe,
+                                  edit_moderator_program_program_item_path(item.program_id, item) %>
+                      <%= link_to '<i class="icon-list text-md"></i>'.html_safe,
+                                  edit_moderator_program_path(item.program), class: 'pl' %>
+                    </td>
+                  </tr>
+              <% end %>
+          <% else %>
+              <tr>
+                <td colspan="6" class="text-center">
+                  Aucune offre en attente de validation pour le moment.
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :body_area do %>
+    <script>
+        initDataTable('#pending_items');
+    </script>
+<% end %>

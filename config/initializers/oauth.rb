@@ -1,6 +1,8 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider :apidae, Rails.application.config.omniauth_config[:client_id],
            Rails.application.config.omniauth_config[:client_secret]
+  provider :apidae_admin, Rails.application.config.omniauth_config[:client_id],
+           Rails.application.config.omniauth_config[:client_secret]
 
   configure do |config|
     config.path_prefix = '/oauth/auth'

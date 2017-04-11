@@ -3,6 +3,7 @@ class User::DashboardController < User::UserController
 
   def index
     @programs = @user.ordered_programs
+    @offers = @user.offers
   end
 
   private

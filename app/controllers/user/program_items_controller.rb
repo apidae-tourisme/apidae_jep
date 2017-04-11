@@ -96,6 +96,7 @@ class User::ProgramItemsController < User::UserController
 
   def set_program_item
     @item = ProgramItem.find(params[:id])
+    @item.author = current_user.first_name
   end
 
   def opening_params

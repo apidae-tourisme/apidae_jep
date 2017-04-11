@@ -25,6 +25,10 @@ class LegalEntity < ActiveRecord::Base
     (address.values + [postal_code, town]).join("\n")
   end
 
+  def label
+    "#{name} - #{town.label}"
+  end
+
   def normalize_website_url
     unless website.blank? || website.start_with?('http')
       self.website = 'http://' + website

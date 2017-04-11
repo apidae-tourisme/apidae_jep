@@ -1,0 +1,47 @@
+<h3>ApidaeJEP - Toutes les utilisateurs</h3>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-info">
+      <div class="table-responsive panel-body">
+        <table id="accounts" class="table table-striped table-bordered table-hover">
+          <thead class="bg-gray-darker">
+          <tr>
+            <th>Nom</th>
+            <th>Structure</th>
+            <th>Email</th>
+            <th>Téléphone</th>
+            <th class="wd-xs"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <% if @accounts.any? %>
+              <% @accounts.each do |account| %>
+                  <tr>
+                    <td><%= account.full_name %></td>
+                    <td><%= account.legal_entity_id ? account.legal_entity.label : 'Aucune' %></td>
+                    <td><%= account.email %></td>
+                    <td><%= account.telephone %></td>
+                    <td class="text-center">
+                      <%= link_to '<i class="icon-note text-md"></i>'.html_safe, '#' %>
+                    </td>
+                  </tr>
+              <% end %>
+          <% else %>
+              <tr>
+                <td colspan="5" class="text-center">
+                  Aucun compte pour le moment.
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :body_area do %>
+    <script>
+        initDataTable('#accounts');
+    </script>
+<% end %>

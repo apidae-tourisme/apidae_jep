@@ -15,3 +15,6 @@
 //= require select2/dist/js/i18n/fr
 //---- jQuery validate
 //= require jquery-validation/dist/jquery.validate
+//--- DataTables
+//= require datatables/media/js/jquery.dataTables.min
+//= require datatables/media/js/dataTables.bootstrap

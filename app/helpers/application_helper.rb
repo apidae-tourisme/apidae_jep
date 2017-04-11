@@ -18,6 +18,29 @@ module ApplicationHelper
       text_field('opening', method, {class: 'hidden'}.merge(html_options))
     end
   end
+
+  def help_button
+    '<button type="button" class="help_button btn btn-xs"><i class="fa fa-question-circle text-info"></i></button>'.html_safe
+  end
+
+  def help_content(help_text)
+    ('<span class="help-block hidden">' + help_text + '</span>').html_safe
+  end
+
+  def item_icon(item_type)
+    case item_type
+      when ITEM_VISITE
+        'fa-institution'
+      when ITEM_PARCOURS
+        'fa-map-signs'
+      when ITEM_ANIMATION
+        'fa-microphone'
+      when ITEM_EXPOSITION
+        'fa-photo'
+      else
+        'fa-institution'
+    end
+  end
 end
 
 module ActionView

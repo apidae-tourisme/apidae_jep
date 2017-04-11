@@ -4,47 +4,82 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="ApidaeJEP">
-  <title>ApidaeJEP</title>
+  <meta name="description" content="ApidaeJEP - Administration">
+  <title>ApidaeJEP - Administration</title>
   <%= stylesheet_link_tag 'base' %>
   <%= stylesheet_link_tag 'application', media: 'all', id: 'maincss' %>
   <%= csrf_meta_tags %>
 </head>
 
-<body>
+<body class="aside-collapsed">
 <div class="wrapper">
-  <!-- top navbar-->
   <header class="topnavbar-wrapper">
-    <%= render partial: "layouts/partials/topnavbar" %>
+    <%= render partial: 'layouts/partials/moderator/topnavbar' %>
   </header>
-  <!-- sidebar-->
   <aside class="aside">
-    <%= render partial: "layouts/partials/sidebar" %>
+    <%= render partial: 'layouts/partials/moderator/sidebar' %>
   </aside>
-  <!-- offsidebar-->
   <aside class="offsidebar hide">
-    <%= render partial: "layouts/partials/offsidebar" %>
+    <%= render partial: 'layouts/partials/moderator/offsidebar' %>
   </aside>
-  <!-- Main section-->
   <section>
-    <!-- Page content-->
     <div class="content-wrapper">
       <%= yield %>
     </div>
   </section>
-  <!-- Page footer-->
   <footer>
-    <%= render partial: "layouts/partials/footer" %>
+    <%= render partial: 'layouts/partials/moderator/footer' %>
   </footer>
 </div>
-<!-- =============== VENDOR SCRIPTS ===============-->
+<div id="modal_window" tabindex="-1" role="dialog" aria-labelledby="modal_title" aria-hidden="true" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-gray-dark">
+        <button type="button" data-dismiss="modal" aria-label="Fermer" class="close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 id="modal_title" class="modal-title"></h4>
+      </div>
+      <div id="modal_body" class="modal-body"></div>
+    </div>
+  </div>
+</div>
+<div id="lg_modal" tabindex="-1" role="dialog" aria-labelledby="modal_title" aria-hidden="true" class="modal fade">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-gray-dark">
+        <button type="button" data-dismiss="modal" aria-label="Fermer" class="close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 id="lg_modal_title" class="modal-title"></h4>
+      </div>
+      <div id="lg_modal_body"></div>
+    </div>
+  </div>
+</div>
 <%= javascript_include_tag 'base' %>
-<!-- =============== VIEW VENDOR SCRIPTS ===============-->
-<%= javascript_include_tag params[:controller] %>
-<!-- =============== APP SCRIPTS ===============-->
 <%= javascript_include_tag 'application' %>
+<script>
+    moment.locale('fr');
+    $(".help_button").click(function() {
+        var modalWindow = $("#modal_window");
+        var helpText = $(this).parents(".form-group").find(".help-block").text();
+        var fieldLabel = $(this).parents("label").text();
+        if(helpText.length > 0) {
+            modalWindow.find("#modal_title").append(fieldLabel);
+            modalWindow.find("#modal_body").append('<p class="pre">' + helpText + '</p>');
+            modalWindow.modal();
+        }
+    });
+</script>
 
 <%= yield :body_area %>
+
+<% if notice %>
+    <script>
+        $.notify("<%= notice %>", "success");
+    </script>
+<% end %>
 
 </body>
 
