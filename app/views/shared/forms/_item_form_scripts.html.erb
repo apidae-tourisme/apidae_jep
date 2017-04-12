@@ -310,11 +310,13 @@
             errorElement: "small",
             rules: {
                 "program_item[accessibility][]": {required: true, minlength: 1},
-                "program_item[status]": {opening_presence: true}
+                "program_item[status]": {opening_presence: true},
+                "program_item[accept_pictures]": {required: true}
             },
             messages: {
                 "program_item[accessibility][]": "champ requis",
-                "program_item[status]": "veuillez saisir au moins une période d'ouverture"
+                "program_item[status]": "veuillez saisir au moins une période d'ouverture",
+                "program_item[accept_pictures]": "veuillez valider les conditions d'utilisations des photos"
             },
             invalidHandler: function(form, validator) {
                 $.notify("Merci de renseigner tous les champs requis", "danger");

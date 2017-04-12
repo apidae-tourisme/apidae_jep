@@ -7,7 +7,7 @@
         <div class="col-sm-5"><%= f.file_field :picture, class: 'form-control' %></div>
     <% end %>
     <label class="control-label col-sm-2">Crédits *</label>
-    <div class="col-sm-3"><%= f.text_field :credits, class: 'form-control', placeholder: "Droits d'utilisation" %></div>
+    <div class="col-sm-3"><%= f.text_field :credits, class: 'form-control required', placeholder: "Droits d'utilisation" %></div>
     <div class="col-sm-2 text-right"><%= link_to_remove_association 'Supprimer'.html_safe, f, class: 'btn btn-danger' %></div>
   </div>
 </fieldset>

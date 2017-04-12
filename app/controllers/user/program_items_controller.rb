@@ -4,7 +4,8 @@ class User::ProgramItemsController < User::UserController
                                           :duplicate]
 
   def new
-    @item = ProgramItem.new(program_id: @program.id, item_type: ITEM_VISITE, free: true, booking: false)
+    @item = ProgramItem.new(program_id: @program.id, item_type: ITEM_VISITE, free: true, booking: false,
+                            accept_pictures: '0')
   end
 
   def create

@@ -24,7 +24,7 @@
 
   <div id="program_items" class="row">
     <% @program.ordered_items.each_with_index do |item, i| %>
-        <%= render 'shared/forms/program_item', item: item, i: i %>
+        <%= render 'shared/forms/program_item', item_controller: 'user/program_items', item: item, i: i %>
     <% end %>
   </div>
 </div>

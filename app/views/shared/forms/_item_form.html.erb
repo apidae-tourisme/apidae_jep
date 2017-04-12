@@ -153,6 +153,15 @@
           </div>
         </fieldset>
         <fieldset>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Informations complémentaires</label>
+            <div class="col-sm-9">
+              <%= item_form.text_area :openings_desc, class: 'form-control',
+                                      placeholder: 'Informations complémentaires sur les horaires et ouvertures' %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
           <legend class="text-uppercase text-primary">Tarifs / réservations</legend>
           <div id="free_toggle" class="form-group mdy">
             <div class="col-sm-12">
@@ -205,12 +214,25 @@
         </fieldset>
         <fieldset class="item_photos">
           <legend class="text-uppercase text-primary">Photos</legend>
+          <p class="help-block">
+            Veuillez n'utiliser que des photos ayant une résolution suffisante (5 megapixels ou plus), pour lesquelles
+            vous disposez des droits d'utilisation.
+          </p>
           <%= item_form.fields_for :attached_files do |file_form| %>
               <%= render 'shared/forms/attached_file_fields', f: file_form %>
           <% end %>
           <div class="links">
             <%= link_to_add_association('Ajouter une photo', item_form, :attached_files, class: 'btn btn-primary',
                                         partial: 'shared/forms/attached_file_fields') %>
+          </div>
+          <div id="accept_pictures" class="form-group mt-lg mdy">
+            <div class="col-sm-12">
+              <label class="checkbox-inline c-checkbox">
+                <%= check_box_tag 'program_item[accept_pictures]', '1', @item.accept_pictures == '1', disabled: current_user ? nil : 'disabled' %>
+                <span class="fa fa-check"></span>J'accepte que les photos soient utilisées dans les supports de communication
+                des Journées Européennes du Patrimoine 2017 au format papier et web*
+              </label>
+            </div>
           </div>
         </fieldset>
         <fieldset>

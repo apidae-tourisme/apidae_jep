@@ -202,6 +202,10 @@ form .item_photos img {
   left: -9em;
 }
 
+#program_item_form #accept_pictures label.c-checkbox > small.error:first-child {
+  left: auto;
+}
+
 #program_item_form .datepicker small.error {
   right: 55px;
 }
