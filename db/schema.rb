@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170411113053) do
+ActiveRecord::Schema.define(version: 20170413212204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,14 @@ ActiveRecord::Schema.define(version: 20170411113053) do
     t.text     "data"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+  end
+
+  create_table "auth_tokens", force: :cascade do |t|
+    t.datetime "expiration_date"
+    t.text     "token"
+    t.string   "member_ref"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "item_openings", force: :cascade do |t|
@@ -100,6 +108,7 @@ ActiveRecord::Schema.define(version: 20170411113053) do
     t.integer  "reference"
     t.integer  "ordering"
     t.text     "history_data"
+    t.integer  "user_id"
   end
 
   add_index "program_items", ["reference"], name: "index_program_items_on_reference", using: :btree

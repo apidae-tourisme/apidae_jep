@@ -5,7 +5,7 @@ class User::ProgramItemsController < User::UserController
 
   def new
     @item = ProgramItem.new(program_id: @program.id, item_type: ITEM_VISITE, free: true, booking: false,
-                            accept_pictures: '0')
+                            accept_pictures: '0', user_id: current_user.id)
   end
 
   def create
@@ -58,6 +58,7 @@ class User::ProgramItemsController < User::UserController
   def duplicate
     @new_item = @item.dup
     @new_item.external_id = nil
+    @new_item.user_id = current_user.id
     @new_item.status = ProgramItem::STATUS_DRAFT
     @item.item_openings.each do |o|
       @new_item.item_openings << o
@@ -97,7 +98,6 @@ class User::ProgramItemsController < User::UserController
 
   def set_program_item
     @item = ProgramItem.find(params[:id])
-    @item.author = current_user.first_name
   end
 
   def opening_params

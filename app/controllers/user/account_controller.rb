@@ -1,5 +1,6 @@
 class User::AccountController < User::UserController
   skip_before_filter :check_entity
+  skip_before_filter :authenticate_user!, only: [:towns, :search_entity]
 
   def edit
     @user = current_user

@@ -1,4 +1,4 @@
-<%= form_for(@user, url: user_account_path(@user),
+<%= form_for(@user, url: account_form_url,
              html: {id: 'user_account_form', class: 'form-horizontal mb-xl pb-xl'}) do |user_form| %>
     <div class="panel panel-default">
       <div class="panel-body">
@@ -35,13 +35,13 @@
             modifier ses caractéristiques si nécessaire.
           </p>
           <div id="entity_form" class="form-group-lg">
-              <select id="search_entity" class="form-control col-sm-6"></select>
-              <div id="add_new_entity" class="pt">
-                <em class="pr text-sm">La structure ne figure pas dans la liste ?</em>
-                <a class="btn btn-labeled btn-default btn-sm">
-                  <i class="fa fa-plus pr-sm"></i>Ajouter une structure
-                </a>
-              </div>
+            <select id="search_entity" class="form-control col-sm-6"></select>
+            <div id="add_new_entity" class="pt">
+              <em class="pr text-sm">La structure ne figure pas dans la liste ?</em>
+              <a class="btn btn-labeled btn-default btn-sm">
+                <i class="fa fa-plus pr-sm"></i>Ajouter une structure
+              </a>
+            </div>
           </div>
         </fieldset>
         <fieldset id="entity_form_fields" style="<%= 'display: none;' unless @user.legal_entity_id %>">

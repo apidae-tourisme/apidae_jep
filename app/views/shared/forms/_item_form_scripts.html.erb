@@ -8,6 +8,11 @@
         $("#program_item_main_lng").val(feature.geometry.coordinates[0]);
     }
 
+    function setStatus(status) {
+        $('#program_item_status').val(status);
+        $('#program_item_author').val('<%= current_user ? current_user.full_name : current_moderator.full_name %>');
+    }
+
     function bindDragToLatLng(marker) {
         marker.on('dragend', function(e) {
             var newLatLng = e.target._latlng;

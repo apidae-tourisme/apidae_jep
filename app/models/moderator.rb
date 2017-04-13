@@ -15,6 +15,10 @@ class Moderator < ActiveRecord::Base
     moderator
   end
 
+  def full_name
+    "#{first_name} #{last_name.upcase if last_name}"
+  end
+
   private
 
   def self.compute_member_ref(postal_code)

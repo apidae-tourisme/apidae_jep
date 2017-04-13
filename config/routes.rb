@@ -52,10 +52,7 @@ Rails.application.routes.draw do
   namespace :moderator, path: 'validation' do
     scope(path_names: {new: 'creer', edit: 'modifier'}) do
       concerns :programs_routes
-      resources :user, controller: 'accounts', path: 'comptes', as: 'accounts', only: [:index, :edit, :update] do
-        get 'search_entity', on: :collection, as: 'search_entity'
-        get 'towns', on: :collection, as: 'towns'
-      end
+      resources :users, controller: 'accounts', path: 'comptes', as: 'accounts', only: [:index, :edit, :update]
     end
   end
 

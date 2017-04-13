@@ -48,13 +48,13 @@ Rails.application.configure do
       token_path: '/oauth/token',
       api_url: 'http://api.sitra2-vm-preprod.accelance.net/api/v002/ecriture/',
       criteria_url: 'http://api.sitra2-vm-preprod.accelance.net/api/v002/criteres-internes/',
-      grandlyon: {
-          client_id: '260e54c7-8767-4b02-9ab6-994d5b5274d5',
-          client_secret: 'APAOqE7W1b9sz2p'
+      grand_lyon: {
+          client_id: '83373b93-6c45-4f20-896e-6c61b65c032e',
+          client_secret: 'luF2OrTc5g0Cqma'
       },
       isere: {
-          client_id: 'e71e900f-ef0b-4dae-aac3-f0ff5331677a',
-          client_secret: 'foZt1g8lIRr4wlY',
+          client_id: 'd6c7f113-7b45-4cad-8e5b-57871f595865',
+          client_secret: 'EYYlr20GJoowzmt'
       }
   }
 

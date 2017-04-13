@@ -3,6 +3,9 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
   before_action :set_program_item, only: [:edit, :update, :destroy, :confirm, :reorder, :select_program, :save_program]
 
   def edit
+    if @item.user.legal_entity.external_id.nil?
+      redirect_to edit_moderator_account_url(@item.user, validate: true), notice: "Validation de la structure organisatrice requise"
+    end
   end
 
   def update

@@ -267,6 +267,7 @@
           </div>
         </fieldset>
         <%= item_form.hidden_field :program_id %>
+        <%= item_form.hidden_field :user_id %>
         <%= item_form.hidden_field :status, id: 'program_item_status' %>
         <%= item_form.hidden_field :author, id: 'program_item_author' %>
       </div>
@@ -274,14 +275,14 @@
         <%= link_to 'Annuler', :back, class: 'btn btn-inverse' %>
         <% if current_moderator %>
             <%= item_form.submit 'Valider la saisie', class: 'btn btn-success ml',
-                                 onclick: "$('#program_item_status').val('#{ProgramItem::STATUS_VALIDATED}')" %>
+                                 onclick: "setStatus('#{ProgramItem::STATUS_VALIDATED}')" %>
             <%= item_form.submit 'Rejeter la saisie', class: 'btn btn-danger ml',
-                                 onclick: "$('#program_item_status').val('#{ProgramItem::STATUS_REJECTED}')" %>
+                                 onclick: "setStatus('#{ProgramItem::STATUS_REJECTED}')" %>
         <% elsif current_user %>
             <%= item_form.submit 'Enregistrer comme brouillon', class: 'btn btn-inverse ml',
-                                 onclick: "$('#program_item_status').val('#{ProgramItem::STATUS_DRAFT}')" %>
+                                 onclick: "setStatus('#{ProgramItem::STATUS_DRAFT}')" %>
             <%= item_form.submit 'Transmettre pour validation', class: 'btn btn-primary ml',
-                                 onclick: "$('#program_item_status').val('#{ProgramItem::STATUS_PENDING}')" %>
+                                 onclick: "setStatus('#{ProgramItem::STATUS_PENDING}')" %>
         <% end %>
       </div>
     </div>

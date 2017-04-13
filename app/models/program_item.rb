@@ -2,6 +2,7 @@ class ProgramItem < ActiveRecord::Base
   include LoggableConcern
 
   belongs_to :program
+  belongs_to :user
   has_many :item_openings
   has_many :attached_files
 
@@ -10,6 +11,7 @@ class ProgramItem < ActiveRecord::Base
 
   STATUS_DRAFT = 'draft'
   STATUS_PENDING = 'pending'
+  STATUS_VALIDATING = 'validating'
   STATUS_VALIDATED = 'validated'
   STATUS_REJECTED = 'rejected'
 

@@ -1,2 +1,21 @@
-<h1>Moderator::Accounts#edit</h1>
-<p>Find me in app/views/moderator/accounts/edit.html.erb</p>
+<div class="content-heading">Paramétrage du compte</div>
+<% if @validate %>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <p class="mb0">
+          <em class="icon-info pr-sm"></em>Une nouvelle structure organisatrice a été saisie pour cette programmation. Avant de poursuivre, nous vous
+          invitons à vérifier son contenu afin de l'enregistrer dans la base de données ApidaeJEP.
+        </p>
+      </div>
+    </div>
+<% end %>
+<% if alert %>
+    <div class="panel panel-danger">
+      <div class="panel-heading">
+        <p class="mb0">
+          <em class="icon-exclamation pr-sm"></em><%= alert %>
+        </p>
+      </div>
+    </div>
+<% end %>
+<%= render 'shared/forms/account_form', account_form_url: moderator_account_path(@user) %>

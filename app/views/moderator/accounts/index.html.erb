@@ -22,7 +22,7 @@
                     <td><%= account.email %></td>
                     <td><%= account.telephone %></td>
                     <td class="text-center">
-                      <%= link_to '<i class="icon-note text-md"></i>'.html_safe, '#' %>
+                      <%= link_to '<i class="icon-note text-md"></i>'.html_safe, edit_moderator_account_path(account) %>
                     </td>
                   </tr>
               <% end %>

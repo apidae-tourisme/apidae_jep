@@ -1,12 +1,12 @@
 <div class="content-heading">Paramétrage du compte</div>
 <% unless @user.legal_entity_id %>
-<div class="panel panel-info">
-  <div class="panel-body">
+<div class="panel panel-primary">
+  <div class="panel-heading">
     <p class="mb0">
-      Avant de commencer votre saisie, veuillez compléter les informations concernant votre compte et votre structure
-      organisatrice ci-dessous.
+      <em class="icon-info pr-sm"></em>Avant de commencer votre saisie, veuillez compléter les informations concernant
+      votre compte et votre structure organisatrice ci-dessous.
     </p>
   </div>
 </div>
 <% end %>
-<%= render 'form' %>
+<%= render 'shared/forms/account_form', account_form_url: user_account_path(@user) %> %>

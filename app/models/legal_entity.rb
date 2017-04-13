@@ -22,7 +22,7 @@ class LegalEntity < ActiveRecord::Base
   end
 
   def full_address
-    (address.values + [postal_code, town]).join("\n")
+    (address.values + [town.postal_code, town.name]).join("\n")
   end
 
   def label
@@ -88,14 +88,7 @@ class LegalEntity < ActiveRecord::Base
     end
   end
 
-  def remote_save(member_ref, commune_id)
-    if town.blank? && postal_code.blank?
-      town_entry = Town.where(external_id: commune_id).first
-      if town_entry
-        self.town = town_entry.name
-        self.postal_code = town_entry.postal_code
-      end
-    end
+  def remote_save(member_ref)
     response = save_to_apidae(member_ref, build_multipart_form, :api_url, :put)
     if response['id']
       self.external_id = response['id']
@@ -131,8 +124,8 @@ class LegalEntity < ActiveRecord::Base
             phone: phone,
             website: website,
             address: adresse1,
-            postal_code: postal_code,
-            town: town,
+            postal_code: town.postal_code,
+            town: town.name,
             external_id: external_id
         }
     )
@@ -155,9 +148,9 @@ class LegalEntity < ActiveRecord::Base
         localisation: {
             adresse: {
                 adresse1: adresse1,
-                codePostal: postal_code,
+                codePostal: town.postal_code,
                 etat: 'France',
-                commune: {id: Town.find_by_name(town).external_id}
+                commune: {id: town.external_id}
             }
         },
         informations: {
