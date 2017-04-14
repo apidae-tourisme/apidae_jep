@@ -22,11 +22,10 @@ class Moderator < ActiveRecord::Base
   private
 
   def self.compute_member_ref(postal_code)
-    puts "postal_code: #{postal_code}"
     if postal_code
       if postal_code.start_with?('69')
         GRAND_LYON
-      elsif postal_code.start_with?('38')
+      elsif postal_code.start_with?('38') || postal_code.start_with?('73') || postal_code.start_with?('26')
         ISERE
       end
     else
