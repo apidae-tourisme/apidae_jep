@@ -53,15 +53,16 @@ ACCESSIBILITY = {
 }
 
 APIDAE_CRITERIA = {
-    '1ère ouverture' => 7997,
-    'En bus' => 7999,
-    'Parcours en extérieur' => 8000,
-    "Visite d'un édifice ou d'un parc / jardin" => 8001,
-    "Visite libre" => nil
+    'Nouveauté' => 7997,
+    "Visite libre" => 8767,
+    "La Métropole au fil de l'eau" => 8776,
+    'Egalité' => 8777,
+    'animation' => 8769,
+    'parcours' => 8768
 }
 
 APIDAE_TYPOLOGIES = {
-    'Thématique 2017' => 4693
+    'Thématique 2017' => 4927
 }
 
 APIDAE_THEMES = {

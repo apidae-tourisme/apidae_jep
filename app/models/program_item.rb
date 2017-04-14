@@ -96,7 +96,7 @@ class ProgramItem < ActiveRecord::Base
     response = save_to_apidae(user.territory, form_data, :api_url, :put)
 
     if external_id || (response['id'] && update_attributes!(external_id: response['id'], external_status: response['status']))
-      update_apidae_criteria(user.territory, build_criteria)
+      update_apidae_criteria(user.territory, build_criteria(themes + criteria))
     end
   end
 
@@ -395,17 +395,16 @@ class ProgramItem < ActiveRecord::Base
     result
   end
 
-  # Todo (criteres internes absents en preprod)
-  def build_criteria
-    # active_categories = data.deep_symbolize_keys[:categories] || []
-    #
-    # criteria_refs = APIDAE_CRITERIA
-    #
-    # added = active_categories.select {|c| criteria_refs.keys.include?(c)}.collect {|c| criteria_refs[c]}
-    # removed = criteria_refs.values - added
-    #
-    # {added: added, removed: removed}
-    {added: [], removed: []}
+  def build_criteria(selected = [])
+    input_refs = selected + [item_type]
+    added = []
+    removed = []
+    APIDAE_CRITERIA.each_pair do |crit, id|
+      added << id if input_refs.include?(crit.parameterize)
+    end
+    # Todo : handle removed
+
+    {added: added, removed: removed}
   end
 
   def opening_times(openings)
