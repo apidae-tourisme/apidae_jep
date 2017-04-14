@@ -104,10 +104,11 @@ class ProgramItem < ActiveRecord::Base
     merged = {}
 
     unless location_data.nil? || location_data.empty?
+      place_town = Town.find_by_postal_code(main_postal_code)
       merged[:place] = {
           name: main_place, startingPoint: alt_place, address: main_address,
           postal_code: main_postal_code, latitude: main_lat, longitude: main_lng,
-          extraInfo: main_transports
+          extraInfo: main_transports, external_id: place_town.external_id
       }
     end
 
@@ -149,7 +150,8 @@ class ProgramItem < ActiveRecord::Base
     form_data = {
         mode: external_id ? WritableConcern::UPDATE : WritableConcern::CREATE,
         id: (external_id if external_id),
-        type: 'FETE_ET_MANIFESTATION'
+        type: 'FETE_ET_MANIFESTATION',
+        skipValidation: 'true'
     }
 
     form_data[:fields] = '["root"]'
@@ -414,11 +416,11 @@ class ProgramItem < ActiveRecord::Base
       opening_time = {
           dateDebut: date.strftime('%F'),
           dateFin: date.strftime('%F'),
-          horaireOuverture: ref_opening.starts_at.strftime('%H:%M'),
+          horaireOuverture: ref_opening.starts_at.strftime('%T'),
           type: 'OUVERTURE_TOUS_LES_JOURS',
           tousLesAns: false
       }
-      opening_time[:horaireFermeture] = ref_opening.ends_at.strftime('%H:%M') if ref_opening.ends_at
+      opening_time[:horaireFermeture] = ref_opening.ends_at.strftime('%T') if ref_opening.ends_at
       opening_times << opening_time
     end
     opening_times

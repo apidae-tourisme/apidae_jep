@@ -27,7 +27,7 @@ class Moderator::AccountsController < Moderator::ModeratorController
       if e.response.parsed
         logger.error "Apidae error : #{e.response.parsed['errorType']} - #{e.response.parsed['message']} - user : #{@user.id}"
         error_msg = e.response.parsed['message']
-        error_msg = error_msg.split("\n").first if errort_msg && error_msg.include?("\n")
+        error_msg = error_msg.split("\n").first if error_msg && error_msg.include?("\n")
         flash.now[:alert] = "Une erreur s'est produite au cours de l'enregistrement dans la base " +
             "de données Apidae.\nLe message fourni est le suivant : #{error_msg}"
       else

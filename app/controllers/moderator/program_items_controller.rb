@@ -1,5 +1,7 @@
 #encoding: UTF-8
 
+require 'raven'
+
 class Moderator::ProgramItemsController < Moderator::ModeratorController
   before_action :set_program
   before_action :set_program_item, only: [:edit, :update, :destroy, :confirm, :reorder, :select_program, :save_program]
@@ -24,7 +26,7 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
       if e.response.parsed
         logger.error "Apidae error : #{e.response.parsed['errorType']} - #{e.response.parsed['message']} - item : #{@item.id}"
         error_msg = e.response.parsed['message']
-        error_msg = error_msg.split("\n").first if errort_msg && error_msg.include?("\n")
+        error_msg = error_msg.split("\n").first if error_msg && error_msg.include?("\n")
         flash.now[:alert] = "Une erreur s'est produite au cours de l'enregistrement dans la base " +
             "de données Apidae.\nLe message fourni est le suivant : #{error_msg}"
       else
