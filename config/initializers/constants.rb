@@ -36,10 +36,67 @@ CRITERIA = {
 }
 
 ACCESSIBILITY = {
-    GRAND_LYON => ["Personnes à mobilité réduite (accès total)", "Personnes à mobilité réduite (accès partiel)",
-                   "Personnes malentendantes ou sourdes", "Personnes malvoyantes ou non voyantes",
-                   "Non accessible en fauteuil roulant"],
-    ISERE => ["Personnes à mobilité réduite (accès total)", "Personnes à mobilité réduite (accès partiel)",
-                   "Personnes malentendantes ou sourdes", "Personnes malvoyantes ou non voyantes",
-                   "Non accessible en fauteuil roulant"]
+    GRAND_LYON => {
+        'fully_accessible' => "Personnes à mobilité réduite (accès total)",
+        'partly_accessible' => "Personnes à mobilité réduite (accès partiel)",
+        'not_accessible' => "Non accessible en fauteuil roulant",
+        'deaf_people' => "Personnes malentendantes ou sourdes",
+        'blind_people' => "Personnes malvoyantes ou non voyantes"
+    },
+    ISERE => {
+        'fully_accessible' => "Personnes à mobilité réduite (accès total)",
+        'partly_accessible' => "Personnes à mobilité réduite (accès partiel)",
+        'not_accessible' => "Non accessible en fauteuil roulant",
+        'deaf_people' => "Personnes malentendantes ou sourdes",
+        'blind_people' => "Personnes malvoyantes ou non voyantes"
+    }
+}
+
+APIDAE_CRITERIA = {
+    '1ère ouverture' => 7997,
+    'En bus' => 7999,
+    'Parcours en extérieur' => 8000,
+    "Visite d'un édifice ou d'un parc / jardin" => 8001,
+    "Visite libre" => nil
+}
+
+APIDAE_TYPOLOGIES = {
+    'Thématique 2017' => 4693
+}
+
+APIDAE_THEMES = {
+    'Conte' => 2276,
+    'Lecture' => 2308,
+    "Sur l'eau" => 2173,
+    'En vélo' => 2338,
+    'Balade contée' => 2158,
+    'Cinéma' => 2133,
+    'Dessin' => 2304,
+    'Loisirs créatifs' => 2144,
+    'Peinture' => 2232,
+    'Photographie' => 2235,
+    'Antiquité' => 2274,
+    'Archéologie' => 3831,
+    'Architecture' => 2126,
+    'Art contemporain' => 2159,
+    'Artisanat' => 2069,
+    'Littérature' => 2210
+}
+
+APIDAE_CATEGORIES = {
+    'Démonstration' => 3871,
+    'Atelier' => 2119,
+    'Jeux' => 2112,
+    'Visite guidée' => 2101,
+    'Concert' => 2128,
+    'Conférence' => 2072,
+    'Exposition' => 2080,
+    'Projection' => 3818,
+    'Spectacle' => 2091,
+    'Dégustation' => 3717,
+    'Goûter' => 2123,
+    'Marché' => 2083,
+    'Théâtre' => 2134,
+    'Danse' => 2151,
+    "Visite d'un site / monument" => 4546
 }

@@ -126,11 +126,11 @@
           <div class="form-group mt-lg mdy">
             <label class="col-sm-3 control-label mdy">Accessibilité</label>
             <div class="col-sm-9">
-              <% accessibility.each do |acc| %>
+              <% accessibility.each_pair do |ref, label| %>
                   <label class="checkbox-inline c-checkbox ml0 mr-lg">
-                    <%= check_box_tag 'program_item[accessibility][]', acc.parameterize,
-                                      (@item.accessibility && @item.accessibility.include?(acc.parameterize)) %>
-                    <span class="fa fa-check"></span><%= acc %>
+                    <%= check_box_tag 'program_item[accessibility][]', ref,
+                                      (@item.accessibility && @item.accessibility.include?(ref)) %>
+                    <span class="fa fa-check"></span><%= label %>
                   </label>
               <% end %>
             </div>

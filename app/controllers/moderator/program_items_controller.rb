@@ -1,3 +1,5 @@
+#encoding: UTF-8
+
 class Moderator::ProgramItemsController < Moderator::ModeratorController
   before_action :set_program
   before_action :set_program_item, only: [:edit, :update, :destroy, :confirm, :reorder, :select_program, :save_program]
@@ -9,11 +11,28 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
   end
 
   def update
-    if @item.update(item_params)
-      redirect_to confirm_moderator_program_program_item_url(@program.id, @item)
-    else
-      render :edit, notice: "Une erreur est survenue lors de la mise à jour de l'offre."
+    begin
+      if @item.update(item_params)
+        if @item.validated? && @item.remote_save
+          redirect_to edit_moderator_program_url(@item.program), notice: "L'offre a bien été enregistrée." and return
+        else
+          redirect_to edit_moderator_program_url(@item.program), notice: "L'offre a bien été mise à jour." and return
+        end
+      end
+    rescue OAuth2::Error => e
+      Raven.capture_exception(e)
+      if e.response.parsed
+        logger.error "Apidae error : #{e.response.parsed['errorType']} - #{e.response.parsed['message']} - item : #{@item.id}"
+        error_msg = e.response.parsed['message']
+        error_msg = error_msg.split("\n").first if errort_msg && error_msg.include?("\n")
+        flash.now[:alert] = "Une erreur s'est produite au cours de l'enregistrement dans la base " +
+            "de données Apidae.\nLe message fourni est le suivant : #{error_msg}"
+      else
+        logger.error "Apidae error : #{e.response} - item : #{@item.id}"
+        flash.now[:alert] = "Une erreur s'est produite au cours de l'enregistrement dans la base de données Apidae."
+      end
     end
+    render :edit, notice: "Une erreur est survenue lors de la mise à jour de l'offre."
   end
 
   def destroy
