@@ -136,7 +136,9 @@
         datepicker.datetimepicker({
             locale: 'fr',
             viewDate: '2017-09-16',
-            defaultDate: false,
+            minDate: '2017-09-16',
+            maxDate: '2017-09-18',
+            defaultDate: '2017-09-16',
             useCurrent: false,
             format: 'YYYY-MM-DD HH:mm',
             sideBySide: true,
@@ -157,7 +159,7 @@
         timepicker.datetimepicker({
             locale: 'fr',
             viewDate: '2017-09-16',
-            defaultDate: false,
+            defaultDate: '2017-09-16 00:00',
             useCurrent: false,
             format: 'HH:mm',
             sideBySide: true,
@@ -206,7 +208,7 @@
     function displayOpeningModal(identifier, clearOnDismiss) {
         var openingId = "program_item_item_openings_attributes_" + identifier;
         $("#lg_modal").find("#lg_modal_title").html("Modifier la période d'ouverture");
-        $("#lg_modal").find("#lg_modal_body").html("<%= j(render 'edit_opening_form') %>");
+        $("#lg_modal").find("#lg_modal_body").html("<%= j(render 'shared/forms/opening_form', opening_form_path: opening_form_path) %>");
         $("#lg_modal").modal();
         $("#lg_modal").drags({handle: '.modal-header'});
         $("#starts_at").val($("#" + openingId + "_starts_at").val() ? moment($("#" + openingId + "_starts_at").val()).format('YYYY-MM-DD HH:mm') : '');
@@ -254,6 +256,15 @@
         });
     }
 
+    function toggleBuildingFields() {
+        var selected = $("#item_types").find("input[type=radio]:checked").val();
+        if(selected == '<%= ITEM_VISITE %>') {
+            $("#building_fields").show();
+        } else {
+            $("#building_fields").hide();
+        }
+    }
+
     $(function() {
         bindOpeningsActions();
         var map = initMap('item_map', 8, 6);
@@ -268,6 +279,7 @@
             displayOpeningModal(tmpIdentifier, true);
         });
         $("#item_types").find("input[type=radio]").change(function() {
+            toggleBuildingFields();
             $.ajax({
                 url: '<%= update_form_path %>',
                 method: 'GET',
@@ -280,6 +292,7 @@
         toggleDisplay("free_toggle", "false");
         setUpToggle("booking_toggle", "true");
         toggleDisplay("booking_toggle", "true");
+        toggleBuildingFields();
 
         function injectTrim(handler) {
             return function (element, event) {

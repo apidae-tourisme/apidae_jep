@@ -4,14 +4,27 @@ class User::ProgramItemsController < User::UserController
                                           :duplicate]
 
   def new
-    @item = ProgramItem.new(program_id: @program.id, item_type: ITEM_VISITE, free: true, booking: false,
-                            accept_pictures: '0', user_id: current_user.id)
+    if params[:id].blank?
+      @item = ProgramItem.new(program_id: @program.id, item_type: ITEM_VISITE, free: true, booking: false,
+                              accept_pictures: '0', user_id: current_user.id, rev: 1, status: ProgramItem::STATUS_DRAFT)
+    else
+      previous_version = ProgramItem.find(params[:id])
+      @item = previous_version.dup
+      @item.status = ProgramItem::STATUS_DRAFT
+      @item.external_status = nil
+      @item.rev += 1
+      @item.reference = previous_version.reference
+      previous_version.item_openings.each do |o|
+        @item.item_openings << o.dup
+      end
+    end
   end
 
   def create
     @item = ProgramItem.new(item_params)
     @item.ordering = @program.program_items.count
-    if @item.save && @item.update(reference: @item.id, rev: 1)
+    if @item.save
+      @item.update(reference: @item.id) unless @item.reference
       redirect_to confirm_user_program_program_item_url(@program.id, @item)
     else
       render :new, notice: "Une erreur est survenue lors de la création de l'offre."
@@ -58,12 +71,18 @@ class User::ProgramItemsController < User::UserController
   def duplicate
     @new_item = @item.dup
     @new_item.external_id = nil
+    @new_item.external_status = nil
+    @new_item.rev = 1
     @new_item.user_id = current_user.id
     @new_item.status = ProgramItem::STATUS_DRAFT
     @item.item_openings.each do |o|
-      @new_item.item_openings << o
+      @new_item.item_openings << o.dup
     end
-    if @new_item.save && @new_item.update(reference: @new_item.id, rev: 1)
+    if @new_item.save
+      @new_item.update(reference: @new_item.id)
+      @item.attached_files.each do |f|
+        AttachedFile.create(data: f.data, picture: f.picture, program_item_id: @new_item.id)
+      end
       redirect_to edit_user_program_url(@program), notice: "L'offre a bien été dupliquée."
     else
       render :edit, notice: "Une erreur est survenue lors de la duplication de l'offre."

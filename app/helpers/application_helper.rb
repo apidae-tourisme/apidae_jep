@@ -8,14 +8,14 @@ module ApplicationHelper
   end
 
   def date_select_tag(method, html_options = {})
-    content_tag(:div, :class => 'input-group date datepicker w100') do
-      text_field('opening', method, {class: 'hidden'}.merge(html_options))
+    content_tag(:div, :class => 'input-group date datepicker w100 p-lg') do
+      text_field('opening', method, {class: 'hidden', placeholder: ''}.merge(html_options))
     end
   end
 
   def time_select_tag(method, html_options = {})
-    content_tag(:div, :class => 'input-group date datetimepicker mauto bg-white p') do
-      text_field('opening', method, {class: 'hidden'}.merge(html_options))
+    content_tag(:div, :class => 'input-group date datetimepicker mauto p') do
+      text_field('opening', method, {class: 'hidden', placeholder: ''}.merge(html_options))
     end
   end
 
@@ -40,6 +40,24 @@ module ApplicationHelper
       else
         'fa-institution'
     end
+  end
+
+  def item_color(item_status)
+    case item_status
+      when ProgramItem::STATUS_PENDING
+        'warning'
+      when ProgramItem::STATUS_VALIDATED
+        'success'
+      when ProgramItem::STATUS_REJECTED
+        'danger'
+      else
+        'inverse'
+    end
+  end
+
+  def render_log_entry(entry)
+    (I18n.l(Time.at(entry[:timestamp].to_i).to_datetime, format: :detailed) +
+        (entry[:author].blank? ? '' : "&nbsp;&nbsp;<small>#{entry[:author]}</small>")).html_safe
   end
 end
 

@@ -22,7 +22,7 @@ fr:
             password_confirmation:
               confirmation: 'Les deux mots de passe saisis ne correspondent pas.'
   territory:
-    grand_lyon: "Métropole du Grand Lyon"
+    grand_lyon: "Grand Lyon"
     isere: "Département de l'Isère"
   user:
     fields:

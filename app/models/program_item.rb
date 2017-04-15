@@ -51,6 +51,10 @@ class ProgramItem < ActiveRecord::Base
     end
   end
 
+  def last_revision
+    ProgramItem.where(reference: reference).order(:rev).last
+  end
+
   def picture
     attached_files.first.picture.url if attached_files.any?
   end
@@ -69,6 +73,10 @@ class ProgramItem < ActiveRecord::Base
 
   def draft?
     status == STATUS_DRAFT
+  end
+
+  def new_item?
+    !persisted? && rev == 1
   end
 
   def self.pending(program_id = nil)

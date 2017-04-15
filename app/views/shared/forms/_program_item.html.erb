@@ -12,43 +12,46 @@
            <% end %>
         </picture>
       </div>
-      <div class="col-xs-9 ph-xl">
-        <div class="item_actions">
-          <%= link_to '<em class="icon-note"></em>'.html_safe,
-                      url_for(controller: item_controller, action: :edit, program_id: @program.id, id: item.id),
-                      class: 'btn btn-primary', title: 'Modifier' %>
-          <% if current_user %>
-          <%= link_to '<em class="icon-docs"></em>'.html_safe,
-                      duplicate_user_program_program_item_path(@program.id, item), method: :post,
-                      class: 'btn btn-primary', title: 'Dupliquer' %>
-          <% end %>
-          <div class="btn-group">
-            <button type="button" data-toggle="dropdown" class="btn dropdown-toggle btn-default">
-              <em class="fa icon-share-alt"></em>
-            </button>
-            <ul role="menu" class="dropdown-menu">
-              <li>
-                <%= link_to '<em class="icon-arrow-up-circle pr-sm"></em>Déplacer vers le haut'.html_safe,
-                            url_for(controller: item_controller, action: :reorder, program_id: @program.id, id: item.id, direction: 'up'),
-                            method: :patch %>
-              </li>
-              <li>
-                <%= link_to '<em class="icon-arrow-down-circle pr-sm"></em>Déplacer vers le bas'.html_safe,
-                            url_for(controller: item_controller, action: :reorder, program_id: @program.id, id: item.id, direction: 'down'),
-                            method: :patch %>
-              </li>
-              <li>
-                <%= link_to '<em class="icon-share-alt pr-sm"></em>Changer de programmation'.html_safe,
-                            url_for(controller: item_controller, action: :select_program, program_id: @program.id, id: item.id),
-                            remote: true %>
-              </li>
-            </ul>
-          </div>
-        </div>
+      <div class="col-xs-7 ph-lg">
         <h3 class="mt">
-          <%= item.title.blank? ? "Offre #{i}" : item.title %>
+          <%= item.title.blank? ? "Offre #{i}" : item.title %>&nbsp;
+          <span class="label text-sm text-normal label-<%= item_color(item.status) %>"><%= t "program_item.status.#{item.status}" %></span>
         </h3>
         <p class="pre"><%= ellipsis(item.description) %></p>
+      </div>
+      <div class="col-xs-2 p-lg text-right vat">
+        <% if current_user || item.pending? %>
+            <%= link_to '<span class="btn-label"><em class="icon-note"></em></span>Modifier'.html_safe,
+                        url_for(controller: item_controller, action: ((item.pending? || item.draft?) ? :edit : :new), program_id: @program.id, id: item.id),
+                        class: 'btn btn-labeled btn-default btn-block', title: 'Modifier' %>
+        <% end %>
+        <% if current_user %>
+            <%= link_to '<span class="btn-label"><em class="icon-docs"></em></span>Dupliquer'.html_safe,
+                        duplicate_user_program_program_item_path(@program.id, item), method: :post,
+                        class: 'btn btn-labeled btn-default btn-block', title: 'Dupliquer' %>
+        <% end %>
+        <div class="btn-group btn-block">
+          <button type="button" data-toggle="dropdown" class="btn dropdown-toggle btn-labeled btn-default btn-block">
+            <span class="btn-label"><em class="icon-share-alt"></em></span>Déplacer
+          </button>
+          <ul role="menu" class="dropdown-menu">
+            <li>
+              <%= link_to '<em class="icon-arrow-up-circle pr-sm"></em>Déplacer vers le haut'.html_safe,
+                          url_for(controller: item_controller, action: :reorder, program_id: @program.id, id: item.id, direction: 'up'),
+                          method: :patch %>
+            </li>
+            <li>
+              <%= link_to '<em class="icon-arrow-down-circle pr-sm"></em>Déplacer vers le bas'.html_safe,
+                          url_for(controller: item_controller, action: :reorder, program_id: @program.id, id: item.id, direction: 'down'),
+                          method: :patch %>
+            </li>
+            <li>
+              <%= link_to '<em class="icon-share-alt pr-sm"></em>Changer de programmation'.html_safe,
+                          url_for(controller: item_controller, action: :select_program, program_id: @program.id, id: item.id),
+                          remote: true %>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

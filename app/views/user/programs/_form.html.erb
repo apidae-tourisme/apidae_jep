@@ -1,29 +1,38 @@
 <div id="program_form">
-  <%= form_for([:user, @program], html: {class: 'mt-xl form-horizontal'}) do |f| %>
-      <fieldset>
-        <div class="form-group">
-          <label class="col-sm-3 control-label">Titre général des offres<%= help_button %></label>
-          <%= help_content("Contenu de l'aide pour le titre des offres") %>
-          <div class="col-sm-7"><%= f.text_field :title, class: 'form-control' %></div>
-          <div class="col-sm-2"><%= f.submit 'Enregistrer', class: 'btn btn-primary' %></div>
-        </div>
-      </fieldset>
+  <div class="panel">
+  <%= form_for([:user, @program], html: {class: 'mv-lg form-horizontal'}) do |f| %>
+      <div class="form-group-lg clearfix">
+        <label class="col-sm-3 control-label">Titre général des offres<%= help_button %></label>
+        <%= help_content("Contenu de l'aide pour le titre des offres") %>
+        <div class="col-sm-9"><%= f.text_field :title, class: 'form-control' %></div>
+      </div>
+      <div class="clear pt-lg ph-lg text-right">
+        <%= link_to 'Retour', user_dashboard_path, class: 'btn btn-lg btn-danger' %>
+        <%= f.submit (@program.persisted? ? "Mettre à jour le titre" : "Créer la programmation"),
+                                             class: 'btn btn-lg btn-primary' %>
+      </div>
   <% end %>
+  </div>
   <% if @program.persisted? %>
-  <div class="pt-lg pb">
-    <div class="pull-right">
-      <%= link_to '<span class="btn-label"><i class="fa fa-plus"></i></span>Nouvelle offre'.html_safe,
-                  new_user_program_program_item_path(@program.id), class: 'btn btn-primary btn-labeled' %>
+  <div class="pt pb">
+    <div class="panel panel-primary mb-sm">
+      <div class="panel-heading">
+        <div class="pull-right">
+          <%= link_to '<i class="fa fa-plus pr-sm"></i>Ajouter une offre'.html_safe,
+                      new_user_program_program_item_path(@program.id), class: 'text-white' %>
+        </div>
+        <h4 class="text-uppercase m0">Mes offres</h4>
+      </div>
     </div>
-    <h3 class="mt0">Mes offres</h3>
+
     <% unless @program.program_items.any? %>
-        <p>Aucune offre saisie pour le moment.</p>
+        <p class="mt-lg">Aucune offre saisie dans cette programmation.</p>
     <% end %>
   </div>
   <% end %>
 
   <div id="program_items" class="row">
-    <% @program.ordered_items.each_with_index do |item, i| %>
+    <% @program.active_items.each_with_index do |item, i| %>
         <%= render 'shared/forms/program_item', item_controller: 'user/program_items', item: item, i: i %>
     <% end %>
   </div>

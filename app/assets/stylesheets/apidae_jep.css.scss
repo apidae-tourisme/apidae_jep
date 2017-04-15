@@ -6,6 +6,10 @@
   vertical-align: middle;
 }
 
+.vat {
+  vertical-align: top !important;
+}
+
 .text-std {
   font-size: 20px;
 }
@@ -16,6 +20,14 @@
 
 .w100 {
   width: 100%;
+}
+
+.w25 {
+  width: 25%;
+}
+
+.btn.btn-labeled {
+  text-align: left;
 }
 
 nav.topnavbar .navbar-header .brand-logo-collapsed {
@@ -75,6 +87,10 @@ form .item_photos img {
   max-height: 160px;
 }
 
+#item_types label.btn.active {
+  color: #6eb1c6;
+}
+
 #program_items picture.lateral-picture {
   height: 160px;
   line-height: 160px;
@@ -83,17 +99,12 @@ form .item_photos img {
   overflow: hidden;
 }
 
-#program_items h3 {
-  padding-right: 200px;
+#program_items h3 > span {
+  vertical-align: bottom;
+  line-height: 24px;
 }
 
-#program_items .item_actions {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-}
-
-#program_items .item_actions .dropdown-menu {
+#program_items .btn-group .dropdown-menu {
   right: 0;
   left: auto;
 }
@@ -102,13 +113,9 @@ form .item_photos img {
   overflow: visible;
 }
 
-// datetime picker custom styling
-#edit_opening #edit_start_date {
-  border-right: 15px solid #e4eaec;
-}
-
-#edit_opening #edit_end_date {
-  border-left: 15px solid #e4eaec;
+#edit_opening .date.datepicker, #edit_opening .date.datetimepicker {
+  border: 1px solid #dde6e9;
+  border-radius: 6px;
 }
 
 #edit_opening .timepicker-picker table td.separator {
@@ -139,6 +146,10 @@ form .item_photos img {
   font-size: 1.6em;
 }
 
+#edit_opening .datepicker td.day.disabled {
+  color: #ccc;
+}
+
 #edit_opening .bootstrap-datetimepicker-widget a[data-action] {
   padding: 0;
 }
@@ -154,6 +165,7 @@ form .item_photos img {
 #edit_opening li.picker-switch td > a > span.icon-trash {
   height: 2em;
   line-height: 2em;
+  width: 100%;
 }
 
 #edit_opening li.picker-switch td > a > span.icon-trash:after {
@@ -161,6 +173,22 @@ form .item_photos img {
   margin-left: 5px;
   content: 'Supprimer';
   font-family: "Source Sans Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+#edit_start_date div.datepicker,
+#edit_end_date div.datepicker {
+  padding-right: 0;
+}
+
+.picker_sm ul {
+  font-size: 1em;
+}
+
+.picker_sm .bootstrap-datetimepicker-widget table td,
+.picker_sm .bootstrap-datetimepicker-widget table td span {
+  height: 24px;
+  width: 36px;
+  line-height: 24px;
 }
 
 #program_item_form legend.openings {

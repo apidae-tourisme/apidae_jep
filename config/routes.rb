@@ -18,11 +18,11 @@ Rails.application.routes.draw do
   end
 
   authenticated :user do
-    get '/', to: 'user/dashboard#index'
+    get '/', to: 'user/dashboard#index', as: 'user_dashboard'
   end
 
   authenticated :moderator do
-    get '/', to: 'moderator/dashboard#index'
+    get '/', to: 'moderator/dashboard#index', as: 'moderator_dashboard'
   end
 
   concern :programs_routes do

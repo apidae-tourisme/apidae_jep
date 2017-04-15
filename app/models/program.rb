@@ -11,6 +11,12 @@ class Program < ActiveRecord::Base
         .where(status: [ProgramItem::STATUS_PENDING, ProgramItem::STATUS_VALIDATED, ProgramItem::STATUS_REJECTED])
   end
 
+  def active_items
+    active_ids = program_items.select("MAX(id) AS id").group(:reference)
+    program_items.where(id: active_ids).order(:ordering)
+  end
+
+
   def label(idx)
     title.blank? ? "Programmation #{idx}" : title
   end

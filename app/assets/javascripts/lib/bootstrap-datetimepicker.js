@@ -1052,14 +1052,16 @@
                 },
 
                 incrementHours: function () {
-                    var newDate = date.clone().add(1, 'h');
+                    var refDate = input.val().trim().length !== 0 ? date : options.defaultDate;
+                    var newDate = refDate.clone().add(1, 'h');
                     if (isValid(newDate, 'h')) {
                         setValue(newDate);
                     }
                 },
 
                 incrementMinutes: function () {
-                    var newDate = date.clone().add(options.stepping, 'm');
+                    var refDate = input.val().trim().length !== 0 ? date : options.defaultDate;
+                    var newDate = refDate.clone().add(options.stepping, 'm');
                     if (isValid(newDate, 'm')) {
                         setValue(newDate);
                     }
@@ -1791,7 +1793,8 @@
 
             options.defaultDate = parsedDate;
 
-            if ((options.defaultDate && options.inline) || input.val().trim() === '') {
+            // Patched - do NOT set default value when input is blank
+            if (options.defaultDate && options.inline && input.attr('placeholder') === undefined) {
                 setValue(options.defaultDate);
             }
             return picker;
