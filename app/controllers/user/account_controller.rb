@@ -18,7 +18,7 @@ class User::AccountController < User::UserController
       update_params = user_params
     end
     if @user.update(update_params)
-      redirect_to edit_user_account_url(@user), notice: "Le compte a bien été mis à jour."
+      redirect_to user_dashboard_url, notice: "Le compte a bien été mis à jour."
     else
       render :edit
     end

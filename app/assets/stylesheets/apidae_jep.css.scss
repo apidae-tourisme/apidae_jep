@@ -30,8 +30,12 @@
   text-align: left;
 }
 
+.aside-collapsed .wrapper > .aside .aside-inner {
+  padding-top: 62px;
+}
+
 nav.topnavbar .navbar-header .brand-logo-collapsed {
-  padding: 14px 8px;
+  padding: 14px 10px;
 }
 
 #user_navbar,

@@ -1,19 +1,9 @@
-<h3>Tableau de bord</h3>
+<h3>Bienvenue sur ApidaeJEP</h3>
 <div class="panel panel-info">
-  <div class="panel-heading">
-    <h4 class="m0">Bienvenue sur ApidaeJEP !</h4>
-  </div>
   <div class="panel-body">
     <p class="mb0">
-      Inscrivez ici vos évènements organisés à l'occasion des Journées Européennes du Patrimoine (JEP) dans le territoire
-      de la Métropole de Lyon ou dans le département de l'Isère.
-    </p>
-    <p class="text-right text-bold">
-      Votre équipe Grand Lyon / Isère
-    </p>
-    <p class="text-right mb0">
-      <%= link_to '<span class="btn-label"><i class="fa fa-phone"></i></span>Téléphone'.html_safe, '#', class: 'btn btn-info btn-labeled' %>&nbsp;
-      <%= mail_to 'email@contact', '<span class="btn-label"><i class="fa fa-envelope"></i></span>email@contact'.html_safe, class: 'btn btn-info btn-labeled' %>
+      Inscrivez ici vos offres évènements organisés à l'occasion des Journées Européennes du Patrimoine (JEP)
+      dans le territoire de la Métropole de Lyon ou dans le département de l'Isère.
     </p>
   </div>
 </div>
@@ -72,14 +62,19 @@
   </div>
 </div>
 
-<div class="pt-xl pb">
-  <div class="pull-right">
-    <%= link_to '<span class="btn-label"><i class="fa fa-plus"></i></span>Nouvelle programmation'.html_safe,
-                new_user_program_path, class: 'btn btn-info btn-labeled' %>
+<div class="pv">
+  <div class="panel panel-primary mb-sm">
+    <div class="panel-heading">
+      <div class="pull-right">
+        <%= link_to '<i class="fa fa-plus pr-sm"></i>Démarrer une programmation'.html_safe,
+                    new_user_program_path, class: 'text-white' %>
+      </div>
+      <h4 class="text-uppercase m0">Mes programmations</h4>
+    </div>
   </div>
-  <h3 class="mt0">Mes programmations</h3>
+
   <% unless @programs.any? %>
-    <p>Aucune programmation saisie pour le moment.</p>
+      <p class="mt-lg">Aucune programmation saisie pour le moment.</p>
   <% end %>
 </div>
 
@@ -87,12 +82,14 @@
   <div class="col-xs-12">
   <% if @programs.any? %>
       <% @programs.each_with_index do |prog, i| %>
-      <div class="panel panel-primary">
+      <div class="panel panel-default">
         <div class="panel-heading">
-            <%= prog.label(i + 1) %>
-            <div class="pull-right">
-              <%= link_to 'Voir les détails', edit_user_program_path(prog), class: 'btn btn-labeled btn-default ml' %>
-            </div>
+          <div class="pull-right">
+            <%= link_to '<i class="fa fa-edit pr-sm"></i>Modifier'.html_safe, edit_user_program_path(prog) %>
+            <%= link_to '<i class="fa fa-plus pr-sm"></i>Ajouter une offre'.html_safe,
+                        new_user_program_program_item_path(prog),  class: 'ml-lg' %>
+          </div>
+          <h4 class="m0"><%= prog.label(i + 1) %></h4>
         </div>
         <div class="panel-body">
           <table class="table">
@@ -103,10 +100,10 @@
                   <i class="fa fa-2x <%= item_icon(item) %>"></i>
                 </td>
                 <td class="vam">
-                  <%= item.title %>
+                  <%= item.title %><span class="label label-<%= t "program_item.color.#{item.status}" %> ml-sm"><%= t "program_item.status.#{item.status}" %></span>
                   <div class="pull-right">
-                    <span class="label label-<%= t "program_item.color.#{item.status}" %>"><%= t "program_item.status.#{item.status}" %></span>
-                    <%= link_to '<em class="fa icon-note"></em/>'.html_safe, edit_user_program_program_item_path(prog.id, item),
+                    <%= link_to '<em class="fa icon-note"></em/>'.html_safe,
+                                url_for(controller: 'user/program_items', action: ((item.pending? || item.draft?) ? :edit : :new), program_id: prog.id, id: item.id),
                                 class: 'btn btn-outline btn-sm btn-primary ml-lg' %>
                   </div>
                 </td>

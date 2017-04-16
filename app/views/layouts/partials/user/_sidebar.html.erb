@@ -4,13 +4,13 @@
       <li class="<%= 'active' if controller?('user/dashboard') %>">
         <a href="<%= url_for(controller: 'user/dashboard', action: 'index') %>" title="Tableau de bord">
           <em class="icon-home"></em>
-          <span>Tableau de bord</span>
+          <div class="text-sm">Accueil</div>
         </a>
       </li>
       <li class="<%= 'active' if controller?('user/programs', 'user/program_items') %>">
         <a href="#programs" title="Programmations" data-toggle="collapse" class="collapsed">
           <em class="icon-calendar"></em>
-          <span>Programmations</span>
+          <div class="text-sm">Mes offres</div>
         </a>
         <ul id="programs" class="nav sidebar-subnav collapse">
           <li class="sidebar-subnav-header">Programmations</li>
@@ -25,7 +25,13 @@
       <li class="<%= 'active' if controller?('user/account') %>">
         <a href="<%= url_for(controller: 'user/account', action: 'edit') %>" title="Gestion du compte">
           <em class="icon-user"></em>
-          <span>Gestion du compte</span>
+          <div class="text-sm">Mon compte</div>
+        </a>
+      </li>
+      <li>
+        <a href="#" title="Aide">
+          <em class="icon-question"></em>
+          <div class="text-sm">Aide</div>
         </a>
       </li>
     </ul>

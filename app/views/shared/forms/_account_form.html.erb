@@ -38,45 +38,49 @@
             <select id="search_entity" class="form-control col-sm-6"></select>
             <div id="add_new_entity" class="pt">
               <em class="pr text-sm">La structure ne figure pas dans la liste ?</em>
-              <a class="btn btn-labeled btn-default btn-sm">
-                <i class="fa fa-plus pr-sm"></i>Ajouter une structure
-              </a>
+              <%= link_to '<i class="fa fa-plus pr-sm"></i>Ajouter une structure'.html_safe, '#ok',
+                          class: 'btn btn-labeled btn-default btn-sm', data: {confirm: 'Remplacer la saisie actuelle ?'} %>
             </div>
           </div>
         </fieldset>
         <fieldset id="entity_form_fields" style="<%= 'display: none;' unless @user.legal_entity_id %>">
           <%= user_form.fields_for :legal_entity do |entity_form| %>
               <div class="form-group mdy">
-                <label class="col-sm-2 control-label">Nom</label>
+                <label class="col-sm-2 control-label">Nom de la structure</label>
                 <div class="col-sm-10">
-                  <%= entity_form.text_field :name, class: 'form-control required' %>
+                  <%= entity_form.text_field :name, class: 'form-control required',
+                                             placeholder: 'Nom de la structure organisatrice' %>
                 </div>
               </div>
               <div class="form-group mt-lg mdy">
                 <label class="col-sm-2 control-label">Adresse</label>
                 <div class="col-sm-4">
-                  <%= entity_form.text_field :adresse1, class: 'form-control required' %>
+                  <%= entity_form.text_field :adresse1, class: 'form-control required',
+                                             placeholder: 'Adresse complète, hors commune et code postal' %>
                 </div>
                 <label class="col-sm-2 control-label">Commune</label>
                 <div class="col-sm-4">
                   <%= entity_form.select :town_insee_code, [], {}, class: 'form-control select_town required',
-                                         'data-placeholder' => 'Choix de la ville' %>
+                                         'data-placeholder' => 'Nom ou code postal de la commune' %>
                 </div>
               </div>
               <div class="form-group mt-lg mdy">
                 <label class="col-sm-2 control-label">Téléphone</label>
                 <div class="col-sm-4">
-                  <%= entity_form.text_field :phone, class: 'form-control required' %>
+                  <%= entity_form.text_field :phone, class: 'form-control required',
+                                             placeholder: 'Téléphone fixe ou portable de la structure organisatrice' %>
                 </div>
                 <label class="col-sm-2 control-label">Email</label>
                 <div class="col-sm-4">
-                  <%= entity_form.text_field :email, class: 'form-control email required' %>
+                  <%= entity_form.text_field :email, class: 'form-control email required',
+                                             placeholder: 'Adresse email de la structure organisatrice' %>
                 </div>
               </div>
               <div class="form-group mt-lg">
                 <label class="col-sm-2 control-label">Site web</label>
                 <div class="col-sm-10">
-                  <%= entity_form.text_field :website, class: 'form-control url' %>
+                  <%= entity_form.text_field :website, class: 'form-control url',
+                                             placeholder: 'Adresse du site web de la structure organisatrice' %>
                 </div>
               </div>
               <%= entity_form.hidden_field :id %>
@@ -84,7 +88,7 @@
         </fieldset>
       </div>
       <div class="panel-footer text-right">
-        <%= link_to 'Retour', :back, class: 'btn btn-inverse' %>
+        <%= link_to 'Retour', (current_user ? user_dashboard_path : moderator_dashboard_path), class: 'btn btn-inverse' %>
         <%= user_form.submit 'Enregistrer', class: 'btn btn-primary ml' %>
       </div>
     </div>
@@ -95,7 +99,8 @@
         function initEntityFields(values) {
             $("#user_legal_entity_attributes_name").val(values.text);
             $("#user_legal_entity_attributes_adresse1").val(values.address);
-            $("#user_legal_entity_attributes_town").val(values.town);
+//            $("#user_legal_entity_attributes_town").val(values.town);
+            select2Elt.val(values.town).trigger('change');
             $("#user_legal_entity_attributes_postal_code").val(values.postal_code);
             $("#user_legal_entity_attributes_phone").val(values.phone);
             $("#user_legal_entity_attributes_email").val(values.email);
