@@ -71,10 +71,12 @@
                     <td><span class="label label-inverse"><%= t "program_item.type.#{item.item_type}" %></span></td>
                     <td><%= item.program.structure %></td>
                     <td class="text-center">
-                      <%= link_to '<i class="icon-note text-md"></i>'.html_safe,
-                                  edit_moderator_program_program_item_path(item.program_id, item) %>
-                      <%= link_to '<i class="icon-list text-md"></i>'.html_safe,
-                                  edit_moderator_program_path(item.program), class: 'pl' %>
+                      <%= link_to '<i class="icon-note"></i>'.html_safe,
+                                  edit_moderator_program_program_item_path(item.program_id, item),
+                                  class: 'btn btn-outline btn-sm btn-primary' %>
+                      <%= link_to '<i class="icon-list"></i>'.html_safe,
+                                  edit_moderator_program_path(item.program),
+                                  class: 'btn btn-outline btn-sm btn-primary ml' %>
                     </td>
                   </tr>
               <% end %>
