@@ -4,19 +4,19 @@
       <li class="<%= 'active' if controller?('moderator/dashboard') %>">
         <a href="<%= url_for(controller: 'moderator/dashboard', action: 'index') %>" title="Tableau de bord">
           <em class="icon-home"></em>
-          <span>Tableau de bord</span>
+          <div class="text-sm">Accueil</div>
         </a>
       </li>
       <li class="<%= 'active' if controller?('moderator/programs', 'moderator/program_items') %>">
         <a href="<%= moderator_programs_path %>" title="Programmations">
           <em class="icon-calendar"></em>
-          <span>Programmations</span>
+          <div class="text-sm">Les offres</div>
         </a>
       </li>
       <li class="<%= 'active' if controller?('moderator/accounts') %>">
         <a href="<%= moderator_accounts_path %>" title="Gestion des comptes">
           <em class="icon-people"></em>
-          <span>Gestion du compte</span>
+          <div class="text-sm">Les comptes</div>
         </a>
       </li>
     </ul>

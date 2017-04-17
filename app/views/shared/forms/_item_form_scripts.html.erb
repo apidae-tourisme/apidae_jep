@@ -313,6 +313,10 @@
             return $("fieldset.opening").length > 0;
         }, "champ requis");
 
+        $.validator.addMethod('accept_pictures', function(value, element) {
+            return $("fieldset.item_photos").find("fieldset.nested-fields:visible").length == 0 || value;
+        });
+
         $("#program_item_form").validate({
             errorPlacement: function errorPlacement(error, element) {
                 if(element.is("input[type=checkbox]")) {
@@ -329,7 +333,7 @@
             rules: {
                 "program_item[accessibility][]": {required: true, minlength: 1},
                 "program_item[status]": {opening_presence: true},
-                "program_item[accept_pictures]": {required: true}
+                "program_item[accept_pictures]": {accept_pictures: true}
             },
             messages: {
                 "program_item[accessibility][]": "champ requis",

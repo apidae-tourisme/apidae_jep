@@ -17,14 +17,22 @@
           </div>
         </fieldset>
         <fieldset>
-          <div class="form-group">
+          <div class="form-group mdy">
             <label class="col-sm-2 control-label">Email</label>
             <div class="col-sm-4">
               <%= user_form.text_field :email, class: 'form-control', readonly: 'readonly', disabled: 'disabled' %>
             </div>
             <label class="col-sm-2 control-label">Téléphone</label>
             <div class="col-sm-4">
-              <%= user_form.text_field :telephone, class: 'form-control' %>
+              <%= user_form.text_field :telephone, class: 'form-control required', placeholder: '0X XX XX XX XX' %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Fonction</label>
+            <div class="col-sm-10">
+              <%= user_form.text_field :role, class: 'form-control' %>
             </div>
           </div>
         </fieldset>
@@ -37,7 +45,7 @@
           <div id="entity_form" class="form-group-lg">
             <select id="search_entity" class="form-control col-sm-6"></select>
             <div id="add_new_entity" class="pt">
-              <em class="pr text-sm">La structure ne figure pas dans la liste ?</em>
+              <em class="pr">La structure ne figure pas dans la liste ?</em>
               <%= link_to '<i class="fa fa-plus pr-sm"></i>Ajouter une structure'.html_safe, '#ok',
                           class: 'btn btn-labeled btn-default btn-sm', data: {confirm: 'Remplacer la saisie actuelle ?'} %>
             </div>
@@ -99,7 +107,6 @@
         function initEntityFields(values) {
             $("#user_legal_entity_attributes_name").val(values.text);
             $("#user_legal_entity_attributes_adresse1").val(values.address);
-//            $("#user_legal_entity_attributes_town").val(values.town);
             select2Elt.val(values.town).trigger('change');
             $("#user_legal_entity_attributes_postal_code").val(values.postal_code);
             $("#user_legal_entity_attributes_phone").val(values.phone);
@@ -181,6 +188,11 @@
             url: "adresse web invalide"
         });
 
+        $.validator.addMethod('valid_phone', function(value, element) {
+            var phoneRegexp = /^\d{10}$/;
+            return value && value.replace(/\s/g, '').match(phoneRegexp);
+        }, "numéro invalide");
+
         $("#user_account_form").validate({
             errorPlacement: function errorPlacement(error, element) {
                 element.after(error);
@@ -188,7 +200,11 @@
             onfocusout: false,
             errorElement: "small",
             invalidHandler: function(form, validator) {
-                $.notify("Merci de renseigner tous les champs requis", "danger");
+                $.notify("Veuillez corriger les erreurs présentes dans le formulaire", "danger");
+            },
+            rules: {
+                'user[telephone]': {valid_phone: true},
+                'user[legal_entity_attributes][phone]': {valid_phone: true}
             }
         });
     </script>

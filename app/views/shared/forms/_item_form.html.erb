@@ -340,8 +340,8 @@
         <%= item_form.hidden_field :author, id: 'program_item_author' %>
       </div>
       <div id="submit_actions" class="panel-footer text-right">
-        <%= link_to 'Retour', edit_user_program_path(@program), class: 'btn btn-inverse' %>
-        <% if current_moderator %>
+        <%= link_to 'Retour', current_user ? edit_user_program_path(@program) : moderator_programs_path(@program), class: 'btn btn-inverse' %>
+        <% if current_moderator && @item.pending? %>
             <%= item_form.submit "Valider et publier #{@item.rev == 1 ? "l'offre" : 'la mise à jour'}", class: 'btn btn-success ml',
                                  onclick: "setStatus('#{ProgramItem::STATUS_VALIDATED}')" %>
             <%= item_form.submit "Rejeter #{@item.rev == 1 ? "l'offre" : 'la mise à jour'}", class: 'btn btn-danger ml',

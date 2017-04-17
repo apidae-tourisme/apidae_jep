@@ -12,7 +12,7 @@ module Moderator::ProgramsHelper
     rendered = []
     items.each do |item|
       rendered << link_to(item.title, edit_moderator_program_program_item_path(item.program_id, item),
-                          class: "label text-lg text-normal label-#{item_color(item.status)} inline")
+                          class: "label text-normal label-#{item_color(item.status)} inline")
     end
     rendered.join('<br/>').html_safe
   end
