@@ -5,10 +5,21 @@
     </div>
     <div class="panel-body">
       <h4 class="text-center mt-sm">ApidaeJEP - Administration</h4>
+      <% if current_user %>
+          <p class="alert alert-warning">
+            <em class="icon-exclamation pr-sm"></em>Vous semblez être authentifié(e) avec un compte organisateur ApidaeJEP.
+            Veuillez vous déconnecter de ce compte avant de vous authentifier en tant que modérateur.
+          </p>
+          <div class="text-center">
+            <%= link_to 'Déconnexion', destroy_user_session_path, method: :delete,
+                        class: 'btn btn-outline btn-primary' %>
+          </div>
+      <% else %>
       <p class="text-center pv">
         Journées Européennes du Patrimoine 2017
       </p>
       <%= link_to 'Se connecter avec Apidae', '/oauth/auth/apidae_admin', class: 'btn btn-block btn-danger text-uppercase' %>
+      <% end %>
     </div>
   </div>
 </div>
