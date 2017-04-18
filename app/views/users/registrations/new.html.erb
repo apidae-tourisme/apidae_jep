@@ -1,10 +1,9 @@
 <div class="block-center mt-xl wd-xl">
   <div class="panel panel-dark panel-flat">
     <div class="panel-heading text-center">
-      <img src="<%= image_path('logo_apidae_mono.svg') %>" alt="logo apidae" class="wd-xs" />
+      <h4>Créer un compte ApidaeJEP</h4>
     </div>
     <div class="panel-body">
-      <h4 class="text-center mt-sm">Créer un compte ApidaeJEP</h4>
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'mb-lg'}) do |f| %>
           <%= devise_error_messages! %>
           <div class="form-group has-feedback">

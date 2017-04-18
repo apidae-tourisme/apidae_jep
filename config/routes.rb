@@ -56,5 +56,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'en-savoir-plus', to: 'about#about', as: 'about'
+  get 'partenaires', to: 'about#partners', as: 'partners'
+
   root to: 'user/dashboard#index'
 end

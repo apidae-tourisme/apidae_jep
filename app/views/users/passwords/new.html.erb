@@ -1,10 +1,9 @@
 <div class="block-center mt-xl wd-xl">
   <div class="panel panel-dark panel-flat">
     <div class="panel-heading text-center">
-      <img src="<%= image_path('logo_apidae_mono.svg') %>" alt="logo apidae" class="wd-xs" />
+      <h4>Réinitaliser mon mot de passe</h4>
     </div>
     <div class="panel-body">
-      <h4 class="text-center mt-sm">Réinitaliser mon mot de passe</h4>
       <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
         <p class="text-center">Veuillez saisir votre adresse email afin de recevoir les instructions de réinitialisation de votre mot de passe.</p>
         <div class="form-group has-feedback">

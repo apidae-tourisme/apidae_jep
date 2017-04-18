@@ -26,6 +26,10 @@
   width: 25%;
 }
 
+.lh {
+  line-height: 1em;
+}
+
 .btn.btn-labeled {
   text-align: left;
 }
@@ -41,6 +45,18 @@ nav.topnavbar .navbar-header .brand-logo-collapsed {
 #user_navbar,
 #moderator_navbar {
   line-height: 60px;
+}
+
+#user_login input.btn, #user_login a.btn, #user_login form {
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#user_login .panel-dark .panel-footer img {
+  max-height: 40px;
+  max-width: 95%;
+  width: auto;
 }
 
 #modal_window .modal-dialog > .modal-content {
