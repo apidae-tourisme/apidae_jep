@@ -268,12 +268,16 @@ form .item_photos img {
 }
 
 #user_account_form .select2.select2-container .select2-selection--single,
-#user_account_form .select2-selection__arrow {
+#user_account_form .select2-selection__arrow,
+#map_fields .select2.select2-container .select2-selection--single,
+#map_fields .select2-selection__arrow {
   height: 36px;
 }
 
 #user_account_form .select2 .select2-selection__rendered,
-#user_account_form .select2 .select2-selection__rendered::after {
+#user_account_form .select2 .select2-selection__rendered::after,
+#map_fields .select2 .select2-selection__rendered,
+#map_fields .select2 .select2-selection__rendered::after {
   line-height: 34px;
 }
 

@@ -30,7 +30,7 @@
         $("#program_item_main_address").val([feature.properties.housenumber, feature.properties.street].join(' '));
 //        $("#program_item_main_postal_code").val(feature.properties.postalcode);
         // Todo : feature.?
-        selectTown.val(feature.town).trigger('change');
+        setTownValue(feature.properties.postalcode, 'test');
 //        $("#program_item_main_town_insee_code").val(feature.properties.locality);
         $("#program_item_main_lat").val(feature.geometry.coordinates[1]);
         $("#program_item_main_lng").val(feature.geometry.coordinates[0]);
@@ -58,7 +58,7 @@
         }).addTo(map);
 
         var geocoderOptions = {
-//            url: 'https://search-places.hotentic.com',
+            url: 'https://search-places.hotentic.com',
             layers: ['venue', 'address', 'street'],
             position: 'topleft',
             expanded: true,
@@ -91,6 +91,7 @@
         }
 
         geocoder.on('select', function (e) {
+            console.log(e.feature.properties);
             updateFormFields(e.feature);
             var markers = [];
             map.eachLayer(function(layer) {

@@ -38,7 +38,19 @@ class Place < ActiveRecord::Base
     end
   end
 
-  def self.export_as_json
+  def self.export_csv(csv_file)
+    columns = ['name', 'address', 'zipcode', 'town', 'inseecode', 'latitude', 'longitude', 'access', 'source']
 
+    CSV.open(Rails.root.join('data', csv_file), 'wb') do |csv|
+      csv << columns
+      Place.all.each do |p|
+        csv << p.to_csv
+      end
+    end
+  end
+
+  def to_csv
+    [name, [address1, address2, address3].join(' '), town.postal_code, town.name, town_insee_code, latitude, longitude,
+     access_details, source]
   end
 end
