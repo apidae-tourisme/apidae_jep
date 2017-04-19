@@ -24,14 +24,14 @@ class ProgramItem < ActiveRecord::Base
 
   store :desc_data, accessors: [:place_desc, :event_planners, :building_ages, :building_types, :accessibility,
                                 :audience, :criteria, :themes, :accept_pictures], coder: JSON
-  store :location_data, accessors: [:main_place, :main_lat, :main_lng, :main_address, :main_town,
-                                    :main_postal_code, :main_transports, :alt_place, :alt_lat, :alt_lng, :alt_address,
-                                    :alt_town, :alt_postal_code, :alt_transports], coder: JSON
+  store :location_data, accessors: [:main_place, :main_lat, :main_lng, :main_address, :main_town_insee_code,
+                                    :main_transports, :alt_place, :alt_lat, :alt_lng, :alt_address,
+                                    :alt_town_insee_code, :alt_postal_code, :alt_transports], coder: JSON
   store :rates_data, accessors: [:free, :rates_desc, :booking, :booking_details, :booking_telephone, :booking_email, :booking_website], coder: JSON
   store :opening_data, accessors: [:openings_desc], coder: JSON
   store :contact_data, accessors: [:telephone, :email, :website], coder: JSON
 
-  validates_presence_of :item_type, :title, :main_place, :main_address, :main_town, :main_postal_code, :main_transports,
+  validates_presence_of :item_type, :title, :main_place, :main_address, :main_town_insee_code, :main_transports,
                         :description, :accessibility, :item_openings
   validates :accept_pictures, acceptance: true
 

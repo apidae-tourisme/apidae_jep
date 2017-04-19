@@ -1,9 +1,37 @@
 <script>
+    var selectTown = $("select.select_town").select2({
+        language: "fr",
+        minimumInputLength: 2,
+        ajax: {
+            url: "<%= towns_user_account_path %>",
+            delay: 500,
+            data: function (params) {
+                var query = {
+                    pattern: encodeURIComponent(params.term),
+                    page: params.page
+                };
+                return query;
+            },
+            processResults: function (data) {
+                return {
+                    results: data.towns
+                };
+            }
+        }
+    });
+
+    function setTownValue(value, label) {
+        $("select.select_town").append('<option value="' + value + '">' + label + '</option>');
+        selectTown.val(value).trigger('change');
+    }
+
     function updateFormFields(feature) {
         $("#program_item_main_place").val(feature.properties.name);
         $("#program_item_main_address").val([feature.properties.housenumber, feature.properties.street].join(' '));
-        $("#program_item_main_postal_code").val(feature.properties.postalcode);
-        $("#program_item_main_town").val(feature.properties.locality);
+//        $("#program_item_main_postal_code").val(feature.properties.postalcode);
+        // Todo : feature.?
+        selectTown.val(feature.town).trigger('change');
+//        $("#program_item_main_town_insee_code").val(feature.properties.locality);
         $("#program_item_main_lat").val(feature.geometry.coordinates[1]);
         $("#program_item_main_lng").val(feature.geometry.coordinates[0]);
     }
@@ -69,6 +97,7 @@
                 if(layer.options.draggable) {
                     markers.push(layer);
                     bindDragToLatLng(layer);
+                    map.setView(layer.getLatLng(), 15);
                 }
             });
             if(markers.length > 1) {
@@ -87,6 +116,7 @@
                 }
                 $("#add_new_place").click(function () {
                     toggleMapFields(true);
+                    L.marker([45.740410, 4.816417], {draggable: true}).addTo(map);
                 });
             }
         });
@@ -293,6 +323,10 @@
         setUpToggle("booking_toggle", "true");
         toggleDisplay("booking_toggle", "true");
         toggleBuildingFields();
+
+        <% if @town %>
+          setTownValue('<%= @town.insee_code %>', '<%= @town.label %>');
+        <% end %>
 
         function injectTrim(handler) {
             return function (element, event) {

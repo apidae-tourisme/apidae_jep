@@ -7,7 +7,7 @@
               <div class="bg-center" style="background-image: url(<%= item.picture %>); height: 100%;"></div>
           <% else %>
               <div class="text-center pt-lg">
-                <i class="fa fa-5x <%= item_icon(item) %>"></i>
+                <i class="fa fa-5x <%= item_icon(item.item_type) %>"></i>
               </div>
            <% end %>
         </picture>
@@ -15,6 +15,7 @@
       <div class="col-xs-7 ph-lg">
         <h3 class="mt">
           <%= item.title.blank? ? "Offre #{i}" : item.title %>&nbsp;
+          <span class="label text-sm label-default text-gray-dark"><%= t "program_item.type.#{item.item_type}" %></span>
           <span class="label text-sm text-normal label-<%= item_color(item.status) %>"><%= t "program_item.status.#{item.status}" %></span>
         </h3>
         <p class="pre"><%= ellipsis(item.description) %></p>

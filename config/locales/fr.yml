@@ -22,7 +22,7 @@ fr:
             password_confirmation:
               confirmation: 'Les deux mots de passe saisis ne correspondent pas.'
   territory:
-    grand_lyon: "Grand Lyon"
+    grand_lyon: "Métropole de Lyon"
     isere: "Département de l'Isère"
   user:
     fields:
@@ -143,6 +143,25 @@ fr:
       parcours: "Parcours"
       animation: "Animation"
       exposition: "Exposition"
+      desc:
+        visite: |+
+          Visite libre ou guidée
+          d'un monument ou
+          d'un site
+        parcours: |+
+          Itinéraire de visite libre
+          ou guidé regroupant
+          plusieurs sites sur
+          un territoire
+        animation: |+
+          Toutes les offres hors visite,
+          parcours ou exposition
+          (ex. atelier, concert, ...)
+        exposition: |+
+          Présentation au public
+          d'une collection ou
+          d'une thématique
+          (visite libre ou guidée)
     accessibility:
       pmr_total: "Personnes à mobilité réduite (accès total)"
       pmr_partiel: "Personnes à mobilité réduite (accès partiel)"

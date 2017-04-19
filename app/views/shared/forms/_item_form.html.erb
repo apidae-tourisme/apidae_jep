@@ -5,17 +5,19 @@
         <fieldset>
           <legend class="text-uppercase text-primary">Informations générales</legend>
           <div class="form-group mdy">
-            <label class="col-sm-2 control-label">Type de l'offre</label>
-            <%= help_content("Texte d'aide pour le champ type de l'offre") %>
+            <label class="col-sm-2 control-label">Type de l'offre<%= help_button %></label>
+            <%= help_content("Sélectionnez le type d'offre.\n Si votre offre comporte à la fois une animation ou une " +
+                                 "exposition ET la visite du lieu (libre ou guidée), saisissez autant d'offres que de types.\n" +
+                                 "NB : Le descriptif du lieu remarquable n'est possible que sur le type \"Visite d'un lieu\".") %>
             <div class="col-sm-10">
               <div id="item_types" data-toggle="buttons" class="btn-group w100">
                 <% ITEM_TYPES.each do |t| %>
                 <label class="btn btn-default btn-labeled text-left w25 <%= 'active' if @item.item_type == t %>">
-                  <i class="fa fa-3x <%= item_icon(t) %> btn-label pv-xl"></i>
+                  <i class="fa text-lg <%= item_icon(t) %> btn-label pv-xl vat"></i>
                   <%= item_form.radio_button :item_type, t %>
-                  <div class="inline">
+                  <div class="inline pt">
                     <strong><%= t "program_item.type.#{t}" %></strong>
-                    <p class="text-sm">Texte explicatif<br/>du type d'offre</p>
+                    <p class="text-xs pre m0"><%= t "program_item.type.desc.#{t}" %></p>
                   </div>
                 </label>
                 <% end %>
@@ -33,7 +35,9 @@
         <fieldset>
           <legend class="text-uppercase text-primary mb-sm">Lieu / emplacement</legend>
           <p class="help-block">
-            Veuillez saisir le nom ou l'adresse du lieu sur la carte pour commencer la saisie. Vous pouvez déplacer le marqueur sur la carte afin de préciser la localisation de l'offre.
+            Saisissez les premières lettres de votre lieu ou adresse. Les réponses que nous connsaissons vous sont
+            suggérées : la proposition la plus cohérente arrive en 1ère proposition. Vous pouvez déplacer le marqueur
+            sur la carte afin de préciser la localisation de l'offre.
           </p>
           <div class="row">
             <div class="col-sm-6">
@@ -56,13 +60,8 @@
                 <div class="form-group mt-lg mdy">
                   <label class="col-sm-4 control-label p0">Commune</label>
                   <div class="col-sm-8">
-                    <%= item_form.text_field :main_town, class: 'form-control required' %>
-                  </div>
-                </div>
-                <div class="form-group mt-lg mdy">
-                  <label class="col-sm-4 control-label p0">Code postal</label>
-                  <div class="col-sm-8">
-                    <%= item_form.text_field :main_postal_code, class: 'form-control required' %>
+                    <%= item_form.select :main_town_insee_code, [], {}, class: 'form-control select_town required',
+                                           'data-placeholder' => 'Nom ou code postal de la commune' %>
                   </div>
                 </div>
                 <%= item_form.hidden_field :main_lat %>
@@ -74,7 +73,8 @@
                   </div>
                 </div>
                 <div class="form-group mt-lg mdy">
-                  <label class="col-sm-4 control-label p0">Accès en transports en commun et indications d'accès</label>
+                  <label class="col-sm-4 control-label p0">Accès en transports en commun et indications d'accès<%= help_button %></label>
+                  <%= help_content("Indiquer les accès en transport en commun (n° bus, ...) et/ou les indications d'accès : parking le plus proche, ...") %>
                   <div class="col-sm-8">
                     <%= item_form.text_area :main_transports, class: 'form-control required', rows: 4 %>
                   </div>
@@ -85,13 +85,15 @@
         </fieldset>
         <fieldset id="building_fields">
           <div class="form-group">
-            <label class="col-sm-2 control-label">Nature du lieu</label>
+            <label class="col-sm-2 control-label">Nature du lieu <%= help_button %></label>
+            <%= help_content("Plusieurs choix possibles.") %>
             <div class="col-sm-4 p0">
               <%= item_form.select :building_types, building_types, {}, multiple: 'multiple',
                                    class: 'form-control chosen-select no-max',
                                    'data-placeholder' => "Types de lieu" %>
             </div>
-            <label class="col-sm-2 control-label">Epoque</label>
+            <label class="col-sm-2 control-label">Epoque<%= help_button %></label>
+            <%= help_content("Plusieurs choix possibles.") %>
             <div class="col-sm-4 pl0">
               <%= item_form.select :building_ages, building_ages, {}, multiple: 'multiple',
                                    class: 'form-control chosen-select no-max',
@@ -108,22 +110,25 @@
         <fieldset>
           <legend class="text-uppercase text-primary">Détails / description</legend>
           <div class="form-group mt">
-            <label class="col-sm-3 control-label">Thèmes</label>
+            <label class="col-sm-3 control-label">Caractéristiques<%= help_button %></label>
+            <%= help_content("Plusieurs choix possibles.") %>
+            <div id="item_caracs" class="col-sm-9">
+              <%= select_tag 'program_item[criteria][]', criteria(@item.item_type, @item.criteria), multiple: 'multiple',
+                             class: 'form-control chosen-select no-max', 'data-placeholder' => "Caractéristiques de l'offre" %>
+            </div>
+          </div>
+          <div class="form-group mt-lg">
+            <label class="col-sm-3 control-label">Thèmes <%= help_button %></label>
+            <%= help_content("Plusieurs choix possibles. Champ non obligatoire") %>
             <div class="col-sm-9">
               <%= item_form.select :themes, themes, {}, multiple: 'multiple',
                                    class: 'form-control chosen-select no-max',
                                    'data-placeholder' => "Thèmes de l'offre" %>
             </div>
           </div>
-          <div class="form-group mt-lg">
-            <label class="col-sm-3 control-label">Caractéristiques</label>
-            <div id="item_caracs" class="col-sm-9">
-              <%= select_tag 'program_item[criteria][]', criteria(@item.item_type, @item.criteria), multiple: 'multiple',
-                             class: 'form-control chosen-select no-max', 'data-placeholder' => "Caractéristiques de l'offre" %>
-            </div>
-          </div>
           <div class="form-group mt-lg mdy">
-            <label class="col-sm-3 control-label">Description</label>
+            <label class="col-sm-3 control-label">Description<%= help_button %></label>
+            <%= help_content("Veuillez vous limiter à 255 caractères") %>
             <div class="col-sm-9">
               <%= item_form.text_area :description, class: 'form-control required', rows: 3 %>
             </div>
@@ -141,7 +146,9 @@
             </div>
           </div>
           <div class="form-group mt-lg">
-            <label class="col-sm-3 control-label">Organisateurs associés</label>
+            <label class="col-sm-3 control-label">Organisateurs associés<%= help_button %></label>
+            <%= help_content("Si vous avez d'autres structures organisatrices de l'offre, merci de les saisir ici. " +
+                                 "Il est inutile d'indiquer votre structure.") %>
             <div class="col-sm-9">
               <%= item_form.text_field :event_planners, class: 'form-control' %>
             </div>
@@ -149,6 +156,10 @@
         </fieldset>
         <fieldset class="item_openings">
           <legend class="text-uppercase text-primary mb0 openings">Horaires / ouverture</legend>
+          <p class="help-block">
+            Merci de saisir une date et un horaire de début. Les autres informations sont facultatives (horaire de fin ; fréquence ; durée).<br/>
+            Vous pouvez modifier, supprimer ou duppliquer un horaire enregistré (par exemple pour afficher le dimanche le même horaire que le samedi).
+          </p>
           <%= item_form.fields_for :item_openings do |opening| %>
               <%= render 'shared/forms/item_opening_fields', f: opening %>
           <% end %>
@@ -218,10 +229,11 @@
           </div>
         </fieldset>
         <fieldset class="item_photos">
-          <legend class="text-uppercase text-primary">Photos</legend>
+          <legend class="text-uppercase text-primary mb-sm">Photos</legend>
           <p class="help-block">
-            Veuillez n'utiliser que des photos ayant une résolution suffisante (5 megapixels ou plus), pour lesquelles
-            vous disposez des droits d'utilisation.
+            <strong>Attention</strong> : les images doivent être libres de droits.
+            Pensez à bien renseigner les crédits (copyright).<br/>
+            Veuillez n'utiliser que des photos ayant une résolution suffisante (5 megapixels ou plus).
           </p>
           <%= item_form.fields_for :attached_files do |file_form| %>
               <%= render 'shared/forms/attached_file_fields', f: file_form %>

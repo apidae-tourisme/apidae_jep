@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170413220012) do
+ActiveRecord::Schema.define(version: 20170419145825) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,6 +88,19 @@ ActiveRecord::Schema.define(version: 20170413220012) do
 
   add_index "moderators", ["email"], name: "index_moderators_on_email", unique: true, using: :btree
   add_index "moderators", ["reset_password_token"], name: "index_moderators_on_reset_password_token", unique: true, using: :btree
+
+  create_table "places", force: :cascade do |t|
+    t.string   "name"
+    t.string   "town_insee_code"
+    t.text     "address_data"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.float    "altitude"
+    t.string   "source"
+    t.text     "access_data"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
 
   create_table "program_items", force: :cascade do |t|
     t.integer  "program_id"

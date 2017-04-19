@@ -63,13 +63,13 @@
 </div>
 
 <div class="pv">
-  <div class="panel panel-primary mb-sm">
+  <div class="panel panel-flat mb-sm">
     <div class="panel-heading">
       <div class="pull-right">
-        <%= link_to '<i class="fa fa-plus pr-sm"></i>Démarrer une programmation'.html_safe,
-                    new_user_program_path, class: 'text-white' %>
+        <%= link_to '<em class="icon-plus pr-sm"></em>Démarrer une programmation'.html_safe,
+                    new_user_program_path, class: 'text-std' %>
       </div>
-      <h4 class="text-uppercase m0">Mes programmations</h4>
+      <h4 class="text-uppercase mv-sm">Mes programmations</h4>
     </div>
   </div>
 
@@ -82,25 +82,25 @@
   <div class="col-xs-12">
   <% if @programs.any? %>
       <% @programs.each_with_index do |prog, i| %>
-      <div class="panel panel-default">
+      <div class="panel panel-dark panel-flat mb-lg">
         <div class="panel-heading">
           <div class="pull-right">
-            <%= link_to '<i class="fa fa-edit pr-sm"></i>Modifier'.html_safe, edit_user_program_path(prog) %>
-            <%= link_to '<i class="fa fa-plus pr-sm"></i>Ajouter une offre'.html_safe,
-                        new_user_program_program_item_path(prog),  class: 'ml-lg' %>
+            <%= link_to '<em class="icon-note pr-sm"></em>Modifier'.html_safe, edit_user_program_path(prog),
+                        class: 'text-white text-std' %>
+            <%= link_to '<em class="icon-plus pr-sm"></em>Ajouter une offre'.html_safe,
+                        new_user_program_program_item_path(prog),  class: 'text-white text-std inline ml-lg' %>
           </div>
-          <h4 class="m0"><%= prog.label(i + 1) %></h4>
+          <h4 class="mv-sm text-uppercase"><%= prog.label(i + 1) %></h4>
         </div>
         <div class="panel-body">
           <table class="table">
             <tbody>
             <% prog.program_items.each do |item| %>
               <tr>
-                <td class="wd-xxs">
-                  <i class="fa fa-2x <%= item_icon(item) %>"></i>
-                </td>
                 <td class="vam">
-                  <%= item.title %><span class="label label-<%= t "program_item.color.#{item.status}" %> ml-sm"><%= t "program_item.status.#{item.status}" %></span>
+                  <%= item.title %>&nbsp;
+                  <span class="label text-sm label-default text-gray-dark"><%= t "program_item.type.#{item.item_type}" %></span>
+                  <span class="label label-<%= t "program_item.color.#{item.status}" %> ml-sm"><%= t "program_item.status.#{item.status}" %></span>
                   <div class="pull-right">
                     <%= link_to '<em class="fa icon-note"></em/>'.html_safe,
                                 url_for(controller: 'user/program_items', action: ((item.pending? || item.draft?) ? :edit : :new), program_id: prog.id, id: item.id),

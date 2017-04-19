@@ -63,11 +63,12 @@
   moment.locale('fr');
   $(".help_button").click(function() {
       var modalWindow = $("#modal_window");
-      var helpText = $(this).parents(".form-group").find(".help-block").text();
-      var fieldLabel = $(this).parents("label").text();
+      var label = $(this).parents("label");
+      var helpText = label.next(".help-block").text();
+      var fieldLabel = label.text();
       if(helpText.length > 0) {
-          modalWindow.find("#modal_title").append(fieldLabel);
-          modalWindow.find("#modal_body").append('<p class="pre">' + helpText + '</p>');
+          modalWindow.find("#modal_title").html(fieldLabel);
+          modalWindow.find("#modal_body").html('<p class="pre">' + helpText + '</p>');
           modalWindow.modal();
       }
   });

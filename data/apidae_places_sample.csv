@@ -1,0 +1,26 @@
+nom,nomlieu,adresse1,adresse2,adresse3,codepostal,commune,etat,longitude,latitude,altitude,geolocalisation_valide,repereplan,complement_adresse,datecreation,datemodification,type,proprietaire
+Sculpteur sur bois,"",Le Crêt,"","",74130,Le Petit-Bornand-les-Glières,"",6.396393,46.001100,735,f,,,2003-06-16 00:00:00,2011-09-13 19:55:00.8,COMMERCE_ET_SERVICE,Office de Tourisme Faucigny Glières
+Les chemins de fer et bus des Transports Publics du Chablais,"","","","",CH-1860,Aigle,"",,,,f,,,2007-08-03 18:01:53.553,2011-09-14 19:55:00.607,EQUIPEMENT,Sitra
+Maréchal ferrant,"",Le Bicheron,"","",01480,Fareins,"",,,,f,,,2007-08-29 10:11:21.373,2011-09-14 19:55:00.607,COMMERCE_ET_SERVICE,Office de tourisme Ars-Trévoux
+Terrain d'atterrissage de la Michaille,"","","","",74220,La Clusaz,"",6.439722,45.881667,1264,t,,"Carte IGN 3430 ET. En voiture à 300 m de la gare de départ du téléphérique de l'Etale.",2007-08-06 10:06:57.37,2011-12-23 19:55:00.723,EQUIPEMENT,Office de Tourisme de La Clusaz
+ACECAM,"",Z.A. La Gravière,"","",01480,Fareins,"",4.757037,46.005696,222,t,,,2007-08-07 10:39:14.69,2011-09-14 19:55:00.607,COMMERCE_ET_SERVICE,Office de tourisme Ars-Trévoux
+Devant Michel,"","",Les Fontaines,"",74300,Châtillon-sur-Cluses,"",,,,f,,,2007-11-17 16:18:05.533,2014-11-19 14:07:50.506,HEBERGEMENT_LOCATIF,Office de tourisme de Morillon
+Bontems Jean-Marc - Zingueur,"","959, l'Essert","","",74130,Le Petit-Bornand-les-Glières,"",6.389108,45.988405,768,t,,,2008-01-02 10:34:39.407,2014-09-18 19:40:42.497,COMMERCE_ET_SERVICE,Office de Tourisme Faucigny Glières
+Office Municipal des Sports,"",Villa des Alpes,"5, rue Doyen Gosse","",38700,La Tronche,"",5.749867,45.204838,238,t,,,2008-09-12 16:08:54.053,2011-09-19 19:55:00.423,COMMERCE_ET_SERVICE,Office de Tourisme de Grenoble-Alpes Métropole
+Boulangerie Sellier,"",le Village,"","",07290,Saint-Jeure-d'Ay,"",4.706029,45.146200,476,t,,,2007-02-07 15:53:21.713,2011-09-17 19:55:00.61,COMMERCE_ET_SERVICE,Office de Tourisme de Lalouvesc et du Val d'Ay
+Transport en bus,"",Place de l'hôtel de ville,"","",07410,Saint-Félicien,"",4.627787,45.086793,,t,,,2009-01-20 10:25:36.103,2015-03-25 18:14:02.916,COMMERCE_ET_SERVICE,Office de Tourisme Saint-Félicien
+Les Ateliers du Terraly,"",Montée du Lavoir,"","",42520,Véranne,"",4.661722,45.368097,,t,,,2007-06-27 20:24:03.197,2015-03-25 18:14:04.748,COMMERCE_ET_SERVICE,Parc naturel régional du Pilat
+L'Agneau du Pilat,"",Avaize,"","",42740,La Terrasse-sur-Dorlay,"",4.572459,45.456582,551,t,,,2007-06-27 20:23:30.523,2015-03-25 18:14:04.896,DEGUSTATION,Parc naturel régional du Pilat
+Mairie,"",Croix Blanche,"","",71570,Pruzilly,"",4.696249,46.257519,,t,,,2009-09-02 14:48:29.893,2015-03-25 18:14:06.409,COMMERCE_ET_SERVICE,Syndicat d'Initiative de Crêches
+EARL Les Chabertes Laurent-Aurore Daubinas,"",Les Chabertes,"","",26800,Montoison,"",4.926890,44.815285,174,t,,,2007-01-31 15:51:19.043,2015-03-25 18:14:06.801,COMMERCE_ET_SERVICE,Office de Tourisme du Val de Drôme
+Boulangerie Giraud Bernard,"","3, rue Peigneaux Dames","","",69620,Le Bois-d'Oingt,"",4.583234,45.922631,354,t,,,2008-05-21 11:35:26.737,2011-09-24 19:55:00.77,COMMERCE_ET_SERVICE,Office de Tourisme du Beaujolais des Pierres Dorées
+Pont roman,"","","","",26170,Buis-les-Baronnies,"",5.279489,44.280635,372,t,,,2004-11-30 00:00:00,2015-03-25 20:02:26.565,PATRIMOINE_CULTUREL,Office de Tourisme des Baronnies en Drôme Provençale
+Institut Formation Rhône Alpes,"",131 Av du 8 Mai 45,"","",01300,Belley,"",5.693473,45.755845,,t,,,2010-01-22 15:53:44.53,2011-09-21 19:55:00.153,COMMERCE_ET_SERVICE,Office de Tourisme Bugey Sud Grand Colombier
+Centre médico-psychologique adultes,"",Avenue Baudin,"","",01300,Belley,"",5.690060,45.759020,,t,,,2010-01-25 16:19:21.78,2011-09-21 19:55:00.153,COMMERCE_ET_SERVICE,Office de Tourisme Bugey Sud Grand Colombier
+Ferme auberge du bon temps,"",Le Vigny,"","",01350,Anglefort,"",5.803906,45.915890,338,t,,,2007-02-20 11:10:05.03,2015-03-25 20:02:27.411,RESTAURATION,Office de tourisme du Pays de Seyssel
+David Brun,"",Sous-Cumane,"","",38160,Saint-Sauveur,"",,,,f,,,2010-03-19 17:10:09.617,2016-09-27 14:03:08.119,DEGUSTATION,Office de Tourisme du Pays de Saint-Marcellin
+Sentier Sainte-Anne,"",Château Sainte-Anne,"","",42130,Marcilly-le-Châtel,"",,,,f,,,2010-02-08 09:55:47.833,2011-12-17 19:55:00.413,EQUIPEMENT,Office de Tourisme Loire Forez
+Circuit des Pins,"",Le Pay,"","",42130,Cezay,"",,,,f,,,2010-02-05 16:39:19.74,2011-12-17 19:55:00.413,EQUIPEMENT,Office de Tourisme Loire Forez
+Ecurie du Bréas,"",Le Bréas,"","",42230,Roche-la-Molière,"",4.386092,45.445756,,t,,,2009-04-25 16:12:45.06,2011-09-21 19:55:00.153,EQUIPEMENT,Saint-Etienne Tourisme
+Chapelle Notre-Dame de Saint-Galmier,"","","","",42260,Bussy-Albieux,"",,,,f,,,2010-01-19 13:53:14.637,2016-07-25 15:16:46.772,PATRIMOINE_CULTUREL,Office de Tourisme Loire Forez
+L'Estampe,"",La Bonasse,"","",26220,Dieulefit,"",5.058904,44.527323,401,t,,,2008-11-25 14:26:21.827,2015-03-25 20:02:28.611,COMMERCE_ET_SERVICE,Office de Tourisme Pays de Dieulefit-Bourdeaux

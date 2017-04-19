@@ -10,16 +10,18 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
     if @item.user.legal_entity.external_id.nil?
       redirect_to edit_moderator_account_url(@item.user, validate: true), notice: "Validation de la structure organisatrice requise"
     end
+    @town = Town.find_by_insee_code(@item.main_town_insee_code) if @item.main_town_insee_code
   end
 
   def update
     begin
-      if @item.update(item_params)
-        if @item.validated? && @item.remote_save
+      @item.attributes = item_params
+      if @item.validated?
+        if @item.save && @item.remote_save
           redirect_to edit_moderator_program_url(@item.program), notice: "L'offre a bien été enregistrée." and return
-        else
-          redirect_to edit_moderator_program_url(@item.program), notice: "L'offre a bien été mise à jour." and return
         end
+      elsif @item.save
+        redirect_to edit_moderator_program_url(@item.program), notice: "L'offre a bien été mise à jour." and return
       end
     rescue OAuth2::Error => e
       Raven.capture_exception(e)

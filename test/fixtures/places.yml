@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  town_insee_code: MyString
+  address_data: MyText
+  latitude: 1.5
+  longitude: 1.5
+  source: MyString
+  access_data: MyText
+
+two:
+  name: MyString
+  town_insee_code: MyString
+  address_data: MyText
+  latitude: 1.5
+  longitude: 1.5
+  source: MyString
+  access_data: MyText

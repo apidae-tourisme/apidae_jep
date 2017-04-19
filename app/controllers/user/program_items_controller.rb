@@ -17,6 +17,7 @@ class User::ProgramItemsController < User::UserController
       previous_version.item_openings.each do |o|
         @item.item_openings << o.dup
       end
+      @town = Town.find_by_insee_code(@item.main_town_insee_code) if @item.main_town_insee_code
     end
   end
 
@@ -32,6 +33,7 @@ class User::ProgramItemsController < User::UserController
   end
 
   def edit
+    @town = Town.find_by_insee_code(@item.main_town_insee_code) if @item.main_town_insee_code
   end
 
   def update

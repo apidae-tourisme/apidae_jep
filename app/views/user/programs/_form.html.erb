@@ -3,7 +3,9 @@
   <%= form_for([:user, @program], html: {class: 'mv-lg form-horizontal'}) do |f| %>
       <div class="form-group-lg clearfix">
         <label class="col-sm-3 control-label">Titre général des offres<%= help_button %></label>
-        <%= help_content("Contenu de l'aide pour le titre des offres") %>
+        <%= help_content("C'est le titre général qui regroupe toutes les offres que vous allez saisir :\n ex. le lieu " +
+                             "de la programmation, s'il s'agit d'un même lieu où se déroule toutes vos offres évènements; " +
+                             "la thématique générale si vous faites une programmation avec plusieurs évènements sur une même thématique, ...") %>
         <div class="col-sm-9"><%= f.text_field :title, class: 'form-control' %></div>
       </div>
       <div class="clear pt-lg ph-lg text-right">
