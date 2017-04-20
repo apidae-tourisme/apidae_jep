@@ -267,9 +267,16 @@
             });
         }
         $("#edit_opening_form").submit(function(evt) {
-            if($("#starts_at").val()) {
-                $("#edit_opening_error").html("");
-                return true;
+            var startsAt = $("#starts_at").val();
+            var endsAt = $("#ends_at").val();
+            if(startsAt) {
+                if(endsAt && startsAt > endsAt) {
+                    $("#edit_opening_error").html('<p class="text-center text-bold">Veuillez saisir une date de fin postérieure à la date de début.</p>');
+                    return false;
+                } else {
+                    $("#edit_opening_error").html("");
+                    return true;
+                }
             } else {
                 $("#edit_opening_error").html('<p class="text-center text-bold">Veuillez saisir une date de début</p>');
                 return false;

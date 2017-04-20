@@ -134,7 +134,8 @@
             </div>
           </div>
           <div class="form-group mt-lg mdy">
-            <label class="col-sm-3 control-label mdy">Accessibilité</label>
+            <label class="col-sm-3 control-label mdy">Accessibilité<%= help_button %></label>
+            <%= help_content("Si non accessible aux personnes en situation de handicap moteur, merci de cocher la case correspondante") %>
             <div class="col-sm-9">
               <% accessibility.each_pair do |ref, label| %>
                   <label class="checkbox-inline c-checkbox ml0 mr-lg">
