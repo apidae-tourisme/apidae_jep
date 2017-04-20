@@ -1051,6 +1051,7 @@
                     }
                 },
 
+                // patched
                 incrementHours: function () {
                     var refDate = input.val().trim().length !== 0 ? date : options.defaultDate;
                     var newDate = refDate.clone().add(1, 'h');
@@ -1059,6 +1060,7 @@
                     }
                 },
 
+                // patched
                 incrementMinutes: function () {
                     var refDate = input.val().trim().length !== 0 ? date : options.defaultDate;
                     var newDate = refDate.clone().add(options.stepping, 'm');
@@ -1074,15 +1076,19 @@
                     }
                 },
 
+                // patched
                 decrementHours: function () {
-                    var newDate = date.clone().subtract(1, 'h');
+                    var refDate = input.val().trim().length !== 0 ? date : options.defaultDate;
+                    var newDate = refDate.clone().subtract(1, 'h');
                     if (isValid(newDate, 'h')) {
                         setValue(newDate);
                     }
                 },
 
+                // patched
                 decrementMinutes: function () {
-                    var newDate = date.clone().subtract(options.stepping, 'm');
+                    var refDate = input.val().trim().length !== 0 ? date : options.defaultDate;
+                    var newDate = refDate.clone().subtract(options.stepping, 'm');
                     if (isValid(newDate, 'm')) {
                         setValue(newDate);
                     }

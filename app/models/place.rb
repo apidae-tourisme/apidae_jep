@@ -5,6 +5,9 @@ class Place < ActiveRecord::Base
   store :address_data, accessors: [:address1, :address2, :address3], coder: JSON
   store :access_data, accessors: [:access_details, :transports], coder: JSON
 
+  # This will move to a separate table/db
+  store :desc_data, accessors: [:description, :ages], coder: JSON
+
   belongs_to :town, foreign_key: :town_insee_code, primary_key: :insee_code
 
   validates_presence_of :name, :town, :source
@@ -39,18 +42,18 @@ class Place < ActiveRecord::Base
   end
 
   def self.export_csv(csv_file)
-    columns = ['name', 'address', 'zipcode', 'town', 'inseecode', 'latitude', 'longitude', 'access', 'source']
+    columns = ['name', 'address', 'zipcode', 'town', 'inseecode', 'latitude', 'longitude', 'access', 'placedesc', 'source']
 
     CSV.open(Rails.root.join('data', csv_file), 'wb') do |csv|
       csv << columns
-      Place.all.each do |p|
+      Place.all.includes(:town).each do |p|
         csv << p.to_csv
       end
     end
   end
 
   def to_csv
-    [name, [address1, address2, address3].join(' '), town.postal_code, town.name, town_insee_code, latitude, longitude,
-     access_details, source]
+    [name, [address1, address2, address3].join(' ').strip, town.postal_code, town.name, town_insee_code, latitude, longitude,
+     access_details, description, source]
   end
 end

@@ -122,8 +122,8 @@ class ProgramItem < ActiveRecord::Base
 
     unless desc_data.nil? || desc_data.empty?
       merged[:description] = {
-          name: title, shortDescription: description,
-          longDescription: details, planners: event_planners,
+          name: title, shortDescription: description[0..254],
+          longDescription: description, planners: event_planners,
           accessibility: accessibility,
           audience: themes,
           categories: criteria,

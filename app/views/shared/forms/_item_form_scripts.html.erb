@@ -25,13 +25,16 @@
         selectTown.val(value).trigger('change');
     }
 
+// Todo : introduce uuid in places model
+// Bind uuid to extra info (access details, desc and centuries) since we dont want to index them for now
+
     function updateFormFields(feature) {
         $("#program_item_main_place").val(feature.properties.name);
-        $("#program_item_main_address").val([feature.properties.housenumber, feature.properties.street].join(' '));
-//        $("#program_item_main_postal_code").val(feature.properties.postalcode);
-        // Todo : feature.?
-        setTownValue(feature.properties.postalcode, 'test');
-//        $("#program_item_main_town_insee_code").val(feature.properties.locality);
+        $("#program_item_main_address").val([feature.properties.housenumber, feature.properties.street].join(' ').trim());
+        var postalCodeId = (feature.properties.postalcode_gid && feature.properties.postalcode_gid.split(':').length == 3) ? feature.properties.postalcode_gid.split(':')[2] : null;
+        if(postalCodeId) {
+          setTownValue(postalCodeId, feature.properties.locality);
+        }
         $("#program_item_main_lat").val(feature.geometry.coordinates[1]);
         $("#program_item_main_lng").val(feature.geometry.coordinates[0]);
     }
@@ -91,7 +94,7 @@
         }
 
         geocoder.on('select', function (e) {
-            console.log(e.feature.properties);
+            console.log(e.feature);
             updateFormFields(e.feature);
             var markers = [];
             map.eachLayer(function(layer) {
@@ -167,7 +170,7 @@
         datepicker.datetimepicker({
             locale: 'fr',
             viewDate: '2017-09-16',
-            minDate: '2017-09-16',
+            minDate: '2017-09-15',
             maxDate: '2017-09-18',
             defaultDate: '2017-09-16',
             useCurrent: false,
@@ -238,10 +241,12 @@
 
     function displayOpeningModal(identifier, clearOnDismiss) {
         var openingId = "program_item_item_openings_attributes_" + identifier;
-        $("#lg_modal").find("#lg_modal_title").html("Modifier la période d'ouverture");
-        $("#lg_modal").find("#lg_modal_body").html("<%= j(render 'shared/forms/opening_form', opening_form_path: opening_form_path) %>");
-        $("#lg_modal").modal();
-        $("#lg_modal").drags({handle: '.modal-header'});
+        var modal = $("#lg_modal");
+        modal.find("#lg_modal_title").html("Modifier la période d'ouverture");
+        modal.find("#lg_modal_body").html("<%= j(render 'shared/forms/opening_form', opening_form_path: opening_form_path) %>");
+        modal.modal();
+        modal.off('hide.bs.modal');
+        modal.drags({handle: '.modal-header'});
         $("#starts_at").val($("#" + openingId + "_starts_at").val() ? moment($("#" + openingId + "_starts_at").val()).format('YYYY-MM-DD HH:mm') : '');
         $("#ends_at").val($("#" + openingId + "_ends_at").val() ? moment($("#" + openingId + "_ends_at").val()).format('YYYY-MM-DD HH:mm') : '');
         var duration = $("#" + openingId + "_duration").val();
