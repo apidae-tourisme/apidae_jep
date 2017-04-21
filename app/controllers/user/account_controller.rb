@@ -37,6 +37,20 @@ class User::AccountController < User::UserController
     end
   end
 
+  def communication
+    @user = current_user
+    @user.communication_poll ||= CommunicationPoll.new(user_id: @user.id)
+  end
+
+  def update_communication
+    @user = current_user
+    if @user.update(user_params)
+      redirect_to user_dashboard_url, notice: "Le formulaire a bien été enregistré."
+    else
+      render :communication, notice: "Une erreur s'est produite lors de l'enregistrement du formulaire."
+    end
+  end
+
   private
 
   def user_params

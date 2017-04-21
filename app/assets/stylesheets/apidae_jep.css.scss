@@ -233,16 +233,16 @@ form .item_photos img {
   color: #d67c7d;
 }
 
-#program_item_form select.error + small + div.chosen-container > ul.chosen-choices,
-#program_item_form select.error + small + span.select2-container span.select2-selection,
-#program_item_form input.error, #program_item_form textarea.error, #user_account_form input.error {
+form select.error + small + div.chosen-container > ul.chosen-choices,
+form select.error + small + span.select2-container span.select2-selection,
+form input.error,
+form textarea.error {
   background: rgb(251, 227, 228);
   border: 1px solid #fbc2c4;
   color: #8a1f11;
 }
 
-#program_item_form small.error,
-#user_account_form small.error {
+form small.error {
   position: absolute;
   right: 25px;
   margin: 0;
@@ -271,18 +271,14 @@ form .item_photos img {
   font-family: inherit;
 }
 
-#user_account_form .select2.select2-container .select2-selection--single,
-#user_account_form .select2-selection__arrow,
-#map_fields .select2.select2-container .select2-selection--single,
-#map_fields .select2-selection__arrow {
-  height: 36px;
+form .select2.select2-container .select2-selection--single,
+form .select2-selection__arrow {
+  height: 36px !important;
 }
 
-#user_account_form .select2 .select2-selection__rendered,
-#user_account_form .select2 .select2-selection__rendered::after,
-#map_fields .select2 .select2-selection__rendered,
-#map_fields .select2 .select2-selection__rendered::after {
-  line-height: 34px;
+form .select2 .select2-selection__rendered,
+form .select2 .select2-selection__rendered::after {
+  line-height: 34px !important;
 }
 
 #entity_form .select2 .select2-selection__arrow {

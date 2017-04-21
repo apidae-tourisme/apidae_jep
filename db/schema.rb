@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170420061628) do
+ActiveRecord::Schema.define(version: 20170421065034) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,22 @@ ActiveRecord::Schema.define(version: 20170420061628) do
     t.string   "member_ref"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+  end
+
+  create_table "communication_polls", force: :cascade do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "role"
+    t.string   "town_insee_code"
+    t.string   "phone"
+    t.string   "email"
+    t.string   "delivery_address"
+    t.string   "delivery_insee_code"
+    t.text     "communication_data"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.integer  "user_id"
+    t.text     "delivery_comments"
   end
 
   create_table "item_openings", force: :cascade do |t|
@@ -175,6 +191,7 @@ ActiveRecord::Schema.define(version: 20170420061628) do
     t.string   "role"
     t.text     "apidae_data"
     t.integer  "legal_entity_id"
+    t.boolean  "communication"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

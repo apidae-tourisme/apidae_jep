@@ -26,7 +26,11 @@ class User::ProgramItemsController < User::UserController
     @item.ordering = @program.program_items.count
     if @item.save
       @item.update(reference: @item.id) unless @item.reference
-      redirect_to confirm_user_program_program_item_url(@program.id, @item)
+      if current_user.territory == GRAND_LYON && current_user.program_items.count == 1 && current_user.communication.nil?
+        redirect_to communication_user_account_path
+      else
+        redirect_to confirm_user_program_program_item_url(@program.id, @item)
+      end
     else
       render :new, notice: "Une erreur est survenue lors de la création de l'offre."
     end

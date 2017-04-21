@@ -3,6 +3,9 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :legal_entity
   has_many :program_items
   has_and_belongs_to_many :programs
+  has_one :communication_poll
+
+  accepts_nested_attributes_for :communication_poll
 
   devise :database_authenticatable, :registerable, :timeoutable, :rememberable,
          :recoverable, :trackable, :validatable

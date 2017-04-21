@@ -34,6 +34,14 @@
           <div class="text-sm">Aide</div>
         </a>
       </li>
+      <% if current_user.territory == GRAND_LYON %>
+      <li class="<%= 'active' if controller?('user/account') && action?('communication') %>">
+        <a href="<%= communication_user_account_path %>" title="Supports de communication">
+          <em class="icon-envelope-letter"></em>
+          <div class="text-sm">Supports</div>
+        </a>
+      </li>
+      <% end %>
     </ul>
   </nav>
 </div>

@@ -22,8 +22,9 @@ gem 'coffee-rails', '~> 4.2'
 
 gem 'bower-rails', '~> 0.9.2'
 
+gem 'sentry-raven'
+
 group :production do
   gem 'therubyracer'
   gem 'lograge'
-  gem 'sentry-raven'
 end
