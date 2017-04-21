@@ -968,6 +968,11 @@
                 return inputDate;
             },
 
+            // patched (added)
+            refDate = function() {
+                return input.val().trim().length !== 0 ? date : options.defaultDate;
+            },
+
             /********************************************************************************
              *
              * Widget UI interaction functions
@@ -1053,8 +1058,7 @@
 
                 // patched
                 incrementHours: function () {
-                    var refDate = input.val().trim().length !== 0 ? date : options.defaultDate;
-                    var newDate = refDate.clone().add(1, 'h');
+                    var newDate = refDate().clone().add(1, 'h');
                     if (isValid(newDate, 'h')) {
                         setValue(newDate);
                     }
@@ -1062,8 +1066,7 @@
 
                 // patched
                 incrementMinutes: function () {
-                    var refDate = input.val().trim().length !== 0 ? date : options.defaultDate;
-                    var newDate = refDate.clone().add(options.stepping, 'm');
+                    var newDate = refDate().clone().add(options.stepping, 'm');
                     if (isValid(newDate, 'm')) {
                         setValue(newDate);
                     }
@@ -1078,8 +1081,7 @@
 
                 // patched
                 decrementHours: function () {
-                    var refDate = input.val().trim().length !== 0 ? date : options.defaultDate;
-                    var newDate = refDate.clone().subtract(1, 'h');
+                    var newDate = refDate().clone().subtract(1, 'h');
                     if (isValid(newDate, 'h')) {
                         setValue(newDate);
                     }
@@ -1087,8 +1089,7 @@
 
                 // patched
                 decrementMinutes: function () {
-                    var refDate = input.val().trim().length !== 0 ? date : options.defaultDate;
-                    var newDate = refDate.clone().subtract(options.stepping, 'm');
+                    var newDate = refDate().clone().subtract(options.stepping, 'm');
                     if (isValid(newDate, 'm')) {
                         setValue(newDate);
                     }
@@ -1157,6 +1158,7 @@
                     widget.find('.timepicker .timepicker-seconds').show();
                 },
 
+                // patched
                 selectHour: function (e) {
                     var hour = parseInt($(e.target).text(), 10);
 
@@ -1171,12 +1173,13 @@
                             }
                         }
                     }
-                    setValue(date.clone().hours(hour));
+                    setValue(refDate().clone().hours(hour));
                     actions.showPicker.call(picker);
                 },
 
+                // patched
                 selectMinute: function (e) {
-                    setValue(date.clone().minutes(parseInt($(e.target).text(), 10)));
+                    setValue(refDate().clone().minutes(parseInt($(e.target).text(), 10)));
                     actions.showPicker.call(picker);
                 },
 

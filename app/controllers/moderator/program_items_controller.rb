@@ -17,10 +17,10 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
     begin
       @item.attributes = item_params
       if @item.validated?
-        if @item.save && @item.remote_save
+        if @item.remote_save && @item.save
           redirect_to edit_moderator_program_url(@item.program), notice: "L'offre a bien été enregistrée." and return
         else
-        #   Todo - handle writing error
+          render :edit, notice: "Une erreur s'est produite lors de la validation de l'offre."
         end
       elsif @item.save
         redirect_to edit_moderator_program_url(@item.program), notice: "L'offre a bien été mise à jour." and return
