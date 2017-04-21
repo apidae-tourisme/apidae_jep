@@ -112,10 +112,10 @@ class ProgramItem < ActiveRecord::Base
     merged = {}
 
     unless location_data.nil? || location_data.empty?
-      place_town = Town.find_by_postal_code(main_postal_code)
+      place_town = Town.find_by_insee_code(main_town_insee_code)
       merged[:place] = {
           name: main_place, startingPoint: alt_place, address: main_address,
-          postal_code: main_postal_code, latitude: main_lat, longitude: main_lng,
+          postal_code: place_town.postal_code, latitude: main_lat, longitude: main_lng,
           extraInfo: main_transports, external_id: place_town.external_id
       }
     end
