@@ -17,13 +17,13 @@
   </div>
   <% if @program.persisted? %>
   <div class="pt pb">
-    <div class="panel panel-primary mb-sm">
+    <div class="panel panel-primary panel-flat mb-sm">
       <div class="panel-heading">
         <div class="pull-right">
-          <%= link_to '<i class="fa fa-plus pr-sm"></i>Ajouter une offre'.html_safe,
-                      new_user_program_program_item_path(@program.id), class: 'text-white' %>
+          <%= link_to '<em class="icon-plus pr-sm"></em>Ajouter une offre'.html_safe,
+                      new_user_program_program_item_path(@program.id),  class: 'text-white text-std' %>
         </div>
-        <h4 class="text-uppercase m0">Mes offres</h4>
+        <h4 class="text-uppercase mv-sm">Mes offres</h4>
       </div>
     </div>
 
