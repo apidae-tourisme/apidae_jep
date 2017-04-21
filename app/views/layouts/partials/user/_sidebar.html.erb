@@ -22,7 +22,7 @@
           <% end %>
         </ul>
       </li>
-      <li class="<%= 'active' if controller?('user/account') %>">
+      <li class="<%= 'active' if controller?('user/account') && action_name != 'communication' %>">
         <a href="<%= url_for(controller: 'user/account', action: 'edit') %>" title="Gestion du compte">
           <em class="icon-user"></em>
           <div class="text-sm">Mon compte</div>

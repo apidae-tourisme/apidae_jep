@@ -19,6 +19,8 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
       if @item.validated?
         if @item.save && @item.remote_save
           redirect_to edit_moderator_program_url(@item.program), notice: "L'offre a bien été enregistrée." and return
+        else
+        #   Todo - handle writing error
         end
       elsif @item.save
         redirect_to edit_moderator_program_url(@item.program), notice: "L'offre a bien été mise à jour." and return

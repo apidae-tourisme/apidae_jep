@@ -1,5 +1,10 @@
 <div class="content-heading">Supports de communication</div>
 <div id="communication_form">
+  <div class="alert alert-info">
+    <em class="icon-info pr-sm"></em>Si vous souhaitez commander des supports de communication pour les
+    Journées européennes du patrimoine (affiches, programmes…), veuillez cocher la case puis renseigner le formulaire
+    de commande ci-dessous.
+  </div>
   <%= form_for(@user, url: com_poll_user_account_path(@user),
                html: {id: 'com_poll_form', class: 'form-horizontal mb-xl pb-xl'}) do |user_form| %>
       <div class="panel panel-default panel-flat">
@@ -8,9 +13,15 @@
             <label class="col-sm-3 control-label mdy">Commande de supports</label>
             <div class="col-sm-9">
               <label class="checkbox-inline c-checkbox ml0 mr-lg">
-                <%= user_form.check_box :communication %>
+                <%= check_box_tag 'user[communication]', '1', @user.communication %>
                 <span class="fa fa-check"></span>Je souhaite commander les supports de communication
               </label>
+            </div>
+            <div id="no_com" class="mt-lg help-block col-sm-9 col-sm-offset-3" style="<%= 'display: none;' if @user.communication %>">
+              <div class="help-block">
+                Vous ne souhaitez pas commander de supports de communication.
+                Vous pouvez corriger cette commande jusqu’au 23 juin depuis votre tableau de bord.
+              </div>
             </div>
           </div>
           <div id="user_com_poll_fields" class="mt-xl">
@@ -54,7 +65,12 @@
                   </div>
                 </fieldset>
                 <fieldset>
-                  <legend class="text-uppercase text-primary">Informations sur la commande</legend>
+                  <legend class="text-uppercase text-primary mb-sm">Informations sur la commande</legend>
+                  <div class="help-block mb-lg">
+                    <em class="icon-info pr-sm"></em>La livraison des supports de communication démarre la semaine du
+                    21 août. Merci de mentionner vos dates et horaires de présence. En cas d'absence sur ces créneaux,
+                    nos contraintes de délais ne permettent pas de second passage.
+                  </div>
                   <div class="form-group mdy">
                     <label class="col-sm-3 control-label">Adresse de livraison</label>
                     <div class="col-sm-9">
@@ -80,13 +96,16 @@
                   </div>
                 </fieldset>
                 <fieldset>
-                  <legend class="text-uppercase text-primary">Nombre de supports</legend>
+                  <legend class="text-uppercase text-primary mb-sm">Nombre de supports</legend>
+                  <div class="help-block mb-lg">
+                    <em class="icon-info pr-sm"></em>Les quantités sont adaptées selon le stock disponible.
+                  </div>
                   <div class="form-group mdy">
                     <label class="col-sm-4 control-label">Nombre de programmes papier</label>
                     <div class="col-sm-2">
-                      <%= poll_form.text_field :flyers, class: 'form-control required digits' %>
+                      <%= poll_form.select :flyers, (0..20).collect {|i| i*50}, {}, class: 'form-control required digits' %>
                     </div>
-                    <label class="col-sm-4 control-label">Nombre d'affiches a x b cm</label>
+                    <label class="col-sm-4 control-label">Nombre d'affiches 40 x 60 cm</label>
                     <div class="col-sm-2">
                       <%= poll_form.text_field :posters1, class: 'form-control required digits' %>
                     </div>
@@ -118,16 +137,23 @@
       function togglePollFields(isChecked) {
           if(isChecked) {
               $("#user_com_poll_fields").show();
+              $("#no_com").hide();
           } else {
               $("#user_com_poll_fields").hide();
+              $("#no_com").show();
           }
+      }
+
+      function setTownValue(value, label) {
+          $("select.select_town").append('<option value="' + value + '">' + label + '</option>');
+          selectTown.val(value).trigger('change');
       }
 
       $("#user_communication").change(function() {
           togglePollFields($(this).is(':checked'));
       });
 
-      var select2Elt = $("select.select_town").select2({
+      var selectTown = $("select.select_town").select2({
           language: "fr",
           minimumInputLength: 2,
           ajax: {
