@@ -1,0 +1,4 @@
+$("#program_item_main_transports").val("<%= @place.access_details %>");
+$("#program_item_place_desc").val("<%= @jep_site.description %>");
+$("#program_item_building_ages").val(<%= @jep_site.ages %>);
+$("#program_item_building_ages").trigger("chosen:updated");

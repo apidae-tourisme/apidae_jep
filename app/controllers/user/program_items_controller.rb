@@ -111,6 +111,11 @@ class User::ProgramItemsController < User::UserController
     @item_type = params[:item_type]
   end
 
+  def site_desc
+    @place = Place.where(uid: params[:place_uid]).first
+    @jep_site = JepSite.where(place_uid: params[:place_uid]).first
+  end
+
   private
 
   def item_params

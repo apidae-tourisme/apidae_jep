@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '~> 4.2.8'
 
 gem 'pg'
+gem 'activerecord-import'
 
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.5'

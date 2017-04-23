@@ -35,6 +35,7 @@ Rails.application.routes.draw do
         patch 'save_program', on: :member, as: 'save'
         patch 'set_opening', on: :collection, as: 'opening'
         get 'update_form', on: :collection, as: 'update_form'
+        get 'site_desc', on: :collection, as: 'site_desc'
       end
     end
   end

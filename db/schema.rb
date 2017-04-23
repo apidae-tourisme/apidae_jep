@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170421065034) do
+ActiveRecord::Schema.define(version: 20170422121251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,16 @@ ActiveRecord::Schema.define(version: 20170421065034) do
     t.integer  "duration"
     t.integer  "frequency"
   end
+
+  create_table "jep_sites", force: :cascade do |t|
+    t.text     "description"
+    t.text     "site_data"
+    t.uuid     "place_uid"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "jep_sites", ["place_uid"], name: "index_jep_sites_on_place_uid", unique: true, using: :btree
 
   create_table "legal_entities", force: :cascade do |t|
     t.string   "name"
@@ -117,7 +127,11 @@ ActiveRecord::Schema.define(version: 20170421065034) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.text     "desc_data"
+    t.uuid     "uid"
+    t.string   "country"
   end
+
+  add_index "places", ["uid"], name: "index_places_on_uid", unique: true, using: :btree
 
   create_table "program_items", force: :cascade do |t|
     t.integer  "program_id"

@@ -25,9 +25,6 @@
         selectTown.val(value).trigger('change');
     }
 
-// Todo : introduce uuid in places model
-// Bind uuid to extra info (access details, desc and centuries) since we dont want to index them for now
-
     function updateFormFields(feature) {
         $("#program_item_main_place").val(feature.properties.name);
         $("#program_item_main_address").val([feature.properties.housenumber, feature.properties.street].join(' ').trim());
@@ -108,6 +105,13 @@
                 map.removeLayer(markers[0]);
             }
             toggleMapFields(false);
+            $.ajax({
+                url: '<%= site_desc_user_program_program_items_path(@program.id) %>',
+                method: 'GET',
+                data: {
+                    place_uid: e.feature.properties.id
+                }
+            });
         });
         geocoder.on('results', function (e) {
             if(e.results.features) {
