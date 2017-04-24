@@ -1,4 +1,4 @@
-<%= form_for([form_scope, @program, @item], html: {multipart: true, id: 'program_item_form', class: 'form-horizontal'}) do |item_form| %>
+<%= form_for([form_scope, @program, @item], html: {multipart: true, id: 'program_item_form', class: 'form-horizontal', onsubmit: 'displaySpinner();'}) do |item_form| %>
     <div class="panel panel-default">
       <div class="panel-body">
         <p class="help-block">Les champs marqués d'un <strong>*</strong> sont obligatoires.</p>
@@ -90,14 +90,14 @@
             <div class="col-sm-4 p0">
               <%= item_form.select :building_types, building_types, {}, multiple: 'multiple',
                                    class: 'form-control chosen-select no-max',
-                                   'data-placeholder' => "Types de lieu" %>
+                                   'data-placeholder' => "Plusieurs choix possibles" %>
             </div>
             <label class="col-sm-2 control-label">Epoque<%= help_button %></label>
             <%= help_content("Plusieurs choix possibles.") %>
             <div class="col-sm-4 pl0">
               <%= item_form.select :building_ages, building_ages, {}, multiple: 'multiple',
                                    class: 'form-control chosen-select no-max',
-                                   'data-placeholder' => "Epoques" %>
+                                   'data-placeholder' => "Plusieurs choix possibles" %>
             </div>
           </div>
           <div class="form-group mt-lg">
@@ -114,7 +114,7 @@
             <%= help_content("Plusieurs choix possibles.") %>
             <div id="item_caracs" class="col-sm-9">
               <%= select_tag 'program_item[criteria][]', criteria(@item.item_type, @item.criteria), multiple: 'multiple',
-                             class: 'form-control chosen-select no-max', 'data-placeholder' => "Caractéristiques de l'offre" %>
+                             class: 'form-control chosen-select no-max', 'data-placeholder' => "Plusieurs choix possibles" %>
             </div>
           </div>
           <div class="form-group mt-lg">
@@ -123,7 +123,7 @@
             <div class="col-sm-9">
               <%= item_form.select :themes, themes, {}, multiple: 'multiple',
                                    class: 'form-control chosen-select no-max',
-                                   'data-placeholder' => "Thèmes de l'offre" %>
+                                   'data-placeholder' => "Plusieurs choix possibles" %>
             </div>
           </div>
           <div class="form-group mt-lg mdy">
@@ -278,13 +278,8 @@
           <legend class="text-uppercase text-primary">Commentaires et suivi</legend>
           <div class="row">
             <div class="col-sm-6">
-              <div class="form-group">
-                <label class="col-sm-3">Statut actuel</label>
-                <div class="col-sm-9 pl0">
-                  <span class="label text-sm label-<%= t "program_item.color.#{@item.status}" %>"><%= t "program_item.status.#{@item.status}" %></span>
-                </div>
-              </div>
-              <div class="form-group mt-lg">
+              <h5><strong>Commentaires facultatifs</strong></h5>
+              <div class="form-group mt-sm">
                 <div class="col-sm-12">
                   <%= item_form.text_area :comment, class: 'form-control', rows: 6,
                                         placeholder: "Ajouter un commentaire concernant la validation de la saisie et le suivi de l'offre" %>
@@ -293,7 +288,9 @@
             </div>
             <div class="col-sm-6">
               <ul class="timeline-alt">
-                <li data-datetime="Aujourd'hui" class="timeline-separator"></li>
+                <li data-datetime="Etat actuel" class="timeline-separator">
+                  &nbsp;<span class="label text-sm label-<%= t "program_item.color.#{@item.status}" %>"><%= t "program_item.status.#{@item.status}" %></span>
+                </li>
                 <% if @item.history_entries.blank? %>
                     <li class="m0">
                       <div class="timeline-panel">

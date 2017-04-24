@@ -91,7 +91,6 @@
         }
 
         geocoder.on('select', function (e) {
-            console.log(e.feature);
             updateFormFields(e.feature);
             var markers = [];
             map.eachLayer(function(layer) {
@@ -310,6 +309,23 @@
         } else {
             $("#building_fields").hide();
         }
+    }
+
+    function displaySpinner() {
+        var modalWindow = $("#modal_window");
+        modalWindow.find("#modal_title").html("Enregistrement en cours");
+        modalWindow.find("#modal_body").html(
+            '<div class="panel panel-flat">' +
+              '<div class="panel-body whirl traditional bg-white">' +
+                '<p class="pre pt-lg text-center">Veuillez patienter, votre saisie est en cours d\'enregistrement.</p>' +
+              '</div>' +
+            '</div>');
+        modalWindow.find("#modal_footer").html('<button id="close_spinner" type="button" class="btn btn-inverse">Fermer</button>');
+        modalWindow.modal();
+        $("#close_spinner").click(function() {
+            modalWindow.modal("hide");
+            return false;
+        });
     }
 
     $(function() {

@@ -37,7 +37,7 @@ class ItemOpening < ActiveRecord::Base
         if frequency
           desc = "#{l(starts_at, format: DATE_ONLY).titleize}, toutes les #{frequency_as_text(frequency)} à partir de #{l(starts_at, format: TIME_ONLY)}"
         else
-          desc = start_str.titleize
+          desc = duration ? start_str.titleize : start_str.titleize.gsub('à', 'à partir de')
         end
       end
       desc += " - Durée : #{duration_as_text(duration)}" if duration

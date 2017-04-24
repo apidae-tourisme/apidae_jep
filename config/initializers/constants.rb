@@ -9,8 +9,8 @@ ITEM_EXPOSITION = "exposition"
 ITEM_TYPES = [ITEM_VISITE, ITEM_PARCOURS, ITEM_ANIMATION, ITEM_EXPOSITION]
 
 THEMES = {
-    GRAND_LYON => ["Thématique 2017", "La Métropole au fil de l'eau", "Nouveauté", "En famille", "Jeunes (15-25 ans)", "Egalité"],
-    ISERE => ["Thématique 2017", "Famille", "Réservé aux enfants", "Antiquité", "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature"]
+    GRAND_LYON => ['Thématique 2017 - "Jeunesse et Patrimoine"', "La Métropole au fil de l'eau", "Nouveauté", "En famille", "Jeunes (15-25 ans)", "Egalité"],
+    ISERE => ['Thématique 2017 - "Jeunesse et Patrimoine"', "Famille", "Réservé aux enfants", "Antiquité", "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature"]
 }
 
 CRITERIA = {
@@ -62,7 +62,7 @@ APIDAE_CRITERIA = {
 }
 
 APIDAE_TYPOLOGIES = {
-    'Thématique 2017' => 4927
+    'Thématique 2017 - "Jeunesse et Patrimoine"' => 4927
 }
 
 APIDAE_THEMES = {

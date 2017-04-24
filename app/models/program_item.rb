@@ -116,7 +116,7 @@ class ProgramItem < ActiveRecord::Base
       merged[:place] = {
           name: main_place, startingPoint: alt_place, address: main_address,
           postal_code: place_town.postal_code, latitude: main_lat, longitude: main_lng,
-          extraInfo: main_transports, external_id: place_town.external_id
+          extraInfo: alt_place, external_id: place_town.external_id
       }
     end
 
@@ -333,14 +333,12 @@ class ProgramItem < ActiveRecord::Base
 
   def audience_values(data = [])
     values = []
-    children_refs = ["En famille", "Famille", "Réservé aux enfants"].map(&:parameterize)
-    if (data & children_refs).any?
+    family_refs = ["En famille", "Famille"].map(&:parameterize)
+    if (data & family_refs).any?
       values << {id: 513, elementReferenceType: 'TypeClientele'}
-      values << {id: 594, elementReferenceType: 'TypeClientele'}
     end
-    if data.include?("Jeunes (15-25 ans)".parameterize)
-      values << {id: 496, elementReferenceType: 'TypeClientele'}
-    end
+    values << {id: 594, elementReferenceType: 'TypeClientele'} if data.include?("Réservé aux enfants".parameterize)
+    values << {id: 496, elementReferenceType: 'TypeClientele'} if data.include?("Jeunes (15-25 ans)".parameterize)
     values
   end
 
@@ -406,12 +404,10 @@ class ProgramItem < ActiveRecord::Base
   def build_criteria(selected = [])
     input_refs = selected + [item_type]
     added = []
-    removed = []
     APIDAE_CRITERIA.each_pair do |crit, id|
       added << id if input_refs.include?(crit.parameterize)
     end
-    # Todo : handle removed
-
+    removed = APIDAE_CRITERIA.values - added
     {added: added, removed: removed}
   end
 

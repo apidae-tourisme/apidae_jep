@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(version: 20170422121251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "unaccent"
 
   create_table "attached_files", force: :cascade do |t|
     t.integer  "program_item_id"

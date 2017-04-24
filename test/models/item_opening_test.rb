@@ -4,7 +4,7 @@ class ItemOpeningTest < ActiveSupport::TestCase
 
   test 'description with start date only' do
     opening = ItemOpening.new(starts_at: DateTime.new(2017, 4, 5, 17, 20, 0))
-    assert_equal 'Mercredi 5 Avril 2017 à 17:20', opening.as_text
+    assert_equal 'Mercredi 5 Avril 2017 à partir de 17:20', opening.as_text
   end
 
   test 'description with two different dates' do

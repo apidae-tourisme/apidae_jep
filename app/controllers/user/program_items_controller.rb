@@ -6,7 +6,9 @@ class User::ProgramItemsController < User::UserController
   def new
     if params[:id].blank?
       @item = ProgramItem.new(program_id: @program.id, item_type: ITEM_VISITE, free: true, booking: false,
-                              accept_pictures: '0', user_id: current_user.id, rev: 1, status: ProgramItem::STATUS_DRAFT)
+                              accept_pictures: '0', user_id: current_user.id, rev: 1, status: ProgramItem::STATUS_DRAFT,
+                              telephone: current_user.legal_entity.phone, email: current_user.legal_entity.email,
+                              website: current_user.legal_entity.website)
     else
       previous_version = ProgramItem.find(params[:id])
       @item = previous_version.dup
