@@ -110,6 +110,27 @@ class Place < ActiveRecord::Base
     result[:features] || []
   end
 
+  def self.export_full(csv_file)
+    columns = ['uid', 'name', 'address1', 'address2', 'address3', 'town_insee_code', 'latitude', 'longitude',
+               'altitude', 'country', 'source', 'access_details', 'transports']
+
+    CSV.open(Rails.root.join('data', csv_file), 'wb') do |csv|
+      csv << columns
+      Place.all.each do |p|
+        csv << [p.uid, p.name, p.address1, p.address2, p.address3, p.town_insee_code, p.latitude, p.longitude,
+                p.altitude, p.country, p.source, p.access_details, p.transports]
+      end
+    end
+  end
+
+  def self.import_full(csv_file)
+    places = []
+    import_csv(csv_file) do |place_attrs|
+      places << Place.new(place_attrs)
+    end
+    Place.import places
+  end
+
   private
 
   def generate_uid
