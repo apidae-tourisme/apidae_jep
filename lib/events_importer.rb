@@ -11,10 +11,12 @@ class EventsImporter
     events_data.each_pair do |email, evts|
       user = User.find_by_email(email)
       if user
-        unless user.programs.any? && user.programs.where(title: LEGACY_PROGRAM).count > 0
+        if user.programs.empty? || user.programs.where(title: LEGACY_PROGRAM).count == 0
           program = Program.new(title: LEGACY_PROGRAM)
           program.users << user
           program.save
+        else
+          program = user.programs.where(title: LEGACY_PROGRAM).first
         end
         evts.each do |evt|
           if evt[:external_id] && events.select {|e| e.id.to_s == evt[:external_id].to_s}.first
@@ -25,6 +27,8 @@ class EventsImporter
             item.event_planners = evt[:event_planners]
             item.building_ages = evt[:building_ages]
             item.building_types = evt[:building_types]
+            item.program_id = program.id
+            item.user_id = user.id
             item.save(validate: false)
           end
         end
