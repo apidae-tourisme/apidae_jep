@@ -2,9 +2,34 @@ require 'sitra_client'
 
 class EventsImporter
 
-  def self.import_events
+  LEGACY_PROGRAM = "Offres saisies au cours de l'édition 2016 des JEP"
+
+  def self.import_events(json_exports_file)
     events = load_apidae_events(40989)
-    puts "Loaded #{events.count} events"
+    events_json = File.read(json_exports_file)
+    events_data = JSON.parse(events_json, symbolize_names: true)
+    events_data.each_pair do |email, evts|
+      user = User.find_by_email(email)
+      if user
+        unless user.programs.any? && user.programs.where(title: LEGACY_PROGRAM).count > 0
+          program = Program.new(title: LEGACY_PROGRAM)
+          program.users << user
+          program.save
+        end
+        evts.each do |evt|
+          if evt[:external_id] && events.select {|e| e.id.to_s == evt[:external_id].to_s}.first
+            obj = events.select {|e| e.id.to_s == evt[:external_id].to_s}.first
+            item = obj.to_program_item
+            item.alt_place = evt[:place_starting_point]
+            item.place_desc = evt[:place_description]
+            item.event_planners = evt[:event_planners]
+            item.building_ages = evt[:building_ages]
+            item.building_types = evt[:building_types]
+            item.save(validate: false)
+          end
+        end
+      end
+    end
   end
 
   def self.load_apidae_events(selection)
