@@ -19,6 +19,7 @@ class JepSite < ActiveRecord::Base
     csv.each do |row|
       sites_fields = row.to_hash
       if sites_fields.length == row.headers.length
+        # Todo : ages is converted to string in the process
         JepSite.create(sites_fields)
       else
         raise Exception.new('Invalid csv row : ' + sites_fields)

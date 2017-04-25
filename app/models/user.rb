@@ -52,4 +52,29 @@ class User < ActiveRecord::Base
   def offers
     programs.collect {|p| p.program_items}.flatten.group_by {|pi| pi.status}
   end
+
+  def self.import_full(csv_file)
+    csv = CSV.new(File.new(csv_file), col_sep: ',', headers: :first_row)
+    csv.each do |row|
+      user_fields = row.to_hash
+      if user_fields.length == row.headers.length
+        existing_user = User.find_by_email(user_fields['email'])
+        if existing_user
+          logger.info "Skipping existing user : #{existing_user.email}"
+        else
+          user = User.new(email: user_fields['email'], encrypted_password: user_fields['encrypted_password'],
+                          first_name: user_fields['first_name'], last_name: user_fields['last_name'],
+                          provider: user_fields['provider'], role: user_fields['role'],
+                          telephone: user_fields['telephone'])
+          unless user_fields['entity_id'].blank?
+            entity = LegalEntity.find_by_external_id(user_fields['entity_id'])
+            user.legal_entity_id = entity.id if entity
+          end
+          user.save(validate: false)
+        end
+      else
+        raise Exception.new('Invalid csv row : ' + user_fields)
+      end
+    end
+  end
 end
