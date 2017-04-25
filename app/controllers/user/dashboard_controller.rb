@@ -6,6 +6,9 @@ class User::DashboardController < User::UserController
     @offers = @user.offers
   end
 
+  def support
+  end
+
   private
 
   def set_user

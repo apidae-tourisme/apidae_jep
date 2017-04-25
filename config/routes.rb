@@ -49,6 +49,7 @@ Rails.application.routes.draw do
         get 'communication', on: :collection
         patch 'update_communication', on: :collection, as: 'com_poll'
       end
+      get 'support', to: 'dashboard#support', path: 'support'
     end
   end
 

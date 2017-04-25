@@ -15,7 +15,7 @@ class TouristicObject
         main_town_insee_code: retrieve_insee_code(address_details[:commune][:nom]),
         main_transports: public_transports_info,
         free: @descriptionTarif && @descriptionTarif[:gratuit],
-        ratesDesc: tarif,
+        rates_desc: tarif,
         booking: booking,
         booking_details: reservation,
         booking_telephone: booking_contact([PHONE])['Téléphone'],
