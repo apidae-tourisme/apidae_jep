@@ -1,3 +1,5 @@
+require 'csv'
+
 class User < ActiveRecord::Base
   belongs_to :legal_entity
   accepts_nested_attributes_for :legal_entity
@@ -82,12 +84,12 @@ class User < ActiveRecord::Base
     end
   end
 
-  def reassign_entities(csv_file)
+  def self.reassign_entities(csv_file)
     csv = CSV.new(File.new(csv_file), col_sep: ',', headers: :first_row)
     csv.each do |row|
       dup_fields = row.to_hash
       if dup_fields.length == row.headers.length
-        if dup_fields['duplicate'].strip == 'OUI'
+        if dup_fields['duplicate'] && dup_fields['duplicate'].strip == 'OUI'
           dup_entity = LegalEntity.find_by_external_id(dup_fields['duplicate_id'].gsub(' ', ''))
           if dup_entity && dup_entity.users.any?
             orig_entity = LegalEntity.find_by_external_id(dup_fields['original_id'])
