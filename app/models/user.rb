@@ -68,7 +68,11 @@ class User < ActiveRecord::Base
                           telephone: user_fields['telephone'])
           unless user_fields['entity_id'].blank?
             entity = LegalEntity.find_by_external_id(user_fields['entity_id'])
-            user.legal_entity_id = entity.id if entity
+            if entity
+              user.legal_entity_id = entity.id
+            else
+              logger.info "Could not find legal entity with id #{user_fields['entity_id']}"
+            end
           end
           user.save(validate: false)
         end
