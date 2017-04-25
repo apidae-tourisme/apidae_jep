@@ -16,6 +16,7 @@ gem 'omniauth-oauth2', '1.3.1'
 gem 'paperclip'
 gem 'cocoon'
 gem 'remotipart', '~> 1.2'
+gem 'sitra_client'
 
 gem 'sass-rails', '~> 5.0.1'
 gem 'uglifier', '>= 1.3.0'

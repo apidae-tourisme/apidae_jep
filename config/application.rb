@@ -24,7 +24,7 @@ module ApidaeJep
     config.action_controller.include_all_helpers = false
 
     # Cache store
-    config.cache_store = :file_store, 'cache', {expires_in: 10.minutes}
+    config.cache_store = :file_store, 'cache', {expires_in: 48.hours}
 
     # Mailer config
     config.action_mailer.smtp_settings = {
