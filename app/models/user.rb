@@ -90,15 +90,17 @@ class User < ActiveRecord::Base
       dup_fields = row.to_hash
       if dup_fields.length == row.headers.length
         if dup_fields['duplicate'] && dup_fields['duplicate'].strip == 'OUI'
-          dup_entity = LegalEntity.find_by_external_id(dup_fields['duplicate_id'].gsub(' ', ''))
+          dup_id = dup_fields['duplicate_id'].gsub(' ', '')
+          orig_id = dup_fields['original_id'].gsub(' ', '')
+          dup_entity = LegalEntity.find_by_external_id(dup_id)
           if dup_entity && dup_entity.users.any?
-            orig_entity = LegalEntity.find_by_external_id(dup_fields['original_id'])
+            orig_entity = LegalEntity.find_by_external_id(orig_id)
             if orig_entity
               logger.info "Transfering #{dup_entity.users.count} user(s) from entity '#{dup_entity.name}' to entity '#{orig_entity.name}'"
               dup_entity.users.update_all(legal_entity_id: orig_entity.id)
             end
           else
-            logger.info "Skipping duplicate entity with id : #{dup_fields['duplicate_id']}"
+            logger.info "Skipping duplicate entity with id : #{dup_id}"
           end
         end
       else
