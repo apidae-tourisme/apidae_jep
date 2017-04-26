@@ -116,8 +116,8 @@ class User::ProgramItemsController < User::UserController
   def site_desc
     @place = Place.where(uid: params[:place_uid]).first
     jep_site = JepSite.where(place_uid: params[:place_uid]).first
-    @site_desc = jep_site ? jep_site.description : ''
-    @site_ages = jep_site ? jep_site.ages : []
+    @site_desc = (jep_site && jep_site.description) ? jep_site.description : ''
+    @site_ages = (jep_site && jep_site.ages) ? jep_site.ages : []
   end
 
   private
