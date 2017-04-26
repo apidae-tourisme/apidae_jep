@@ -1,6 +1,6 @@
 $("#program_item_main_transports").val("<%= j(raw(@place.access_details)) %>");
 $("#program_item_place_desc").val("<%= j(raw(@site_desc)) %>");
-$("#program_item_building_ages").val("<%= @site_ages.ages.join(';') %>".split(';'));
+$("#program_item_building_ages").val("<%= @site_ages.join(';') %>".split(';'));
 $("#program_item_building_ages").trigger("chosen:updated");
 $("#program_item_building_types").val("");
 $("#program_item_building_types").trigger("chosen:updated");
