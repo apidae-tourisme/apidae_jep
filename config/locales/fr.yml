@@ -7,7 +7,7 @@ fr:
   devise:
     mailer:
       reset_password_instructions:
-        subject: "Instructions de réinitialisation de mot de passe"
+        subject: "ApidaeJEP - Instructions de réinitialisation de mot de passe"
         request_reset_link_msg: "Nous avons reçu une demande de réinitialisation de votre mot de passe. Pour finaliser cette demande, suivez le lien ci-dessous."
         password_change_link: "Changer mon mot de passe"
         ignore_mail_msg: "Si vous n'êtes pas à l'origine de cette demande, veuillez ignorer cet e-mail."
