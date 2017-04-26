@@ -22,6 +22,18 @@
 
 <%= yield :body_area %>
 
+<% if alert %>
+    <script>
+        $.notify("<%= alert %>", "danger");
+    </script>
+<% end %>
+
+<% if notice %>
+    <script>
+        $.notify("<%= notice %>", "success");
+    </script>
+<% end %>
+
 </body>
 
 </html>

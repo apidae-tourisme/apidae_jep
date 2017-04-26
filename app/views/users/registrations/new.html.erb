@@ -1,11 +1,15 @@
-<div class="block-center mt-xl wd-xl">
+<div class="block-center mt-xl wd-xxl">
   <div class="panel panel-dark panel-flat">
     <div class="panel-heading text-center">
       <h4>Créer un compte ApidaeJEP</h4>
     </div>
     <div class="panel-body">
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'mb-lg'}) do |f| %>
-          <%= devise_error_messages! %>
+          <% unless resource.errors.blank? %>
+          <div class="alert alert-danger">
+            <%= resource.errors.messages.values.join('<br/>').html_safe %>
+          </div>
+          <% end %>
           <div class="form-group has-feedback">
             <%= f.label :email, 'Adresse email', class: 'text-muted' %>
             <%= f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'Adresse email' %>
