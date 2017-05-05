@@ -1,0 +1,18 @@
+<%= Rails.application.config.rejection_title %>
+<%= @title %>
+
+Bonjour,
+
+Votre saisie a été invalidée par l'équipe de modération des JEP 2016.
+<% if @comment %>
+    Le commentaire fourni est le suivant :
+
+    ---
+    <%= @comment %>
+    ---
+
+<% end %>
+Si vous le souhaitez, vous pouvez proposer une nouvelle saisie dans l'application ApidaeJEP à l'adresse suivante :
+<%= new_user_program_program_item_url(id: @item.id) %>
+
+-- Cet email est généré automatiquement - Il est inutile d'y répondre --

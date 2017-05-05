@@ -7,7 +7,7 @@ class ElementsControllerTest < ActionController::TestCase
   end
 
   test "should get notification" do
-    get :notification
+    get :notification_mailer
     assert_response :success
   end
 

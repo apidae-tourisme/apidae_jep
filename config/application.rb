@@ -38,6 +38,11 @@ module ApidaeJep
     }
     config.action_mailer.perform_deliveries = true
     config.action_mailer.raise_delivery_errors = true
+
+    # Notification email config
+    config.notification_title = "JEP 2017 - Nouvelle saisie dans l'application ApidaeJEP"
+    config.rejection_title = "JEP 2017 - Saisie d'offre invalidée"
+    config.publication_title = "JEP 2017 - Saisie d'offre validée"
     
     # setup bower components folder for lookup
     config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')

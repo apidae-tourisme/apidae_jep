@@ -18,11 +18,13 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
       @item.attributes = item_params
       if @item.validated?
         if @item.remote_save && @item.save
+          NotificationMailer.publish(@item).deliver_now
           redirect_to edit_moderator_program_url(@item.program), notice: "L'offre a bien été enregistrée." and return
         else
           render :edit, notice: "Une erreur s'est produite lors de la validation de l'offre."
         end
       elsif @item.save
+        NotificationMailer.reject(@item).deliver_now if @item.rejected?
         redirect_to edit_moderator_program_url(@item.program), notice: "L'offre a bien été mise à jour." and return
       end
     rescue OAuth2::Error => e

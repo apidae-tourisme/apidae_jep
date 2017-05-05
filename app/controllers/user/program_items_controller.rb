@@ -28,6 +28,7 @@ class User::ProgramItemsController < User::UserController
     @item.ordering = @program.program_items.count
     if @item.save
       @item.update(reference: @item.id) unless @item.reference
+      NotificationMailer.notify(@item).deliver_now unless @item.pending?
       if current_user.territory == GRAND_LYON && current_user.program_items.count == 1 && current_user.communication.nil?
         redirect_to communication_user_account_path
       else
@@ -44,6 +45,7 @@ class User::ProgramItemsController < User::UserController
 
   def update
     if @item.update(item_params)
+      NotificationMailer.notify(@item).deliver_now if @item.pending?
       redirect_to confirm_user_program_program_item_url(@program.id, @item)
     else
       render :edit, notice: "Une erreur est survenue lors de la mise à jour de l'offre."

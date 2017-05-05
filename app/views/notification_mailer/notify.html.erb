@@ -1,0 +1,9 @@
+<h1><%= Rails.application.config.notification_title %></h1>
+<p>
+  Bonjour,<br/>
+  <br/>
+  Une nouvelle saisie a été effectuée dans l'application ApidaeJEP et est en attente de validation.<br/>
+  Veuillez suivre le lien suivant pour consulter l'offre nouvellement saisie :<br/>
+  <%= link_to 'Nouvelle offre ApidaeJEP', edit_moderator_program_program_item_url(@item.program_id, @item) %><br/>
+</p>
+<em>Cet email est généré automatiquement - Il est inutile d'y répondre</em>
