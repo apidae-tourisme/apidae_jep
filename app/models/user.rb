@@ -46,7 +46,8 @@ class User < ActiveRecord::Base
           legal_entity.town_insee_code.start_with?('26')
         ISERE
       else
-        raise Exception.new("Unsupported INSEE code : #{legal_entity.town_insee_code} - Cannot find corresponding JEP territory")
+        logger.info("Unsupported INSEE code : #{legal_entity.town_insee_code} - Cannot find corresponding JEP territory")
+        GRAND_LYON
       end
     end
   end
