@@ -10,8 +10,8 @@ class AttachedFile < ActiveRecord::Base
                             :small => ['320x240', :jpg],
                             :thumb => ['200x200>', :png]
                         },
-                        path: 'public/pictures/:timestamp/:id/:style/:basename.:extension',
-                        url: '/pictures/:timestamp/:id/:style/:basename.:extension'
+                        path: 'public/pictures/:timestamp/:ref/:style/:basename.:extension',
+                        url: '/pictures/:timestamp/:ref/:style/:basename.:extension'
                     }
 
   validates_attachment :picture, content_type: { content_type: /\Aimage\/.*\Z/ }
@@ -24,9 +24,17 @@ class AttachedFile < ActiveRecord::Base
 
   Paperclip.interpolates :timestamp do |attachment, style|
     if attachment.instance.created_at
-    "#{attachment.instance.created_at.year}/#{attachment.instance.created_at.month}"
+      "#{attachment.instance.created_at.year}/#{attachment.instance.created_at.month}"
     else
       "#{Time.current.year}/#{Time.current.month}"
+    end
+  end
+
+  Paperclip.interpolates :ref do |attachment, style|
+    if attachment.instance.program_item
+      attachment.instance.program_item.reference
+    else
+      'undefined'
     end
   end
 end

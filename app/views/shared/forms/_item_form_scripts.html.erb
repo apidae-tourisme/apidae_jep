@@ -57,6 +57,7 @@
             detectRetina: true
         }).addTo(map);
 
+        <% unless readonly %>
         var geocoderOptions = {
             url: 'https://search-places.hotentic.com',
             layers: ['venue', 'address', 'street'],
@@ -128,6 +129,7 @@
             }
         });
         geocoder.addTo(map);
+        <% end %>
         return map;
     }
 
@@ -332,8 +334,12 @@
         bindOpeningsActions();
         var map = initMap('item_map', 8, 6);
         <% if @item.main_lat && @item.main_lng %>
-        var marker = L.marker([<%= @item.main_lat %>, <%= @item.main_lng %>], {draggable: true}).addTo(map);
-        bindDragToLatLng(marker);
+          <% if readonly %>
+              L.marker([<%= @item.main_lat %>, <%= @item.main_lng %>]).addTo(map);
+          <% else %>
+              var marker = L.marker([<%= @item.main_lat %>, <%= @item.main_lng %>], {draggable: true}).addTo(map);
+              bindDragToLatLng(marker);
+          <% end %>
         <% end %>
         $(".chosen-select.no-max").chosen({width: '95%'});
         $(".item_openings").on("cocoon:after-insert", function (e, elt) {

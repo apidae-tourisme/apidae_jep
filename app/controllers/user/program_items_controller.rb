@@ -1,7 +1,7 @@
 class User::ProgramItemsController < User::UserController
   before_action :set_program
-  before_action :set_program_item, only: [:edit, :update, :destroy, :confirm, :reorder, :select_program, :save_program,
-                                          :duplicate]
+  before_action :set_program_item, only: [:edit, :update, :show, :destroy, :confirm, :reorder, :select_program,
+                                          :save_program, :duplicate]
 
   def new
     if params[:id].blank?
@@ -10,6 +10,7 @@ class User::ProgramItemsController < User::UserController
                               telephone: current_user.legal_entity.phone, email: current_user.legal_entity.email,
                               website: current_user.legal_entity.website)
     else
+      @previous_id = params[:id]
       previous_version = ProgramItem.find(params[:id])
       @item = previous_version.dup
       @item.status = ProgramItem::STATUS_DRAFT
@@ -18,6 +19,9 @@ class User::ProgramItemsController < User::UserController
       @item.reference = previous_version.reference
       previous_version.item_openings.each do |o|
         @item.item_openings << o.dup
+      end
+      previous_version.attached_files.each do |f|
+        @item.attached_files << AttachedFile.new(program_item: @item, data: f.data, picture: f.picture, created_at: f.created_at)
       end
       @town = Town.find_by_insee_code(@item.main_town_insee_code) if @item.main_town_insee_code
     end
@@ -28,7 +32,7 @@ class User::ProgramItemsController < User::UserController
     @item.ordering = @program.program_items.count
     if @item.save
       @item.update(reference: @item.id) unless @item.reference
-      NotificationMailer.notify(@item).deliver_now unless @item.pending?
+      NotificationMailer.notify(@item).deliver_now if @item.pending?
       if current_user.territory == GRAND_LYON && current_user.program_items.count == 1 && current_user.communication.nil?
         redirect_to communication_user_account_path
       else
@@ -50,6 +54,10 @@ class User::ProgramItemsController < User::UserController
     else
       render :edit, notice: "Une erreur est survenue lors de la mise à jour de l'offre."
     end
+  end
+
+  def show
+    @town = Town.find_by_insee_code(@item.main_town_insee_code) if @item.main_town_insee_code
   end
 
   def destroy

@@ -17,7 +17,7 @@ class User::AccountController < User::UserController
     else
       update_params = user_params
     end
-    if @user.update(update_params)
+    if @user.update(update_params) && @user.update(territory: @user.compute_territory)
       redirect_to user_dashboard_url, notice: "Le compte a bien été mis à jour."
     else
       render :edit

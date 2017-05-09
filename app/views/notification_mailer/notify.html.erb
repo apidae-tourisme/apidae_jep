@@ -1,9 +1,18 @@
-<h1><%= Rails.application.config.notification_title %></h1>
 <p>
   Bonjour,<br/>
   <br/>
   Une nouvelle saisie a été effectuée dans l'application ApidaeJEP et est en attente de validation.<br/>
+  <br/>
+  Titre de l'offre : <%= @item.title %><br/>
+  Organisateur : <%= "#{@item.user.full_name} - #{@item.user.legal_entity.name}" %><br/>
+  <br/>
   Veuillez suivre le lien suivant pour consulter l'offre nouvellement saisie :<br/>
-  <%= link_to 'Nouvelle offre ApidaeJEP', edit_moderator_program_program_item_url(@item.program_id, @item) %><br/>
+  <%= link_to 'Nouvelle offre ApidaeJEP', moderator_program_program_item_url(@item.program_id, @item) %><br/>
+  <br/>
+  <% unless @comment.blank? %>
+      Message de l'organisateur :<br/>
+      <span style="white-space: pre-line; font-style: italic;"><%= @comment %></span>
+  <% end %>
 </p>
+<br/>
 <em>Cet email est généré automatiquement - Il est inutile d'y répondre</em>

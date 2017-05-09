@@ -1,9 +1,19 @@
-<%= Rails.application.config.notification_title %>
-
 Bonjour,
 
 Une nouvelle saisie a été effectuée dans l'application ApidaeJEP et est en attente de validation.
+---
+Titre de l'offre : <%= @item.title %>
+Organisateur : <%= "#{@item.user.full_name} - #{@item.user.legal_entity.name}" %>
+---
 Veuillez suivre le lien suivant pour consulter l'offre nouvellement saisie :
-<%= edit_moderator_program_program_item_url(@item.program_id, @item) %>
+<%= moderator_program_program_item_url(@item.program_id, @item) %>
+
+<% unless @comment.blank? %>
+    Message de l'organisateur :
+    ---
+    <%= @comment %>
+    ---
+<% end %>
+
 
 -- Cet email est généré automatiquement - Il est inutile d'y répondre --

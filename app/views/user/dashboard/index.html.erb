@@ -96,12 +96,13 @@
         <div class="panel-body">
           <table class="table">
             <tbody>
-            <% prog.program_items.each do |item| %>
+            <% prog.active_items.each do |item| %>
               <tr>
                 <td class="vam">
                   <%= item.title %>&nbsp;
                   <span class="label text-sm label-default text-gray-dark"><%= t "program_item.type.#{item.item_type}" %></span>
                   <span class="label label-<%= t "program_item.color.#{item.status}" %> ml-sm"><%= t "program_item.status.#{item.status}" %></span>
+                  <span class="label label-inverse text-normal vam ml-sm"><%= "Réf. #{item.reference}" %></span>
                   <div class="pull-right">
                     <%= link_to '<em class="fa icon-note"></em/>'.html_safe,
                                 url_for(controller: 'user/program_items', action: ((item.pending? || item.draft?) ? :edit : :new), program_id: prog.id, id: item.id),

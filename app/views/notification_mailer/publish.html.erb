@@ -1,7 +1,17 @@
-<h1><%= Rails.application.config.publication_title %></h1>
-<h2><%= @title %></h2>
 <p>
   Bonjour,<br/>
   <br/>
-  <p style="white-space: pre-line;"><%= @comment %></p>
-<em>Cet email est généré automatiquement - Il est inutile d'y répondre</em>
+  Nous avons bien validé votre offre pour les JEP 2017.
+  <br/>
+  Titre offre : <%= @item.title %>
+  <br/>
+  Veuillez suivre le lien suivant pour consulter l'offre validée sur ApidaeJEP :<br/>
+  <%= link_to "Consulter l'offre", user_program_program_item_url(@item.program_id, @item) %><br/>
+  <br/>
+  Cordialement,<br/>
+  <br/>
+  <%= @signature[:label] %><br/>
+  <%= @signature[:contact] %>
+  <br/>
+  <em>Cet email est généré automatiquement - Il est inutile d'y répondre</em>
+</p>

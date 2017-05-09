@@ -21,6 +21,11 @@
         <p class="pre"><%= ellipsis(item.description) %></p>
       </div>
       <div class="col-xs-2 p-lg text-right vat">
+        <% if current_user || !item.draft? %>
+            <%= link_to '<span class="btn-label"><em class="icon-eye"></em></span>Visualiser'.html_safe,
+                        url_for(controller: item_controller, action: :show, program_id: @program.id, id: item.id),
+                        class: 'btn btn-labeled btn-default btn-block', title: 'Visualiser' %>
+        <% end %>
         <% if current_user || item.pending? %>
             <%= link_to '<span class="btn-label"><em class="icon-note"></em></span>Modifier'.html_safe,
                         url_for(controller: item_controller, action: ((item.pending? || item.draft?) ? :edit : :new), program_id: @program.id, id: item.id),

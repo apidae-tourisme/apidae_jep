@@ -11,10 +11,10 @@
                                  "NB : Le descriptif du lieu remarquable n'est possible que sur le type \"Visite d'un lieu\".") %>
             <div class="col-sm-10">
               <div id="item_types" data-toggle="buttons" class="btn-group w100">
-                <% ITEM_TYPES.each do |t| %>
-                <label class="btn btn-default btn-labeled text-left w25 <%= 'active' if @item.item_type == t %>">
+                <% (readonly ? [@item.item_type] : ITEM_TYPES).each do |t| %>
+                <label class="btn btn-default btn-labeled text-left w25 <%= 'active' if @item.item_type == t && !readonly %>">
                   <i class="fa text-lg <%= item_icon(t) %> btn-label pv-xl vat"></i>
-                  <%= item_form.radio_button :item_type, t %>
+                  <%= item_form.radio_button :item_type, t, disabled: readonly %>
                   <div class="inline pt">
                     <strong><%= t "program_item.type.#{t}" %></strong>
                     <p class="text-xs pre m0"><%= t "program_item.type.desc.#{t}" %></p>
@@ -28,7 +28,7 @@
             <label class="col-sm-2 control-label">Titre de l'offre</label>
             <%= help_content("Texte d'aide pour le champ titre de l'offre") %>
             <div class="col-sm-10">
-              <%= item_form.text_field :title, class: 'form-control required', placeholder: "Titre de l'offre" %>
+              <%= item_form.text_field :title, class: 'form-control required', placeholder: "Titre de l'offre", disabled: readonly %>
             </div>
           </div>
         </fieldset>
@@ -48,19 +48,19 @@
                 <div class="form-group mdy">
                   <label class="col-sm-4 control-label ph0">Nom du lieu</label>
                   <div class="col-sm-8">
-                    <%= item_form.text_field :main_place, class: 'form-control required' %>
+                    <%= item_form.text_field :main_place, class: 'form-control required', disabled: readonly %>
                   </div>
                 </div>
                 <div class="form-group mt-lg mdy">
                   <label class="col-sm-4 control-label ph0">Adresse</label>
                   <div class="col-sm-8">
-                    <%= item_form.text_field :main_address, class: 'form-control required' %>
+                    <%= item_form.text_field :main_address, class: 'form-control required', disabled: readonly %>
                   </div>
                 </div>
                 <div class="form-group mt-lg mdy">
                   <label class="col-sm-4 control-label ph0">Commune</label>
                   <div class="col-sm-8">
-                    <%= item_form.select :main_town_insee_code, [], {}, class: 'form-control select_town required',
+                    <%= item_form.select :main_town_insee_code, [], {}, class: 'form-control select_town required', disabled: readonly,
                                            'data-placeholder' => 'Nom ou code postal de la commune' %>
                   </div>
                 </div>
@@ -69,14 +69,14 @@
                 <div class="form-group mt">
                   <label class="col-sm-4 control-label ph0">Point de rendez-vous</label>
                   <div class="col-sm-8">
-                    <%= item_form.text_field :alt_place, class: 'form-control', placeholder: 'Si différent du lieu' %>
+                    <%= item_form.text_field :alt_place, class: 'form-control', placeholder: 'Si différent du lieu', disabled: readonly %>
                   </div>
                 </div>
                 <div class="form-group mt-lg mdy">
                   <label class="col-sm-4 control-label ph0">Accès en transports en commun et indications d'accès<%= help_button %></label>
                   <%= help_content("Indiquer les accès en transport en commun (n° bus, ...) et/ou les indications d'accès : parking le plus proche, ...") %>
                   <div class="col-sm-8">
-                    <%= item_form.text_area :main_transports, class: 'form-control required', rows: 4 %>
+                    <%= item_form.text_area :main_transports, class: 'form-control required', disabled: readonly, rows: 4 %>
                   </div>
                 </div>
               </div>
@@ -89,21 +89,21 @@
             <%= help_content("Plusieurs choix possibles.") %>
             <div class="col-sm-4 p0">
               <%= item_form.select :building_types, building_types, {}, multiple: 'multiple',
-                                   class: 'form-control chosen-select no-max',
+                                   class: 'form-control chosen-select no-max', disabled: readonly,
                                    'data-placeholder' => "Plusieurs choix possibles" %>
             </div>
             <label class="col-sm-2 control-label">Epoque<%= help_button %></label>
             <%= help_content("Plusieurs choix possibles.") %>
             <div class="col-sm-4 pl0">
               <%= item_form.select :building_ages, building_ages, {}, multiple: 'multiple',
-                                   class: 'form-control chosen-select no-max',
+                                   class: 'form-control chosen-select no-max', disabled: readonly,
                                    'data-placeholder' => "Plusieurs choix possibles" %>
             </div>
           </div>
           <div class="form-group mt-lg">
             <label class="col-sm-2 control-label">Description du lieu</label>
             <div class="col-sm-10 pl0">
-              <%= item_form.text_area :place_desc, class: 'form-control', rows: 3 %>
+              <%= item_form.text_area :place_desc, class: 'form-control', disabled: readonly, rows: 3 %>
             </div>
           </div>
         </fieldset>
@@ -114,7 +114,7 @@
             <%= help_content("Plusieurs choix possibles.") %>
             <div id="item_caracs" class="col-sm-9">
               <%= select_tag 'program_item[criteria][]', criteria(@item.item_type, @item.criteria), multiple: 'multiple',
-                             class: 'form-control chosen-select no-max', 'data-placeholder' => "Plusieurs choix possibles" %>
+                             class: 'form-control chosen-select no-max', disabled: readonly, 'data-placeholder' => "Plusieurs choix possibles" %>
             </div>
           </div>
           <div class="form-group mt-lg">
@@ -122,7 +122,7 @@
             <%= help_content("Plusieurs choix possibles. Champ non obligatoire") %>
             <div class="col-sm-9">
               <%= item_form.select :themes, themes, {}, multiple: 'multiple',
-                                   class: 'form-control chosen-select no-max',
+                                   class: 'form-control chosen-select no-max', disabled: readonly,
                                    'data-placeholder' => "Plusieurs choix possibles" %>
             </div>
           </div>
@@ -130,7 +130,7 @@
             <label class="col-sm-3 control-label">Description<%= help_button %></label>
             <%= help_content("Veuillez vous limiter à 255 caractères") %>
             <div class="col-sm-9">
-              <%= item_form.text_area :description, class: 'form-control required', rows: 3 %>
+              <%= item_form.text_area :description, class: 'form-control required', disabled: readonly, rows: 3 %>
             </div>
           </div>
           <div class="form-group mt-lg mdy">
@@ -140,7 +140,7 @@
               <% accessibility.each_pair do |ref, label| %>
                   <label class="checkbox-inline c-checkbox ml0 mr-lg">
                     <%= check_box_tag 'program_item[accessibility][]', ref,
-                                      (@item.accessibility && @item.accessibility.include?(ref)) %>
+                                      (@item.accessibility && @item.accessibility.include?(ref)), disabled: readonly %>
                     <span class="fa fa-check"></span><%= label %>
                   </label>
               <% end %>
@@ -151,7 +151,7 @@
             <%= help_content("Si vous avez d'autres structures organisatrices de l'offre, merci de les saisir ici. " +
                                  "Il est inutile d'indiquer votre structure.") %>
             <div class="col-sm-9">
-              <%= item_form.text_field :event_planners, class: 'form-control' %>
+              <%= item_form.text_field :event_planners, class: 'form-control', disabled: readonly %>
             </div>
           </div>
         </fieldset>
@@ -162,18 +162,21 @@
             Vous pouvez modifier, supprimer ou duppliquer un horaire enregistré (par exemple pour afficher le dimanche le même horaire que le samedi).
           </p>
           <%= item_form.fields_for :item_openings do |opening| %>
-              <%= render 'shared/forms/item_opening_fields', f: opening %>
+              <%= render 'shared/forms/item_opening_fields', f: opening, readonly: readonly %>
           <% end %>
+          <% unless readonly %>
           <div class="links">
             <%= link_to_add_association('Ajouter une ouverture', item_form, :item_openings, class: 'btn btn-primary mt',
+                                        render_options: {locals: {readonly: readonly}},
                                         partial: 'shared/forms/item_opening_fields') %>
           </div>
+          <% end %>
         </fieldset>
         <fieldset>
           <div class="form-group">
             <label class="col-sm-3 control-label">Informations complémentaires</label>
             <div class="col-sm-9">
-              <%= item_form.text_area :openings_desc, class: 'form-control',
+              <%= item_form.text_area :openings_desc, class: 'form-control', disabled: readonly,
                                       placeholder: 'Informations complémentaires sur les horaires et ouvertures' %>
             </div>
           </div>
@@ -183,49 +186,51 @@
           <div id="free_toggle" class="form-group mdy">
             <div class="col-sm-12">
               <label class="radio-inline c-radio mh">
-                <%= item_form.radio_button :free, true %>
+                <%= item_form.radio_button :free, true, disabled: readonly %>
                 <span class="fa fa-circle"></span>Accès gratuit</label>
               <label class="radio-inline c-radio mh">
-                <%= item_form.radio_button :free, false %>
+                <%= item_form.radio_button :free, false, disabled: readonly %>
                 <span class="fa fa-circle"></span>Accès payant</label>
             </div>
           </div>
           <div class="form-group mt free_toggle">
             <div class="col-sm-12">
-              <%= item_form.text_area :rates_desc, class: 'form-control', rows: 3, placeholder: 'Informations sur les tarifs' %>
+              <%= item_form.text_area :rates_desc, class: 'form-control', disabled: readonly, rows: 3,
+                                      placeholder: 'Informations sur les tarifs' %>
             </div>
           </div>
           <div id="booking_toggle" class="form-group mt-xl">
             <div class="col-sm-12">
               <label class="radio-inline c-radio mh">
-                <%= item_form.radio_button :booking, false %>
+                <%= item_form.radio_button :booking, false, disabled: readonly %>
                 <span class="fa fa-circle"></span>Pas de réservation</label>
               <label class="radio-inline c-radio mh">
-                <%= item_form.radio_button :booking, true %>
+                <%= item_form.radio_button :booking, true, disabled: readonly %>
                 <span class="fa fa-circle"></span>Réservation</label>
             </div>
           </div>
           <div class="form-group mt booking_toggle">
             <div class="col-sm-12">
-              <%= item_form.text_area :booking_details, class: 'form-control', rows: 3, placeholder: 'Informations sur la réservation' %>
+              <%= item_form.text_area :booking_details, class: 'form-control', disabled: readonly, rows: 3,
+                                      placeholder: 'Informations sur la réservation' %>
             </div>
           </div>
           <div class="form-group mt-lg booking_toggle">
             <label class="col-sm-3 control-label">Téléphone (réservations)</label>
             <div class="col-sm-9">
-              <%= item_form.text_field :booking_telephone, class: 'form-control' %>
+              <%= item_form.text_field :booking_telephone, class: 'form-control', disabled: readonly %>
             </div>
           </div>
           <div class="form-group mt-lg booking_toggle">
             <label class="col-sm-3 control-label">Email (réservations)</label>
             <div class="col-sm-9">
-              <%= item_form.text_field :booking_email, class: 'form-control email' %>
+              <%= item_form.text_field :booking_email, class: 'form-control email', disabled: readonly %>
             </div>
           </div>
           <div class="form-group mt-lg booking_toggle">
             <label class="col-sm-3 control-label">Site web (réservations)</label>
             <div class="col-sm-9">
-              <%= item_form.text_field :booking_website, class: 'form-control url', placeholder: 'http://' %>
+              <%= item_form.text_field :booking_website, class: 'form-control url', disabled: readonly, placeholder: 'http://' %>
             </div>
           </div>
         </fieldset>
@@ -237,16 +242,19 @@
             Veuillez n'utiliser que des photos ayant une résolution suffisante (1600 pixels minimum sur le grand côté).
           </p>
           <%= item_form.fields_for :attached_files do |file_form| %>
-              <%= render 'shared/forms/attached_file_fields', f: file_form %>
+              <%= render 'shared/forms/attached_file_fields', f: file_form, readonly: readonly %>
           <% end %>
+          <% unless readonly %>
           <div class="links">
             <%= link_to_add_association('Ajouter une photo', item_form, :attached_files, class: 'btn btn-primary',
+                                        render_options: {locals: {readonly: readonly}},
                                         partial: 'shared/forms/attached_file_fields') %>
           </div>
+          <% end %>
           <div id="accept_pictures" class="form-group mt-lg mdy">
             <div class="col-sm-12">
               <label class="checkbox-inline c-checkbox">
-                <%= check_box_tag 'program_item[accept_pictures]', '1', @item.accept_pictures == '1', disabled: current_user ? nil : 'disabled' %>
+                <%= check_box_tag 'program_item[accept_pictures]', '1', @item.accept_pictures == '1', disabled: (current_user && !readonly) ? nil : 'disabled' %>
                 <span class="fa fa-check"></span>J'accepte que les photos soient utilisées dans les supports de communication
                 des Journées Européennes du Patrimoine 2017 au format papier et web*
               </label>
@@ -258,19 +266,19 @@
           <div class="form-group">
             <label class="col-sm-3 control-label">Téléphone</label>
             <div class="col-sm-9">
-              <%= item_form.text_field :telephone, class: 'form-control' %>
+              <%= item_form.text_field :telephone, class: 'form-control', disabled: readonly %>
             </div>
           </div>
           <div class="form-group mt-lg">
             <label class="col-sm-3 control-label">Email</label>
             <div class="col-sm-9">
-              <%= item_form.text_field :email, class: 'form-control email' %>
+              <%= item_form.text_field :email, class: 'form-control email', disabled: readonly %>
             </div>
           </div>
           <div class="form-group mt-lg">
             <label class="col-sm-3 control-label">Site web</label>
             <div class="col-sm-9">
-              <%= item_form.text_field :website, class: 'form-control url', placeholder: 'http://' %>
+              <%= item_form.text_field :website, class: 'form-control url', disabled: readonly, placeholder: 'http://' %>
             </div>
           </div>
         </fieldset>
@@ -281,7 +289,7 @@
               <h5><strong>Commentaires facultatifs</strong></h5>
               <div class="form-group mt-sm">
                 <div class="col-sm-12">
-                  <%= item_form.text_area :comment, class: 'form-control', rows: 6,
+                  <%= item_form.text_area :comment, class: 'form-control', disabled: readonly, rows: 6,
                                         placeholder: "Ajouter un commentaire concernant la validation de la saisie et le suivi de l'offre" %>
                 </div>
               </div>
@@ -326,12 +334,17 @@
                           <div class="timeline-panel">
                             <div class="popover right">
                               <h5 class="popover-title">
-                                <%= render_log_entry(c) %><br/>
-                                <span class="inline mt-sm label label-<%= t "program_item.color.#{c[:event_status]}" %>">
-                                  Nouveau statut : <%= t "program_item.status.#{c[:event_status]}" %>
+                                <%= render_log_entry(c) %>
+                                <span class="ml-sm inline mt-sm label label-<%= t "program_item.color.#{c[:event_status]}" %>">
+                                  <%= t "program_item.status.#{c[:event_status]}" %>
                                 </span>
                               </h5>
                               <div class="arrow"></div>
+                              <% unless c[:description].blank? %>
+                                  <div class="popover-content">
+                                    <p class="pre text-sm mb0"><%= c[:description] %></p>
+                                  </div>
+                              <% end %>
                             </div>
                           </div>
                         </li>
@@ -350,17 +363,23 @@
         <%= item_form.hidden_field :author, id: 'program_item_author' %>
       </div>
       <div id="submit_actions" class="panel-footer text-right">
-        <%= link_to 'Retour', current_user ? edit_user_program_path(@program) : moderator_programs_path(@program), class: 'btn btn-inverse' %>
-        <% if current_moderator && @item.pending? %>
-            <%= item_form.submit "Valider et publier #{@item.rev == 1 ? "l'offre" : 'la mise à jour'}", class: 'btn btn-success ml',
-                                 onclick: "setStatus('#{ProgramItem::STATUS_VALIDATED}')" %>
-            <%= item_form.submit "Rejeter #{@item.rev == 1 ? "l'offre" : 'la mise à jour'}", class: 'btn btn-danger ml',
-                                 onclick: "setStatus('#{ProgramItem::STATUS_REJECTED}')" %>
-        <% elsif current_user %>
-            <%= item_form.submit 'Enregistrer le brouillon', class: 'btn btn-inverse ml',
-                                 onclick: "setStatus('#{ProgramItem::STATUS_DRAFT}')" %>
-            <%= item_form.submit "Transmettre #{@item.rev == 1 ? "l'offre" : 'la mise à jour'} pour validation", class: 'btn btn-primary ml',
-                                 onclick: "setStatus('#{ProgramItem::STATUS_PENDING}')" %>
+        <%= link_to 'Retour', current_user ? edit_user_program_path(@program) : moderator_programs_path(@program), class: 'btn btn-default' %>
+        <% if readonly && current_user %>
+          <%= link_to "Modifier l'offre",
+                      url_for(controller: current_user ? 'user/program_items' : 'moderator/program_items', action: ((@item.pending? || @item.draft?) ? :edit : :new), program_id: @program.id, id: @item.id),
+                      class: 'btn btn-primary ml' %>
+        <% else %>
+          <% if current_moderator && @item.pending? %>
+              <%= item_form.submit "Valider et publier #{@item.rev == 1 ? "l'offre" : 'la mise à jour'}", class: 'btn btn-success ml',
+                                   onclick: "setStatus('#{ProgramItem::STATUS_VALIDATED}')" %>
+              <%= item_form.submit "Rejeter #{@item.rev == 1 ? "l'offre" : 'la mise à jour'}", class: 'btn btn-danger ml',
+                                   onclick: "setStatus('#{ProgramItem::STATUS_REJECTED}')" %>
+          <% elsif current_user %>
+              <%= item_form.submit 'Enregistrer le brouillon', class: 'btn btn-inverse ml',
+                                   onclick: "setStatus('#{ProgramItem::STATUS_DRAFT}')" %>
+              <%= item_form.submit "Transmettre #{@item.rev == 1 ? "l'offre" : 'la mise à jour'} pour validation", class: 'btn btn-primary ml',
+                                   onclick: "setStatus('#{ProgramItem::STATUS_PENDING}')" %>
+          <% end %>
         <% end %>
       </div>
     </div>

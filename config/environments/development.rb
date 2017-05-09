@@ -65,4 +65,9 @@ Rails.application.configure do
       :client_secret => '7MjOmvNcwCMWDiW',
       :profile_url => '/api/v002/sso/utilisateur/profil'
   }
+
+  config.moderators = {
+      'grand_lyon' => ['contact@hotentic.com'],
+      'isere' => ['contact@hotentic.com']
+  }
 end

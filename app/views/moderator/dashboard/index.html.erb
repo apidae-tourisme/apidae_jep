@@ -7,7 +7,7 @@
           <em class="icon-hourglass fa-2x"></em>
         </div>
         <div class="col-xs-8 pv-lg">
-          <div class="h1 m0 text-bold"><%= ProgramItem.pending.count %></div>
+          <div class="h1 m0 text-bold"><%= ProgramItem.in_status(ProgramItem::STATUS_PENDING, current_moderator.member_ref).count %></div>
           <div class="text-uppercase">en validation</div>
         </div>
       </div>
@@ -20,7 +20,7 @@
           <em class="icon-like fa-2x"></em>
         </div>
         <div class="col-xs-8 pv-lg">
-          <div class="h1 m0 text-bold"><%= ProgramItem.validated.count %></div>
+          <div class="h1 m0 text-bold"><%= ProgramItem.in_status(ProgramItem::STATUS_VALIDATED, current_moderator.member_ref).count %></div>
           <div class="text-uppercase">validées</div>
         </div>
       </div>
@@ -33,7 +33,7 @@
           <em class="icon-dislike fa-2x"></em>
         </div>
         <div class="col-xs-8 pv-lg">
-          <div class="h1 m0 text-bold"><%= ProgramItem.rejected.count %></div>
+          <div class="h1 m0 text-bold"><%= ProgramItem.in_status(ProgramItem::STATUS_REJECTED, current_moderator.member_ref).count %></div>
           <div class="text-uppercase">rejetées</div>
         </div>
       </div>

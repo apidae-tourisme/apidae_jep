@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170422121251) do
+ActiveRecord::Schema.define(version: 20170509212641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "unaccent"
 
   create_table "attached_files", force: :cascade do |t|
     t.integer  "program_item_id"
@@ -205,9 +206,11 @@ ActiveRecord::Schema.define(version: 20170422121251) do
     t.text     "apidae_data"
     t.integer  "legal_entity_id"
     t.boolean  "communication"
+    t.string   "territory"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["territory"], name: "index_users_on_territory", using: :btree
 
 end

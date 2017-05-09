@@ -1,8 +1,15 @@
-<%= Rails.application.config.publication_title %>
-<%= @title %>
-
 Bonjour,
 
-<%= @comment %>
+Nous avons bien validé votre offre pour les JEP 2017.
+---
+Titre offre : <%= @item.title %>
+---
+Veuillez suivre le lien suivant pour consulter l'offre validée sur ApidaeJEP :
+<%= user_program_program_item_url(@item.program_id, @item) %>
+
+Cordialement,
+
+<%= @signature[:label] %>
+<%= @signature[:contact] %>
 
 -- Cet email est généré automatiquement - Il est inutile d'y répondre --

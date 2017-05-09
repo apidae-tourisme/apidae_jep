@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name.upcase if last_name}"
   end
 
-  def territory
+  def compute_territory
     if legal_entity_id && legal_entity.town_insee_code
       if legal_entity.town_insee_code.start_with?('69')
         GRAND_LYON

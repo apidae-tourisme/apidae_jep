@@ -1,18 +1,20 @@
-<%= Rails.application.config.rejection_title %>
-<%= @title %>
-
 Bonjour,
 
-Votre saisie a été invalidée par l'équipe de modération des JEP 2016.
-<% if @comment %>
-    Le commentaire fourni est le suivant :
+Nous sommes au regret de vous informer que votre offre pour les JEP 2017 a été rejetée.
+---
+Titre de l'offre : <%= @item.title %>
+---
+Message de l'équipe de validation :
+---
+<%= @comment %>
+---
 
-    ---
-    <%= @comment %>
-    ---
+Nous vous invitons à suivre le lien suivant pour consulter l'offre sur ApidaeJEP et la modifier :
+<%= user_program_program_item_url(@item.program_id, @item) %>
 
-<% end %>
-Si vous le souhaitez, vous pouvez proposer une nouvelle saisie dans l'application ApidaeJEP à l'adresse suivante :
-<%= new_user_program_program_item_url(id: @item.id) %>
+Cordialement,
+
+<%= @signature[:label] %>
+<%= @signature[:contact] %>
 
 -- Cet email est généré automatiquement - Il est inutile d'y répondre --

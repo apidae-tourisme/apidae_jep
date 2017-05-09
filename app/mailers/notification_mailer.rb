@@ -3,20 +3,21 @@ class NotificationMailer < ApplicationMailer
 
   def notify(item)
     @item = item
-    moderators = Moderator.where(member_ref: @item.user.territory).collect {|m| m.email}.uniq
+    moderators = Rails.application.config.moderators[@item.user.territory]
+    @comment = @item.history_entry(ProgramItem::STATUS_PENDING) ? @item.history_entry(ProgramItem::STATUS_PENDING)[:description] : ''
     mail(to: moderators, subject: "#{Rails.application.config.notification_title} - #{@item.title}")
   end
 
   def reject(item)
     @item = item
-    @comment = item.comment
-    @title = item.title
-    mail(to: item.user.email, subject: "#{Rails.application.config.rejection_title} - #{@title}")
+    @signature = Rails.application.config.signature[@item.user.territory]
+    @comment = @item.history_entry(ProgramItem::STATUS_REJECTED) ? @item.history_entry(ProgramItem::STATUS_REJECTED)[:description] : ''
+    mail(to: item.user.email, subject: "#{Rails.application.config.rejection_title} - #{@item.title}")
   end
 
   def publish(item)
-    @comment = item.comment
-    @title = item.title
-    mail(to: item.user.email, subject: "#{Rails.application.config.publication_title} - #{@title}")
+    @item = item
+    @signature = Rails.application.config.signature[@item.user.territory]
+    mail(to: item.user.email, subject: "#{Rails.application.config.publication_title} - #{@item.title}")
   end
 end

@@ -79,9 +79,10 @@ class ProgramItem < ActiveRecord::Base
     !persisted? && rev == 1
   end
 
-  def self.pending(program_id = nil)
-    items = where(status: STATUS_PENDING)
-    program_id ? items.where(program_id: program_id) : items
+  def self.in_status(status, territory)
+    where("program_items.status = '#{status}' AND users.territory = '#{territory}'")
+        .joins("JOIN users ON users.id = program_items.user_id")
+
   end
 
   def self.validated(program_id = nil)

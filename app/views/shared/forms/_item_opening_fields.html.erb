@@ -7,10 +7,12 @@
       <%= f.hidden_field :duration %>
       <%= f.hidden_field :frequency %>
     </div>
+    <% unless readonly %>
     <div class="col-sm-3 text-left pl0">
       <%= link_to '<em class="fa text-std icon-note"></em>'.html_safe, '#', class: 'btn btn-primary edit_opening', title: 'Modifier', remote: true %>
       <%= link_to '<em class="fa text-std icon-docs"></em>'.html_safe, '#', class: 'btn btn-warning ml-sm clone_opening', title: 'Dupliquer', remote: true %>
       <%= link_to_remove_association '<em class="fa text-std icon-trash"></em>'.html_safe, f, class: 'btn btn-danger ml-sm', title: 'Supprimer' %>
     </div>
+    <% end %>
   </div>
 </fieldset>
