@@ -7,8 +7,9 @@
           <thead class="bg-gray-darker">
           <tr>
             <th>Titre</th>
-            <th>Date</th>
+            <th>Mise à jour</th>
             <th>Offres</th>
+            <th>Organisateurs</th>
             <th>Structure</th>
             <th class="wd-xxs"></th>
           </tr>
@@ -18,9 +19,10 @@
               <% @programs.each do |program| %>
                   <tr>
                     <td><%= program.label(program.id) %></td>
-                    <td><span class="hidden"><%= program.created_at.to_i %></span><%= l(program.created_at, format: :notime) %></td>
+                    <td><span class="hidden"><%= program.updated_at.to_i %></span><%= l(program.updated_at, format: :withtime) %></td>
                     <td class="text-left"><%= render_items(program.visible_items) %></td>
-                    <td><%= program.structure %></td>
+                    <td><%= program.users.collect {|u| "#{u.full_name} - <em>#{u.email}</em>"}.join('<br/>').html_safe %></td>
+                    <td><%= program.structure %><br/></td>
                     <td class="text-center wd-xxs">
                       <%= link_to '<i class="icon-note"></i>'.html_safe, edit_moderator_program_path(program),
                                   class: 'btn btn-outline btn-sm btn-primary' %>

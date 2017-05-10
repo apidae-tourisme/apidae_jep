@@ -2,7 +2,10 @@ class Moderator::ProgramsController < Moderator::ModeratorController
   before_action :set_program, only: [:edit, :update, :destroy]
 
   def index
-    @programs = Program.all
+    @programs = Program.select(:id, :title, :updated_at).includes(:users)
+                    .joins("JOIN program_items ON program_items.program_id = programs.id")
+                    .where("program_items.status != '#{ProgramItem::STATUS_DRAFT}'")
+                    .uniq
   end
 
   def edit

@@ -7,7 +7,7 @@ class Program < ActiveRecord::Base
   end
 
   def visible_items
-    program_items.order(:ordering)
+    active_items
         .where(status: [ProgramItem::STATUS_PENDING, ProgramItem::STATUS_VALIDATED, ProgramItem::STATUS_REJECTED])
   end
 
@@ -22,6 +22,6 @@ class Program < ActiveRecord::Base
   end
 
   def structure
-    (users.any? && users.first.legal_entity) ? users.first.legal_entity.name : 'Inconnue'
+    (users.any? && users.first.legal_entity) ? users.first.legal_entity.label : 'Inconnue'
   end
 end

@@ -7,16 +7,22 @@
           <div class="text-sm">Accueil</div>
         </a>
       </li>
-      <li class="<%= 'active' if controller?('moderator/programs', 'moderator/program_items') %>">
+      <li class="<%= 'active' if controller?('moderator/programs') %>">
         <a href="<%= moderator_programs_path %>" title="Programmations">
           <em class="icon-calendar"></em>
-          <div class="text-sm">Les offres</div>
+          <div class="text-sm">Programmes</div>
+        </a>
+      </li>
+      <li class="<%= 'active' if controller?('moderator/program_items') %>">
+        <a href="<%= moderator_items_path %>" title="Offres">
+          <em class="icon-list"></em>
+          <div class="text-sm">Offres</div>
         </a>
       </li>
       <li class="<%= 'active' if controller?('moderator/accounts') %>">
         <a href="<%= moderator_accounts_path %>" title="Gestion des comptes">
           <em class="icon-people"></em>
-          <div class="text-sm">Les comptes</div>
+          <div class="text-sm">Organisateurs</div>
         </a>
       </li>
     </ul>

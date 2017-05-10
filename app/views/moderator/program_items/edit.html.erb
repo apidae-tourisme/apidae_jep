@@ -1,7 +1,11 @@
-<div class="content-heading">Modifier l'offre</div>
+<div class="content-heading">
+  Modifier l'offre
+  <span class="label label-inverse text-normal vam ml"><%= "Réf. #{@item.reference}" %></span>
+  <span class="label label-<%= t "program_item.color.#{@item.status}" %> text-normal vam"><%= t "program_item.status.#{@item.status}" %></span>
+</div>
 <%= render 'shared/forms/item_form', form_scope: :moderator, readonly: nil %>
 <% content_for :body_area do %>
-    <%= render 'shared/forms/item_form_scripts', readonly: true,
+    <%= render 'shared/forms/item_form_scripts', readonly: nil,
                update_form_path: update_form_moderator_program_program_items_path(@program.id),
                opening_form_path: opening_moderator_program_program_items_path(@program.id) %>
 <% end %>

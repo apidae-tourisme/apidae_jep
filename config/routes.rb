@@ -38,6 +38,7 @@ Rails.application.routes.draw do
         get 'site_desc', on: :collection, as: 'site_desc'
       end
     end
+    resources :program_items, path: 'offres', as: 'items', only: [:index]
   end
 
   namespace :user, path: 'saisie' do

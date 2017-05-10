@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
   end
 
   def offers
-    programs.collect {|p| p.program_items}.flatten.group_by {|pi| pi.status}
+    programs.collect {|p| p.active_items}.flatten.group_by {|pi| pi.status}
   end
 
   def self.import_full(csv_file)

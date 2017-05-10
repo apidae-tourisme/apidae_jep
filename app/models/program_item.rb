@@ -79,8 +79,17 @@ class ProgramItem < ActiveRecord::Base
     !persisted? && rev == 1
   end
 
+  def structure
+    user.legal_entity.name if user && user.legal_entity
+  end
+
+  def town
+    Town.find_by_insee_code(main_town_insee_code).label if Town.find_by_insee_code(main_town_insee_code)
+  end
+
   def self.in_status(status, territory)
-    where("program_items.status = '#{status}' AND users.territory = '#{territory}'")
+    active_ids = select("MAX(id) AS id").group(:reference)
+    where(id: active_ids).where("program_items.status = '#{status}' AND users.territory = '#{territory}'")
         .joins("JOIN users ON users.id = program_items.user_id")
 
   end

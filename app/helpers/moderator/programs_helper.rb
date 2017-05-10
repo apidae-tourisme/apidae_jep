@@ -11,7 +11,7 @@ module Moderator::ProgramsHelper
   def render_items(items)
     rendered = []
     items.each do |item|
-      rendered << link_to(item.title, edit_moderator_program_program_item_path(item.program_id, item),
+      rendered << link_to("#{item.title} - Réf: #{item.reference}", edit_moderator_program_program_item_path(item.program_id, item),
                           class: "label text-normal label-#{item_color(item.status)} inline")
     end
     rendered.join('<br/>').html_safe

@@ -3,8 +3,17 @@
 require 'raven'
 
 class Moderator::ProgramItemsController < Moderator::ModeratorController
-  before_action :set_program
-  before_action :set_program_item, only: [:edit, :update, :destroy, :confirm, :reorder, :select_program, :save_program]
+  before_action :set_program, except: [:index]
+  before_action :set_program_item, only: [:show, :edit, :update, :destroy, :confirm, :reorder, :select_program, :save_program]
+
+  def index
+    @status = params[:status] || ProgramItem::STATUS_PENDING
+    @items = ProgramItem.in_status(@status, current_moderator.member_ref)
+  end
+
+  def show
+    @town = Town.find_by_insee_code(@item.main_town_insee_code) if @item.main_town_insee_code
+  end
 
   def edit
     if @item.user.legal_entity.external_id.nil?
