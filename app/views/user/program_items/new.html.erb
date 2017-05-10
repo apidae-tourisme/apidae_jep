@@ -9,7 +9,7 @@
 </div>
 <%= render 'shared/forms/item_form', form_scope: :user, readonly: nil %>
 <% content_for :body_area do %>
-    <%= render 'shared/forms/item_form_scripts', readonly: true,
+    <%= render 'shared/forms/item_form_scripts', readonly: nil,
                update_form_path: update_form_user_program_program_items_path(@program.id),
                opening_form_path: opening_user_program_program_items_path(@program.id) %>
 <% end %>
