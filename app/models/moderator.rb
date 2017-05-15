@@ -9,7 +9,7 @@ class Moderator < ActiveRecord::Base
     moderator.last_name = auth.info.last_name
     moderator.uid = auth.uid
     moderator.notification_email = auth.info.email
-    moderator.member_ref = compute_member_ref(auth.info.postal_code)
+    moderator.member_ref ||= compute_member_ref(auth.info.postal_code)
     moderator.apidae_data = auth.info.apidae_hash
     moderator.save!
     moderator
