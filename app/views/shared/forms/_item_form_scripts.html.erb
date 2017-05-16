@@ -333,7 +333,7 @@
     $(function() {
         bindOpeningsActions();
         var map = initMap('item_map', 8, 6);
-        <% if @item.main_lat && @item.main_lng %>
+        <% unless @item.main_lat.blank? || @item.main_lng.blank? %>
           <% if readonly %>
               L.marker([<%= @item.main_lat %>, <%= @item.main_lng %>]).addTo(map);
           <% else %>
