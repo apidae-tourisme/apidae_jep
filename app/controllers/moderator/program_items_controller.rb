@@ -55,6 +55,7 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
     end
     @item.status = ProgramItem::STATUS_PENDING
     @item.save
+    @town = Town.find_by_insee_code(@item.main_town_insee_code) if @item.main_town_insee_code
     render :edit, notice: "Une erreur est survenue lors de la mise à jour de l'offre."
   end
 
