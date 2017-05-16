@@ -36,6 +36,10 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
         NotificationMailer.reject(@item).deliver_now if @item.rejected?
         redirect_to edit_moderator_program_url(@item.program), notice: "L'offre a bien été mise à jour." and return
       end
+    rescue Encoding::UndefinedConversionError => e
+      Raven.capture_exception(e)
+      logger.error("Apidae error - encoding issue : #{e}")
+      flash.now[:alert] = "Une erreur technique s'est produite lors de la transmission de l'offre à Apidae"
     rescue OAuth2::Error => e
       Raven.capture_exception(e)
       if e.response.parsed
@@ -49,6 +53,8 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
         flash.now[:alert] = "Une erreur s'est produite au cours de l'enregistrement dans la base de données Apidae."
       end
     end
+    @item.status = ProgramItem::STATUS_PENDING
+    @item.save
     render :edit, notice: "Une erreur est survenue lors de la mise à jour de l'offre."
   end
 
