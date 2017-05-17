@@ -365,6 +365,7 @@ fr:
       js: "%Y-%m-%d"
       notime: "%d/%m/%Y"
       withtime: "Le %d/%m/%Y à %H:%M"
+      timeonly: "%H:%M"
       date_detailed: "%d/%m/%Y"
       full: "%A %e %B %Y à %H:%M"
       reference: "%d%m%y-%H%M%S"
