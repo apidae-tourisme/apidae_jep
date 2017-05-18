@@ -1,17 +1,14 @@
 /*
- * 
- *= require angle/app
- *
- *
- *= require fonts
- *= require vendor.assets
- *= require lib/bootstrap-datetimepicker.css
+ *= require lib/app
  *= require leaflet
  *= require lib/leaflet-geocoder-mapzen
- *= require apidae_jep
+ *= require lib/bootstrap-datetimepicker
  *= require lib/chosen
  *= require select2/dist/css/select2.min
  *= require select2-bootstrap-theme/dist/select2-bootstrap.min
  *= require datatables/media/css/dataTables.bootstrap
  *= require dataTables.fontAwesome/index
+ *= require fonts
+ *= require vendor.assets
+ *= require apidae_jep
  */
