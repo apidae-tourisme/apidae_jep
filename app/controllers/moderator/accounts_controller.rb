@@ -4,7 +4,7 @@ class Moderator::AccountsController < Moderator::ModeratorController
   before_action :set_user, only: [:edit, :update]
 
   def index
-    @accounts = User.all
+    @accounts = User.where(territory: current_moderator.member_ref)
   end
 
   def edit

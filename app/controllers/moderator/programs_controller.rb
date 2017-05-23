@@ -4,7 +4,8 @@ class Moderator::ProgramsController < Moderator::ModeratorController
   def index
     @programs = Program.select(:id, :title, :updated_at).includes(:users)
                     .joins("JOIN program_items ON program_items.program_id = programs.id")
-                    .where("program_items.status != '#{ProgramItem::STATUS_DRAFT}'")
+                    .joins("JOIN users ON users.id = program_items.user_id")
+                    .where("program_items.status != '#{ProgramItem::STATUS_DRAFT}' AND users.territory = '#{current_moderator.member_ref}'")
                     .uniq
   end
 
