@@ -5,7 +5,7 @@ class TransferPictures
   FOLDERS = ['large', 'medium', 'original', 'small', 'thumb', 'xlarge']
 
   def self.transfer(file, item_reference)
-    Dir.chdir('./public/pictures/2017/5')
+    Dir.chdir(Rails.root.join('public', 'pictures', '2017', '5'))
     unless Dir.exist?(item_reference.to_s)
       Dir.mkdir(item_reference.to_s)
       FOLDERS.each do |d|
