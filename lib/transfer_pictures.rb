@@ -11,7 +11,7 @@ class TransferPictures
       FOLDERS.each do |d|
         Dir.mkdir("#{item_reference}/#{d}")
         if d == 'thumb'
-          file_name = file.gsub('.jpg', '.png')
+          file_name = file.split('.').first + '.png'
         elsif d != 'original'
           file_name = file.split('.').first + '.jpg'
         else
