@@ -32,7 +32,7 @@ class AttachedFile < ActiveRecord::Base
 
   Paperclip.interpolates :ref do |attachment, style|
     if attachment.instance.program_item
-      attachment.instance.program_item.reference
+      attachment.instance.program_item.reference || attachment.instance.program_item.id
     else
       'undefined'
     end
