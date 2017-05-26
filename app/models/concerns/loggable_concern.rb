@@ -5,6 +5,7 @@ module LoggableConcern
   EVENT_NEW_COMMENT = 'new_comment'
 
   included do
+    attr_accessor :comment, :author, :timestamp
 
     store :history_data, accessors: [:history], coder: JSON
     before_save :log_change
@@ -39,26 +40,5 @@ module LoggableConcern
         last_change ? Time.at(last_change[:timestamp].to_i) : updated_at
       end
     end
-  end
-
-  def comment
-  end
-
-  def comment=(val)
-    @comment = val
-  end
-
-  def author
-  end
-
-  def author=(val)
-    @author = val
-  end
-
-  def timestamp
-  end
-
-  def timestamp=(val)
-    @timestamp = val
   end
 end

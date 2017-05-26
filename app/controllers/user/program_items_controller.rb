@@ -31,6 +31,7 @@ class User::ProgramItemsController < User::UserController
     @item = ProgramItem.new(item_params)
     @item.ordering = @program.program_items.count
     if @item.save
+      @item.comment = nil
       @item.update(reference: @item.id) unless @item.reference
       NotificationMailer.notify(@item).deliver_now if @item.pending?
       if current_user.territory == GRAND_LYON && current_user.program_items.count == 1 && current_user.communication.nil?
@@ -124,8 +125,8 @@ class User::ProgramItemsController < User::UserController
   end
 
   def site_desc
-    @place = Place.where(uid: params[:place_uid]).first
-    jep_site = JepSite.where(place_uid: params[:place_uid]).first
+    @place = Place.where(uid: "f10f8c48-875e-4194-bd7a-33dc2875efef").first
+    jep_site = JepSite.where(place_uid: "f10f8c48-875e-4194-bd7a-33dc2875efef").first
     @site_desc = (jep_site && jep_site.description) ? jep_site.description : ''
     @site_ages = (jep_site && jep_site.ages) ? jep_site.ages : []
   end

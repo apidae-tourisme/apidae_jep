@@ -31,6 +31,10 @@ class AttachedFile < ActiveRecord::Base
     str.parameterize
   end
 
+  def picture_url
+    picture.url
+  end
+
   private
 
   Paperclip.interpolates :timestamp do |attachment, style|

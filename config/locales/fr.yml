@@ -162,12 +162,51 @@ fr:
           d'une collection ou
           d'une thématique
           (visite libre ou guidée)
-    accessibility:
-      pmr_total: "Personnes à mobilité réduite (accès total)"
-      pmr_partiel: "Personnes à mobilité réduite (accès partiel)"
-      malentendant: "Personnes malentendantes ou sourdes"
-      malvoyant: "Personnes malvoyantes ou non voyantes"
-      non_accessible: "Non accessible en fauteuil roulant"
+  ref:
+    visite-guidee: Visite guidée
+    visite-libre: Visite libre
+    parcours: Parcours
+    croisiere: Croisière
+    theatre: Théâtre
+    concert: Concert
+    danse: Danse
+    lecture: Lecture
+    conte: Conte
+    conference-debat: Conférence / Débat
+    projection: Projection
+    demonstration: Démonstration
+    degustations: Dégustations
+    jeux: Jeux
+    atelier: Atelier
+    degustation: Dégustation
+    gouter: Goûter
+    jeu-de-piste-chasse-au-tresor: Jeu de piste / Chasse au trésor
+    marche: Marché
+    balade-contee: Balade contée
+    cinema: Cinéma
+    dessin: Dessin
+    loisirs-creatifs: Loisirs créatifs
+    peinture: Peinture
+    photographie: Photographie
+    thematique-2017-jeunesse-et-patrimoine: Thématique 2017 - "Jeunesse et Patrimoine"
+    la-metropole-au-fil-de-l-eau: La Métropole au fil de l'eau
+    nouveaute: Nouveauté
+    en-famille: En famille
+    jeunes-15-25-ans: Jeunes (15-25 ans)
+    egalite: Egalité
+    famille: Famille
+    reserve-aux-enfants: Réservé aux enfants
+    antiquite: Antiquité
+    archeologie: Archéologie
+    architecture: Architecture
+    art-contemporain: Art contemporain
+    artisanat: Artisanat
+    litterature: Littérature
+    fully_accessible: Personnes à mobilité réduite (accès total)
+    partly_accessible: Personnes à mobilité réduite (accès partiel)
+    not_accessible: Non accessible en fauteuil roulant
+    deaf_people: Personnes malentendantes ou sourdes
+    blind_people: Personnes malvoyantes ou non voyantes
   member:
     grandlyon: 'Grand Lyon'
     isere: 'Isère'

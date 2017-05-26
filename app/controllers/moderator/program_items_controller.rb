@@ -13,6 +13,7 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
 
   def show
     @town = Town.find_by_insee_code(@item.main_town_insee_code) if @item.main_town_insee_code
+    @prev_item = ProgramItem.where(reference: @item.reference, rev: @item.rev - 1).first
   end
 
   def edit
@@ -20,6 +21,7 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
       redirect_to edit_moderator_account_url(@item.user, validate: true), notice: "Validation de la structure organisatrice requise"
     end
     @town = Town.find_by_insee_code(@item.main_town_insee_code) if @item.main_town_insee_code
+    @prev_item = ProgramItem.where(reference: @item.reference, rev: @item.rev - 1).first
   end
 
   def update

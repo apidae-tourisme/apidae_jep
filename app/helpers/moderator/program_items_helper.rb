@@ -48,4 +48,34 @@ module Moderator::ProgramItemsHelper
         |opt| '<option value="' + opt.parameterize + '"' + (selected && selected.include?(opt.parameterize) ? ' selected' : '') + '>' + opt + '</option>'
     }.join('')
   end
+
+  def render_previous(attr, rows = 1)
+    if @prev_item
+      @prev_item.send(attr) != @item.send(attr) ? "<textarea class='mt-sm previous_val form-control' rows='#{rows}' readonly='readonly'>#{stringify(@prev_item.send(attr), attr)}</textarea>".html_safe : ''
+    elsif attr == :place_desc && @item.place_desc != @item.place_desc_ref
+      "<textarea class='mt-sm previous_val form-control' rows='#{rows}' readonly='readonly'>#{@item.place_desc_ref}</textarea>".html_safe
+    end
+  end
+
+  def render_previous_assoc(prev_objects, new_objects, attr, rows = 1)
+    prev_values = prev_objects.collect {|obj| obj.send(attr)}
+    new_values = new_objects.collect {|obj| obj.send(attr)}
+    if prev_values.to_set != new_values.to_set
+      if attr == :picture_url
+        ("<div class='row'><p class='col-sm-12 text-warning'>Photos précédentes</p>" + prev_values.map {|v| "<div class='col-sm-2'>#{image_tag(v)}</div>"}.join('') + "</div>").html_safe
+      else
+        prev_values.map {|v| "<textarea class='mt-xl previous_val form-control' rows='#{rows}' readonly='readonly'>#{stringify(v, attr)}</textarea>"}.join('<br/>').html_safe
+      end
+    else
+      ''
+    end
+  end
+
+  def stringify(val, attr)
+    if attr == :free
+      val == 'true' ? 'Accès gratuit' : 'Accès payant'
+    else
+      val.is_a?(Array) ? val.select {|v| !v.blank?}.map {|v| I18n.t("ref.#{v}") }.join(' | ') : val
+    end
+  end
 end

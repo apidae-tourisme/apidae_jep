@@ -22,7 +22,7 @@ class ProgramItem < ActiveRecord::Base
   DIRECTION_UP = 'up'
   DIRECTION_DOWN = 'down'
 
-  store :desc_data, accessors: [:place_desc, :event_planners, :building_ages, :building_types, :accessibility,
+  store :desc_data, accessors: [:place_desc, :place_desc_ref, :event_planners, :building_ages, :building_types, :accessibility,
                                 :audience, :criteria, :themes, :accept_pictures], coder: JSON
   store :location_data, accessors: [:main_place, :main_lat, :main_lng, :main_address, :main_town_insee_code,
                                     :main_transports, :alt_place, :alt_lat, :alt_lng, :alt_address,
@@ -85,6 +85,10 @@ class ProgramItem < ActiveRecord::Base
 
   def town
     Town.find_by_insee_code(main_town_insee_code).label if Town.find_by_insee_code(main_town_insee_code)
+  end
+
+  def opening_text(opening)
+    openings.include?(opening) ? opening.as_text : ''
   end
 
   def self.in_status(status, territory)

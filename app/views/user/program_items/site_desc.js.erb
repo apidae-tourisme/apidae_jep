@@ -1,6 +1,20 @@
+<% if @place %>
 $("#program_item_main_transports").val("<%= j(raw(@place.access_details)) %>");
+<% else %>
+$("#program_item_main_transports").val("");
+<% end %>
+<% if @site_desc %>
 $("#program_item_place_desc").val("<%= j(raw(@site_desc)) %>");
+$("#program_item_place_desc_ref").val("<%= j(raw(@site_desc)) %>");
+<% else %>
+$("#program_item_place_desc").val("");
+$("#program_item_place_desc_ref").val("");
+<% end %>
+<% if @site_ages %>
 $("#program_item_building_ages").val("<%= @site_ages.join(';') %>".split(';'));
+<% else %>
+$("#program_item_building_ages").val("");
+<% end %>
 $("#program_item_building_ages").trigger("chosen:updated");
 $("#program_item_building_types").val("");
 $("#program_item_building_types").trigger("chosen:updated");

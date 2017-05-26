@@ -49,4 +49,11 @@ module User::ProgramItemsHelper
         |opt| '<option value="' + opt.parameterize + '"' + (selected && selected.include?(opt.parameterize) ? ' selected' : '') + '>' + opt + '</option>'
     }.join('')
   end
+
+  #   Nothing to show on user side for now
+  def render_previous(attr, rows = 1)
+  end
+
+  def render_previous_assoc(prev_objects, new_objects, attr, rows = 1)
+  end
 end
