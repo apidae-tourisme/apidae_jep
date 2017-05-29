@@ -1,7 +1,7 @@
 require 'raven'
 
 class Moderator::AccountsController < Moderator::ModeratorController
-  before_action :set_user, only: [:edit, :update]
+  before_action :set_user, only: [:edit, :update, :edit_com, :update_com]
 
   def index
     @accounts = User.where(territory: current_moderator.member_ref)
@@ -10,16 +10,18 @@ class Moderator::AccountsController < Moderator::ModeratorController
   def edit
     unless params[:validate].blank?
       @validate = true
+      @item_id = params[:item_id]
     end
   end
 
   def update
     begin
       if @user.update(user_params)
+        redirect_url = params[:item_id].blank? ? url_for(action: :index) : edit_moderator_program_program_item_url(params[:item_id])
         if @user.legal_entity.external_id.nil? && @user.legal_entity.remote_save(@user.territory)
-          redirect_to url_for(action: :index), notice: "La nouvelle structure a bien été enregistrée." and return
+          redirect_to redirect_url, notice: "La nouvelle structure a bien été enregistrée." and return
         else
-          redirect_to url_for(action: :index), notice: "La structure a bien été mise à jour." and return
+          redirect_to redirect_url, notice: "La structure a bien été mise à jour." and return
         end
       end
     rescue OAuth2::Error => e
@@ -36,6 +38,21 @@ class Moderator::AccountsController < Moderator::ModeratorController
       end
     end
     render :edit
+  end
+
+  def list_com
+    @polls = CommunicationPoll.where(user_id: User.where(territory: current_moderator.member_ref, communication: true).collect {|u| u.id})
+  end
+
+  def edit_com
+  end
+
+  def update_com
+    if @user.update(user_params)
+      redirect_to url_for(action: :list_com), notice: "Le formulaire a bien été enregistré."
+    else
+      render :edit_com, notice: "Une erreur s'est produite lors de l'enregistrement du formulaire."
+    end
   end
 
   private

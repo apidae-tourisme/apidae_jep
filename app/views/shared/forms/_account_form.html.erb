@@ -4,7 +4,8 @@
       <div class="panel-body">
         <p class="help-block">Les champs marqués d'un <strong>*</strong> sont obligatoires.</p>
         <fieldset>
-          <legend class="text-uppercase text-primary">Informations du compte</legend>
+          <legend class="text-uppercase text-primary">Informations du compte<%= link_to('<em class="icon icon-arrow-right"></em>Voir les offres du compte'.html_safe,
+                                                                                        account_moderator_items_path(user_id: @user.id), class: 'btn btn-sm btn-link') if current_moderator %></legend>
           <div class="form-group mdy">
             <label class="col-sm-2 control-label">Nom</label>
             <div class="col-sm-4">
@@ -36,8 +37,36 @@
             </div>
           </div>
         </fieldset>
+        <% if current_moderator %>
+            <fieldset>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Mode d'authentification</label>
+                <div class="col-sm-4">
+                  <%= text_field_tag 'auth_mode', @user.provider == 'apidae' ? 'Apidae' : 'ApidaeJEP',
+                                     class: 'form-control', readonly: 'readonly', disabled: 'disabled' %>
+                </div>
+                <label class="col-sm-2 control-label">Identifiant Apidae</label>
+                <div class="col-sm-4">
+                  <%= user_form.text_field :uid, class: 'form-control', readonly: 'readonly', disabled: 'disabled' %>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Date de création</label>
+                <div class="col-sm-4">
+                  <%= user_form.datetime_select :created_at, {}, class: 'form-control', readonly: 'readonly', disabled: 'disabled' %>
+                </div>
+                <label class="col-sm-2 control-label">Dernière connexion</label>
+                <div class="col-sm-4">
+                  <%= user_form.datetime_select :last_sign_in_at, {}, class: 'form-control', readonly: 'readonly', disabled: 'disabled' %>
+                </div>
+              </div>
+            </fieldset>
+        <% end %>
         <fieldset>
-          <legend class="text-uppercase text-primary mb-sm">Structure organisatrice</legend>
+          <legend class="text-uppercase text-primary mb-sm">Structure organisatrice<%= link_to('<em class="icon icon-arrow-right"></em>Voir les offres de la structure'.html_safe,
+                                                                                               entity_moderator_items_path(entity_id: @user.legal_entity_id), class: 'btn btn-sm btn-link') if current_moderator %></legend>
           <p class="help-block">
             Veuillez indiquer le nom de votre structure dans le champ de recherche ci-dessous. Vous pourrez ensuite
             modifier ses caractéristiques si nécessaire.<br/>
@@ -93,6 +122,9 @@
                 </div>
               </div>
               <%= entity_form.hidden_field :id %>
+              <% if @item_id %>
+              <%= hidden_field_tag 'item_id', @item_id %>
+              <% end %>
           <% end %>
         </fieldset>
       </div>

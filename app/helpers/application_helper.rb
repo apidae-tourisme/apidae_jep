@@ -7,6 +7,10 @@ module ApplicationHelper
     action.include?(params[:action])
   end
 
+  def territory?(territory)
+    (current_user && current_user.territory == territory) || (current_moderator && current_moderator.member_ref == territory)
+  end
+
   def date_select_tag(method, html_options = {})
     content_tag(:div, :class => 'input-group date datepicker w100 p-lg') do
       text_field('opening', method, {class: 'hidden', placeholder: ''}.merge(html_options))

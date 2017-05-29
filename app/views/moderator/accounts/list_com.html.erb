@@ -1,0 +1,49 @@
+<h3>Supports de communication</h3>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-info">
+      <div class="table-responsive panel-body">
+        <table id="polls" class="table table-striped table-bordered table-hover">
+          <thead class="bg-gray-darker">
+          <tr>
+            <th>Mise à jour</th>
+            <th>Utilisateur</th>
+            <th>Personne référente</th>
+            <th>Adresse de livraison</th>
+            <th>Commande</th>
+            <th class="wd-xs"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <% if @polls.any? %>
+              <% @polls.each do |poll| %>
+                  <tr>
+                    <td><%= l(poll.updated_at, format: :withtime)  %></td>
+                    <td><%= poll.user.full_name %></td>
+                    <td><%= poll.ref_person %></td>
+                    <td class="pre"><%= poll.full_address %></td>
+                    <td class="pre"><%= render_com_kit(poll) %></td>
+                    <td class="text-center">
+                      <%= link_to '<i class="icon-note text-md"></i>'.html_safe, edit_kit_moderator_account_path(poll.user_id) %>
+                    </td>
+                  </tr>
+              <% end %>
+          <% else %>
+              <tr>
+                <td colspan="5" class="text-center">
+                  Aucun support de communication commandé pour le moment.
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :body_area do %>
+    <script>
+        initDataTable('#polls');
+    </script>
+<% end %>

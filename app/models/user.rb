@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   end
 
   def ordered_programs
-    programs.order(:id)
+    legal_entity.programs.sort_by {|p| p.id}
   end
 
   def full_name
@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
   end
 
   def offers
-    programs.collect {|p| p.active_items}.flatten.group_by {|pi| pi.status}
+    legal_entity.programs.collect {|p| p.active_items}.flatten.group_by {|pi| pi.status}
   end
 
   def self.import_full(csv_file)

@@ -1,0 +1,70 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-primary">
+      <div class="table-responsive panel-body">
+        <table id="items_list" class="table table-striped table-bordered table-hover text-sm">
+          <thead class="bg-gray-darker">
+          <tr>
+            <th>Réf.</th>
+            <th>Mise à jour</th>
+            <th>Titre offre</th>
+            <th>Type</th>
+            <th>Structure</th>
+            <th>Commune</th>
+            <th>Lieu</th>
+            <% if territory?(GRAND_LYON) %>
+            <th>Kit com</th>
+            <% end %>
+            <th class="wd-sm"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <% if @items.any? %>
+              <% @items.each do |item| %>
+                  <tr>
+                    <td><%= item.reference %><span class="hidden"><%= item.user.full_name %></span></td>
+                    <td>
+                      <span class="hidden"><%= item.updated_at.to_i %></span><%= l(item.updated_at, format: :withtime) %>
+                    </td>
+                    <td><%= item.title %></td>
+                    <td><span class="label label-inverse"><%= t "program_item.type.#{item.item_type}" %></span></td>
+                    <td><%= item.structure %></td>
+                    <td><%= item.town %></td>
+                    <td><%= item.main_place %></td>
+                    <% if territory?(GRAND_LYON) %>
+                    <td class="text-center">
+                      <%= item.user.communication.nil? ? '?' : (item.user.communication ? link_to('Oui', edit_kit_moderator_account_path(item.user_id), class: 'btn btn-link') : 'Non') %>
+                    </td>
+                    <% end %>
+                    <td class="text-center">
+                      <%= link_to '<i class="icon-eye"></i>'.html_safe,
+                                  moderator_program_program_item_path(item.program_id, item),
+                                  class: 'btn btn-outline btn-sm btn-primary', title: 'Visualiser' %>
+                      <%= link_to '<i class="icon-note"></i>'.html_safe,
+                                  edit_moderator_program_program_item_path(item.program_id, item),
+                                  class: 'btn btn-outline btn-sm btn-primary ml-sm', title: 'Modifier' %>
+                      <%= link_to '<i class="icon-list"></i>'.html_safe,
+                                  edit_moderator_program_path(item.program),
+                                  class: 'btn btn-outline btn-sm btn-primary ml-sm', title: 'Voir la programmation' %>
+                    </td>
+                  </tr>
+              <% end %>
+          <% else %>
+              <tr>
+                <td colspan="6" class="text-center">
+                  Aucune offre pour le moment.
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :body_area do %>
+    <script>
+        initDataTable('#items_list');
+    </script>
+<% end %>

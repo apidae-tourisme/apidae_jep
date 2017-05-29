@@ -162,6 +162,12 @@ fr:
           d'une collection ou
           d'une thématique
           (visite libre ou guidée)
+  com_kit:
+    format:
+      flyers: "Programmes papier"
+      posters1: "Affiches 40x60cm"
+      posters2: "Affiches 120x176cm"
+      signs: "Panneaux de signalétique"
   ref:
     visite-guidee: Visite guidée
     visite-libre: Visite libre

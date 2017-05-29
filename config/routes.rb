@@ -38,7 +38,10 @@ Rails.application.routes.draw do
         get 'site_desc', on: :collection, as: 'site_desc'
       end
     end
-    resources :program_items, path: 'offres', as: 'items', only: [:index]
+    resources :program_items, path: 'offres', as: 'items', only: [:index] do
+      get 'account', on: :collection, path: 'compte'
+      get 'entity', on: :collection, path: 'structure'
+    end
   end
 
   namespace :user, path: 'saisie' do
@@ -57,7 +60,11 @@ Rails.application.routes.draw do
   namespace :moderator, path: 'validation' do
     scope(path_names: {new: 'creer', edit: 'modifier'}) do
       concerns :programs_routes
-      resources :users, controller: 'accounts', path: 'comptes', as: 'accounts', only: [:index, :edit, :update]
+      resources :users, controller: 'accounts', path: 'comptes', as: 'accounts', only: [:index, :edit, :update] do
+        get 'list_com', on: :collection,  as: 'kits', path: 'supports'
+        get 'edit_com', on: :member, as: 'edit_kit', path: 'supports'
+        patch 'update_com', on: :member
+      end
     end
   end
 

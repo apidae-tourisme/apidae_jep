@@ -91,11 +91,18 @@ class ProgramItem < ActiveRecord::Base
     openings.include?(opening) ? opening.as_text : ''
   end
 
-  def self.in_status(status, territory)
+  def self.active_versions
     active_ids = select("MAX(id) AS id").group(:reference)
-    where(id: active_ids).where("program_items.status = '#{status}' AND users.territory = '#{territory}'")
-        .joins("JOIN users ON users.id = program_items.user_id")
+    where(id: active_ids)
+  end
 
+  def self.visible
+    where(status: [STATUS_PENDING, STATUS_VALIDATED, STATUS_REJECTED])
+  end
+
+  def self.in_status(status, territory)
+    active_versions.where("program_items.status = '#{status}' AND users.territory = '#{territory}'")
+        .joins("JOIN users ON users.id = program_items.user_id")
   end
 
   def self.validated(program_id = nil)

@@ -78,4 +78,8 @@ module Moderator::ProgramItemsHelper
       val.is_a?(Array) ? val.select {|v| !v.blank?}.map {|v| I18n.t("ref.#{v}") }.join(' | ') : val
     end
   end
+
+  def entity_label(entity)
+    "#{entity.label} - Identifiant Apidae : #{entity.external_id}"
+  end
 end

@@ -3,7 +3,7 @@
 require 'raven'
 
 class Moderator::ProgramItemsController < Moderator::ModeratorController
-  before_action :set_program, except: [:index]
+  before_action :set_program, except: [:index, :account, :entity]
   before_action :set_program_item, only: [:show, :edit, :update, :destroy, :confirm, :reorder, :select_program, :save_program]
 
   def index
@@ -18,7 +18,7 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
 
   def edit
     if @item.user.legal_entity.external_id.nil?
-      redirect_to edit_moderator_account_url(@item.user, validate: true), notice: "Validation de la structure organisatrice requise"
+      redirect_to edit_moderator_account_url(@item.user, validate: true, item_id: @item.id), notice: "Validation de la structure organisatrice requise"
     end
     @town = Town.find_by_insee_code(@item.main_town_insee_code) if @item.main_town_insee_code
     @prev_item = ProgramItem.where(reference: @item.reference, rev: @item.rev - 1).first
@@ -83,6 +83,22 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
       redirect_to edit_moderator_program_url(@item.program), notice: "L'offre a bien déplacée dans sa nouvelle programmation."
     else
       redirect_to edit_moderator_program_url(@program), notice: "Une erreur est survenue au cours du déplacement de l'offre."
+    end
+  end
+
+  def account
+    @items = []
+    unless params[:user_id].blank?
+      @user = User.find(params[:user_id])
+      @items = ProgramItem.active_versions.visible.where(user_id: params[:user_id])
+    end
+  end
+
+  def entity
+    @items = []
+    unless params[:entity_id].blank?
+      @entity = LegalEntity.find(params[:entity_id])
+      @items = ProgramItem.active_versions.visible.where(user_id: User.where(legal_entity_id: params[:entity_id]).collect {|u| u.id})
     end
   end
 
