@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
   authenticated :moderator do
     get '/', to: 'moderator/dashboard#index', as: 'moderator_dashboard'
+    get '/inactive', to: 'moderator/dashboard#inactive', as: 'moderator_inactive'
   end
 
   concern :programs_routes do

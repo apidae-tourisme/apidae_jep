@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170509212641) do
+ActiveRecord::Schema.define(version: 20170530143659) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,6 +110,7 @@ ActiveRecord::Schema.define(version: 20170509212641) do
     t.text     "apidae_data"
     t.string   "notification_email"
     t.string   "member_ref"
+    t.boolean  "active"
   end
 
   add_index "moderators", ["email"], name: "index_moderators_on_email", unique: true, using: :btree
