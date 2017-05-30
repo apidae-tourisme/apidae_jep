@@ -52,14 +52,25 @@ ACCESSIBILITY = {
     }
 }
 
+# Prod
 APIDAE_CRITERIA = {
     'Nouveauté' => 7997,
-    "Visite libre" => 8767,
-    "La Métropole au fil de l'eau" => 8776,
-    'Egalité' => 8777,
-    'animation' => 8769,
-    'parcours' => 8768
+    "Visite libre" => 10173,
+    "La Métropole au fil de l'eau" => 10160,
+    'Egalité' => 10161,
+    'animation' => 10171,
+    'parcours' => 10172
 }
+
+# Preprod
+# APIDAE_CRITERIA = {
+#     'Nouveauté' => 7997,
+#     "Visite libre" => 8767,
+#     "La Métropole au fil de l'eau" => 8776,
+#     'Egalité' => 8777,
+#     'animation' => 8769,
+#     'parcours' => 8768
+# }
 
 APIDAE_TYPOLOGIES = {
     'Thématique 2017 - "Jeunesse et Patrimoine"' => 5133
