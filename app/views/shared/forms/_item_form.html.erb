@@ -1,10 +1,11 @@
 <%= form_for([form_scope, @program, @item], html: {multipart: true, id: 'program_item_form', class: 'form-horizontal'}) do |item_form| %>
     <div class="panel panel-default">
       <div class="panel-body">
-        <p class="help-block">Les champs marqués d'un <strong>*</strong> sont obligatoires.</p>
+        <p class="help-block">Les champs marqués d'un <strong>*</strong> sont obligatoires.
         <% if current_moderator %>
-          <p class="text-warning">Lorsqu'un champ a été modifié par rapport à la saisie précédente, sa valeur avant modification est indiquée sous le champ concerné.</p>
+          <br/><strong>Lorsqu'un champ a été modifié par rapport à la saisie précédente, sa valeur avant modification est indiquée sous le champ concerné.</strong>
         <% end %>
+        </p>
         <fieldset>
           <legend class="text-uppercase text-primary">Informations générales</legend>
           <div class="form-group mdy">

@@ -43,4 +43,23 @@ module OAuth2
     # end
 
   end
+
+  class Error < StandardError
+    attr_reader :response, :code, :description
+
+    # Makes a error message
+    # @param [String] response_body response body of request
+    # @param [String] opts :error_description error description to show first line
+    def error_message(response_body, opts = {})
+      message = []
+
+      opts[:error_description] && message << opts[:error_description]
+
+      error_message = response_body
+      message << error_message
+
+      message.join("\n")
+    end
+  end
+
 end
