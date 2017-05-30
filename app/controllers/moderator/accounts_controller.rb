@@ -17,7 +17,11 @@ class Moderator::AccountsController < Moderator::ModeratorController
   def update
     begin
       if @user.update(user_params)
-        redirect_url = params[:item_id].blank? ? url_for(action: :index) : edit_moderator_program_program_item_url(params[:item_id])
+        redirect_url = url_for(action: :index)
+        unless params[:item_id].blank?
+          item = ProgramItem.find(params[:item_id])
+          redirect_url = edit_moderator_program_program_item_url(item.program_id, item.id)
+        end
         if @user.legal_entity.external_id.nil? && @user.legal_entity.remote_save(@user.territory)
           redirect_to redirect_url, notice: "La nouvelle structure a bien été enregistrée." and return
         else
