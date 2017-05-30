@@ -3,6 +3,7 @@ class TouristicObject
   def to_program_item
     ProgramItem.new(
         rev: 1,
+        ordering: 1,
         status: ProgramItem::STATUS_DRAFT,
         external_id: id,
         item_type: ITEM_VISITE,
