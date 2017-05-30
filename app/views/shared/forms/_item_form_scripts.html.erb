@@ -413,6 +413,10 @@
                 "program_item[status]": "veuillez saisir au moins une période d'ouverture",
                 "program_item[accept_pictures]": "veuillez valider les conditions d'utilisations des photos"
             },
+            submitHandler: function(form) {
+                displaySpinner();
+                form.submit();
+            },
             invalidHandler: function(form, validator) {
                 $.notify("Merci de renseigner tous les champs requis", "danger");
             }

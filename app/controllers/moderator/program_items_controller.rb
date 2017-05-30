@@ -31,8 +31,6 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
         if @item.remote_save && @item.save
           NotificationMailer.publish(@item).deliver_now
           redirect_to edit_moderator_program_url(@item.program), notice: "L'offre a bien été enregistrée." and return
-        else
-          render :edit, notice: "Une erreur s'est produite lors de la validation de l'offre."
         end
       elsif @item.save
         NotificationMailer.reject(@item).deliver_now if @item.rejected?
@@ -54,11 +52,16 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
         logger.error "Apidae error : #{e.response} - item : #{@item.id}"
         flash.now[:alert] = "Une erreur s'est produite au cours de l'enregistrement dans la base de données Apidae."
       end
+    rescue Exception => e
+      Raven.capture_exception(e)
+      logger.error "Exception caught : #{e}"
+      flash.now[:alert] = "Une erreur est survenue lors de la mise à jour de l'offre."
     end
     @item.status = ProgramItem::STATUS_PENDING
     @item.save
     @town = Town.find_by_insee_code(@item.main_town_insee_code) if @item.main_town_insee_code
-    render :edit, notice: "Une erreur est survenue lors de la mise à jour de l'offre."
+    flash.now[:alert] ||= "Une erreur est survenue lors de la mise à jour de l'offre."
+    render :edit
   end
 
   def destroy
