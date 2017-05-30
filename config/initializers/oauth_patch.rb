@@ -44,6 +44,8 @@ module OAuth2
 
   end
 
+  # Patched error class to prevent it from trying to enforce encoding on response messages (as it fails to detect the
+  # right encoding and generates an Encoding::UndefinedConversionError on most accented FR chars)
   class Error < StandardError
     attr_reader :response, :code, :description
 
