@@ -308,6 +308,48 @@ fr:
       fauteuil_roulant_avec_aide: 'Personnes à mobilité réduite (accès partiel)'
       fauteuil_roulant_en_autonomie: 'Personnes à mobilité réduite (accès total)'
       theme_2016_patrimoine_citoyennete: 'Thème JEP 2016 : Patrimoine et citoyenneté'
+    program_item:
+      reference: Référence
+      rev: Version
+      status: Statut
+      external_id: Identifiant Apidae
+      title: Titre
+      description: Description
+      item_type: Catégorie
+      place_desc: Description du lieu
+      event_planners: Organisateurs associés
+      building_ages: Epoques
+      building_types: Nature du lieu
+      accessibility: Accessibilité
+      audience: Public
+      criteria: Caractéristiques
+      themes: Thèmes
+      free: Gratuit
+      rates_desc: Informations sur les tarifs
+      booking: Réservation
+      booking_details: Informations sur la réservation
+      booking_telephone: Téléphone (réservations)
+      booking_email: Email (réservations)
+      booking_website: Site web (réservations)
+      openings_desc: Dates et horaires d'ouverture
+      telephone: Téléphone
+      email: Email
+      website: Site web
+      ordering: Ordre
+      main_place: Nom du lieu
+      main_lat: Latitude
+      main_lng: Longitude
+      main_address: Adresse
+      town: Commune
+      main_transports: Accès en transports
+      alt_place: Point de rendez-vous
+      program_title: Programmation
+      opening_description: Informations complémentaires sur les horaires et ouvertures
+      pictures: Images
+      user_name: Nom organisateur
+      user_email: Email organisateur
+      user_telephone: Téléphone organisateur
+      user_entity: Structure organisatrice
   date:
     abbr_day_names:
     - dim

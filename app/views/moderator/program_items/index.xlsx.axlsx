@@ -1,0 +1,12 @@
+#encoding: UTF-8
+
+wb = xlsx_package.workbook
+xlsx_package.use_shared_strings = true
+wrap = xlsx_package.workbook.styles.add_style alignment: {wrap_text: true}
+
+wb.add_worksheet(name: 'offres') do |sheet|
+  sheet.add_row exported_columns.values.flatten.map {|v| I18n.t("export.program_item.#{v}")}
+  @items.each do |item|
+    sheet.add_row exported_values(item), style: wrap
+  end
+end

@@ -82,4 +82,28 @@ module Moderator::ProgramItemsHelper
   def entity_label(entity)
     "#{entity.label} - Identifiant Apidae : #{entity.external_id}"
   end
+
+  def exported_columns
+    {
+        item: ['reference', 'rev', 'status', 'external_id', 'title', 'description', 'item_type', 'place_desc', 'event_planners', 'building_ages',
+               'building_types', 'accessibility', 'audience', 'criteria', 'themes', 'free', 'rates_desc', 'booking', 'booking_details', 'booking_telephone',
+               'booking_email', 'booking_website', 'openings_desc', 'telephone', 'email', 'website', 'ordering', 'main_place', 'main_lat', 'main_lng',
+               'main_address', 'town', 'main_transports', 'alt_place'],
+        program: ['program_title'],
+        item_openings: ['opening_description'],
+        attached_files: ['pictures'],
+        user: ['user_name', 'user_email', 'user_telephone', 'user_entity']
+    }
+  end
+
+  def exported_values(item)
+    values = exported_columns[:item].collect do |c|
+      val = item.send(c)
+      val && val.is_a?(Array) ? val.select {|v| !v.blank?}.map {|v| ALL_REFS[v] || v}.join("\r") : val
+    end
+    values << item.program.title
+    values << item.item_openings.collect {|o| o.description}.join("\r")
+    values << item.attached_files.collect {|p| p.info}.join("\r")
+    values + [item.user.full_name, item.user.email, item.user.telephone, item.user.entity_name]
+  end
 end

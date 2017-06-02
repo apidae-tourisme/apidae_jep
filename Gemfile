@@ -18,6 +18,10 @@ gem 'cocoon'
 gem 'remotipart', '~> 1.2'
 gem 'sitra_client'
 
+gem 'rubyzip', '= 1.0.0'
+gem 'axlsx', '= 2.0.1'
+gem 'axlsx_rails'
+
 gem 'sass-rails', '~> 5.0.1'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'

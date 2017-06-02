@@ -18,7 +18,7 @@
           <span class="label text-sm label-default text-gray-dark"><%= t "program_item.type.#{item.item_type}" %></span>
           <span class="label text-sm text-normal label-<%= item_color(item.status) %>"><%= t "program_item.status.#{item.status}" %></span>
         </h3>
-        <p class="pre"><%= ellipsis(item.description) %></p>
+        <p class="pre"><%= ellipsis(item.description) unless item.description.blank? %></p>
       </div>
       <div class="col-xs-2 p-lg text-right vat">
         <% if current_user || !item.draft? %>
@@ -26,15 +26,18 @@
                         url_for(controller: item_controller, action: :show, program_id: @program.id, id: item.id),
                         class: 'btn btn-labeled btn-default btn-block', title: 'Visualiser' %>
         <% end %>
-        <% if current_user || item.pending? %>
+        <% if current_user %>
             <%= link_to '<span class="btn-label"><em class="icon-note"></em></span>Modifier'.html_safe,
                         url_for(controller: item_controller, action: ((item.pending? || item.draft?) ? :edit : :new), program_id: @program.id, id: item.id),
                         class: 'btn btn-labeled btn-default btn-block', title: 'Modifier' %>
-        <% end %>
-        <% if current_user %>
             <%= link_to '<span class="btn-label"><em class="icon-docs"></em></span>Dupliquer'.html_safe,
                         duplicate_user_program_program_item_path(@program.id, item), method: :post,
                         class: 'btn btn-labeled btn-default btn-block', title: 'Dupliquer' %>
+        <% end %>
+        <% if current_moderator %>
+            <%= link_to '<span class="btn-label"><em class="icon-note"></em></span>Modifier'.html_safe,
+                        url_for(controller: item_controller, action: :edit, program_id: @program.id, id: item.id),
+                        class: 'btn btn-labeled btn-default btn-block', title: 'Modifier' %>
         <% end %>
         <div class="btn-group btn-block">
           <button type="button" data-toggle="dropdown" class="btn dropdown-toggle btn-labeled btn-default btn-block">

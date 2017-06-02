@@ -6,7 +6,7 @@ function initDataTable(tableSelector, inverseOrdering, orderingCol) {
                 ordering: true,
                 order: [(orderingCol || 0), inverseOrdering ? 'asc' : 'desc'],
                 info: true,
-                pageLength: 10,
+                pageLength: 50,
                 autoWidth: false,
                 language: {
                     "sProcessing": "Traitement en cours...",

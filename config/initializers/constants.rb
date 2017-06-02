@@ -12,6 +12,7 @@ THEMES = {
     GRAND_LYON => ['Thématique 2017 - "Jeunesse et Patrimoine"', "La Métropole au fil de l'eau", "Nouveauté", "En famille", "Jeunes (15-25 ans)", "Egalité"],
     ISERE => ['Thématique 2017 - "Jeunesse et Patrimoine"', "Famille", "Réservé aux enfants", "Antiquité", "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature"]
 }
+THEMES_REFS = Hash[THEMES.values.flatten.collect {|th| [th.parameterize, th] }]
 
 CRITERIA = {
     GRAND_LYON => {
@@ -34,6 +35,7 @@ CRITERIA = {
         ITEM_EXPOSITION => ["Visite guidée", "Visite libre"]
     }
 }
+CRITERIA_REFS = Hash[CRITERIA.values.collect {|v| v.values.collect {|val| val.is_a?(Hash) ? val.values.flatten : val}.flatten}.flatten.uniq.collect {|crit| [crit.parameterize, crit]}]
 
 ACCESSIBILITY = {
     GRAND_LYON => {
@@ -51,6 +53,9 @@ ACCESSIBILITY = {
         'blind_people' => "Personnes malvoyantes ou non voyantes"
     }
 }
+ACCESSIBILITY_REFS = ACCESSIBILITY.values.inject(:merge)
+
+ALL_REFS = THEMES_REFS.merge(CRITERIA_REFS).merge(ACCESSIBILITY_REFS)
 
 # Prod
 APIDAE_CRITERIA = {

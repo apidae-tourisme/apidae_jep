@@ -30,6 +30,10 @@ class User < ActiveRecord::Base
     legal_entity.address.values.join("\n")
   end
 
+  def entity_name
+    legal_entity.label
+  end
+
   def ordered_programs
     legal_entity.programs.sort_by {|p| p.id}
   end
