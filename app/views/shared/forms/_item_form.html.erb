@@ -283,7 +283,7 @@
           <div id="accept_pictures" class="form-group mt-lg mdy">
             <div class="col-sm-12">
               <label class="checkbox-inline c-checkbox">
-                <%= check_box_tag 'program_item[accept_pictures]', '1', @item.accept_pictures == '1', disabled: (current_user && !readonly) ? nil : 'disabled' %>
+                <%= check_box_tag 'program_item[accept_pictures]', '1', @item.accept_pictures == '1', disabled: readonly %>
                 <span class="fa fa-check"></span>J'accepte que les photos soient utilisées dans les supports de communication
                 des Journées Européennes du Patrimoine 2017 au format papier et web*
               </label>

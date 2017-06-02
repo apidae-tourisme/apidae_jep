@@ -28,9 +28,11 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
     begin
       @item.attributes = item_params
       if @item.validated?
-        if @item.remote_save && @item.save
-          NotificationMailer.publish(@item).deliver_now
-          redirect_to edit_moderator_program_url(@item.program), notice: "L'offre a bien été enregistrée." and return
+        if @item.save
+          if @item.remote_save
+            NotificationMailer.publish(@item).deliver_now
+            redirect_to edit_moderator_program_url(@item.program), notice: "L'offre a bien été enregistrée." and return
+          end
         end
       elsif @item.save
         NotificationMailer.reject(@item).deliver_now if @item.rejected?
