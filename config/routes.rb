@@ -42,6 +42,7 @@ Rails.application.routes.draw do
     resources :program_items, path: 'offres', as: 'items', only: [:index] do
       get 'account', on: :collection, path: 'compte'
       get 'entity', on: :collection, path: 'structure'
+      get 'export', on: :collection, path: 'export'
     end
   end
 

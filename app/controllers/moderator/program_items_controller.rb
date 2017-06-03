@@ -3,14 +3,17 @@
 require 'raven'
 
 class Moderator::ProgramItemsController < Moderator::ModeratorController
-  before_action :set_program, except: [:index, :account, :entity]
+  before_action :set_program, except: [:index, :account, :entity, :export]
   before_action :set_program_item, only: [:show, :edit, :update, :destroy, :confirm, :reorder, :select_program, :save_program]
 
   def index
     @status = params[:status] || ProgramItem::STATUS_PENDING
     @items = ProgramItem.in_status(@status, current_moderator.member_ref)
+  end
+
+  def export
+    @items = ProgramItem.visible
     respond_to do |format|
-      format.html
       format.xlsx {
         response.headers['Content-Disposition'] = "attachment; filename=\"offres-#{current_moderator.member_ref}-#{I18n.l(Time.current, format: :reference)}.xlsx\""
       }
