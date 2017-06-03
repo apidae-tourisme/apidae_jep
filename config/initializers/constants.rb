@@ -67,6 +67,10 @@ APIDAE_CRITERIA = {
     'parcours' => 10172
 }
 
+APIDAE_TYPOLOGIES = {
+    'Thématique 2017 - "Jeunesse et Patrimoine"' => 5133
+}
+
 # Preprod
 # APIDAE_CRITERIA = {
 #     'Nouveauté' => 7997,
@@ -76,10 +80,10 @@ APIDAE_CRITERIA = {
 #     'animation' => 8769,
 #     'parcours' => 8768
 # }
-
-APIDAE_TYPOLOGIES = {
-    'Thématique 2017 - "Jeunesse et Patrimoine"' => 5133
-}
+#
+# APIDAE_TYPOLOGIES = {
+#     'Thématique 2017 - "Jeunesse et Patrimoine"' => 4927
+# }
 
 APIDAE_THEMES = {
     'Conte' => 2276,
