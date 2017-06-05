@@ -8,11 +8,12 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
 
   def index
     @status = params[:status] || ProgramItem::STATUS_PENDING
-    @items = ProgramItem.in_status(@status, current_moderator.member_ref)
+    @items = ProgramItem.in_status(current_moderator.member_ref, @status)
   end
 
   def export
-    @items = ProgramItem.visible
+    @items = ProgramItem.in_status(current_moderator.member_ref,
+                                   ProgramItem::STATUS_PENDING, ProgramItem::STATUS_VALIDATED, ProgramItem::STATUS_REJECTED)
     respond_to do |format|
       format.xlsx {
         response.headers['Content-Disposition'] = "attachment; filename=\"offres-#{current_moderator.member_ref}-#{I18n.l(Time.current, format: :reference)}.xlsx\""
