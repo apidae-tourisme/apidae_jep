@@ -202,7 +202,7 @@ class ProgramItem < ActiveRecord::Base
       attachment_key = "attachment-#{i}"
       if attachment.picture
         attachments[:illustrations] ||= []
-        form_data["multimedia.#{attachment_key}"] = Faraday::UploadIO.new(attachment.picture.path, attachment.picture_content_type)
+        form_data["multimedia.#{attachment_key}"] = Faraday::UploadIO.new(attachment.picture.path(:xlarge), attachment.picture_content_type)
         attachments[:illustrations] << {
             link: false,
             type: 'IMAGE',
