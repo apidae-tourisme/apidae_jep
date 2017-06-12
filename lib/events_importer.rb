@@ -49,7 +49,36 @@ class EventsImporter
     user = User.find_by_email(user_email)
     if user
       evt = load_apidae_event(apidae_id)
+      if evt
+        program = Program.new(title: DEFAULT_PROGRAM)
+        program.users << user
+        item = evt.to_program_item
+        item.attached_files = event_pictures(evt)
+        item.user_id = user.id
+        item.save(validate: false)
+      else
+        puts "Could not load Apidae event #{apidae_id}"
+      end
+    else
+      puts "Could not find user with email #{user_email}"
     end
+  end
+
+  def self.event_pictures(evt)
+    evt_pictures = []
+    pictures_array = evt[:illustrations]
+    unless pictures_array.blank?
+      pictures_array.select { |p| p.is_a?(Hash) && !p[:traductionFichiers].blank? }.each do |pic|
+        begin
+          evt_pictures << AttachedFile.new(name: node_value(pic, :nom),
+                                      picture: URI.parse(pic[:traductionFichiers][0][:url]),
+                                      credits: node_value(pic, :copyright))
+        rescue OpenURI::HTTPError => e
+          puts "Could not retrieve attached picture for object #{title} - Error is #{e.message}"
+        end
+      end
+    end
+    evt_pictures
   end
 
   def self.load_apidae_selection(selection)
@@ -76,6 +105,14 @@ class EventsImporter
                                                    '@informationsObjetTouristique', 'descriptionTarif', 'localisation',
                                                    'prestations', 'reservation', 'criteresInternes']
                               })
-    query[:results]
+    query[:results].first
+  end
+
+  def self.node_value(node, key)
+    if node && node[key]
+      node[key][:libelleFr]
+    else
+      ''
+    end
   end
 end
