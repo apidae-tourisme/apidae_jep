@@ -2,10 +2,11 @@ require 'sitra_client'
 
 class EventsImporter
 
+  DEFAULT_PROGRAM = "Imports Apidae"
   LEGACY_PROGRAM = "Offres saisies au cours de l'édition 2016 des JEP"
 
   def self.import_events(json_exports_file, user_email = nil)
-    events = load_apidae_events(40989)
+    events = load_apidae_selection(40989)
     events_json = File.read(json_exports_file)
     events_data = JSON.parse(events_json, symbolize_names: true)
     if user_email
@@ -44,7 +45,14 @@ class EventsImporter
     end
   end
 
-  def self.load_apidae_events(selection)
+  def self.import_apidae_event(user_email, apidae_id)
+    user = User.find_by_email(user_email)
+    if user
+      evt = load_apidae_event(apidae_id)
+    end
+  end
+
+  def self.load_apidae_selection(selection)
     apidae_events = Rails.cache.read("apidae_#{selection}")
     unless apidae_events
       SitraClient.configure(Rails.application.config.sitra_config)
@@ -60,4 +68,14 @@ class EventsImporter
     apidae_events
   end
 
+  def self.load_apidae_event(id)
+    SitraClient.configure(Rails.application.config.sitra_config)
+    query = SitraClient.query({
+                                  identifiants: [id],
+                                  responseFields: ['id', 'nom', 'gestion', 'presentation', 'illustrations', 'informations', 'ouverture',
+                                                   '@informationsObjetTouristique', 'descriptionTarif', 'localisation',
+                                                   'prestations', 'reservation', 'criteresInternes']
+                              })
+    query[:results]
+  end
 end
