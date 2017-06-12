@@ -69,9 +69,8 @@ class EventsImporter
     unless pictures_array.blank?
       pictures_array.select { |p| p.is_a?(Hash) && !p[:traductionFichiers].blank? }.each do |pic|
         begin
-          evt_pictures << AttachedFile.new(name: node_value(pic, :nom),
-                                      picture: URI.parse(pic[:traductionFichiers][0][:url]),
-                                      credits: node_value(pic, :copyright))
+          evt_pictures << AttachedFile.new(picture: URI.parse(pic[:traductionFichiers][0][:url]),
+                                           credits: node_value(pic, :copyright))
         rescue OpenURI::HTTPError => e
           puts "Could not retrieve attached picture for object #{title} - Error is #{e.message}"
         end
