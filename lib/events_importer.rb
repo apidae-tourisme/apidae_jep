@@ -50,7 +50,7 @@ class EventsImporter
     if user
       evt = load_apidae_event(apidae_id)
       if evt
-        program = Program.find_or_create_by(title: DEFAULT_PROGRAM, user_id: user.id)
+        user.programs.find_or_create_by(title: DEFAULT_PROGRAM)
         item = evt.to_program_item
         item.attached_files = event_pictures(evt)
         item.user_id = user.id
