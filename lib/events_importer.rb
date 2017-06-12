@@ -65,7 +65,7 @@ class EventsImporter
 
   def self.event_pictures(evt)
     evt_pictures = []
-    pictures_array = evt[:illustrations]
+    pictures_array = evt.illustrations
     unless pictures_array.blank?
       pictures_array.select { |p| p.is_a?(Hash) && !p[:traductionFichiers].blank? }.each do |pic|
         begin

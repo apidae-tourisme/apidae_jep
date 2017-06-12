@@ -1,5 +1,7 @@
 class TouristicObject
 
+  attr_reader :illustrations
+
   def to_program_item
     ProgramItem.new(
         rev: 1,
