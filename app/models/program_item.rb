@@ -125,7 +125,7 @@ class ProgramItem < ActiveRecord::Base
     response = save_to_apidae(user.territory, form_data, :api_url, :put)
 
     if external_id || (response['id'] && update_attributes!(external_id: response['id'], external_status: response['status']))
-      update_apidae_criteria(user.territory, build_criteria(themes + criteria))
+      update_apidae_criteria(user.territory, build_criteria((themes || []) + (criteria || [])))
     end
   end
 
@@ -365,24 +365,30 @@ class ProgramItem < ActiveRecord::Base
 
   def build_categories(values = [])
     categories = []
-    APIDAE_CATEGORIES.each_pair do |cat, id|
-      categories << {id: id, elementReferenceType: 'FeteEtManifestationCategorie'} if values.include?(cat.parameterize)
+    unless values.nil?
+      APIDAE_CATEGORIES.each_pair do |cat, id|
+        categories << {id: id, elementReferenceType: 'FeteEtManifestationCategorie'} if values.include?(cat.parameterize)
+      end
     end
     categories
   end
 
   def build_themes(values = [])
     themes = []
-    APIDAE_THEMES.each_pair do |th, id|
-      themes << {id: id, elementReferenceType: 'FeteEtManifestationTheme'} if values.include?(th.parameterize)
+    unless values.nil?
+      APIDAE_THEMES.each_pair do |th, id|
+        themes << {id: id, elementReferenceType: 'FeteEtManifestationTheme'} if values.include?(th.parameterize)
+      end
     end
     themes
   end
 
   def build_typologies(values = [])
     typologies = []
-    APIDAE_TYPOLOGIES.each_pair do |typo, id|
-      typologies << {id: id, elementReferenceType: 'TypologiePromoSitra'} if values.include?(typo.parameterize)
+    unless values.nil?
+      APIDAE_TYPOLOGIES.each_pair do |typo, id|
+        typologies << {id: id, elementReferenceType: 'TypologiePromoSitra'} if values.include?(typo.parameterize)
+      end
     end
     typologies
   end
@@ -423,7 +429,7 @@ class ProgramItem < ActiveRecord::Base
   end
 
   def build_criteria(selected = [])
-    input_refs = selected + [item_type]
+    input_refs = (selected || []) + [item_type]
     added = []
     APIDAE_CRITERIA.each_pair do |crit, id|
       added << id if input_refs.include?(crit.parameterize)
