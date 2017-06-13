@@ -148,7 +148,7 @@ class ProgramItem < ActiveRecord::Base
           accessibility: accessibility,
           audience: themes,
           categories: criteria,
-          themes: themes + criteria
+          themes: (themes || []) + (criteria || [])
       }
     end
 

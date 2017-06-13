@@ -40,6 +40,7 @@ class EventsImporter
           item.program_id = program.id
           item.user_id = user.id
           item.save(validate: false)
+          item.update(reference: item.id)
         end
       end
     end
@@ -50,11 +51,13 @@ class EventsImporter
     if user
       evt = load_apidae_event(apidae_id)
       if evt
-        user.programs.find_or_create_by(title: DEFAULT_PROGRAM)
+        program = user.programs.find_or_create_by(title: DEFAULT_PROGRAM)
         item = evt.to_program_item
         item.attached_files = event_pictures(evt)
         item.user_id = user.id
+        item.program_id = program.id
         item.save(validate: false)
+        item.update(reference: item.id)
       else
         puts "Could not load Apidae event #{apidae_id}"
       end

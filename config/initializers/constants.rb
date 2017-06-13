@@ -10,7 +10,7 @@ ITEM_TYPES = [ITEM_VISITE, ITEM_PARCOURS, ITEM_ANIMATION, ITEM_EXPOSITION]
 
 THEMES = {
     GRAND_LYON => ['Thématique 2017 - "Jeunesse et Patrimoine"', "La Métropole au fil de l'eau", "Nouveauté", "En famille", "Jeunes (15-25 ans)", "Egalité"],
-    ISERE => ['Thématique 2017 - "Jeunesse et Patrimoine"', "Famille", "Réservé aux enfants", "Antiquité", "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature"]
+    ISERE => ['Thématique 2017 - "Jeunesse et Patrimoine"', "Famille", "Réservé aux enfants", "Antiquité", "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique"]
 }
 THEMES_REFS = Hash[THEMES.values.flatten.collect {|th| [th.parameterize, th] }]
 
@@ -101,7 +101,8 @@ APIDAE_THEMES = {
     'Architecture' => 2126,
     'Art contemporain' => 2159,
     'Artisanat' => 2069,
-    'Littérature' => 2210
+    'Littérature' => 2210,
+    'Historique' => 2206
 }
 
 APIDAE_CATEGORIES = {
