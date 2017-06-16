@@ -40,8 +40,8 @@ Rails.application.configure do
 
   config.sitra_config = {
       base_url: 'http://api.apidae-tourisme.com/api/v002',
-      api_key: 'BPPKiFmZ',
-      site_identifier: '1525'
+      api_key: '',
+      site_identifier: ''
   }
   config.oauth_config = {
       auth_site: 'http://api.sitra2-vm-preprod.accelance.net',
@@ -49,25 +49,22 @@ Rails.application.configure do
       api_url: 'http://api.sitra2-vm-preprod.accelance.net/api/v002/ecriture/',
       criteria_url: 'http://api.sitra2-vm-preprod.accelance.net/api/v002/criteres-internes/',
       grand_lyon: {
-          client_id: '83373b93-6c45-4f20-896e-6c61b65c032e',
-          client_secret: 'luF2OrTc5g0Cqma'
+          client_id: '',
+          client_secret: ''
       },
       isere: {
-          client_id: 'd6c7f113-7b45-4cad-8e5b-57871f595865',
-          client_secret: 'EYYlr20GJoowzmt'
+          client_id: '',
+          client_secret: ''
       }
   }
 
   config.omniauth_config = {
       :authorize_site => 'http://sitra2-vm-preprod.accelance.net',
       :auth_site => 'http://api.sitra2-vm-preprod.accelance.net',
-      :client_id => '8d96b6c5-93ef-464e-a3be-34bb1da888c3',
-      :client_secret => '7MjOmvNcwCMWDiW',
+      :client_id => '',
+      :client_secret => '',
       :profile_url => '/api/v002/sso/utilisateur/profil'
   }
 
-  config.moderators = {
-      'grand_lyon' => ['contact@hotentic.com'],
-      'isere' => ['contact@hotentic.com']
-  }
+  config.moderators = {}
 end
