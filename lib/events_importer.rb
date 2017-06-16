@@ -58,7 +58,8 @@ class EventsImporter
         item.user_id = user.id
         item.program_id = program.id
         item.save(validate: false)
-        item.update(reference: item.id)
+        item.reference = item.id
+        item.save(validate: false)
       else
         puts "Could not load Apidae event #{apidae_id}"
       end
