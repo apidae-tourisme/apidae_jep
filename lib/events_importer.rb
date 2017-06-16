@@ -53,6 +53,7 @@ class EventsImporter
       if evt
         program = user.programs.find_or_create_by(title: DEFAULT_PROGRAM)
         item = evt.to_program_item
+        item.item_openings = event_openings(evt)
         item.attached_files = event_pictures(evt)
         item.user_id = user.id
         item.program_id = program.id
@@ -80,6 +81,24 @@ class EventsImporter
       end
     end
     evt_pictures
+  end
+
+  def self.event_openings(evt)
+    item_openings = []
+    openings = evt.attributes['ouverture'][:periodesOuvertures]
+    unless openings.blank?
+      openings.each do |o|
+        unless o[:dateDebut].blank?
+          start_time = o[:horaireOuverture].blank? ? '00:00:00' : o[:horaireOuverture]
+          item_opening = ItemOpening.new(starts_at: DateTime.parse("#{o[:dateDebut]} #{start_time}"))
+          unless o[:dateFin].blank? || o[:horaireFermeture].blank?
+            item_opening.ends_at = DateTime.parse("#{o[:dateFin]} #{o[:horaireFermeture]}")
+          end
+          item_openings << item_opening
+        end
+      end
+    end
+    item_openings
   end
 
   def self.load_apidae_selection(selection)
