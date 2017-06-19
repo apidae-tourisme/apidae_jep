@@ -73,8 +73,23 @@
                     <%= render_previous(:main_town_insee_code) %>
                   </div>
                 </div>
+                <% if current_moderator %>
+                    <div class="form-group mt-lg">
+                      <label class="col-sm-4 control-label ph0">Latitude</label>
+                      <div class="col-sm-3">
+                        <%= item_form.text_field :main_lat, class: 'form-control', disabled: readonly %>
+                        <%= render_previous(:main_lat) %>
+                      </div>
+                      <label class="col-sm-2 control-label ph0">Longitude</label>
+                      <div class="col-sm-3">
+                        <%= item_form.text_field :main_lng, class: 'form-control', disabled: readonly %>
+                        <%= render_previous(:main_lng) %>
+                      </div>
+                    </div>
+                <% else %>
                 <%= item_form.hidden_field :main_lat %>
                 <%= item_form.hidden_field :main_lng %>
+                <% end %>
                 <div class="form-group mt">
                   <label class="col-sm-4 control-label ph0">Point de rendez-vous</label>
                   <div class="col-sm-8">

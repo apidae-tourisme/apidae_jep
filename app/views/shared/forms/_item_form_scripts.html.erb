@@ -36,6 +36,22 @@
         $("#program_item_main_lng").val(feature.geometry.coordinates[0]);
     }
 
+    function updateMarker(map, lat, lng) {
+        var prevLayers = [];
+        map.eachLayer(function(layer) {
+            if(layer.options.draggable) {
+                prevLayers.push(layer);
+            }
+        });
+        for(var i = 0; i < prevLayers.length; i++) {
+            map.removeLayer(prevLayers[i]);
+        }
+        var marker = L.marker([lat, lng], {draggable: true});
+        marker.addTo(map);
+        map.setView([lat, lng], 15);
+        bindDragToLatLng(marker);
+    }
+
     function setStatus(status) {
         $('#program_item_status').val(status);
         $('#program_item_author').val('<%= current_user ? current_user.full_name : current_moderator.full_name %>');
@@ -129,6 +145,14 @@
             }
         });
         geocoder.addTo(map);
+
+        $("#program_item_main_lat, #program_item_main_lng").focusout(function() {
+            var newLat = $("#program_item_main_lat").val();
+            var newLng = $("#program_item_main_lng").val();
+            if(newLat && newLng) {
+                updateMarker(map, newLat, newLng);
+            }
+        });
         <% end %>
         return map;
     }
