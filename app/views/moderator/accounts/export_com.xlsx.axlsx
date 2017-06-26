@@ -1,0 +1,12 @@
+#encoding: UTF-8
+
+wb = xlsx_package.workbook
+xlsx_package.use_shared_strings = true
+wrap = xlsx_package.workbook.styles.add_style alignment: {wrap_text: true}
+
+wb.add_worksheet(name: 'Supports') do |sheet|
+  sheet.add_row com_kit_columns.map {|v| I18n.t("export.communication_poll.#{v}")}
+  @polls.each do |poll|
+    sheet.add_row com_kit_values(poll), style: wrap
+  end
+end

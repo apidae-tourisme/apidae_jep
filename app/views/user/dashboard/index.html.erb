@@ -8,6 +8,12 @@
     </p>
   </div>
 </div>
+<% if current_user.territory == ISERE %>
+    <p class="alert alert-info">
+      <em class="icon-info pr-sm"></em>Les inscriptions effectuées <strong>après le mercredi 28 juin</strong> ne seront pas incluses
+      dans le programme papier mais seulement dans les agendas en ligne.
+    </p>
+<% end %>
 <div class="row">
   <div class="col-md-3 pr-sm">
     <div class="panel widget bg-inverse">

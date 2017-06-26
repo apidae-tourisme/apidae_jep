@@ -3,10 +3,28 @@
 wb = xlsx_package.workbook
 xlsx_package.use_shared_strings = true
 wrap = xlsx_package.workbook.styles.add_style alignment: {wrap_text: true}
+items_codes = Hash[Town.where(insee_code: @items.collect {|itm| itm.main_town_insee_code}.uniq).collect {|t| [t.insee_code, t.postal_code]}]
+unknown = []
 
-wb.add_worksheet(name: 'offres') do |sheet|
-  sheet.add_row exported_columns.values.flatten.map {|v| I18n.t("export.program_item.#{v}")}
-  @items.each do |item|
-    sheet.add_row exported_values(item), style: wrap
+TERRITORIES[current_moderator.member_ref].each_pair do |t, codes|
+  wb.add_worksheet(name: t) do |sheet|
+    sheet.add_row exported_columns.values.flatten.map {|v| I18n.t("export.program_item.#{v}")}
+    @items.each do |item|
+      if items_codes[item.main_town_insee_code]
+        if codes.include?(items_codes[item.main_town_insee_code])
+          sheet.add_row exported_values(item), style: wrap
+        end
+      else
+        unknown << item
+      end
+    end
+  end
+end
+unless unknown.empty?
+  wb.add_worksheet(name: 'Inconnu') do |sheet|
+    sheet.add_row exported_columns.values.flatten.map {|v| I18n.t("export.program_item.#{v}")}
+    unknown.each do |item|
+      sheet.add_row exported_values(item), style: wrap
+    end
   end
 end

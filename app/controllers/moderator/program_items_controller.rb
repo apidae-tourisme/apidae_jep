@@ -9,6 +9,7 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
   def index
     @status = params[:status] || ProgramItem::STATUS_PENDING
     @items = ProgramItem.in_status(current_moderator.member_ref, @status)
+    @items.each {|item| item.set_territory(current_moderator.member_ref)}
   end
 
   def export
@@ -32,6 +33,7 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
     end
     @town = Town.find_by_insee_code(@item.main_town_insee_code) if @item.main_town_insee_code
     @prev_item = ProgramItem.where(reference: @item.reference, rev: @item.rev - 1).first
+    @entity_items = @item.user.legal_entity.programs.collect {|p| p.active_items}.flatten.select {|itm| itm.validated?}
   end
 
   def update
@@ -77,6 +79,11 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
   end
 
   def destroy
+    if ProgramItem.where(reference: @item.reference).destroy_all
+      redirect_to edit_moderator_program_url(@program), notice: "L'offre a bien été supprimée."
+    else
+      redirect_to edit_moderator_program_url(@program), notice: "Une erreur est survenue lors de la suppression de l'offre."
+    end
   end
 
   def confirm

@@ -7,7 +7,7 @@ module User::ProgramItemsHelper
         ['XVIe'], ['XVIIe'], ['XVIIIe'], ['XIXe'], ['XXe'], ['XXIe']
     ]
   end
-
+  
   def building_types
     [
         ["Château, hôtel urbain, palais, manoir"], ["Édifice religieux"], ["Édifice hospitalier"],
@@ -18,7 +18,7 @@ module User::ProgramItemsHelper
         ["Maison, appartement, atelier de personnes célèbres"], ["Archives"]
     ]
   end
-
+  
   def themes
     THEMES[current_user.territory].collect { |t| [t, t.parameterize] }
   end

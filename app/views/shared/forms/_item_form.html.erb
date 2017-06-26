@@ -158,13 +158,22 @@
             </div>
           </div>
           <div class="form-group mt-lg mdy">
-            <label class="col-sm-3 control-label">Description<%= help_button %></label>
+            <label class="col-sm-3 control-label">Description<%= help_button %><br/>(255 caractères max)</label>
             <%= help_content("Veuillez vous limiter à 255 caractères") %>
             <div class="col-sm-9">
               <%= item_form.text_area :description, class: 'form-control required', disabled: readonly, rows: 3 %>
               <%= render_previous(:description, 3) %>
             </div>
           </div>
+          <% if current_moderator %>
+          <div class="form-group mt-lg">
+            <label class="col-sm-3 control-label">Résumé</label>
+            <div class="col-sm-9">
+              <%= item_form.text_area :summary, class: 'form-control', disabled: readonly, rows: 3, maxlength: 255 %>
+              <%= render_previous(:summary, 3) %>
+            </div>
+          </div>
+          <% end %>
           <div class="form-group mt-lg mdy">
             <label class="col-sm-3 control-label mdy">Accessibilité<%= help_button %></label>
             <%= help_content("Si non accessible aux personnes en situation de handicap moteur, merci de cocher la case correspondante") %>
@@ -441,6 +450,8 @@
                   <%= item_form.submit "Rejeter #{@item.rev == 1 ? "l'offre" : 'la mise à jour'}", class: 'btn btn-danger ml',
                                        onclick: "setStatus('#{ProgramItem::STATUS_REJECTED}')" %>
                 <% end %>
+                <%= link_to "Supprimer l'offre", moderator_program_program_item_path(@program.id, @item), method: :delete,
+                            class: 'btn btn-inverse ml', data: {confirm: "La suppression d'une offre est définitive. Êtes-vous sûr(e) ? - Note : la suppression n'est effective que sur ApidaeJEP et n'affecte pas les éventuelles publications dans la base de données Apidae"} %>
           <% elsif current_user %>
               <%= item_form.submit 'Enregistrer le brouillon', class: 'btn btn-inverse ml',
                                    onclick: "setStatus('#{ProgramItem::STATUS_DRAFT}')" %>

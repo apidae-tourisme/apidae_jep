@@ -36,7 +36,7 @@ class AttachedFile < ActiveRecord::Base
   end
 
   def info
-    "#{picture_url} | #{credits} | #{picture_file_size / 1024} Ko"
+    "#{picture_url} | Crédits : #{credits} | Taille : #{picture_file_size / 1024} Ko"
   end
 
   private

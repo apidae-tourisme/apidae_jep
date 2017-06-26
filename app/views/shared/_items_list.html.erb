@@ -8,6 +8,7 @@
             <th>Réf.</th>
             <th>Mise à jour</th>
             <th>Titre offre</th>
+            <th>Résumé</th>
             <th>Type</th>
             <th>Structure</th>
             <th>Commune</th>
@@ -27,9 +28,10 @@
                       <span class="hidden"><%= item.updated_at.to_i %></span><%= l(item.updated_at, format: :withtime) %>
                     </td>
                     <td><%= item.title %></td>
+                    <td><%= (item.summary.blank? || item.summary.length <= 50) ? item.summary : (item.summary[0...50] + '...') %></td>
                     <td><span class="label label-inverse"><%= t "program_item.type.#{item.item_type}" %></span></td>
                     <td><%= item.structure %></td>
-                    <td><%= item.town %></td>
+                    <td><%= item.town %><br/><%= item.territory %></td>
                     <td><%= item.main_place %></td>
                     <% if territory?(GRAND_LYON) %>
                     <td class="text-center">

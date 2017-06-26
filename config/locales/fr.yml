@@ -315,6 +315,7 @@ fr:
       external_id: Identifiant Apidae
       title: Titre
       description: Description
+      short_desc: Résumé
       item_type: Catégorie
       place_desc: Description du lieu
       event_planners: Organisateurs associés
@@ -331,7 +332,7 @@ fr:
       booking_telephone: Téléphone (réservations)
       booking_email: Email (réservations)
       booking_website: Site web (réservations)
-      openings_desc: Dates et horaires d'ouverture
+      openings_desc: Informations complémentaires sur les horaires et ouvertures
       telephone: Téléphone
       email: Email
       website: Site web
@@ -344,12 +345,29 @@ fr:
       main_transports: Accès en transports
       alt_place: Point de rendez-vous
       program_title: Programmation
-      opening_description: Informations complémentaires sur les horaires et ouvertures
+      opening_description: Dates et horaires d'ouverture
       pictures: Images
       user_name: Nom organisateur
       user_email: Email organisateur
       user_telephone: Téléphone organisateur
       user_entity: Structure organisatrice
+    communication_poll:
+      ref_person: Personne référente
+      full_address: Adresse de livraison
+      delivery_comments: Informations complémentaires
+      flyers: Programmes papier
+      posters1: Affiches 40 x 60 cm
+      posters2: Affiches 120 x 176 cm
+      signs: Panneaux de signalétique 53 x 120 cm
+    user:
+      full_name: Nom
+      email: Email
+      telephone: Téléphone
+      entity_name: Nom de la structure
+      entity_address: Adresse de la structure
+      communication: Kit com
+      offers_count: Nombre d'offres
+      programs_count: Nombre de programmations
   date:
     abbr_day_names:
     - dim

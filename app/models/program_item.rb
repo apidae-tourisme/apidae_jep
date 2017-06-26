@@ -6,11 +6,13 @@ class ProgramItem < ActiveRecord::Base
 
   belongs_to :program
   belongs_to :user
-  has_many :item_openings
-  has_many :attached_files
+  has_many :item_openings, dependent: :destroy
+  has_many :attached_files, dependent: :destroy
 
   accepts_nested_attributes_for :item_openings, allow_destroy: true
   accepts_nested_attributes_for :attached_files, allow_destroy: true, reject_if: proc {|attrs| attrs['picture'].blank?}
+
+  attr_accessor :territory
 
   STATUS_DRAFT = 'draft'
   STATUS_PENDING = 'pending'
@@ -34,6 +36,7 @@ class ProgramItem < ActiveRecord::Base
   validates_presence_of :item_type, :title, :main_place, :main_address, :main_town_insee_code, :main_transports,
                         :description, :accessibility, :item_openings
   validates :accept_pictures, acceptance: true
+  validates_length_of :summary, maximum: 255
 
   def self.change_order(item, direction)
     ordered_items = item.program.ordered_items
@@ -120,6 +123,14 @@ class ProgramItem < ActiveRecord::Base
     program_id ? items.where(program_id: program_id) : items
   end
 
+  def short_desc
+    summary.blank? ? description[0..254] : summary
+  end
+
+  def set_territory(member_ref)
+    self.territory = TERRITORIES_BY_CODE[member_ref][Town.find_by_insee_code(main_town_insee_code).postal_code] if Town.find_by_insee_code(main_town_insee_code)
+  end
+
   def remote_save
     form_data = build_multipart_form(merge_data)
     response = save_to_apidae(user.territory, form_data, :api_url, :put)
@@ -143,7 +154,7 @@ class ProgramItem < ActiveRecord::Base
 
     unless desc_data.nil? || desc_data.empty?
       merged[:description] = {
-          name: title, shortDescription: description[0..254],
+          name: title, shortDescription: short_desc,
           longDescription: description, planners: event_planners,
           accessibility: accessibility,
           audience: themes,
@@ -288,7 +299,8 @@ class ProgramItem < ActiveRecord::Base
                 categories: build_categories(value[:categories]),
                 themes: build_themes(value),
                 portee: {id: 2352, elementReferenceType: 'FeteEtManifestationPortee'},
-                evenementGenerique: {id: 2388, elementReferenceType: 'FeteEtManifestationGenerique'}
+                evenementGenerique: {id: 2388, elementReferenceType: 'FeteEtManifestationGenerique'},
+                typesManifestation: [{id: 1958, elementReferenceType: 'FeteEtManifestationType'}],
             }
         }
       when :legal_entity

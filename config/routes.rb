@@ -66,6 +66,8 @@ Rails.application.routes.draw do
         get 'list_com', on: :collection,  as: 'kits', path: 'supports'
         get 'edit_com', on: :member, as: 'edit_kit', path: 'supports'
         patch 'update_com', on: :member
+        get 'export', on: :collection, path: 'export'
+        get 'export_com', on: :collection, as: 'export_kits', path: 'export_supports'
       end
     end
   end

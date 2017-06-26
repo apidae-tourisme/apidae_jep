@@ -59,6 +59,24 @@ class Moderator::AccountsController < Moderator::ModeratorController
     end
   end
 
+  def export
+    @accounts = User.where(territory: current_moderator.member_ref)
+    respond_to do |format|
+      format.xlsx {
+        response.headers['Content-Disposition'] = "attachment; filename=\"organisateurs-#{current_moderator.member_ref}-#{I18n.l(Time.current, format: :reference)}.xlsx\""
+      }
+    end
+  end
+
+  def export_com
+    @polls = CommunicationPoll.where(user_id: User.where(territory: current_moderator.member_ref, communication: true).collect {|u| u.id})
+    respond_to do |format|
+      format.xlsx {
+        response.headers['Content-Disposition'] = "attachment; filename=\"supports-com-#{current_moderator.member_ref}-#{I18n.l(Time.current, format: :reference)}.xlsx\""
+      }
+    end
+  end
+
   private
 
   def set_user
