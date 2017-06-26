@@ -2,6 +2,9 @@
   Modifier l'offre
   <span class="label label-inverse text-normal vam ml"><%= "Réf. #{@item.reference}" %></span>
   <span class="label label-<%= t "program_item.color.#{@item.status}" %> text-normal vam"><%= t "program_item.status.#{@item.status}" %></span>
+  <% if @item.external_id %>
+  <span class="label label-primary text-normal vam"><%= "Id Apidae #{@item.external_id}" %></span>
+  <% end %>
 </div>
 <% unless @entity_items.blank? %>
 <div class="alert alert-info">
