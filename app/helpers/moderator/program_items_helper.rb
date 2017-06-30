@@ -85,8 +85,8 @@ module Moderator::ProgramItemsHelper
 
   def exported_columns
     {
-        item: ['title', 'description', 'short_desc', 'place_desc', 'event_planners', 'building_ages',
-               'building_types', 'accessibility', 'criteria', 'themes', 'free', 'rates_desc',
+        item: ['reference', 'status', 'external_id', 'title', 'description', 'short_desc', 'place_desc',
+               'event_planners', 'building_ages', 'building_types', 'accessibility', 'criteria', 'themes', 'free', 'rates_desc',
                'booking', 'booking_details', 'booking_telephone', 'booking_email', 'booking_website', 'openings_desc',
                'telephone', 'email', 'website', 'ordering', 'main_place', 'main_lat', 'main_lng', 'main_address',
                'town', 'main_transports', 'alt_place'],
@@ -100,11 +100,12 @@ module Moderator::ProgramItemsHelper
   def exported_values(item)
     values = exported_columns[:item].collect do |c|
       val = item.send(c)
-      format_value(c, val && val.is_a?(Array) ? val.select {|v| !v.blank?}.map {|v| ALL_REFS[v] || v}.join("\r") : val)
+      format_value(c, val && val.is_a?(Array) ? val.select {|v| !v.blank?}.map {|v| ALL_REFS[v] || v}.join(' | ') : val)
     end
     values << item.program.title
-    values << item.item_openings.collect {|o| format_opening(current_moderator.member_ref,o.description)}.join("\r")
-    values << item.attached_files.collect {|p| p.info}.join("\r")
+    values << item.item_openings.collect {|o| format_opening(current_moderator.member_ref,o.description)}.join(' | ')
+    values << item.attached_files.collect {|p| p.info}.join(' | ')
+    values.each {|val| val.gsub!(/\r?\n|\r/, ' ') if val.is_a?(String)}
     values + [item.user.full_name, item.user.email, format_phone(item.user.telephone), item.user.entity_name]
   end
 
