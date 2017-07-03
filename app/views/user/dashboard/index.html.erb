@@ -13,6 +13,14 @@
       <em class="icon-info pr-sm"></em>Les inscriptions effectuées <strong>après le mercredi 28 juin</strong> ne seront pas incluses
       dans le programme papier mais seulement dans les agendas en ligne.
     </p>
+<% elsif current_user.territory == GRAND_LYON %>
+    <p class="alert alert-danger">
+      <em class="icon-exclamation pr-sm"></em><strong>Important</strong><br/>
+      À partir du lundi 3 juillet à minuit, toutes les créations ou modifications d'offres qui seront effectuées seront
+      reportées uniquement sur la version internet du programme (disponible dès fin août sur
+      <a href="http://www.jep.grandlyon.com" target="_blank">www.jep.grandlyon.com</a>), et ne concerneront pas la
+      version papier, déjà exportée.
+    </p>
 <% end %>
 <div class="row">
   <div class="col-md-3 pr-sm">
