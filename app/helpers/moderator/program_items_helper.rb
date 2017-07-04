@@ -89,7 +89,7 @@ module Moderator::ProgramItemsHelper
 
   def exported_columns
     {
-        item: ['reference', 'status', 'external_id', 'title', 'description', 'short_desc', 'place_desc',
+        item: ['reference', 'rev', 'status', 'external_id', 'item_type', 'title', 'description', 'short_desc', 'place_desc',
                'event_planners', 'building_ages', 'building_types', 'accessibility', 'criteria', 'themes',
                'validation_criteria', 'free', 'rates_desc', 'booking', 'booking_details', 'booking_telephone',
                'booking_email', 'booking_website', 'openings_desc', 'telephone', 'email', 'website', 'ordering',
