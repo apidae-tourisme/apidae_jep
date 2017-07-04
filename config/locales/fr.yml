@@ -354,6 +354,7 @@ fr:
       user_entity: Structure organisatrice
     communication_poll:
       ref_person: Personne référente
+      entity: Structure organisatrice
       full_address: Adresse de livraison
       delivery_comments: Informations complémentaires
       flyers: Programmes papier
