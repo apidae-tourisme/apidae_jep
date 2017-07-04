@@ -36,7 +36,7 @@ module Moderator::ProgramItemsHelper
   end
 
   def validation_criteria
-    VALIDATION_CRITERIA[current_moderator.territory].collect { |t| [t, t.parameterize] }
+    VALIDATION_CRITERIA[current_moderator.member_ref].collect { |t| [t, t.parameterize] }
   end
 
   def accessibility
