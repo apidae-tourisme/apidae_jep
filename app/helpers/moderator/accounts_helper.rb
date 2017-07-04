@@ -4,7 +4,7 @@ module Moderator::AccountsHelper
   end
 
   def com_kit_columns
-    ['ref_person', 'full_address', 'delivery_comments', 'flyers', 'posters1', 'posters2', 'signs']
+    ['ref_person', 'entity', 'full_address', 'delivery_comments', 'flyers', 'posters1', 'posters2', 'signs']
   end
 
   def com_kit_values(kit)

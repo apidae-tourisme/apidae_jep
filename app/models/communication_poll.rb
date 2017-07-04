@@ -13,4 +13,8 @@ class CommunicationPoll < ActiveRecord::Base
   def full_address
     "#{delivery_address}\n#{delivery_town.label}"
   end
+
+  def entity
+    user.entity_name
+  end
 end

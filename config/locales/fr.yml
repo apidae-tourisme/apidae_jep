@@ -325,6 +325,7 @@ fr:
       audience: Public
       criteria: Caractéristiques
       themes: Thèmes
+      validation_criteria: Critères validation
       free: Gratuit
       rates_desc: Informations sur les tarifs
       booking: Réservation

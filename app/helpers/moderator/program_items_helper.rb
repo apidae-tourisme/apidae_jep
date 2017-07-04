@@ -35,6 +35,10 @@ module Moderator::ProgramItemsHelper
     options.html_safe
   end
 
+  def validation_criteria
+    VALIDATION_CRITERIA[current_user.territory].collect { |t| [t, t.parameterize] }
+  end
+
   def accessibility
     ACCESSIBILITY[current_moderator.member_ref]
   end
@@ -86,10 +90,10 @@ module Moderator::ProgramItemsHelper
   def exported_columns
     {
         item: ['reference', 'status', 'external_id', 'title', 'description', 'short_desc', 'place_desc',
-               'event_planners', 'building_ages', 'building_types', 'accessibility', 'criteria', 'themes', 'free', 'rates_desc',
-               'booking', 'booking_details', 'booking_telephone', 'booking_email', 'booking_website', 'openings_desc',
-               'telephone', 'email', 'website', 'ordering', 'main_place', 'main_lat', 'main_lng', 'main_address',
-               'town', 'main_transports', 'alt_place'],
+               'event_planners', 'building_ages', 'building_types', 'accessibility', 'criteria', 'themes',
+               'validation_criteria', 'free', 'rates_desc', 'booking', 'booking_details', 'booking_telephone',
+               'booking_email', 'booking_website', 'openings_desc', 'telephone', 'email', 'website', 'ordering',
+               'main_place', 'main_lat', 'main_lng', 'main_address', 'town', 'main_transports', 'alt_place'],
         program: ['program_title'],
         item_openings: ['opening_description'],
         attached_files: ['pictures'],

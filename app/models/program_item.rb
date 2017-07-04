@@ -25,7 +25,7 @@ class ProgramItem < ActiveRecord::Base
   DIRECTION_DOWN = 'down'
 
   store :desc_data, accessors: [:place_desc, :place_desc_ref, :event_planners, :building_ages, :building_types, :accessibility,
-                                :audience, :criteria, :themes, :accept_pictures], coder: JSON
+                                :audience, :criteria, :themes, :validation_criteria, :accept_pictures], coder: JSON
   store :location_data, accessors: [:main_place, :main_lat, :main_lng, :main_address, :main_town_insee_code,
                                     :main_transports, :alt_place, :alt_lat, :alt_lng, :alt_address,
                                     :alt_town_insee_code, :alt_postal_code, :alt_transports], coder: JSON
@@ -136,7 +136,7 @@ class ProgramItem < ActiveRecord::Base
     response = save_to_apidae(user.territory, form_data, :api_url, :put)
 
     if external_id || (response['id'] && update_attributes!(external_id: response['id'], external_status: response['status']))
-      update_apidae_criteria(user.territory, build_criteria((themes || []) + (criteria || [])))
+      update_apidae_criteria(user.territory, build_criteria((themes || []) + (criteria || []) + (validation_criteria || [])))
     end
   end
 
@@ -158,8 +158,8 @@ class ProgramItem < ActiveRecord::Base
           longDescription: description, planners: event_planners,
           accessibility: accessibility,
           audience: themes,
-          categories: criteria,
-          themes: (themes || []) + (criteria || [])
+          categories: (criteria || []) + (validation_criteria || []),
+          themes: (themes || []) + (criteria || []) + (validation_criteria || [])
       }
     end
 

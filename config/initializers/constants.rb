@@ -17,6 +17,13 @@ THEMES = {
 }
 THEMES_REFS = Hash[THEMES.values.flatten.collect {|th| [th.parameterize, th] }]
 
+VALIDATION_CRITERIA = {
+    GRAND_LYON => ['Coup de coeur', 'Visites guidées de l\'Office du Tourisme', 'Balades urbaines du Musée Gadagne',
+                   'Sous-thématique 1', 'Sous-thématique 2', 'Sous-thématique 3', 'Sous-thématique 4', 'Sous-thématique 5'],
+    ISERE => []
+}
+VALIDATION_CRITERIA_REFS = Hash[VALIDATION_CRITERIA.values.flatten.collect {|th| [th.parameterize, th] }]
+
 CRITERIA = {
     GRAND_LYON => {
       ITEM_VISITE => ["Visite guidée", "Visite libre"],
@@ -58,7 +65,7 @@ ACCESSIBILITY = {
 }
 ACCESSIBILITY_REFS = ACCESSIBILITY.values.inject(:merge)
 
-ALL_REFS = THEMES_REFS.merge(CRITERIA_REFS).merge(ACCESSIBILITY_REFS)
+ALL_REFS = THEMES_REFS.merge(VALIDATION_CRITERIA_REFS).merge(CRITERIA_REFS).merge(ACCESSIBILITY_REFS)
 
 # Prod
 APIDAE_CRITERIA = {
@@ -72,7 +79,10 @@ APIDAE_CRITERIA = {
     'Sous-thématique 2' => 10165,
     'Sous-thématique 3' => 10166,
     'Sous-thématique 4' => 10167,
-    'Sous-thématique 5' => 10168
+    'Sous-thématique 5' => 10168,
+    'Coup de coeur' => 7998,
+    'Visites guidées de l\'Office du Tourisme' => 8778,
+    'Balades urbaines du Musée Gadagne' => 8292
 }
 
 APIDAE_TYPOLOGIES = {
@@ -91,7 +101,10 @@ APIDAE_TYPOLOGIES = {
 #     'Sous-thématique 1' => 8772,
 #     'Sous-thématique 1' => 8773,
 #     'Sous-thématique 1' => 8774,
-#     'Sous-thématique 1' => 8775
+#     'Sous-thématique 1' => 8775,
+#     'Coup de coeur' => 7998,
+#     'Visites guidées de l\'Office du Tourisme' => 8778,
+#     'Balades urbaines du Musée Gadagne' => 8292
 # }
 #
 # APIDAE_TYPOLOGIES = {
