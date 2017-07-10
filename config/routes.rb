@@ -72,6 +72,11 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :api, path: 'api' do
+    get 'offres/json_example', to: 'program_items#json_example'
+    get 'offres/:ref', to: 'program_items#index'
+  end
+
   get 'en-savoir-plus', to: 'about#about', as: 'about'
   get 'partenaires', to: 'about#partners', as: 'partners'
 

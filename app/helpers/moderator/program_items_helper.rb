@@ -110,7 +110,7 @@ module Moderator::ProgramItemsHelper
     values << item.item_openings.collect {|o| format_opening(current_moderator.member_ref,o.description)}.join(' | ')
     values << item.attached_files.collect {|p| p.info}.join(' | ')
     values.each {|val| val.gsub!(/\r?\n|\r/, ' ') if val.is_a?(String)}
-    values + [item.user.full_name, item.user.email, format_phone(item.user.telephone), item.user.entity_name]
+    values + [item.user.full_name, item.user.email, format_phone(item.user.telephone), item.user.legal_entity.name]
   end
 
   def format_value(key, value)

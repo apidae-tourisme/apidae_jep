@@ -15,6 +15,6 @@ class CommunicationPoll < ActiveRecord::Base
   end
 
   def entity
-    user.entity_name
+    user.legal_entity.name
   end
 end

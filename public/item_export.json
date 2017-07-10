@@ -1,0 +1,111 @@
+  {
+  <span style='color: #6eb1c6;'>// Liste des offres exportées</span>
+  "program_items": [
+    {
+      <span style='color: #6eb1c6;'>// Identifiant unique de cette version de l'offre dans ApidaeJEP</span>
+      "id": 12345,
+      <span style='color: #6eb1c6;'>// Référence de l'offre dans ApidaeJEP (inchangée d'une version à l'autre)</span>
+      "reference": 12345,
+      <span style='color: #6eb1c6;'>// Numéro de version de l'offre (démarre à 1)</span>
+      "revision": 1,
+      <span style='color: #6eb1c6;'>// Organisateur</span>
+      "entity": "Prénom NOM",
+      <span style='color: #6eb1c6;'>// Structure organisatrice</span>
+      "entity": "Rhône-Alpes Tourisme",
+      <span style='color: #6eb1c6;'>// Date de création</span>
+      "created_at": "2016-06-01T11:59:25.860+00:00",
+      <span style='color: #6eb1c6;'>// Date de dernière mise à jour</span>
+      "updated_at": "2016-06-01T12:06:06.504+00:00",
+      <span style='color: #6eb1c6;'>// Lieu de l'offre</span>
+      "place": {
+        "name": "Basilique de Fourvière",
+        "address": "place de Fourvière",
+        "postal_code": "69005",
+        "insee_code": "12345",
+        "town": "Lyon 5ème",
+        "latitude": 45.762254,
+        "longitude": 4.821925,
+        "transports": "Métro D station Vieux-Lyon, puis funiculaire direction Fourvière.",
+        "description": "Descriptif du lieu",
+        "starting_point": "Basilique de Fourvière"
+      },
+      <span style='color: #6eb1c6;'>// Descriptif de l'offre </span>
+      "description": {
+        "name": "Titre de l'évènement",
+        "short_desc": "Descriptif court de l'offre",
+        "long_desc": "Descriptif long de l'offre",
+        <span style='color: #6eb1c6;'>// Critères d'accessibilité</span>
+        "accessibility": [
+          "deficience_auditive",
+          "deficience_visuelle",
+          "fauteuil_roulant_avec_aide"
+        ],
+        <span style='color: #6eb1c6;'>// Public visé</span>
+        "audience": [
+          "jeune_public"
+        ],
+        <span style='color: #6eb1c6;'>// Organisateurs et partenaires</span>
+        "planners": "Rhône-Alpes Tourisme"
+      },
+      <span style='color: #6eb1c6;'>// Informations sur l'édifice</span>
+      "building": {
+        <span style='color: #6eb1c6;'>// Epoque</span>
+        "ages": [
+          "XVIIIe"
+        ],
+        <span style='color: #6eb1c6;'>// Type</span>
+        "types": [
+          "edifice_religieux"
+        ]
+      },
+      <span style='color: #6eb1c6;'>// Thèmes de l'offre</span>
+      "themes": [
+        "theme_2017"
+      ],
+      <span style='color: #6eb1c6;'>// Caractéristiques de l'offre</span>
+      "criteria": [
+        "exposition",
+        "spectacle",
+        "visite_guidee"
+      ],
+      <span style='color: #6eb1c6;'>// Critères validation de l'offre</span>
+      "validation_criteria": [
+        "sous-thematique-1"
+      ],
+      <span style='color: #6eb1c6;'>// Horaires et ouvertures</span>
+      "openings": {
+        "values": [
+          {"starts_at": "2017-09-16T10:00:00.000Z", "ends_at": null, "duration": 3600, "frequency": null: "description": "Samedi 16 Septembre 2017 à 10:00 - Durée : 1 heure"}
+        ],
+        "description": "Informations complémentaires sur les horaires et ouvertures"
+      },
+      <span style='color: #6eb1c6;'>// Tarifs</span>
+      "rates": {
+        "free": false,
+        "description": "Détail des tarifs"
+      },
+      <span style='color: #6eb1c6;'>// Réservation</span>
+      "booking": {
+        "enabled": true,
+        "description": "Détail des modes de réservation"
+      },
+      <span style='color: #6eb1c6;'>// Informations de contact</span>
+      "contact": {
+        "phone": "04 26 73 21 59",
+        "email": "info@rhonealpes-tourisme.com",
+        "website": "http://www.rhonealpes-tourisme.com",
+        "booking_phone": "04 26 73 21 59",
+        "booking_email": "info@rhonealpes-tourisme.com",
+        "booking_website": "http://www.rhonealpes-tourisme.com"
+      },
+      <span style='color: #6eb1c6;'>// Images (url a préfixer par https://jep.apidae-tourisme.com)</span>
+      "pictures": [
+        {
+          "name": "image.jpg",
+          "url": "/pictures/2017/5/123/original/image.jpg",
+          "credits": "crédits image"
+        }
+      ]
+    }
+  ]
+}
