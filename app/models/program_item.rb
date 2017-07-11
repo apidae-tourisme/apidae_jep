@@ -94,6 +94,14 @@ class ProgramItem < ActiveRecord::Base
     openings.include?(opening) ? opening.as_text : ''
   end
 
+  def open_dates
+    dates = []
+    if item_openings.any?
+      dates = item_openings.collect {|o| o.starts_at.to_date.strftime('%F')}
+    end
+    dates.uniq
+  end
+
   def self.active_versions
     active_ids = select("MAX(id) AS id").group(:reference)
     where(id: active_ids)

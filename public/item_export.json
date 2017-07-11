@@ -16,6 +16,8 @@
       "created_at": "2016-06-01T11:59:25.860+00:00",
       <span style='color: #6eb1c6;'>// Date de dernière mise à jour</span>
       "updated_at": "2016-06-01T12:06:06.504+00:00",
+      <span style='color: #6eb1c6;'>// Catégorie (visite / parcours / animation / exposition)</span>
+      "category": "visite",
       <span style='color: #6eb1c6;'>// Lieu de l'offre</span>
       "place": {
         "name": "Basilique de Fourvière",
@@ -74,6 +76,7 @@
       ],
       <span style='color: #6eb1c6;'>// Horaires et ouvertures</span>
       "openings": {
+        "dates": ["2017-09-16"],
         "values": [
           {"starts_at": "2017-09-16T10:00:00.000Z", "ends_at": null, "duration": 3600, "frequency": null: "description": "Samedi 16 Septembre 2017 à 10:00 - Durée : 1 heure"}
         ],

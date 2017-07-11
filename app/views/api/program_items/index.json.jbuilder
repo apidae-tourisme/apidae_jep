@@ -8,6 +8,7 @@ json.program_items do
     json.entity item.user ? item.user.legal_entity.name : 'unknown'
     json.created_at item.created_at
     json.updated_at item.updated_at
+    json.category item.item_type
     json.place do
       json.name item.main_place
       json.address item.main_address
@@ -36,6 +37,7 @@ json.program_items do
     json.criteria normalize_list(item.criteria) || []
     json.validation_criteria normalize_list(item.validation_criteria) || []
     json.openings do
+      json.dates item.open_dates
       json.values do
         json.array!(item.item_openings) do |o|
           json.starts_at o.starts_at
