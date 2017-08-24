@@ -52,7 +52,7 @@ module ApidaeJep
     # setup bower components folder for lookup
     config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')
     # fonts
-    config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
+    config.assets.precompile << /\.(?:svg|eot|woff|woff2|ttf)$/
     # images
     config.assets.precompile << /\.(?:png|jpg)$/
     # precompile vendor assets
