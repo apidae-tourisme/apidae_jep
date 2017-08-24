@@ -10,7 +10,7 @@ class ProgramItem < ActiveRecord::Base
   has_many :attached_files, dependent: :destroy
 
   accepts_nested_attributes_for :item_openings, allow_destroy: true
-  accepts_nested_attributes_for :attached_files, allow_destroy: true, reject_if: proc {|attrs| attrs['picture'].blank?}
+  accepts_nested_attributes_for :attached_files, allow_destroy: true, reject_if: proc {|attrs| attrs['picture'].blank? && attrs['picture_file_name'].blank? }
 
   attr_accessor :territory
 
