@@ -80,8 +80,8 @@
     "rickshaw": "1.5.10",
     "datatables-buttons": "1.2.2",
     "datatables-responsive": "2.1.0",
-    "leaflet": "^1.0.3",
-    "leaflet-draw": "^0.4.9"
+    "leaflet": "1.0.3",
+    "leaflet-draw": "0.4.9"
   },
   "resolutions": {
     "jquery": "2.2.4"
