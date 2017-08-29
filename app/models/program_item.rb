@@ -181,7 +181,7 @@ class ProgramItem < ActiveRecord::Base
 
     unless rates_data.nil? || rates_data.empty?
       merged[:rates] = {
-          free: free, description: rates_desc
+          free: free == 'true', description: rates_desc
       }
       merged[:booking] = {
           booking: booking, bookingDetails: booking_details,
