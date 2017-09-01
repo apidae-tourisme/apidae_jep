@@ -184,7 +184,7 @@ class ProgramItem < ActiveRecord::Base
           free: (free == 'true' || free == true), description: rates_desc
       }
       merged[:booking] = {
-          booking: booking, bookingDetails: booking_details,
+          booking: (booking == 'true' || booking == true), bookingDetails: booking_details,
           bookingPhone: booking_telephone, bookingEmail: booking_email, bookingWebsite: booking_website
       }
     end
