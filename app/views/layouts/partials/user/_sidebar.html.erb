@@ -7,6 +7,7 @@
           <div class="text-sm">Accueil</div>
         </a>
       </li>
+      <% unless current_user.territory == ISERE %>
       <li class="<%= 'active' if controller?('user/programs', 'user/program_items') %>">
         <a href="#programs" title="Programmations" data-toggle="collapse" class="collapsed">
           <em class="icon-calendar"></em>
@@ -28,6 +29,7 @@
           <div class="text-sm">Mon compte</div>
         </a>
       </li>
+      <% end %>
       <li class="<%= 'active' if controller?('user/dashboard') && action_name == 'support' %>">
         <a href="<%= user_support_path %>" title="Aide">
           <em class="icon-question"></em>

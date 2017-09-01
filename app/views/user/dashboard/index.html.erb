@@ -1,4 +1,5 @@
 <h3>Bienvenue sur ApidaeJEP</h3>
+<% unless current_user.territory == ISERE %>
 <div class="panel panel-info">
   <div class="panel-body">
     <p class="mb0">
@@ -8,10 +9,15 @@
     </p>
   </div>
 </div>
+<% end %>
 <% if current_user.territory == ISERE %>
     <p class="alert alert-info">
-      <em class="icon-info pr-sm"></em>Les inscriptions effectuées <strong>après le mercredi 28 juin</strong> ne seront pas incluses
-      dans le programme papier mais seulement dans les agendas en ligne.
+      <em class="icon-info pr-sm"></em>Il n'est plus possible de modifier en ligne la programmation pour les Journées du Patrimoine.<br/>
+      <br/>
+      Le programme papier pour l'Isère est déjà édité.<br/>
+      Pour toute modification d'une offre existante, merci de vous rapprocher de votre Office de Tourisme pour la prise en compte des modifications.<br/>
+      <br/>
+      Nous vous remercions toutes et tous pour votre collaboration sur les JEP 2017 !
     </p>
 <% elsif current_user.territory == GRAND_LYON %>
     <p class="alert alert-danger">
@@ -22,6 +28,7 @@
       version papier, déjà exportée.
     </p>
 <% end %>
+<% unless current_user.territory == ISERE %>
 <div class="row">
   <div class="col-md-3 pr-sm">
     <div class="panel widget bg-inverse">
@@ -132,5 +139,5 @@
       <% end %>
     </div>
   <% end %>
-  </div>
 </div>
+<% end %>
