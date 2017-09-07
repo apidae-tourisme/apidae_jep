@@ -1,7 +1,7 @@
 class ItemOpening < ActiveRecord::Base
   include I18n::Base
 
-  belongs_to :program_item
+  belongs_to :program_item, touch: true
 
   FULL = '%A %-e %B %Y à %H:%M'
   DATE_ONLY = '%A %-e %B %Y'

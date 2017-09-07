@@ -4,7 +4,7 @@ class ProgramItem < ActiveRecord::Base
   include LoggableConcern
   include WritableConcern
 
-  belongs_to :program
+  belongs_to :program, touch: true
   belongs_to :user
   has_many :item_openings, dependent: :destroy
   has_many :attached_files, dependent: :destroy
@@ -100,6 +100,15 @@ class ProgramItem < ActiveRecord::Base
       dates = item_openings.collect {|o| o.starts_at.to_date.strftime('%F')}
     end
     dates.uniq
+  end
+
+  def validated_at
+    if validated?
+      updated_at
+    elsif rev > 1
+      last_validation = ProgramItem.where(reference: reference, status: STATUS_VALIDATED).order(:rev).last
+      last_validation ? last_validation.updated_at : nil
+    end
   end
 
   def self.active_versions
@@ -285,7 +294,7 @@ class ProgramItem < ActiveRecord::Base
                         type: 'Point',
                         coordinates: [value[:longitude], value[:latitude]]
                     }
-                },
+                }
             },
             informationsFeteEtManifestation: {
                 nomLieu: value[:name]

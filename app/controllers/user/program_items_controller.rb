@@ -1,7 +1,14 @@
 class User::ProgramItemsController < User::UserController
+  before_filter :check_auth
   before_action :set_program
   before_action :set_program_item, only: [:edit, :update, :show, :destroy, :confirm, :reorder, :select_program,
                                           :save_program, :duplicate]
+
+  def check_auth
+    if current_user.territory == ISERE
+      redirect_to user_dashboard_url, alert: "La saisie des offres pour l'Isère en ligne n'est plus disponible."
+    end
+  end
 
   def new
     if params[:id].blank?

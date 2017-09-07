@@ -93,7 +93,8 @@ module Moderator::ProgramItemsHelper
                'event_planners', 'building_ages', 'building_types', 'accessibility', 'criteria', 'themes',
                'validation_criteria', 'free', 'rates_desc', 'booking', 'booking_details', 'booking_telephone',
                'booking_email', 'booking_website', 'openings_desc', 'telephone', 'email', 'website', 'ordering',
-               'main_place', 'main_lat', 'main_lng', 'main_address', 'town', 'main_transports', 'alt_place'],
+               'main_place', 'main_lat', 'main_lng', 'main_address', 'town', 'main_transports', 'alt_place', 'updated_at',
+               'validated_at'],
         program: ['program_title'],
         item_openings: ['opening_description'],
         attached_files: ['pictures'],
@@ -126,9 +127,15 @@ module Moderator::ProgramItemsHelper
         format_website(val)
       when 'town'
         format_town(val)
+      when 'updated_at', 'validated_at'
+        format_date(val)
       else
         val
     end
+  end
+
+  def format_date(val)
+    I18n.l(val) unless val.blank?
   end
 
   def format_opening(member_ref, openings_desc)

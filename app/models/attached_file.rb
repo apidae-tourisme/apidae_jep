@@ -1,5 +1,5 @@
 class AttachedFile < ActiveRecord::Base
-  belongs_to :program_item
+  belongs_to :program_item, touch: true
 
   has_attached_file :picture,
                     {
@@ -41,6 +41,7 @@ class AttachedFile < ActiveRecord::Base
 
   private
 
+  # Sidenote : better not mix ref & timestamps in paths generation, makes it hard to maintain files path between parent instance versions
   Paperclip.interpolates :timestamp do |attachment, style|
     if attachment.instance.created_at
       "#{attachment.instance.created_at.year}/#{attachment.instance.created_at.month}"

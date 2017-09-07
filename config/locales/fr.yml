@@ -348,6 +348,8 @@ fr:
       program_title: Programmation
       opening_description: Dates et horaires d'ouverture
       pictures: Images
+      updated_at: Dernière mise à jour
+      validated_at: Dernière validation
       user_name: Nom organisateur
       user_email: Email organisateur
       user_telephone: Téléphone organisateur
