@@ -39,12 +39,24 @@ class AttachedFile < ActiveRecord::Base
     "#{picture_url} - Crédits : #{credits} - Taille : #{picture_file_size / 1024} Ko"
   end
 
+  def self.full_path(attachment, month)
+    File.join('public', 'pictures', attachment.instance.created_at.year.to_s, month.to_s,
+              attachment.instance.program_item.reference.to_s, 'original', attachment.instance.picture_file_name)
+  end
+
   private
 
-  # Sidenote : better not mix ref & timestamps in paths generation, makes it hard to maintain files path between parent instance versions
+  # For future use : do not mix ref & timestamps in paths generation, makes it hard to maintain files path between
+  # parent instance versions - sthing like /:ref[0]/:ref would be safer - patched for now
   Paperclip.interpolates :timestamp do |attachment, style|
     if attachment.instance.created_at
-      "#{attachment.instance.created_at.year}/#{attachment.instance.created_at.month}"
+      path = AttachedFile.full_path(attachment,attachment.instance.created_at.month)
+      i = 0
+      while !File.exist?(path) && i < 6
+        i += 1
+        path = AttachedFile.full_path(attachment,attachment.instance.created_at.month - i)
+      end
+      "#{attachment.instance.created_at.year}/#{attachment.instance.created_at.month - i}"
     else
       "#{Time.current.year}/#{Time.current.month}"
     end
