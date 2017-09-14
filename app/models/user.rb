@@ -64,6 +64,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def entity_apidae_id
+    legal_entity.external_id if legal_entity
+  end
+
   def offers
     legal_entity.programs.collect {|p| p.active_items}.flatten.group_by {|pi| pi.status}
   end

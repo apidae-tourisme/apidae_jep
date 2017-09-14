@@ -372,6 +372,7 @@ fr:
       communication: Kit com
       offers_count: Nombre d'offres
       programs_count: Nombre de programmations
+      entity_apidae_id: Id Entité Apidae
   date:
     abbr_day_names:
     - dim

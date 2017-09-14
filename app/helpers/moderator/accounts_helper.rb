@@ -12,7 +12,7 @@ module Moderator::AccountsHelper
   end
 
   def user_columns
-    ['full_name', 'email', 'telephone', 'entity_name', 'entity_address', 'communication', 'offers_count', 'programs_count']
+    ['full_name', 'email', 'telephone', 'entity_name', 'entity_address', 'communication', 'offers_count', 'programs_count', 'entity_apidae_id']
   end
 
   def user_values(usr)
