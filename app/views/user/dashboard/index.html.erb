@@ -1,5 +1,5 @@
 <h3>Bienvenue sur ApidaeJEP</h3>
-<% unless current_user.territory == ISERE %>
+<% if false %>
 <div class="panel panel-info">
   <div class="panel-body">
     <p class="mb0">
@@ -10,16 +10,14 @@
   </div>
 </div>
 <% end %>
-<% if current_user.territory == ISERE %>
-    <p class="alert alert-info">
-      <em class="icon-info pr-sm"></em>Il n'est plus possible de modifier en ligne la programmation pour les Journées du Patrimoine.<br/>
-      <br/>
-      Le programme papier pour l'Isère est déjà édité.<br/>
-      Pour toute modification d'une offre existante, merci de vous rapprocher de votre Office de Tourisme pour la prise en compte des modifications.<br/>
-      <br/>
-      Nous vous remercions toutes et tous pour votre collaboration sur les JEP 2017 !
-    </p>
-<% elsif current_user.territory == GRAND_LYON %>
+<p class="alert alert-info">
+  <em class="icon-info pr-sm"></em>Il n'est plus possible de modifier en ligne la programmation pour les Journées du Patrimoine 2017.<br/>
+  <br/>
+  Pour toute modification d'une offre existante, merci de vous rapprocher de votre Office de Tourisme pour la prise en compte des modifications.<br/>
+  <br/>
+  Nous vous remercions toutes et tous pour votre collaboration sur les JEP 2017 !
+</p>
+<% if false %>
     <p class="alert alert-danger">
       <em class="icon-exclamation pr-sm"></em><strong>Important</strong><br/>
       À partir du lundi 3 juillet à minuit, toutes les créations ou modifications d'offres qui seront effectuées seront
@@ -28,7 +26,7 @@
       version papier, déjà exportée.
     </p>
 <% end %>
-<% unless current_user.territory == ISERE %>
+<% if false %>
 <div class="row">
   <div class="col-md-3 pr-sm">
     <div class="panel widget bg-inverse">

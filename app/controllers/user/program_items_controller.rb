@@ -5,9 +5,7 @@ class User::ProgramItemsController < User::UserController
                                           :save_program, :duplicate]
 
   def check_auth
-    if current_user.territory == ISERE
-      redirect_to user_dashboard_url, alert: "La saisie des offres pour l'Isère en ligne n'est plus disponible."
-    end
+    redirect_to user_dashboard_url, alert: "La saisie en ligne des offres JEP 2017 n'est plus disponible."
   end
 
   def new
