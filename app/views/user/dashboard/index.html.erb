@@ -12,11 +12,32 @@
 <% end %>
 <p class="alert alert-info">
   <em class="icon-info pr-sm"></em>Il n'est plus possible de modifier en ligne la programmation pour les Journées du Patrimoine 2017.<br/>
-  <br/>
   Pour toute modification d'une offre existante, merci de vous rapprocher de votre Office de Tourisme pour la prise en compte des modifications.<br/>
-  <br/>
   Nous vous remercions toutes et tous pour votre collaboration sur les JEP 2017 !
 </p>
+<% if current_user.territory == GRAND_LYON %>
+    <div class="panel panel-success">
+      <div class="panel-heading">Le questionnaire Bilan des JEP 2017 est en ligne</div>
+      <div class="panel-body">
+        <p>
+          Nous espérons que vous avez passé une excellente édition des JEP 2017 sur la thématique "Ma Métropole au fil de l’eau" ou autour des liens entre la jeunesse et le patrimoine.<br/>
+          Comme chaque année, nous essayons d’élaborer et de largement diffuser le bilan car c’est notre manière de garder le lien et de faire vivre le réseau.
+          Aussi, nous devons encore vous mobiliser et vous remercions de bien vouloir remplir le traditionnel <%= link_to 'Questionnaire Bilan', (current_user.event_poll ? user_event_poll_path : new_user_event_poll_path) %>.
+          Nous vous invitons à vous acquitter de cette petite tâche "à chaud", dès cette semaine qui suit les JEP, avant vendredi 22 septembre.<br/>
+          <br/>
+          N’hésitez pas par ailleurs à nous faire des commentaires qualitatifs aussi importants que la fréquentation.
+          Il nous est en effet particulièrement précieux de recueillir vos avis sur l’organisation, la qualité du programme, les thématiques, les offres, les publics...<br/>
+          <br/>
+          L'équipe JEP pour la Métropole de Lyon<br/>
+          <%= mail_to 'jep.metropole@grandlyon.com', 'jep.metropole@grandlyon.com' %>
+        </p>
+        <div>
+          <%= link_to "#{current_user.event_poll ? 'Consulter le' : 'Accéder au'} questionnaire",
+                      (current_user.event_poll ? user_event_poll_path : new_user_event_poll_path), class: 'btn btn-success' %>
+        </div>
+      </div>
+    </div>
+<% end %>
 <% if false %>
     <p class="alert alert-danger">
       <em class="icon-exclamation pr-sm"></em><strong>Important</strong><br/>

@@ -318,3 +318,12 @@ form .select2 .select2-selection__rendered::after {
 .table > thead.bg-gray-darker > tr > th {
   color: white;
 }
+
+#event_poll_wrapper .form_entry {
+  font-size: 18px;
+  line-height: 1em;
+  height: 80px;
+  margin: 15px 0;
+  padding: 15px;
+  border-right: 2px solid #3a3f51;
+}

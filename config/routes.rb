@@ -55,6 +55,7 @@ Rails.application.routes.draw do
         get 'communication', on: :collection
         patch 'update_communication', on: :collection, as: 'com_poll'
       end
+      resource :event_poll, path: 'questionnaire', only: [:new, :create, :show]
       get 'support', to: 'dashboard#support', path: 'support'
     end
   end
@@ -68,6 +69,10 @@ Rails.application.routes.draw do
         patch 'update_com', on: :member
         get 'export', on: :collection, path: 'export'
         get 'export_com', on: :collection, as: 'export_kits', path: 'export_supports'
+      end
+      resources :event_polls, path: 'questionnaires', only: [:index, :show] do
+        get 'export', on: :collection
+        patch 'notify', on: :collection
       end
     end
   end

@@ -32,6 +32,12 @@
               <div class="text-sm">Kits com</div>
             </a>
           </li>
+          <li class="<%= 'active' if controller?('moderator/event_polls') %>">
+            <a href="<%= moderator_event_polls_path %>" title="Questionnaires bilan">
+              <em class="icon-check"></em>
+              <div class="text-sm">Bilans</div>
+            </a>
+          </li>
       <% end %>
     </ul>
   </nav>

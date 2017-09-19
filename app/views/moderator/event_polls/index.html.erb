@@ -1,10 +1,14 @@
 <div class="pull-right">
-  <a class="btn btn-labeled btn-primary" href="<%= export_moderator_accounts_path %>.xlsx">
+  <a class="btn btn-labeled btn-green" href="<%= notify_moderator_event_polls_path %>" data-method="patch">
+    <span class="btn-label"><em class="icon icon-paper-plane"></em></span>
+    Envoyer une relance
+  </a>
+  <a class="btn btn-labeled btn-primary" href="<%= export_moderator_event_polls_path %>.xlsx">
     <span class="btn-label"><em class="icon icon-cloud-download"></em></span>
     Export Excel
   </a>
 </div>
-<h3>ApidaeJEP - Tous les utilisateurs</h3>
+<h3>ApidaeJEP - Questionnaires bilan</h3>
 <div class="row">
   <div class="col-xs-12">
     <div class="panel panel-info">
@@ -17,22 +21,24 @@
             <th>Commune</th>
             <th>Email</th>
             <th>Téléphone</th>
-            <th>Dernière connexion</th>
-            <th class="wd-xs"></th>
+            <th>Statut</th>
           </tr>
           </thead>
           <tbody>
-          <% if @accounts.any? %>
-              <% @accounts.each do |account| %>
+          <% if @users.any? %>
+              <% @users.each do |account| %>
                   <tr>
                     <td><%= account.full_name %></td>
                     <td><%= account.legal_entity_id ? account.legal_entity.name : 'Aucune' %></td>
                     <td><%= account.legal_entity.town.label %></td>
                     <td><%= account.email %></td>
                     <td><%= account.telephone %></td>
-                    <td><%= l(account.last_sign_in_at, format: :withtime) if account.last_sign_in_at %></td>
                     <td class="text-center">
-                      <%= link_to '<i class="icon-note text-md"></i>'.html_safe, edit_moderator_account_path(account) %>
+                      <% if account.event_poll %>
+                        <%= link_to 'Voir la réponse', moderator_event_poll_path(account.event_poll), class: 'btn btn-info' %>
+                      <% else %>
+                        <span class="label label-inverse">En attente</span>
+                      <% end %>
                     </td>
                   </tr>
               <% end %>

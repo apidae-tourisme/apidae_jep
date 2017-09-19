@@ -36,6 +36,14 @@
           <div class="text-sm">Aide</div>
         </a>
       </li>
+      <% if current_user.territory == GRAND_LYON %>
+      <li class="<%= 'active' if controller?('user/event_polls') %>">
+        <a href="<%= current_user.event_poll ? user_event_poll_path : new_user_event_poll_path %>" title="Questionnaire bilan">
+          <em class="icon-check"></em>
+          <div class="text-sm">Bilan</div>
+        </a>
+      </li>
+      <% end %>
       <% if false %>
       <li class="<%= 'active' if controller?('user/account') && action?('communication') %>">
         <a href="<%= communication_user_account_path %>" title="Supports de communication">

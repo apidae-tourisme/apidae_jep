@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   has_many :program_items
   has_and_belongs_to_many :programs
   has_one :communication_poll
+  has_one :event_poll
 
   accepts_nested_attributes_for :communication_poll
 
@@ -24,6 +25,14 @@ class User < ActiveRecord::Base
     user.apidae_data = auth.info.apidae_hash
     user.save!
     user
+  end
+
+  def self.with_items
+    joins(:program_items).distinct
+  end
+
+  def last_poll
+    EventPoll.where(user_id: id).order(id: :desc).first
   end
 
   def entity_address
