@@ -22,8 +22,9 @@
         <p>
           Nous espérons que vous avez passé une excellente édition des JEP 2017 sur la thématique "Ma Métropole au fil de l’eau" ou autour des liens entre la jeunesse et le patrimoine.<br/>
           Comme chaque année, nous essayons d’élaborer et de largement diffuser le bilan car c’est notre manière de garder le lien et de faire vivre le réseau.
-          Aussi, nous devons encore vous mobiliser et vous remercions de bien vouloir remplir le traditionnel <%= link_to 'Questionnaire Bilan', (current_user.event_poll ? user_event_poll_path : new_user_event_poll_path) %>.
-          Nous vous invitons à vous acquitter de cette petite tâche "à chaud", dès cette semaine qui suit les JEP, avant vendredi 22 septembre.<br/>
+          Aussi, nous devons encore vous mobiliser et vous remercions de bien vouloir remplir le traditionnel
+          <%= link_to 'Questionnaire Bilan', (current_user.event_poll ? user_user_event_poll_path(current_user.id) : new_user_user_event_poll_path(current_user.id)) %>.
+          Nous vous invitons à vous acquitter de cette petite tâche "à chaud", dès cette semaine avant vendredi 6 Octobre.<br/>
           <br/>
           N’hésitez pas par ailleurs à nous faire des commentaires qualitatifs aussi importants que la fréquentation.
           Il nous est en effet particulièrement précieux de recueillir vos avis sur l’organisation, la qualité du programme, les thématiques, les offres, les publics...<br/>
@@ -33,7 +34,7 @@
         </p>
         <div>
           <%= link_to "#{current_user.event_poll ? 'Consulter le' : 'Accéder au'} questionnaire",
-                      (current_user.event_poll ? user_event_poll_path : new_user_event_poll_path), class: 'btn btn-success' %>
+                      (current_user.event_poll ? user_user_event_poll_path(current_user.id) : new_user_user_event_poll_path(current_user.id)), class: 'btn btn-success' %>
         </div>
       </div>
     </div>

@@ -13,18 +13,20 @@
 
 <body class="aside-collapsed">
 <div class="wrapper">
+  <% if current_user %>
     <header class="topnavbar-wrapper">
         <%= render partial: 'layouts/partials/user/topnavbar' %>
     </header>
     <aside class="aside">
         <%= render partial: 'layouts/partials/user/sidebar' %>
     </aside>
-    <section>
+  <% end %>
+    <section class="<%= 'ml0' unless current_user %>">
         <div class="content-wrapper">
             <%= yield %>
         </div>
     </section>
-    <footer>
+    <footer class="<%= 'ml0' unless current_user %>">
         <%= render partial: 'layouts/partials/user/footer' %>
     </footer>
 </div>

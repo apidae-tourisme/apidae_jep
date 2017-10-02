@@ -1,6 +1,7 @@
 class Moderator::EventPollsController < Moderator::ModeratorController
   def index
-    @users = User.with_items
+    @users = User.with_items(GRAND_LYON)
+    @users_without_poll = @users.to_a.select {|usr| usr.event_poll.nil?}
   end
 
   def show
@@ -14,6 +15,13 @@ class Moderator::EventPollsController < Moderator::ModeratorController
   end
 
   def notify
-    redirect_to url_for(action: :index)
+    @users = User.with_items(GRAND_LYON)
+    @users_without_poll = @users.to_a.select {|usr| usr.event_poll.nil?}
+
+    @users_without_poll.each do |usr|
+      NotificationMailer.notify_poll(usr).deliver_later
+    end
+
+    redirect_to url_for(action: :index), notice: 'Les notifications ont bien été transmises.'
   end
 end

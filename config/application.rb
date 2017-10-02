@@ -28,11 +28,11 @@ module ApidaeJep
 
     # Mailer config
     config.action_mailer.smtp_settings = {
-        address: 'smtp-jep.alwaysdata.net',
+        address: '',
         port: 587,
-        domain: 'jep.alwaysdata.net',
-        user_name: 'jep@alwaysdata.net',
-        password: 'jep_smtp',
+        domain: '',
+        user_name: '',
+        password: '',
         authentication: 'plain',
         enable_starttls_auto: true
     }
@@ -43,6 +43,7 @@ module ApidaeJep
     config.notification_title = "ApidaeJEP 2017 - Nouvelle saisie"
     config.rejection_title = "ApidaeJEP 2017 - Offre rejetée"
     config.publication_title = "ApidaeJEP 2017 - Offre validée"
+    config.notify_poll_title = "Journées européennes du patrimoine de la Métropole de Lyon"
 
     config.signature = {
         'grand_lyon' => {label: "L’équipe JEP pour la Métropole de Lyon", contact: "jep.metropole@grandlyon.com"},

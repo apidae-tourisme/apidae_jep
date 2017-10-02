@@ -20,4 +20,9 @@ class NotificationMailer < ApplicationMailer
     @signature = Rails.application.config.signature[@item.user.territory]
     mail(to: item.user.email, subject: "#{Rails.application.config.publication_title} - #{@item.title}")
   end
+
+  def notify_poll(user)
+    @user = user
+    mail(from: 'jep.metropole@grandlyon.com', to: user.email, subject: Rails.application.config.notify_poll_title)
+  end
 end

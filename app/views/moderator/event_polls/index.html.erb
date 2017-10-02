@@ -1,8 +1,7 @@
 <div class="pull-right">
-  <a class="btn btn-labeled btn-green" href="<%= notify_moderator_event_polls_path %>" data-method="patch">
-    <span class="btn-label"><em class="icon icon-paper-plane"></em></span>
-    Envoyer une relance
-  </a>
+  <%= link_to '<span class="btn-label"><em class="icon icon-paper-plane"></em></span>Notifier les organisateur(s)'.html_safe,
+              notify_moderator_event_polls_path, data: {confirm: "Notifier #{@users_without_poll.length} organisateurs ?"},
+              method: :patch, class: 'btn btn-labeled btn-green' %>
   <a class="btn btn-labeled btn-primary" href="<%= export_moderator_event_polls_path %>.xlsx">
     <span class="btn-label"><em class="icon icon-cloud-download"></em></span>
     Export Excel

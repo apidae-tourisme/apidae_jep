@@ -1,7 +1,9 @@
-class User::EventPollsController < User::UserController
+class User::EventPollsController < ApplicationController
+  layout 'user'
+
   def new
-    @user = current_user
-    if current_user.event_poll
+    @user = User.find(params[:user_id])
+    if @user.event_poll
       redirect_to url_for(action: :show)
     else
       @poll = EventPoll.new(user_id: @user.id)
@@ -14,9 +16,13 @@ class User::EventPollsController < User::UserController
   end
 
   def show
-    @user = current_user
-    @poll = current_user.last_poll
-    @disabled = 'disabled'
+    @user = User.find(params[:user_id])
+    if !@user.event_poll
+      redirect_to url_for(action: :new)
+    else
+      @poll = @user.last_poll
+      @disabled = 'disabled'
+    end
   end
 
   private

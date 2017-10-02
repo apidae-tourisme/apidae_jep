@@ -27,8 +27,8 @@ class User < ActiveRecord::Base
     user
   end
 
-  def self.with_items
-    joins(:program_items).distinct
+  def self.with_items(user_territory)
+    joins(:program_items).where(users: {territory: user_territory}, program_items: {status: [ProgramItem::STATUS_VALIDATED]}).distinct
   end
 
   def last_poll
