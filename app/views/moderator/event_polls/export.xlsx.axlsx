@@ -1,0 +1,14 @@
+#encoding: UTF-8
+
+wb = xlsx_package.workbook
+xlsx_package.use_shared_strings = true
+wrap = xlsx_package.workbook.styles.add_style alignment: {wrap_text: true}
+
+wb.add_worksheet(name: 'Questionnaires') do |sheet|
+  sheet.add_row poll_columns.values.flatten.map {|v| I18n.t("export.event_poll.#{v}")}
+  @users.each do |user|
+    user.account_offers.each do |offer|
+      sheet.add_row poll_values(user, offer), style: wrap
+    end
+  end
+end

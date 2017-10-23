@@ -11,7 +11,12 @@ class Moderator::EventPollsController < Moderator::ModeratorController
   end
 
   def export
-    redirect_to url_for(action: :index)
+    @users = User.with_items(GRAND_LYON)
+    respond_to do |format|
+      format.xlsx {
+        response.headers['Content-Disposition'] = "attachment; filename=\"questionnaires-#{I18n.l(Time.current, format: :reference)}.xlsx\""
+      }
+    end
   end
 
   def notify

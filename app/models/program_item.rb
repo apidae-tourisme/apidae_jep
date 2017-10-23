@@ -111,6 +111,10 @@ class ProgramItem < ActiveRecord::Base
     end
   end
 
+  def program_title
+    program.title
+  end
+
   def self.active_versions
     active_ids = select("MAX(id) AS id").group(:reference)
     where(id: active_ids)

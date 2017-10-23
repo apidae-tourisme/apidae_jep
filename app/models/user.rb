@@ -81,6 +81,10 @@ class User < ActiveRecord::Base
     legal_entity.programs.collect {|p| p.active_items}.flatten.group_by {|pi| pi.status}
   end
 
+  def account_offers
+    ProgramItem.active_versions.where(user_id: id, status: ProgramItem::STATUS_VALIDATED)
+  end
+
   def self.import_full(csv_file)
     csv = CSV.new(File.new(csv_file), col_sep: ',', headers: :first_row)
     csv.each do |row|

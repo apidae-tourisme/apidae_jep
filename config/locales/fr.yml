@@ -373,6 +373,24 @@ fr:
       offers_count: Nombre d'offres
       programs_count: Nombre de programmations
       entity_apidae_id: Id Entité Apidae
+    event_poll:
+      full_name: Nom
+      email: Email
+      telephone: Téléphone
+      entity_name: Nom de la structure
+      criteria: Caractéristiques
+      themes: Thèmes
+      program_title: Programmation
+      town: Commune
+      title: Titre
+      item_type: Catégorie
+      count_sat: Fréquentation samedi
+      count_sun: Fréquentation dimanche
+      compare_sat: Fréquentation 10/06
+      compare_sun: Fréquentation 11/06
+      comments: Commentaires
+      poll_general_comments: Commentaires qualitatifs
+      poll_theme_comments: Commentaires thématique
   date:
     abbr_day_names:
     - dim
