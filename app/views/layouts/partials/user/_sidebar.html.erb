@@ -7,21 +7,11 @@
           <div class="text-sm">Accueil</div>
         </a>
       </li>
-      <% if false %>
-      <li class="<%= 'active' if controller?('user/programs', 'user/program_items') %>">
-        <a href="#programs" title="Programmations" data-toggle="collapse" class="collapsed">
+      <li class="<%= 'active' if controller?('user/program_items') %>">
+        <a href="<%= user_program_items_url %>" title="Programmations">
           <em class="icon-calendar"></em>
           <div class="text-sm">Mes offres</div>
         </a>
-        <ul id="programs" class="nav sidebar-subnav collapse">
-          <li class="sidebar-subnav-header">Programmations</li>
-          <% current_user.ordered_programs.each_with_index do |p, i| %>
-              <li>
-                <%= link_to "<span class='pre'>#{p.label(i + 1)}</span>".html_safe, edit_user_program_path(p),
-                            title: p.label(i + 1) %>
-              </li>
-          <% end %>
-        </ul>
       </li>
       <li class="<%= 'active' if controller?('user/account') && action_name != 'communication' %>">
         <a href="<%= url_for(controller: 'user/account', action: 'edit') %>" title="Gestion du compte">
@@ -29,7 +19,6 @@
           <div class="text-sm">Mon compte</div>
         </a>
       </li>
-      <% end %>
       <li class="<%= 'active' if controller?('user/dashboard') && action_name == 'support' %>">
         <a href="<%= user_support_path %>" title="Aide">
           <em class="icon-question"></em>
@@ -44,14 +33,12 @@
         </a>
       </li>
       <% end %>
-      <% if false %>
       <li class="<%= 'active' if controller?('user/account') && action?('communication') %>">
         <a href="<%= communication_user_account_path %>" title="Supports de communication">
           <em class="icon-envelope-letter"></em>
           <div class="text-sm">Kits com</div>
         </a>
       </li>
-      <% end %>
     </ul>
   </nav>
 </div>

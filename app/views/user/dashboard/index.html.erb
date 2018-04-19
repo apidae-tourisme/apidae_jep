@@ -1,58 +1,21 @@
 <h3>Bienvenue sur ApidaeJEP</h3>
-<% if false %>
 <div class="panel panel-info">
   <div class="panel-body">
     <p class="mb0">
       Inscrivez ici vos offres évènements organisés à l'occasion des Journées européennes du patrimoine (JEP)
-      dans le territoire de la Métropole de Lyon ou dans le département de l'Isère, en choissant d'abord le titre de
-      votre programmation (titre général de vos offres), puis détaillez chaque offre.
+      dans le territoire de la Métropole de Lyon ou dans le département de l'Isère.
     </p>
   </div>
 </div>
-<% end %>
-<p class="alert alert-info">
-  <em class="icon-info pr-sm"></em>Il n'est plus possible de modifier en ligne la programmation pour les Journées du Patrimoine 2017.<br/>
-  Pour toute modification d'une offre existante, merci de vous rapprocher de votre Office de Tourisme pour la prise en compte des modifications.<br/>
-  Nous vous remercions toutes et tous pour votre collaboration sur les JEP 2017 !
-</p>
-<% if current_user.territory == GRAND_LYON %>
-    <div class="panel panel-success">
-      <div class="panel-heading">Le questionnaire Bilan des JEP 2017 est en ligne</div>
-      <div class="panel-body">
-        <p>
-          Nous espérons que vous avez passé une excellente édition des JEP 2017 sur la thématique "Ma Métropole au fil de l’eau" ou autour des liens entre la jeunesse et le patrimoine.<br/>
-          Comme chaque année, nous essayons d’élaborer et de largement diffuser le bilan car c’est notre manière de garder le lien et de faire vivre le réseau.
-          Aussi, nous devons encore vous mobiliser et vous remercions de bien vouloir remplir le traditionnel
-          <%= link_to 'Questionnaire Bilan', (current_user.event_poll ? user_user_event_poll_path(current_user.id) : new_user_user_event_poll_path(current_user.id)) %>.
-          Nous vous invitons à vous acquitter de cette petite tâche "à chaud", dès cette semaine avant mardi 10 Octobre.<br/>
-          <br/>
-          N’hésitez pas par ailleurs à nous faire des commentaires qualitatifs aussi importants que la fréquentation.
-          Il nous est en effet particulièrement précieux de recueillir vos avis sur l’organisation, la qualité du programme, les thématiques, les offres, les publics...<br/>
-          <br/>
-          L'équipe JEP pour la Métropole de Lyon<br/>
-          <%= mail_to 'jep.metropole@grandlyon.com', 'jep.metropole@grandlyon.com' %>
-        </p>
-        <div>
-          <%= link_to "#{current_user.event_poll ? 'Consulter le' : 'Accéder au'} questionnaire",
-                      (current_user.event_poll ? user_user_event_poll_path(current_user.id) : new_user_user_event_poll_path(current_user.id)), class: 'btn btn-success' %>
-        </div>
-      </div>
-    </div>
-<% end %>
-<% if false %>
-    <p class="alert alert-danger">
-      <em class="icon-exclamation pr-sm"></em><strong>Important</strong><br/>
-      À partir du lundi 3 juillet à minuit, toutes les créations ou modifications d'offres qui seront effectuées seront
-      reportées uniquement sur la version internet du programme (disponible dès fin août sur
-      <a href="http://www.jep.grandlyon.com" target="_blank">www.jep.grandlyon.com</a>), et ne concerneront pas la
-      version papier, déjà exportée.
-    </p>
-<% end %>
-<% if false %>
-<div class="row">
-  <div class="col-md-3 pr-sm">
+<div class="pull-right">
+  <%= link_to '<span class="btn-label"><i class="fa fa-plus"></i></span>Saisir une offre'.html_safe, new_user_program_item_path,
+              class: 'btn btn-labeled btn-primary' %>
+</div>
+<h2 class="text-uppercase">Mes offres</h2>
+<div id="user_dashboard" class="row">
+  <div class="col-md-6 pr-sm">
     <div class="panel widget bg-inverse">
-      <div class="row row-table">
+      <a class="row row-table" href="<%= drafts_user_program_items_path(status: ProgramItem::STATUS_DRAFT) %>">
         <div class="col-xs-4 text-center bg-inverse-dark pv-lg">
           <em class="icon-note fa-2x"></em>
         </div>
@@ -60,12 +23,12 @@
           <div class="h1 m0 text-bold"><%= @offers.has_key?(ProgramItem::STATUS_DRAFT) ? @offers[ProgramItem::STATUS_DRAFT].count : 0 %></div>
           <div class="text-uppercase">brouillons</div>
         </div>
-      </div>
+      </a>
     </div>
   </div>
-  <div class="col-md-3 ph-sm">
+  <div class="col-md-6 pl-sm">
     <div class="panel widget bg-warning">
-      <div class="row row-table">
+      <a class="row row-table" href="<%= pending_user_program_items_path(status: ProgramItem::STATUS_PENDING) %>">
         <div class="col-xs-4 text-center bg-warning-dark pv-lg">
           <em class="icon-hourglass fa-2x"></em>
         </div>
@@ -73,12 +36,12 @@
           <div class="h1 m0 text-bold"><%= @offers.has_key?(ProgramItem::STATUS_PENDING) ? @offers[ProgramItem::STATUS_PENDING].count : 0 %></div>
           <div class="text-uppercase">en validation</div>
         </div>
-      </div>
+      </a>
     </div>
   </div>
-  <div class="col-md-3 ph-sm">
+  <div class="col-md-6 pr-sm">
     <div class="panel widget bg-success">
-      <div class="row row-table">
+      <a class="row row-table" href="<%= validated_user_program_items_path(status: ProgramItem::STATUS_VALIDATED) %>">
         <div class="col-xs-4 text-center bg-success-dark pv-lg">
           <em class="icon-like fa-2x"></em>
         </div>
@@ -86,12 +49,12 @@
           <div class="h1 m0 text-bold"><%= @offers.has_key?(ProgramItem::STATUS_VALIDATED) ? @offers[ProgramItem::STATUS_VALIDATED].count : 0 %></div>
           <div class="text-uppercase">validées</div>
         </div>
-      </div>
+      </a>
     </div>
   </div>
-  <div class="col-md-3 pl-sm">
+  <div class="col-md-6 pl-sm">
     <div class="panel widget bg-danger">
-      <div class="row row-table">
+      <a class="row row-table" href="<%= rejected_user_program_items_path(status: ProgramItem::STATUS_REJECTED) %>">
         <div class="col-xs-4 text-center bg-danger-dark pv-lg">
           <em class="icon-dislike fa-2x"></em>
         </div>
@@ -99,65 +62,7 @@
           <div class="h1 m0 text-bold"><%= @offers.has_key?(ProgramItem::STATUS_REJECTED) ? @offers[ProgramItem::STATUS_REJECTED].count : 0 %></div>
           <div class="text-uppercase">rejetées</div>
         </div>
-      </div>
+      </a>
     </div>
   </div>
 </div>
-
-<div class="pv">
-  <div class="panel panel-flat mb-sm">
-    <div class="panel-heading">
-      <div class="pull-right">
-        <%= link_to '<em class="icon-plus pr-sm"></em>Démarrer une programmation'.html_safe,
-                    new_user_program_path, class: 'text-std' %>
-      </div>
-      <h4 class="text-uppercase mv-sm">Mes programmations</h4>
-    </div>
-  </div>
-
-  <% unless @programs.any? %>
-      <p class="mt-lg">Aucune programmation saisie pour le moment.</p>
-  <% end %>
-</div>
-
-<div class="row">
-  <div class="col-xs-12">
-  <% if @programs.any? %>
-      <% @programs.each_with_index do |prog, i| %>
-      <div class="panel panel-dark panel-flat mb-lg">
-        <div class="panel-heading">
-          <div class="pull-right">
-            <%= link_to '<em class="icon-note pr-sm"></em>Modifier'.html_safe, edit_user_program_path(prog),
-                        class: 'text-white text-std' %>
-            <%= link_to '<em class="icon-plus pr-sm"></em>Ajouter une offre'.html_safe,
-                        new_user_program_program_item_path(prog),  class: 'text-white text-std inline ml-lg' %>
-          </div>
-          <h4 class="mv-sm text-uppercase"><%= prog.label(i + 1) %></h4>
-        </div>
-        <div class="panel-body">
-          <table class="table">
-            <tbody>
-            <% prog.active_items.each do |item| %>
-              <tr>
-                <td class="vam">
-                  <%= item.title %>&nbsp;
-                  <span class="label text-sm label-default text-gray-dark"><%= t "program_item.type.#{item.item_type}" %></span>
-                  <span class="label label-<%= t "program_item.color.#{item.status}" %> ml-sm"><%= t "program_item.status.#{item.status}" %></span>
-                  <span class="label label-inverse text-normal vam ml-sm"><%= "Réf. #{item.reference}" %></span>
-                  <div class="pull-right">
-                    <%= link_to '<em class="fa icon-note"></em/>'.html_safe,
-                                url_for(controller: 'user/program_items', action: ((item.pending? || item.draft?) ? :edit : :new), program_id: prog.id, id: item.id),
-                                class: 'btn btn-outline btn-sm btn-primary ml-lg' %>
-                  </div>
-                </td>
-              </tr>
-            <% end %>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <% end %>
-    </div>
-  <% end %>
-</div>
-<% end %>

@@ -27,7 +27,7 @@ Rails.application.routes.draw do
   end
 
   concern :programs_routes do
-    resources :programs, path: 'programmations' do
+    # resources :programs, path: 'programmations' do
       resources :program_items, path: 'offres' do
         get 'confirm', on: :member, path: 'confirmation'
         post 'duplicate', on: :member, as: 'duplicate'
@@ -37,8 +37,12 @@ Rails.application.routes.draw do
         patch 'set_opening', on: :collection, as: 'opening'
         get 'update_form', on: :collection, as: 'update_form'
         get 'site_desc', on: :collection, as: 'site_desc'
+        get 'brouillons', on: :collection, as: 'drafts', to: 'program_items#index', status: ProgramItem::STATUS_DRAFT
+        get 'validations', on: :collection, as: 'pending', to: 'program_items#index', status: ProgramItem::STATUS_PENDING
+        get 'publiees', on: :collection, as: 'validated', to: 'program_items#index', status: ProgramItem::STATUS_VALIDATED
+        get 'rejetees', on: :collection, as: 'rejected', to: 'program_items#index', status: ProgramItem::STATUS_REJECTED
       end
-    end
+    # end
     resources :program_items, path: 'offres', as: 'items', only: [:index] do
       get 'account', on: :collection, path: 'compte'
       get 'entity', on: :collection, path: 'structure'

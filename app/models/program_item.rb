@@ -4,7 +4,6 @@ class ProgramItem < ActiveRecord::Base
   include LoggableConcern
   include WritableConcern
 
-  belongs_to :program, touch: true
   belongs_to :user
   has_many :item_openings, dependent: :destroy
   has_many :attached_files, dependent: :destroy
@@ -33,26 +32,10 @@ class ProgramItem < ActiveRecord::Base
   store :opening_data, accessors: [:openings_desc], coder: JSON
   store :contact_data, accessors: [:telephone, :email, :website], coder: JSON
 
-  validates_presence_of :item_type, :title, :main_place, :main_address, :main_town_insee_code, :main_transports,
-                        :description, :accessibility, :item_openings
+  validates_presence_of :item_type, :title, :main_place, :main_lat, :main_lng, :main_address, :main_town_insee_code,
+                        :main_transports, :description, :accessibility, :item_openings
   validates :accept_pictures, acceptance: true
   validates_length_of :summary, maximum: 255
-
-  def self.change_order(item, direction)
-    ordered_items = item.program.ordered_items
-    item_index = ordered_items.index(item)
-    if direction == DIRECTION_UP && item != ordered_items.first
-      ordered_items.each do |itm|
-        itm.update(ordering:  itm.ordering + 1) if (ordered_items.index(item) >= item_index - 1 && itm != item)
-      end
-      item.update(ordering: item.ordering - 1)
-    elsif direction == DIRECTION_DOWN && item != ordered_items.last
-      ordered_items.each do |itm|
-        itm.update(ordering:  itm.ordering - 1) if (ordered_items.index(item) >= item_index - 1 && itm != item)
-      end
-      item.update(ordering: item.ordering + 1)
-    end
-  end
 
   def last_revision
     ProgramItem.where(reference: reference).order(:rev).last
@@ -111,10 +94,6 @@ class ProgramItem < ActiveRecord::Base
     end
   end
 
-  def program_title
-    program.title
-  end
-
   def self.active_versions
     active_ids = select("MAX(id) AS id").group(:reference)
     where(id: active_ids)
@@ -129,19 +108,16 @@ class ProgramItem < ActiveRecord::Base
         .joins("JOIN users ON users.id = program_items.user_id")
   end
 
-  def self.validated(program_id = nil)
-    items = where(status: STATUS_VALIDATED)
-    program_id ? items.where(program_id: program_id) : items
+  def self.validated
+    where(status: STATUS_VALIDATED)
   end
 
-  def self.draft(program_id = nil)
-    items = where(status: STATUS_DRAFT)
-    program_id ? items.where(program_id: program_id) : items
+  def self.draft
+    where(status: STATUS_DRAFT)
   end
 
-  def self.rejected(program_id = nil)
-    items = where(status: STATUS_REJECTED)
-    program_id ? items.where(program_id: program_id) : items
+  def self.rejected
+    where(status: STATUS_REJECTED)
   end
 
   def short_desc

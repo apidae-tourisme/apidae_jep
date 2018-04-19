@@ -2,7 +2,6 @@ class User::DashboardController < User::UserController
   before_action :set_user
 
   def index
-    @programs = @user.ordered_programs
     @offers = @user.offers
   end
 

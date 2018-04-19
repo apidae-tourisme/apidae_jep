@@ -13,8 +13,8 @@ class LegalEntity < ActiveRecord::Base
     LegalEntity.where("trim(unaccent(replace(name, '-', ' '))) ILIKE trim(unaccent(replace(?, '-', ' ')))", "%#{pattern}%")
   end
 
-  def programs
-    users.collect {|u| u.programs}.flatten.uniq
+  def active_items
+    users.collect {|u| u.active_items}.flatten.uniq
   end
 
   def street_address

@@ -6,7 +6,7 @@ Titre de l'offre : <%= @item.title %>
 Organisateur : <%= "#{@item.user.full_name} - #{@item.user.legal_entity.name}" %>
 ---
 Veuillez suivre le lien suivant pour consulter l'offre nouvellement saisie :
-<%= moderator_program_program_item_url(@item.program_id, @item) %>
+<%= moderator_program_item_url(@item) %>
 
 <% unless @comment.blank? %>
     Message de l'organisateur :

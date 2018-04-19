@@ -4,7 +4,6 @@ class User < ActiveRecord::Base
   belongs_to :legal_entity
   accepts_nested_attributes_for :legal_entity
   has_many :program_items
-  has_and_belongs_to_many :programs
   has_one :communication_poll
   has_one :event_poll
 
@@ -43,8 +42,9 @@ class User < ActiveRecord::Base
     legal_entity.label
   end
 
-  def ordered_programs
-    legal_entity.programs.sort_by {|p| p.id}
+  def active_items
+    active_ids = program_items.select("MAX(id) AS id").group(:reference)
+    program_items.where(id: active_ids).order(:id)
   end
 
   def full_name
@@ -53,10 +53,6 @@ class User < ActiveRecord::Base
 
   def offers_count
     program_items.count
-  end
-
-  def programs_count
-    programs.count
   end
 
   def compute_territory
@@ -78,7 +74,7 @@ class User < ActiveRecord::Base
   end
 
   def offers
-    legal_entity.programs.collect {|p| p.active_items}.flatten.group_by {|pi| pi.status}
+    legal_entity.active_items.group_by {|pi| pi.status}
   end
 
   def account_offers

@@ -208,5 +208,14 @@ module Moderator::ProgramItemsHelper
     formatted_town.gsub!(/(Lyon\s\d\p{Alpha}+)/) {|m| m.slice(0, 6)}
     formatted_town
   end
+
+  def default_opening(opening)
+    opening.starts_at = DateTime.new(2018, 9, 15, 10, 0, 0)
+    opening
+  end
+
+  def ellipsis(text)
+    text.length > 255 ? (text[0, 255] + '...') : text
+  end
   
 end

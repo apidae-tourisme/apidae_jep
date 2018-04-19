@@ -40,14 +40,11 @@
                     <% end %>
                     <td class="text-center">
                       <%= link_to '<i class="icon-eye"></i>'.html_safe,
-                                  moderator_program_program_item_path(item.program_id, item),
+                                  moderator_program_item_path(item),
                                   class: 'btn btn-outline btn-sm btn-primary', title: 'Visualiser' %>
                       <%= link_to '<i class="icon-note"></i>'.html_safe,
-                                  edit_moderator_program_program_item_path(item.program_id, item),
+                                  edit_moderator_program_item_path(item),
                                   class: 'btn btn-outline btn-sm btn-primary ml-sm', title: 'Modifier' %>
-                      <%= link_to '<i class="icon-list"></i>'.html_safe,
-                                  edit_moderator_program_path(item.program),
-                                  class: 'btn btn-outline btn-sm btn-primary ml-sm', title: 'Voir la programmation' %>
                     </td>
                   </tr>
               <% end %>

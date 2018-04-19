@@ -56,4 +56,13 @@ module User::ProgramItemsHelper
 
   def render_previous_assoc(prev_objects, new_objects, attr, rows = 1)
   end
+
+  def default_opening(opening)
+    opening.starts_at = DateTime.new(2018, 9, 15, 10, 0, 0)
+    opening
+  end
+
+  def ellipsis(text)
+    text.length > 255 ? (text[0, 255] + '...') : text
+  end
 end

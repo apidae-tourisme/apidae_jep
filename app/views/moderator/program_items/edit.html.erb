@@ -11,7 +11,7 @@
   <p class="man text-uppercase pb-sm">Offres publiées pour cette structure :</p>
   <ul>
     <% @entity_items.each do |itm| %>
-      <li><%= link_to "#{itm.title}<em class='icon-arrow-right-circle pl'></em>".html_safe, moderator_program_program_item_path(itm.program_id, itm), target: '_blank', class: 'text-white' %></li>
+      <li><%= link_to "#{itm.title}<em class='icon-arrow-right-circle pl'></em>".html_safe, moderator_program_item_path(itm), target: '_blank', class: 'text-white' %></li>
     <% end %>
   </ul>
 </div>
@@ -19,6 +19,6 @@
 <%= render 'shared/forms/item_form', form_scope: :moderator, readonly: nil %>
 <% content_for :body_area do %>
     <%= render 'shared/forms/item_form_scripts', readonly: nil,
-               update_form_path: update_form_moderator_program_program_items_path(@program.id),
-               opening_form_path: opening_moderator_program_program_items_path(@program.id) %>
+               update_form_path: update_form_moderator_program_items_path,
+               opening_form_path: opening_moderator_program_items_path %>
 <% end %>

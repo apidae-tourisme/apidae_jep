@@ -3,8 +3,8 @@
 require 'raven'
 
 class Moderator::ProgramItemsController < Moderator::ModeratorController
-  before_action :set_program, except: [:index, :account, :entity, :export]
-  before_action :set_program_item, only: [:show, :edit, :update, :destroy, :confirm, :reorder, :select_program, :save_program]
+  # before_action :set_program, except: [:index, :account, :entity, :export]
+  before_action :set_program_item, only: [:show, :edit, :update, :destroy, :confirm]
 
   def index
     @status = params[:status] || ProgramItem::STATUS_PENDING
@@ -33,7 +33,7 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
     end
     @town = Town.find_by_insee_code(@item.main_town_insee_code) if @item.main_town_insee_code
     @prev_item = ProgramItem.where(reference: @item.reference, rev: @item.rev - 1).first
-    @entity_items = @item.user.legal_entity.programs.collect {|p| p.active_items}.flatten.select {|itm| itm.validated?}
+    @entity_items = @item.user.legal_entity.active_items.select {|itm| itm.validated?}
   end
 
   def update
@@ -80,33 +80,34 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
 
   def destroy
     if ProgramItem.where(reference: @item.reference).destroy_all
-      redirect_to edit_moderator_program_url(@program), notice: "L'offre a bien été supprimée."
+      redirect_to moderator_program_items_url, notice: "L'offre a bien été supprimée."
     else
-      redirect_to edit_moderator_program_url(@program), notice: "Une erreur est survenue lors de la suppression de l'offre."
+      flash.now[:alert] = "Une erreur est survenue lors de la suppression de l'offre."
+      render :index
     end
   end
 
   def confirm
   end
 
-  def reorder
-    unless params[:direction].blank?
-      ProgramItem.change_order(@item, params[:direction])
-    end
-    redirect_to edit_moderator_program_url(@program), notice: "L'offre a bien été mise à jour."
-  end
-
-  def select_program
-    @programs = @program.users.collect {|u| u.programs}.flatten.uniq.collect {|p| [p.title, p.id]}
-  end
-
-  def save_program
-    if @item.update(item_params)
-      redirect_to edit_moderator_program_url(@item.program), notice: "L'offre a bien déplacée dans sa nouvelle programmation."
-    else
-      redirect_to edit_moderator_program_url(@program), notice: "Une erreur est survenue au cours du déplacement de l'offre."
-    end
-  end
+  # def reorder
+  #   unless params[:direction].blank?
+  #     ProgramItem.change_order(@item, params[:direction])
+  #   end
+  #   redirect_to edit_moderator_program_url(@program), notice: "L'offre a bien été mise à jour."
+  # end
+  #
+  # def select_program
+  #   @programs = @program.users.collect {|u| u.programs}.flatten.uniq.collect {|p| [p.title, p.id]}
+  # end
+  #
+  # def save_program
+  #   if @item.update(item_params)
+  #     redirect_to edit_moderator_program_url(@item.program), notice: "L'offre a bien déplacée dans sa nouvelle programmation."
+  #   else
+  #     redirect_to edit_moderator_program_url(@program), notice: "Une erreur est survenue au cours du déplacement de l'offre."
+  #   end
+  # end
 
   def account
     @items = []
@@ -146,9 +147,9 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
     params.require(:program_item).permit!
   end
 
-  def set_program
-    @program = Program.find(params[:program_id])
-  end
+  # def set_program
+  #   @program = Program.find(params[:program_id])
+  # end
 
   def set_program_item
     @item = ProgramItem.find(params[:id])

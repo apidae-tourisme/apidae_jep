@@ -7,12 +7,6 @@
           <div class="text-sm">Accueil</div>
         </a>
       </li>
-      <li class="<%= 'active' if controller?('moderator/programs') %>">
-        <a href="<%= moderator_programs_path %>" title="Programmations">
-          <em class="icon-calendar"></em>
-          <div class="text-sm">Programmes</div>
-        </a>
-      </li>
       <li class="<%= 'active' if controller?('moderator/program_items') %>">
         <a href="<%= moderator_items_path %>" title="Offres">
           <em class="icon-list"></em>

@@ -2,9 +2,6 @@ require 'sitra_client'
 
 class EventsImporter
 
-  DEFAULT_PROGRAM = "Imports Apidae"
-  LEGACY_PROGRAM = "Offres saisies au cours de l'édition 2016 des JEP"
-
   def self.import_events(json_exports_file, user_email = nil)
     events = load_apidae_selection(40989)
     events_json = File.read(json_exports_file)
@@ -21,13 +18,6 @@ class EventsImporter
   def self.import_user_events(email, evts, apidae_events)
     user = User.find_by_email(email)
     if user
-      if user.programs.empty? || user.programs.where(title: LEGACY_PROGRAM).count == 0
-        program = Program.new(title: LEGACY_PROGRAM)
-        program.users << user
-        program.save
-      else
-        program = user.programs.where(title: LEGACY_PROGRAM).first
-      end
       evts.each do |evt|
         if evt[:external_id] && apidae_events.select {|e| e.id.to_s == evt[:external_id].to_s}.first
           obj = apidae_events.select {|e| e.id.to_s == evt[:external_id].to_s}.first
@@ -37,7 +27,6 @@ class EventsImporter
           item.event_planners = evt[:event_planners]
           item.building_ages = evt[:building_ages]
           item.building_types = evt[:building_types]
-          item.program_id = program.id
           item.user_id = user.id
           item.save(validate: false)
           item.update(reference: item.id)
@@ -51,12 +40,10 @@ class EventsImporter
     if user
       evt = load_apidae_event(apidae_id)
       if evt
-        program = user.programs.find_or_create_by(title: DEFAULT_PROGRAM)
         item = evt.to_program_item
         item.item_openings = event_openings(evt)
         item.attached_files = event_pictures(evt)
         item.user_id = user.id
-        item.program_id = program.id
         item.save(validate: false)
         item.reference = item.id
         item.save(validate: false)

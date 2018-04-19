@@ -61,7 +61,9 @@
         marker.on('dragend', function(e) {
             var newLatLng = e.target._latlng;
             $("#program_item_main_lat").val(newLatLng.lat);
+            $("#program_item_main_lat").removeClass("error");
             $("#program_item_main_lng").val(newLatLng.lng);
+            $("#program_item_main_lng").removeClass("error");
         });
     }
 
@@ -75,7 +77,7 @@
 
         <% unless readonly %>
         var geocoderOptions = {
-            url: 'https://search-places.hotentic.com',
+            url: 'https://places.apidae.net',
             layers: ['venue', 'address', 'street'],
             position: 'topleft',
             expanded: true,
@@ -122,7 +124,7 @@
             }
             toggleMapFields(false);
             $.ajax({
-                url: '<%= site_desc_user_program_program_items_path(@program.id) %>',
+                url: '<%= site_desc_user_program_items_path %>',
                 method: 'GET',
                 data: {
                     place_uid: e.feature.properties.id
@@ -198,10 +200,10 @@
         var datepicker = $("#" + wrapperElt).find(".datepicker");
         datepicker.datetimepicker({
             locale: 'fr',
-            viewDate: '2017-09-16',
-            minDate: '2017-09-15',
-            maxDate: '2017-09-18',
-            defaultDate: '2017-09-16',
+            viewDate: '2018-09-15',
+            minDate: '2018-09-14',
+            maxDate: '2018-09-17',
+            defaultDate: '2018-09-15',
             useCurrent: false,
             format: 'YYYY-MM-DD HH:mm',
             sideBySide: true,
@@ -221,8 +223,8 @@
         var timepicker = $("#" + wrapperElt).find(".datetimepicker");
         timepicker.datetimepicker({
             locale: 'fr',
-            viewDate: '2017-09-16',
-            defaultDate: '2017-09-16 00:00',
+            viewDate: '2018-09-15',
+            defaultDate: '2018-09-15 00:00',
             useCurrent: false,
             format: 'HH:mm',
             sideBySide: true,

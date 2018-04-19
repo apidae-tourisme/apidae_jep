@@ -7,7 +7,7 @@
   Organisateur : <%= "#{@item.user.full_name} - #{@item.user.legal_entity.name}" %><br/>
   <br/>
   Veuillez suivre le lien suivant pour consulter l'offre nouvellement saisie :<br/>
-  <%= link_to 'Nouvelle offre ApidaeJEP', moderator_program_program_item_url(@item.program_id, @item) %><br/>
+  <%= link_to 'Nouvelle offre ApidaeJEP', moderator_program_item_url(@item) %><br/>
   <br/>
   <% unless @comment.blank? %>
       Message de l'organisateur :<br/>

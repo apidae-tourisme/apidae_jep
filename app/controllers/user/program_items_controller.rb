@@ -1,16 +1,18 @@
 class User::ProgramItemsController < User::UserController
-  before_filter :check_auth
-  before_action :set_program
-  before_action :set_program_item, only: [:edit, :update, :show, :destroy, :confirm, :reorder, :select_program,
-                                          :save_program, :duplicate]
 
-  def check_auth
-    redirect_to user_dashboard_url, alert: "La saisie en ligne des offres JEP 2017 n'est plus disponible."
+  before_action :set_program_item, only: [:edit, :update, :show, :destroy, :confirm, :duplicate]
+
+  def index
+    @items = current_user.program_items.order(id: :desc)
+    unless params[:status].blank?
+      @status = params[:status]
+      @items = @items.where(status: params[:status])
+    end
   end
 
   def new
     if params[:id].blank?
-      @item = ProgramItem.new(program_id: @program.id, item_type: ITEM_VISITE, free: true, booking: false,
+      @item = ProgramItem.new(item_type: ITEM_VISITE, free: true, booking: false,
                               accept_pictures: '0', user_id: current_user.id, rev: 1, status: ProgramItem::STATUS_DRAFT,
                               telephone: current_user.legal_entity.phone, email: current_user.legal_entity.email,
                               website: current_user.legal_entity.website)
@@ -34,15 +36,15 @@ class User::ProgramItemsController < User::UserController
 
   def create
     @item = ProgramItem.new(item_params)
-    @item.ordering = @program.program_items.count
-    if @item.save
+
+    if @item.save(validate: @item.status != ProgramItem::STATUS_DRAFT)
       @item.comment = nil
       @item.update(reference: @item.id) unless @item.reference
       NotificationMailer.notify(@item).deliver_now if @item.pending?
       if current_user.territory == GRAND_LYON && current_user.program_items.count == 1 && current_user.communication.nil?
         redirect_to communication_user_account_path
       else
-        redirect_to confirm_user_program_program_item_url(@program.id, @item)
+        redirect_to confirm_user_program_item_url(@item)
       end
     else
       render :new, notice: "Une erreur est survenue lors de la création de l'offre."
@@ -54,9 +56,10 @@ class User::ProgramItemsController < User::UserController
   end
 
   def update
-    if @item.update(item_params)
+    @item.attributes = item_params
+    if @item.save(validate: @item.status != ProgramItem::STATUS_DRAFT)
       NotificationMailer.notify(@item).deliver_now if @item.pending?
-      redirect_to confirm_user_program_program_item_url(@program.id, @item)
+      redirect_to confirm_user_program_item_url(@item)
     else
       render :edit, notice: "Une erreur est survenue lors de la mise à jour de l'offre."
     end
@@ -72,26 +75,6 @@ class User::ProgramItemsController < User::UserController
   def confirm
   end
 
-  def reorder
-    unless params[:direction].blank?
-      ProgramItem.change_order(@item, params[:direction])
-    end
-    redirect_to edit_user_program_url(@program), notice: "L'offre a bien été mise à jour."
-  end
-
-  def select_program
-    @programs = Program.joins("INNER JOIN programs_users ON programs_users.program_id = programs.id")
-                    .where("programs_users.user_id = ?", current_user.id).collect {|p| [p.title, p.id]}
-  end
-
-  def save_program
-    if @item.update(item_params)
-      redirect_to edit_user_program_url(@item.program), notice: "L'offre a bien déplacée dans sa nouvelle programmation."
-    else
-      redirect_to edit_user_program_url(@program), notice: "Une erreur est survenue au cours du déplacement de l'offre."
-    end
-  end
-
   def duplicate
     @new_item = @item.dup
     @new_item.ordering ||= 1
@@ -102,12 +85,12 @@ class User::ProgramItemsController < User::UserController
     @item.item_openings.each do |o|
       @new_item.item_openings << o.dup
     end
-    if @new_item.save
+    if @new_item.save(validate: false)
       @new_item.update(reference: @new_item.id)
       @item.attached_files.each do |f|
         AttachedFile.create(data: f.data, picture: f.picture, program_item_id: @new_item.id)
       end
-      redirect_to edit_user_program_url(@program), notice: "L'offre a bien été dupliquée."
+      redirect_to edit_user_program_item(@new_item), notice: "L'offre a bien été dupliquée."
     else
       render :edit, notice: "Une erreur est survenue lors de la duplication de l'offre."
     end
@@ -140,10 +123,6 @@ class User::ProgramItemsController < User::UserController
 
   def item_params
     params.require(:program_item).permit!
-  end
-
-  def set_program
-    @program = Program.find(params[:program_id])
   end
 
   def set_program_item

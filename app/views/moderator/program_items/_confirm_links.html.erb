@@ -10,8 +10,6 @@
   <% end %>
 </div>
 <div class="panel-footer text-right">
-  <%= link_to '<span class="btn-label"><i class="fa fa-list"></i></span>Programmation'.html_safe,
-              edit_moderator_program_path(@program), class: 'btn btn-info btn-labeled' %>
   <%= link_to '<span class="btn-label"><i class="fa fa-home"></i></span>Accueil'.html_safe,
               url_for(controller: 'moderator/dashboard', action: :index), class: 'btn btn-inverse btn-labeled' %>
 </div>

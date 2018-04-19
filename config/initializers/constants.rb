@@ -9,10 +9,10 @@ ITEM_EXPOSITION = "exposition"
 ITEM_TYPES = [ITEM_VISITE, ITEM_PARCOURS, ITEM_ANIMATION, ITEM_EXPOSITION]
 
 THEMES = {
-    GRAND_LYON => ['Thématique 2017 - "Jeunesse et Patrimoine"', "La Métropole au fil de l'eau", "Nouveauté",
+    GRAND_LYON => ['Thématique 2018', "Unesco", "Nouveauté",
                    "En famille", "Jeunes (15-25 ans)", "Egalité", 'Sous-thématique 1', 'Sous-thématique 2',
                    'Sous-thématique 3', 'Sous-thématique 4', 'Sous-thématique 5'],
-    ISERE => ['Thématique 2017 - "Jeunesse et Patrimoine"', "Famille", "Réservé aux enfants", "Antiquité",
+    ISERE => ['Thématique 2018', "Famille", "Réservé aux enfants", "Antiquité",
               "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique"]
 }
 THEMES_REFS = Hash[THEMES.values.flatten.collect {|th| [th.parameterize, th] }]
@@ -71,7 +71,7 @@ ALL_REFS = THEMES_REFS.merge(VALIDATION_CRITERIA_REFS).merge(CRITERIA_REFS).merg
 APIDAE_CRITERIA = {
     'Nouveauté' => 7997,
     "Visite libre" => 10173,
-    "La Métropole au fil de l'eau" => 10160,
+    "Unesco" => 10160,
     'Egalité' => 10161,
     'animation' => 10171,
     'parcours' => 10172,
@@ -86,14 +86,14 @@ APIDAE_CRITERIA = {
 }
 
 APIDAE_TYPOLOGIES = {
-    'Thématique 2017 - "Jeunesse et Patrimoine"' => 5133
+    'Thématique 2018' => 5133
 }
 
 # Preprod
 # APIDAE_CRITERIA = {
 #     'Nouveauté' => 7997,
 #     "Visite libre" => 8767,
-#     "La Métropole au fil de l'eau" => 8776,
+#     "Unesco" => 8776,
 #     'Egalité' => 8777,
 #     'animation' => 8769,
 #     'parcours' => 8768,
@@ -108,7 +108,7 @@ APIDAE_TYPOLOGIES = {
 # }
 #
 # APIDAE_TYPOLOGIES = {
-#     'Thématique 2017 - "Jeunesse et Patrimoine"' => 4927
+#     'Thématique 2018' => 4927
 # }
 
 APIDAE_THEMES = {

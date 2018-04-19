@@ -1,4 +1,4 @@
-<%= form_for([form_scope, @program, @item], html: {multipart: true, id: 'program_item_form', class: 'form-horizontal'}) do |item_form| %>
+<%= form_for([form_scope, @item], html: {multipart: true, id: 'program_item_form', class: 'form-horizontal'}) do |item_form| %>
     <div class="panel panel-default">
       <div class="panel-body">
         <p class="help-block">Les champs marqués d'un <strong>*</strong> sont obligatoires.
@@ -73,23 +73,18 @@
                     <%= render_previous(:main_town_insee_code) %>
                   </div>
                 </div>
-                <% if current_moderator %>
-                    <div class="form-group mt-lg">
-                      <label class="col-sm-4 control-label ph0">Latitude</label>
-                      <div class="col-sm-3">
-                        <%= item_form.text_field :main_lat, class: 'form-control', disabled: readonly %>
-                        <%= render_previous(:main_lat) %>
-                      </div>
-                      <label class="col-sm-2 control-label ph0">Longitude</label>
-                      <div class="col-sm-3">
-                        <%= item_form.text_field :main_lng, class: 'form-control', disabled: readonly %>
-                        <%= render_previous(:main_lng) %>
-                      </div>
-                    </div>
-                <% else %>
-                <%= item_form.hidden_field :main_lat %>
-                <%= item_form.hidden_field :main_lng %>
-                <% end %>
+                <div class="form-group mt-lg mdy">
+                  <label class="col-sm-4 control-label ph0">Latitude</label>
+                  <div class="col-sm-3">
+                    <%= item_form.text_field :main_lat, class: 'form-control required', disabled: readonly %>
+                    <%= render_previous(:main_lat) %>
+                  </div>
+                  <label class="col-sm-2 control-label ph0">Longitude</label>
+                  <div class="col-sm-3">
+                    <%= item_form.text_field :main_lng, class: 'form-control required', disabled: readonly %>
+                    <%= render_previous(:main_lng) %>
+                  </div>
+                </div>
                 <div class="form-group mt">
                   <label class="col-sm-4 control-label ph0">Point de rendez-vous</label>
                   <div class="col-sm-8">
@@ -320,7 +315,7 @@
               <label class="checkbox-inline c-checkbox">
                 <%= check_box_tag 'program_item[accept_pictures]', '1', @item.accept_pictures == '1', disabled: readonly %>
                 <span class="fa fa-check"></span>J'accepte que les photos soient utilisées dans les supports de communication
-                des Journées Européennes du Patrimoine 2017 au format papier et web*
+                des Journées Européennes du Patrimoine 2018 au format papier et web*
               </label>
             </div>
           </div>
@@ -352,7 +347,6 @@
         <fieldset>
           <legend class="text-uppercase text-primary">Suivi</legend>
           <% if current_moderator %>
-          <div class="row">
           <div class="row">
             <label class="col-sm-3 control-label">Structure organisatrice</label>
             <div class="col-sm-7">
@@ -437,7 +431,6 @@
             </div>
           </div>
         </fieldset>
-        <%= item_form.hidden_field :program_id %>
         <%= item_form.hidden_field :user_id %>
         <%= item_form.hidden_field :rev %>
         <%= item_form.hidden_field :reference %>
@@ -447,10 +440,10 @@
         <%= item_form.hidden_field :author, id: 'program_item_author' %>
       </div>
       <div id="submit_actions" class="panel-footer text-right">
-        <%= link_to 'Retour', current_user ? edit_user_program_path(@program) : moderator_programs_path(@program), class: 'btn btn-default' %>
+        <%= link_to 'Retour', :back, class: 'btn btn-default' %>
         <% if readonly && current_user %>
           <%= link_to "Modifier l'offre",
-                      url_for(controller: current_user ? 'user/program_items' : 'moderator/program_items', action: ((@item.pending? || @item.draft?) ? :edit : :new), program_id: @program.id, id: @item.id),
+                      url_for(controller: current_user ? 'user/program_items' : 'moderator/program_items', action: ((@item.pending? || @item.draft?) ? :edit : :new), id: @item.id),
                       class: 'btn btn-primary ml' %>
         <% else %>
           <% if current_moderator %>
@@ -462,11 +455,11 @@
                   <%= item_form.submit "Rejeter #{@item.rev == 1 ? "l'offre" : 'la mise à jour'}", class: 'btn btn-danger ml',
                                        onclick: "setStatus('#{ProgramItem::STATUS_REJECTED}')" %>
                 <% end %>
-                <%= link_to "Supprimer l'offre", moderator_program_program_item_path(@program.id, @item), method: :delete,
+                <%= link_to "Supprimer l'offre", moderator_program_item_path(@item), method: :delete,
                             class: 'btn btn-inverse ml', data: {confirm: "La suppression d'une offre est définitive. Êtes-vous sûr(e) ? - Note : la suppression n'est effective que sur ApidaeJEP et n'affecte pas les éventuelles publications dans la base de données Apidae"} %>
           <% elsif current_user %>
               <%= item_form.submit 'Enregistrer le brouillon', class: 'btn btn-inverse ml',
-                                   onclick: "setStatus('#{ProgramItem::STATUS_DRAFT}')" %>
+                                   onclick: "setStatus('#{ProgramItem::STATUS_DRAFT}')", formnovalidate: 'formnovalidate' %>
               <%= item_form.submit "Transmettre #{@item.rev == 1 ? "l'offre" : 'la mise à jour'} pour validation", class: 'btn btn-primary ml',
                                    onclick: "setStatus('#{ProgramItem::STATUS_PENDING}')" %>
           <% end %>

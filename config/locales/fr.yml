@@ -133,6 +133,11 @@ fr:
       pending: 'en cours'
       validated: 'validée'
       rejected: 'rejetée'
+    statuses:
+      draft: 'brouillons'
+      pending: 'en cours'
+      validated: 'validées'
+      rejected: 'rejetées'
     color:
       draft: 'inverse'
       pending: 'warning'
@@ -194,8 +199,8 @@ fr:
     loisirs-creatifs: Loisirs créatifs
     peinture: Peinture
     photographie: Photographie
-    thematique-2017-jeunesse-et-patrimoine: Thématique 2017 - "Jeunesse et Patrimoine"
-    la-metropole-au-fil-de-l-eau: La Métropole au fil de l'eau
+    thematique-2018: Thématique 2018
+    unesco: Unesco
     nouveaute: Nouveauté
     en-famille: En famille
     jeunes-15-25-ans: Jeunes (15-25 ans)

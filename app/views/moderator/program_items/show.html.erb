@@ -1,6 +1,8 @@
 <div class="content-heading">
   Visualiser l'offre
-  <span class="label label-inverse text-normal vam ml"><%= "Réf. #{@item.reference}" %></span>
+  <% unless @item.reference.blank? %>
+    <span class="label label-inverse text-normal vam ml"><%= "Réf. #{@item.reference}" %></span>
+  <% end %>
   <span class="label label-<%= t "program_item.color.#{@item.status}" %> text-normal vam"><%= t "program_item.status.#{@item.status}" %></span>
   <% if @item.external_id %>
       <span class="label label-primary text-normal vam"><%= "Id Apidae #{@item.external_id}" %></span>
@@ -9,6 +11,6 @@
 <%= render 'shared/forms/item_form', form_scope: :user, readonly: 'disabled' %>
 <% content_for :body_area do %>
     <%= render 'shared/forms/item_form_scripts', readonly: true,
-               update_form_path: update_form_user_program_program_items_path(@program.id),
-               opening_form_path: opening_user_program_program_items_path(@program.id) %>
+               update_form_path: update_form_user_program_items_path,
+               opening_form_path: opening_user_program_items_path %>
 <% end %>

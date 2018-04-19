@@ -40,9 +40,9 @@ module ApidaeJep
     config.action_mailer.raise_delivery_errors = true
 
     # Notification email config
-    config.notification_title = "ApidaeJEP 2017 - Nouvelle saisie"
-    config.rejection_title = "ApidaeJEP 2017 - Offre rejetée"
-    config.publication_title = "ApidaeJEP 2017 - Offre validée"
+    config.notification_title = "ApidaeJEP 2018 - Nouvelle saisie"
+    config.rejection_title = "ApidaeJEP 2018 - Offre rejetée"
+    config.publication_title = "ApidaeJEP 2018 - Offre validée"
     config.notify_poll_title = "Journées européennes du patrimoine de la Métropole de Lyon"
 
     config.signature = {
