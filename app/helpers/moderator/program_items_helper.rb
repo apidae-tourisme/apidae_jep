@@ -95,7 +95,6 @@ module Moderator::ProgramItemsHelper
                'booking_email', 'booking_website', 'openings_desc', 'telephone', 'email', 'website', 'ordering',
                'main_place', 'main_lat', 'main_lng', 'main_address', 'town', 'main_transports', 'alt_place', 'updated_at',
                'validated_at'],
-        program: ['program_title'],
         item_openings: ['opening_description'],
         attached_files: ['pictures'],
         user: ['user_name', 'user_email', 'user_telephone', 'user_entity']
@@ -107,7 +106,6 @@ module Moderator::ProgramItemsHelper
       val = item.send(c)
       format_value(c, val && val.is_a?(Array) ? val.select {|v| !v.blank?}.map {|v| ALL_REFS[v] || v}.join(' | ') : val)
     end
-    values << item.program.title
     values << item.item_openings.collect {|o| format_opening(current_moderator.member_ref,o.description)}.join(' | ')
     values << item.attached_files.collect {|p| p.info}.join(' | ')
     values.each {|val| val.gsub!(/\r?\n|\r/, ' ') if val.is_a?(String)}

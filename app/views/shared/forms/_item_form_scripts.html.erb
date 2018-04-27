@@ -103,14 +103,17 @@
         function toggleMapFields(newPlace) {
             $("#map_fields").show();
             if(newPlace) {
-                updateFormFields({properties:{}, geometry:{coordinates:[]}});
+                updateFormFields({properties:{}, geometry:{coordinates:[45.740410, 4.816417]}});
+                $("#program_item_main_transports").val('');
+                $("#program_item_main_town_insee_code").val('').trigger('change');
+                $("#program_item_building_types").val('').trigger("chosen:updated");
+                $("#program_item_building_ages").val('').trigger("chosen:updated");
                 geocoder.reset();
                 geocoder.blur();
             }
         }
 
-        geocoder.on('select', function (e) {
-            updateFormFields(e.feature);
+        function clearMarkers() {
             var markers = [];
             map.eachLayer(function(layer) {
                 if(layer.options.draggable) {
@@ -122,6 +125,11 @@
             if(markers.length > 1) {
                 map.removeLayer(markers[0]);
             }
+        }
+
+        geocoder.on('select', function (e) {
+            updateFormFields(e.feature);
+            clearMarkers();
             toggleMapFields(false);
             $.ajax({
                 url: '<%= site_desc_user_program_items_path %>',
@@ -142,7 +150,7 @@
                 }
                 $("#add_new_place").click(function () {
                     toggleMapFields(true);
-                    L.marker([45.740410, 4.816417], {draggable: true}).addTo(map);
+                    updateMarker(map, 45.740410, 4.816417);
                 });
             }
         });
@@ -317,10 +325,12 @@
 
     function toggleDisplay(selector, val) {
         var elt = $("#" + selector).find("input:checked");
-        if(elt.val() && elt.val() == val) {
-            $("." + selector).show();
+        var descElt = $("." + selector);
+        if(elt.val() && elt.val() === val) {
+            descElt.show();
         } else {
-            $("." + selector).hide();
+            descElt.hide();
+            descElt.find("textarea").val('');
         }
     }
 
@@ -334,6 +344,9 @@
         var selected = $("#item_types").find("input[type=radio]:checked").val();
         if(selected == '<%= ITEM_VISITE %>') {
             $("#building_fields").show();
+        } else if(selected == '<%= ITEM_EXPOSITION %>') {
+            $("#building_fields").show();
+            $("#building_fields").find(".form-group:first-child").hide();
         } else {
             $("#building_fields").hide();
         }

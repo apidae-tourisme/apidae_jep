@@ -90,7 +90,7 @@ class User::ProgramItemsController < User::UserController
       @item.attached_files.each do |f|
         AttachedFile.create(data: f.data, picture: f.picture, program_item_id: @new_item.id)
       end
-      redirect_to edit_user_program_item(@new_item), notice: "L'offre a bien été dupliquée."
+      redirect_to edit_user_program_item_url(@new_item), notice: "L'offre a bien été dupliquée."
     else
       render :edit, notice: "Une erreur est survenue lors de la duplication de l'offre."
     end

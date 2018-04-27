@@ -9,10 +9,9 @@ ITEM_EXPOSITION = "exposition"
 ITEM_TYPES = [ITEM_VISITE, ITEM_PARCOURS, ITEM_ANIMATION, ITEM_EXPOSITION]
 
 THEMES = {
-    GRAND_LYON => ['Thématique 2018', "Unesco", "Nouveauté",
-                   "En famille", "Jeunes (15-25 ans)", "Egalité", 'Sous-thématique 1', 'Sous-thématique 2',
-                   'Sous-thématique 3', 'Sous-thématique 4', 'Sous-thématique 5'],
-    ISERE => ['Thématique 2018', "Famille", "Réservé aux enfants", "Antiquité",
+    GRAND_LYON => ["Thématique 2018 - \"L'art du partage\"", "Unesco", "Nouveauté",
+                   "En famille", "Jeunes (15-25 ans)", "Egalité"],
+    ISERE => ["Thématique 2018 - \"L'art du partage\"", "Famille", "Réservé aux enfants", "Antiquité",
               "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique"]
 }
 THEMES_REFS = Hash[THEMES.values.flatten.collect {|th| [th.parameterize, th] }]
@@ -86,7 +85,7 @@ APIDAE_CRITERIA = {
 }
 
 APIDAE_TYPOLOGIES = {
-    'Thématique 2018' => 5133
+    "Thématique 2018 - \"L'art du partage\"" => 5412
 }
 
 # Preprod
@@ -108,7 +107,7 @@ APIDAE_TYPOLOGIES = {
 # }
 #
 # APIDAE_TYPOLOGIES = {
-#     'Thématique 2018' => 4927
+#     "Thématique 2018 - \"L'art du partage\"" => 4927
 # }
 
 APIDAE_THEMES = {

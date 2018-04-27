@@ -43,12 +43,12 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
         if @item.save
           if @item.remote_save
             NotificationMailer.publish(@item).deliver_now
-            redirect_to edit_moderator_program_url(@item.program), notice: "L'offre a bien été enregistrée." and return
+            redirect_to moderator_program_items_url, notice: "L'offre a bien été enregistrée." and return
           end
         end
       elsif @item.save
         NotificationMailer.reject(@item).deliver_now if @item.rejected?
-        redirect_to edit_moderator_program_url(@item.program), notice: "L'offre a bien été mise à jour." and return
+        redirect_to moderator_program_items_url, notice: "L'offre a bien été mise à jour." and return
       end
     rescue Encoding::UndefinedConversionError => e
       Raven.capture_exception(e)
