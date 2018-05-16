@@ -130,12 +130,12 @@ fr:
   program_item:
     status:
       draft: 'brouillon'
-      pending: 'en cours'
+      pending: 'en validation'
       validated: 'validée'
       rejected: 'rejetée'
     statuses:
       draft: 'brouillons'
-      pending: 'en cours'
+      pending: 'en validation'
       validated: 'validées'
       rejected: 'rejetées'
     color:

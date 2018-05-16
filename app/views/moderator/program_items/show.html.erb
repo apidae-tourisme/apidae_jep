@@ -8,7 +8,7 @@
       <span class="label label-primary text-normal vam"><%= "Id Apidae #{@item.external_id}" %></span>
   <% end %>
 </div>
-<%= render 'shared/forms/item_form', form_scope: :user, readonly: 'disabled' %>
+<%= render 'shared/forms/item_form', form_scope: :moderator, readonly: 'disabled' %>
 <% content_for :body_area do %>
     <%= render 'shared/forms/item_form_scripts', readonly: true,
                update_form_path: update_form_user_program_items_path,

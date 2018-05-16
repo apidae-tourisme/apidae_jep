@@ -2,7 +2,7 @@
 <div class="row">
   <div class="col-md-4 pr-sm">
     <div class="panel widget bg-warning">
-      <a class="row row-table text-white" href="<%= moderator_items_path(status: ProgramItem::STATUS_PENDING) %>">
+      <a class="row row-table text-white" href="<%= moderator_program_items_path(status: ProgramItem::STATUS_PENDING) %>">
         <div class="col-xs-4 text-center bg-warning-dark pv-lg">
           <em class="icon-hourglass fa-2x"></em>
         </div>
@@ -15,7 +15,7 @@
   </div>
   <div class="col-md-4 ph-sm">
     <div class="panel widget bg-success">
-      <a class="row row-table text-white" href="<%= moderator_items_path(status: ProgramItem::STATUS_VALIDATED) %>">
+      <a class="row row-table text-white" href="<%= moderator_program_items_path(status: ProgramItem::STATUS_VALIDATED) %>">
         <div class="col-xs-4 text-center bg-success-dark pv-lg">
           <em class="icon-like fa-2x"></em>
         </div>
@@ -28,7 +28,7 @@
   </div>
   <div class="col-md-4 pl-sm">
     <div class="panel widget bg-danger">
-      <a class="row row-table text-white" href="<%= moderator_items_path(status: ProgramItem::STATUS_REJECTED) %>">
+      <a class="row row-table text-white" href="<%= moderator_program_items_path(status: ProgramItem::STATUS_REJECTED) %>">
         <div class="col-xs-4 text-center bg-danger-dark pv-lg">
           <em class="icon-dislike fa-2x"></em>
         </div>

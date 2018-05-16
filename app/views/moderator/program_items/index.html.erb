@@ -8,11 +8,11 @@
 <div class="row">
   <div class="col-lg-12">
     <div class="btn-group btn-group-justified mb-xl">
-      <%= link_to('En validation', moderator_items_path(status: ProgramItem::STATUS_PENDING),
+      <%= link_to('En validation', moderator_program_items_path(status: ProgramItem::STATUS_PENDING),
                   class: "text-md btn btn-lg btn-warning #{@status == ProgramItem::STATUS_PENDING ? 'text-bold' : 'text-alpha'}") %>
-      <%= link_to('Validées', moderator_items_path(status: ProgramItem::STATUS_VALIDATED),
+      <%= link_to('Validées', moderator_program_items_path(status: ProgramItem::STATUS_VALIDATED),
                   class: "text-md btn btn-lg btn-success #{@status == ProgramItem::STATUS_VALIDATED ? 'text-bold' : 'text-alpha'}") %>
-      <%= link_to('Rejetées', moderator_items_path(status: ProgramItem::STATUS_REJECTED),
+      <%= link_to('Rejetées', moderator_program_items_path(status: ProgramItem::STATUS_REJECTED),
                   class: "text-md btn btn-lg btn-danger #{@status == ProgramItem::STATUS_REJECTED ? 'text-bold' : 'text-alpha'}") %>
     </div>
   </div>
