@@ -14,6 +14,7 @@ class User::ProgramItemsController < User::UserController
     end
   end
 
+  # created_at "2018-05-23 15:00:13.740306" item_id = 2879
   def new
     if params[:id].blank?
       @item = ProgramItem.new(item_type: ITEM_VISITE, free: true, booking: false,
@@ -43,7 +44,10 @@ class User::ProgramItemsController < User::UserController
 
     if @item.save(validate: @item.status != ProgramItem::STATUS_DRAFT)
       @item.comment = nil
-      @item.update(reference: @item.id) unless @item.reference
+      unless @item.reference
+        @item.reference = @item.id
+        @item.save(validate: @item.status != ProgramItem::STATUS_DRAFT)
+      end
       NotificationMailer.notify(@item).deliver_now if @item.pending?
       if current_user.territory == GRAND_LYON && current_user.program_items.count == 1 && current_user.communication.nil?
         redirect_to communication_user_account_path
