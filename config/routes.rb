@@ -46,7 +46,7 @@ Rails.application.routes.draw do
       get 'validations(/:year)', on: :collection, as: 'pending', to: 'program_items#index', status: ProgramItem::STATUS_PENDING
       get 'publiees(/:year)', on: :collection, as: 'validated', to: 'program_items#index', status: ProgramItem::STATUS_VALIDATED
       get 'rejetees(/:year)', on: :collection, as: 'rejected', to: 'program_items#index', status: ProgramItem::STATUS_REJECTED
-      match ':year', on: :collection, to: 'program_items#index', via: :get, as: 'annual', year: /\d{4}/
+      match ':year', on: :collection, to: 'program_items#index', via: :get, as: 'annual', year: /201[78]/
     end
   end
 
