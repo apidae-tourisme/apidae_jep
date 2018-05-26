@@ -8,6 +8,10 @@ class User::ProgramItemsController < User::UserController
       @status = params[:status]
       @items = @items.where(status: params[:status])
     end
+    unless params[:year].blank?
+      @year = params[:year].to_i
+      @items = @items.where(created_at: (Date.new(@year, 1, 1)..Date.new(@year + 1, 1, 1)))
+    end
   end
 
   def new

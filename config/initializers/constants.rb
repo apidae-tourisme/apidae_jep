@@ -1,6 +1,8 @@
 GRAND_LYON = "grand_lyon"
 ISERE = "isere"
 
+EDITION = 2018
+
 ITEM_VISITE = "visite"
 ITEM_PARCOURS = "parcours"
 ITEM_ANIMATION = "animation"
@@ -9,7 +11,7 @@ ITEM_EXPOSITION = "exposition"
 ITEM_TYPES = [ITEM_VISITE, ITEM_PARCOURS, ITEM_ANIMATION, ITEM_EXPOSITION]
 
 THEMES = {
-    GRAND_LYON => ["Thématique 2018 - \"L'art du partage\"", "Unesco", "Nouveauté",
+    GRAND_LYON => ["Thématique 2018 - \"L'art du partage\"", "Le goût en partage", "Unesco", "Nouveauté",
                    "En famille", "Jeunes (15-25 ans)", "Egalité"],
     ISERE => ["Thématique 2018 - \"L'art du partage\"", "Famille", "Réservé aux enfants", "Antiquité",
               "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique"]
@@ -70,6 +72,7 @@ ALL_REFS = THEMES_REFS.merge(VALIDATION_CRITERIA_REFS).merge(CRITERIA_REFS).merg
 # APIDAE_CRITERIA = {
 #     'Nouveauté' => 7997,
 #     "Visite libre" => 10173,
+#     "Le goût en partage" => 10164,
 #     "Unesco" => 10160,
 #     'Egalité' => 10161,
 #     'animation' => 10171,
@@ -92,15 +95,16 @@ ALL_REFS = THEMES_REFS.merge(VALIDATION_CRITERIA_REFS).merge(CRITERIA_REFS).merg
 APIDAE_CRITERIA = {
     'Nouveauté' => 7997,
     "Visite libre" => 8767,
+    "Le goût en partage" => 8771,
     "Unesco" => 8776,
     'Egalité' => 8777,
     'animation' => 8769,
     'parcours' => 8768,
     'Sous-thématique 1' => 8771,
-    'Sous-thématique 1' => 8772,
-    'Sous-thématique 1' => 8773,
-    'Sous-thématique 1' => 8774,
-    'Sous-thématique 1' => 8775,
+    'Sous-thématique 2' => 8772,
+    'Sous-thématique 3' => 8773,
+    'Sous-thématique 4' => 8774,
+    'Sous-thématique 5' => 8775,
     'Coup de coeur' => 7998,
     'Visites guidées de l\'Office du Tourisme' => 8778,
     'Balades urbaines du Musée Gadagne' => 8292

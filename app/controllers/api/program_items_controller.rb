@@ -3,7 +3,7 @@ class Api::ProgramItemsController < Api::ApiController
     @items = []
     @member_ref = params[:ref]
     unless @member_ref.blank?
-      @items = ProgramItem.in_status(@member_ref, ProgramItem::STATUS_VALIDATED)
+      @items = ProgramItem.in_status(@member_ref, EDITION, ProgramItem::STATUS_VALIDATED)
     end
   end
 

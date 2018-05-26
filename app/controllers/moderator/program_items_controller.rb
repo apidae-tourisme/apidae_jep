@@ -3,17 +3,17 @@
 require 'raven'
 
 class Moderator::ProgramItemsController < Moderator::ModeratorController
-  # before_action :set_program, except: [:index, :account, :entity, :export]
   before_action :set_program_item, only: [:show, :edit, :update, :destroy, :confirm]
 
   def index
+    @year = params[:year].blank? ? EDITION : params[:year].to_i
     @status = params[:status] || ProgramItem::STATUS_PENDING
-    @items = ProgramItem.in_status(current_moderator.member_ref, @status)
+    @items = ProgramItem.in_status(current_moderator.member_ref, @year, @status)
     @items.each {|item| item.set_territory(current_moderator.member_ref)}
   end
 
   def export
-    @items = ProgramItem.in_status(current_moderator.member_ref,
+    @items = ProgramItem.in_status(current_moderator.member_ref, EDITION,
                                    ProgramItem::STATUS_PENDING, ProgramItem::STATUS_VALIDATED, ProgramItem::STATUS_REJECTED)
     respond_to do |format|
       format.xlsx {
@@ -90,25 +90,6 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
   def confirm
   end
 
-  # def reorder
-  #   unless params[:direction].blank?
-  #     ProgramItem.change_order(@item, params[:direction])
-  #   end
-  #   redirect_to edit_moderator_program_url(@program), notice: "L'offre a bien été mise à jour."
-  # end
-  #
-  # def select_program
-  #   @programs = @program.users.collect {|u| u.programs}.flatten.uniq.collect {|p| [p.title, p.id]}
-  # end
-  #
-  # def save_program
-  #   if @item.update(item_params)
-  #     redirect_to edit_moderator_program_url(@item.program), notice: "L'offre a bien déplacée dans sa nouvelle programmation."
-  #   else
-  #     redirect_to edit_moderator_program_url(@program), notice: "Une erreur est survenue au cours du déplacement de l'offre."
-  #   end
-  # end
-
   def account
     @items = []
     unless params[:user_id].blank?
@@ -146,10 +127,6 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
   def item_params
     params.require(:program_item).permit!
   end
-
-  # def set_program
-  #   @program = Program.find(params[:program_id])
-  # end
 
   def set_program_item
     @item = ProgramItem.find(params[:id])

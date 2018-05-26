@@ -73,8 +73,8 @@ class User < ActiveRecord::Base
     legal_entity.external_id if legal_entity
   end
 
-  def offers
-    legal_entity.active_items.group_by {|pi| pi.status}
+  def offers(year)
+    legal_entity.active_items.select {|item| item.created_at.year == year}.group_by {|pi| pi.status}
   end
 
   def account_offers

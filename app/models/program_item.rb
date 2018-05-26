@@ -103,8 +103,9 @@ class ProgramItem < ActiveRecord::Base
     where(status: [STATUS_PENDING, STATUS_VALIDATED, STATUS_REJECTED])
   end
 
-  def self.in_status(territory, *statuses)
-    active_versions.where("program_items.status IN (?) AND users.territory = ?", statuses, territory)
+  def self.in_status(territory, year, *statuses)
+    active_versions.where(created_at: (Date.new(year, 1, 1)..Date.new(year + 1, 1, 1)))
+        .where("program_items.status IN (?) AND users.territory = ?", statuses, territory)
         .joins("JOIN users ON users.id = program_items.user_id")
   end
 

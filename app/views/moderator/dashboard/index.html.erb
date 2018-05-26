@@ -1,13 +1,19 @@
-<h3>ApidaeJEP - Administration</h3>
+<div class="pull-right">
+  <a href="<%= moderator_dashboard_path(year: 2018) %>" class="btn btn-info btn-oval <%= 'btn-outline' unless @year == 2018 %>">JEP 2018</a>
+  <a href="<%= moderator_dashboard_path(year: 2017) %>" class="btn btn-info btn-oval <%= 'btn-outline' unless @year == 2017 %>">JEP 2017</a>
+</div>
+<h3>
+  ApidaeJEP - Administration
+</h3>
 <div class="row">
   <div class="col-md-4 pr-sm">
     <div class="panel widget bg-warning">
-      <a class="row row-table text-white" href="<%= moderator_program_items_path(status: ProgramItem::STATUS_PENDING) %>">
+      <a class="row row-table text-white" href="<%= moderator_program_items_path(status: ProgramItem::STATUS_PENDING, year: @year) %>">
         <div class="col-xs-4 text-center bg-warning-dark pv-lg">
           <em class="icon-hourglass fa-2x"></em>
         </div>
         <div class="col-xs-8 pv-lg">
-          <div class="h1 m0 text-bold"><%= ProgramItem.in_status(current_moderator.member_ref, ProgramItem::STATUS_PENDING).count %></div>
+          <div class="h1 m0 text-bold"><%= ProgramItem.in_status(current_moderator.member_ref, @year, ProgramItem::STATUS_PENDING).count %></div>
           <div class="text-uppercase">en validation</div>
         </div>
       </a>
@@ -15,12 +21,12 @@
   </div>
   <div class="col-md-4 ph-sm">
     <div class="panel widget bg-success">
-      <a class="row row-table text-white" href="<%= moderator_program_items_path(status: ProgramItem::STATUS_VALIDATED) %>">
+      <a class="row row-table text-white" href="<%= moderator_program_items_path(status: ProgramItem::STATUS_VALIDATED, year: @year) %>">
         <div class="col-xs-4 text-center bg-success-dark pv-lg">
           <em class="icon-like fa-2x"></em>
         </div>
         <div class="col-xs-8 pv-lg">
-          <div class="h1 m0 text-bold"><%= ProgramItem.in_status(current_moderator.member_ref, ProgramItem::STATUS_VALIDATED).count %></div>
+          <div class="h1 m0 text-bold"><%= ProgramItem.in_status(current_moderator.member_ref, @year, ProgramItem::STATUS_VALIDATED).count %></div>
           <div class="text-uppercase">validées</div>
         </div>
       </a>
@@ -28,12 +34,12 @@
   </div>
   <div class="col-md-4 pl-sm">
     <div class="panel widget bg-danger">
-      <a class="row row-table text-white" href="<%= moderator_program_items_path(status: ProgramItem::STATUS_REJECTED) %>">
+      <a class="row row-table text-white" href="<%= moderator_program_items_path(status: ProgramItem::STATUS_REJECTED, year: @year) %>">
         <div class="col-xs-4 text-center bg-danger-dark pv-lg">
           <em class="icon-dislike fa-2x"></em>
         </div>
         <div class="col-xs-8 pv-lg">
-          <div class="h1 m0 text-bold"><%= ProgramItem.in_status(current_moderator.member_ref, ProgramItem::STATUS_REJECTED).count %></div>
+          <div class="h1 m0 text-bold"><%= ProgramItem.in_status(current_moderator.member_ref, @year, ProgramItem::STATUS_REJECTED).count %></div>
           <div class="text-uppercase">rejetées</div>
         </div>
       </a>

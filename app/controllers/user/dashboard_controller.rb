@@ -2,7 +2,8 @@ class User::DashboardController < User::UserController
   before_action :set_user
 
   def index
-    @offers = @user.offers
+    @year = params[:year].blank? ? EDITION : params[:year].to_i
+    @offers = @user.offers(@year)
   end
 
   def support

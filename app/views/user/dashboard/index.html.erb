@@ -1,4 +1,10 @@
-<h3>Bienvenue sur ApidaeJEP</h3>
+<div class="pull-right">
+  <a href="<%= user_dashboard_path(year: 2018) %>" class="btn btn-info btn-oval <%= 'btn-outline' unless @year == 2018 %>">JEP 2018</a>
+  <a href="<%= user_dashboard_path(year: 2017) %>" class="btn btn-info btn-oval <%= 'btn-outline' unless @year == 2017 %>">JEP 2017</a>
+</div>
+<h3>
+  Bienvenue sur ApidaeJEP
+</h3>
 <div class="panel panel-info">
   <div class="panel-body">
     <p class="mb0">
@@ -15,7 +21,7 @@
 <div id="user_dashboard" class="row">
   <div class="col-md-6 pr-sm">
     <div class="panel widget bg-inverse">
-      <a class="row row-table" href="<%= drafts_user_program_items_path(status: ProgramItem::STATUS_DRAFT) %>">
+      <a class="row row-table" href="<%= drafts_user_program_items_path(status: ProgramItem::STATUS_DRAFT, year: @year) %>">
         <div class="col-xs-4 text-center bg-inverse-dark pv-lg">
           <em class="icon-note fa-2x"></em>
         </div>
@@ -28,7 +34,7 @@
   </div>
   <div class="col-md-6 pl-sm">
     <div class="panel widget bg-warning">
-      <a class="row row-table" href="<%= pending_user_program_items_path(status: ProgramItem::STATUS_PENDING) %>">
+      <a class="row row-table" href="<%= pending_user_program_items_path(status: ProgramItem::STATUS_PENDING, year: @year) %>">
         <div class="col-xs-4 text-center bg-warning-dark pv-lg">
           <em class="icon-hourglass fa-2x"></em>
         </div>
@@ -41,7 +47,7 @@
   </div>
   <div class="col-md-6 pr-sm">
     <div class="panel widget bg-success">
-      <a class="row row-table" href="<%= validated_user_program_items_path(status: ProgramItem::STATUS_VALIDATED) %>">
+      <a class="row row-table" href="<%= validated_user_program_items_path(status: ProgramItem::STATUS_VALIDATED, year: @year) %>">
         <div class="col-xs-4 text-center bg-success-dark pv-lg">
           <em class="icon-like fa-2x"></em>
         </div>
@@ -54,7 +60,7 @@
   </div>
   <div class="col-md-6 pl-sm">
     <div class="panel widget bg-danger">
-      <a class="row row-table" href="<%= rejected_user_program_items_path(status: ProgramItem::STATUS_REJECTED) %>">
+      <a class="row row-table" href="<%= rejected_user_program_items_path(status: ProgramItem::STATUS_REJECTED, year: @year) %>">
         <div class="col-xs-4 text-center bg-danger-dark pv-lg">
           <em class="icon-dislike fa-2x"></em>
         </div>
