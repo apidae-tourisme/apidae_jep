@@ -31,7 +31,6 @@ Rails.application.routes.draw do
       get 'account', on: :collection, path: 'compte'
       get 'entity', on: :collection, path: 'structure'
       get 'export', on: :collection, path: 'export'
-      match ':year', on: :collection, to: 'program_items#index', via: :get, as: 'annual', year: /\d{4}/
     end
 
     resources :program_items, path: 'offres' do
@@ -47,6 +46,7 @@ Rails.application.routes.draw do
       get 'validations(/:year)', on: :collection, as: 'pending', to: 'program_items#index', status: ProgramItem::STATUS_PENDING
       get 'publiees(/:year)', on: :collection, as: 'validated', to: 'program_items#index', status: ProgramItem::STATUS_VALIDATED
       get 'rejetees(/:year)', on: :collection, as: 'rejected', to: 'program_items#index', status: ProgramItem::STATUS_REJECTED
+      match ':year', on: :collection, to: 'program_items#index', via: :get, as: 'annual', year: /\d{4}/
     end
   end
 
