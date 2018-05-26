@@ -94,7 +94,8 @@ class User::ProgramItemsController < User::UserController
       @new_item.item_openings << o.dup
     end
     if @new_item.save(validate: false)
-      @new_item.update(reference: @new_item.id)
+      @new_item.reference = @new_item.id
+      @new_item.save(validate: false)
       @item.attached_files.each do |f|
         AttachedFile.create(data: f.data, picture: f.picture, program_item_id: @new_item.id)
       end
