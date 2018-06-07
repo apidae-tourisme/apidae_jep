@@ -3,18 +3,17 @@ class User::ProgramItemsController < User::UserController
   before_action :set_program_item, only: [:edit, :update, :show, :destroy, :confirm, :duplicate]
 
   def index
-    @items = current_user.program_items.order(id: :desc)
+    @items = current_user.legal_entity.active_items.sort_by {|i| 1/i.id.to_f}
     unless params[:status].blank?
       @status = params[:status]
-      @items = @items.where(status: params[:status])
+      @items = @items.select {|i| i.status == @status}
     end
     unless params[:year].blank?
       @year = params[:year].to_i
-      @items = @items.where(created_at: (Date.new(@year, 1, 1)..Date.new(@year + 1, 1, 1)))
+      @items = @items.select {|i| i.created_at >= Date.new(@year, 1, 1) && i.created_at < Date.new(@year + 1, 1, 1)}
     end
   end
 
-  # created_at "2018-05-23 15:00:13.740306" item_id = 2879
   def new
     if params[:id].blank?
       @item = ProgramItem.new(item_type: ITEM_VISITE, free: true, booking: false,
