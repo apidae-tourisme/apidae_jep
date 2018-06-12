@@ -1,12 +1,15 @@
-/*
- * 
- * --- FontAwesome
- *= require fontawesome/css/font-awesome.min
- * --- Simple Line Icons
- *= require simple-line-icons/css/simple-line-icons
- * --- Animate.css
- *= require animate.css/animate.min
- * --- Whirl (spinners)
- *= require whirl/dist/whirl
- *
- */
+@import "fontawesome/scss/variables";
+@import "fontawesome/scss/mixins";
+@import "fontawesome/scss/core";
+@import "fontawesome/scss/larger";
+@import "fontawesome/scss/fixed-width";
+@import "fontawesome/scss/list";
+@import "fontawesome/scss/bordered-pulled";
+@import "fontawesome/scss/animated";
+@import "fontawesome/scss/rotated-flipped";
+@import "fontawesome/scss/stacked";
+@import "fontawesome/scss/icons";
+@import "fontawesome/scss/screen-reader";
+
+$simple-line-font-family: "Simple-Line-Icons";
+@import "simple-line-icons/scss/simple-line-icons";
