@@ -61,7 +61,7 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
         error_msg = e.response.parsed['message']
         error_msg = error_msg.split("\n").first if error_msg && error_msg.include?("\n")
         flash.now[:alert] = "Une erreur s'est produite au cours de l'enregistrement dans la base " +
-            "de données Apidae.\nLe message fourni est le suivant : #{error_msg}"
+            "de données Apidae. Le message fourni est le suivant : #{error_msg}"
       else
         logger.error "Apidae error : #{e.response} - item : #{@item.id}"
         flash.now[:alert] = "Une erreur s'est produite au cours de l'enregistrement dans la base de données Apidae."
