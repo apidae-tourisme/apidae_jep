@@ -39,8 +39,8 @@
           </div>
           <% if current_moderator %>
           <div class="form-group mt-lg">
-            <label class="col-sm-2 control-label">Identifiant Apidae</label>
-            <%= help_content("Identifiant de la fiche correspondante dans Apidae. Utile uniquement dans le cas où vous souhaitez supprimer une référence vers une fiche Apidae obsolète.") %>
+            <label class="col-sm-2 control-label">Identifiant Apidae<%= help_button %></label>
+            <%= help_content("Identifiant de la fiche correspondante dans Apidae. A supprimer si la saisie ApidaeJEP est toujours rattachée à une fiche Apidae qui a été supprimée (message d'erreur \"Aucun objet ne correspond...\").") %>
             <div class="col-sm-10">
               <%= item_form.text_field :external_id, class: 'form-control', placeholder: "Identifiant Apidae", disabled: readonly %>
               <%= render_previous(:external_id) %>
