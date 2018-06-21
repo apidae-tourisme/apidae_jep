@@ -103,7 +103,7 @@
         function toggleMapFields(newPlace) {
             $("#map_fields").show();
             if(newPlace) {
-                updateFormFields({properties:{}, geometry:{coordinates:[45.740410, 4.816417]}});
+                updateFormFields({properties:{}, geometry:{coordinates:[4.816417, 45.740410]}});
                 $("#program_item_main_transports").val('');
                 $("#program_item_main_town_insee_code").val('').trigger('change');
                 $("#program_item_building_types").val('').trigger("chosen:updated");
