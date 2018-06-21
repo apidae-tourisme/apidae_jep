@@ -34,7 +34,7 @@
       <span style='color: #6eb1c6;'>// Descriptif de l'offre </span>
       "description": {
         "name": "Titre de l'évènement",
-        "short_desc": "Descriptif court de l'offre",
+        "summary": "Descriptif court de l'offre",
         "long_desc": "Descriptif long de l'offre",
         <span style='color: #6eb1c6;'>// Critères d'accessibilité</span>
         "accessibility": [

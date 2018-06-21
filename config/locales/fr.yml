@@ -320,7 +320,7 @@ fr:
       external_id: Identifiant Apidae
       title: Titre
       description: Description
-      short_desc: Résumé
+      summary: Résumé
       item_type: Catégorie
       place_desc: Description du lieu
       event_planners: Organisateurs associés
