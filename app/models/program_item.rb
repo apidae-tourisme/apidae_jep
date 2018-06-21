@@ -121,10 +121,6 @@ class ProgramItem < ActiveRecord::Base
     where(status: STATUS_REJECTED)
   end
 
-  def short_desc
-    summary.blank? ? description[0..254] : summary
-  end
-
   def set_territory(member_ref)
     self.territory = TERRITORIES_BY_CODE[member_ref][Town.find_by_insee_code(main_town_insee_code).postal_code] if Town.find_by_insee_code(main_town_insee_code)
   end
@@ -152,8 +148,10 @@ class ProgramItem < ActiveRecord::Base
 
     unless desc_data.nil? || desc_data.empty?
       merged[:description] = {
-          name: title, shortDescription: short_desc,
-          longDescription: description, planners: event_planners,
+          name: title,
+          shortDescription: (user.territory == GRAND_LYON ? summary : description[0..254]),
+          longDescription: (user.territory == GRAND_LYON ? description : ''),
+          planners: event_planners,
           accessibility: accessibility,
           audience: themes,
           categories: (criteria || []) + (validation_criteria || []),
