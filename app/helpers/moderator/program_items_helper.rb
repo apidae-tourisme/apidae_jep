@@ -89,27 +89,44 @@ module Moderator::ProgramItemsHelper
 
   def exported_columns
     {
-        item: ['reference', 'rev', 'status', 'external_id', 'item_type', 'title', 'description', 'summary', 'place_desc',
-               'event_planners', 'building_ages', 'building_types', 'accessibility', 'criteria', 'themes',
-               'validation_criteria', 'free', 'rates_desc', 'booking', 'booking_details', 'booking_telephone',
-               'booking_email', 'booking_website', 'openings_desc', 'telephone', 'email', 'website', 'ordering',
-               'main_place', 'main_lat', 'main_lng', 'main_address', 'town', 'main_transports', 'alt_place', 'updated_at',
-               'validated_at'],
+        item_0: ['reference', 'rev', 'status', 'external_id', 'main_lat', 'main_lng', 'town', 'themes', 'main_place',
+               'accessibility', 'validation_criteria', 'building_ages', 'building_types', 'place_desc', 'ordering',
+               'title', 'item_type', 'criteria', 'description', 'summary'],
         item_openings: ['opening_description'],
+        item_1: ['openings_desc', 'free', 'rates_desc', 'booking', 'booking_details', 'booking_telephone',
+                   'booking_email', 'booking_website', 'main_address', 'alt_place', 'main_transports', 'telephone',
+                   'email', 'website'],
+        user_0: ['user_entity'],
+        item_2: ['event_planners'],
+        user_1: ['user_name', 'user_email', 'user_telephone'],
         attached_files: ['pictures'],
-        user: ['user_name', 'user_email', 'user_telephone', 'user_entity']
+        item_3: ['updated_at', 'validated_at']
     }
   end
 
+  def cols_width
+    [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, 60, nil, nil, nil, nil, 60, 60, 60, nil, nil,
+     nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+  end
+
   def exported_values(item)
-    values = exported_columns[:item].collect do |c|
+    values = item_values(item, exported_columns[:item_0])
+    values << item.item_openings.collect {|o| format_opening(current_moderator.member_ref,o.description)}.join(' | ')
+    values += item_values(item, exported_columns[:item_1])
+    values << item.user.legal_entity.name
+    values += item_values(item, exported_columns[:item_2])
+    values += [item.user.full_name, item.user.email, format_phone(item.user.telephone)]
+    values << item.attached_files.collect {|p| p.info}.join(' | ')
+    values += item_values(item, exported_columns[:item_3])
+    values.each {|val| val.gsub!(/\r?\n|\r/, ' ') if val.is_a?(String)}
+    values
+  end
+
+  def item_values(item, columns)
+    columns.collect do |c|
       val = item.send(c)
       format_value(c, val && val.is_a?(Array) ? val.select {|v| !v.blank?}.map {|v| ALL_REFS[v] || v}.join(' | ') : val)
     end
-    values << item.item_openings.collect {|o| format_opening(current_moderator.member_ref,o.description)}.join(' | ')
-    values << item.attached_files.collect {|p| p.info}.join(' | ')
-    values.each {|val| val.gsub!(/\r?\n|\r/, ' ') if val.is_a?(String)}
-    values + [item.user.full_name, item.user.email, format_phone(item.user.telephone), item.user.legal_entity.name]
   end
 
   def format_value(key, value)
