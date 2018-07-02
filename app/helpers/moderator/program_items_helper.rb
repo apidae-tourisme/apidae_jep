@@ -105,8 +105,8 @@ module Moderator::ProgramItemsHelper
   end
 
   def cols_width
-    [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, 60, nil, nil, nil, nil, 60, 60, 60, nil, nil,
-     nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+    [nil, nil, nil, nil, nil, nil, nil, nil, nil, 100, nil, nil, nil, 100, nil, 100, nil, nil, 100, 100, 100, 100, nil,
+     100, nil, 100, nil, nil, nil, nil, nil, 100, nil, nil, nil, nil, 100, nil, nil, nil, 100, nil, nil]
   end
 
   def exported_values(item)
