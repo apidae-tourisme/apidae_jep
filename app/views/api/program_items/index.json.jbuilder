@@ -37,9 +37,9 @@ json.program_items do
     json.criteria normalize_list(item.criteria) || []
     json.validation_criteria normalize_list(item.validation_criteria) || []
     json.openings do
-      json.dates item.open_dates
+      json.dates item.open_dates.sort
       json.values do
-        json.array!(item.item_openings) do |o|
+        json.array!(item.item_openings.order(:starts_at)) do |o|
           json.starts_at o.starts_at
           json.ends_at o.ends_at
           json.duration o.duration

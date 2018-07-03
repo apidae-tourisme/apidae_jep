@@ -75,6 +75,7 @@ Rails.application.routes.draw do
         patch 'update_com', on: :member
         get 'export', on: :collection, path: 'export'
         get 'export_com', on: :collection, as: 'export_kits', path: 'export_supports'
+        patch 'notify_com', on: :collection
       end
       resources :event_polls, path: 'questionnaires', only: [:index, :show] do
         get 'export', on: :collection

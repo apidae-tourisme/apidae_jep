@@ -46,6 +46,8 @@ class Moderator::AccountsController < Moderator::ModeratorController
 
   def list_com
     @polls = CommunicationPoll.where(user_id: User.where(territory: current_moderator.member_ref, communication: true).collect {|u| u.id})
+    @users = User.with_items(GRAND_LYON)
+    @users_without_com = @users.to_a.select {|usr| usr.communication_poll.nil?}
   end
 
   def edit_com
@@ -75,6 +77,17 @@ class Moderator::AccountsController < Moderator::ModeratorController
         response.headers['Content-Disposition'] = "attachment; filename=\"supports-com-#{current_moderator.member_ref}-#{I18n.l(Time.current, format: :reference)}.xlsx\""
       }
     end
+  end
+
+  def notify_com
+    @users = User.with_items(GRAND_LYON)
+    @users_without_com = @users.to_a.select {|usr| usr.communication_poll.nil?}
+
+    @users_without_com.each do |usr|
+      NotificationMailer.notify_com(usr).deliver_later
+    end
+
+    redirect_to url_for(action: :list_com), notice: 'Les notifications ont bien été transmises.'
   end
 
   private

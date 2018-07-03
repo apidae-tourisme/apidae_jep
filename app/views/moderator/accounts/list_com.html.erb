@@ -1,4 +1,7 @@
 <div class="pull-right">
+  <%= link_to '<span class="btn-label"><em class="icon icon-paper-plane"></em></span>Notifier les organisateur(s)'.html_safe,
+              notify_com_moderator_accounts_path, data: {confirm: "Notifier #{@users_without_com.length} organisateurs ?"},
+              method: :patch, class: 'btn btn-labeled btn-green' %>
   <a class="btn btn-labeled btn-primary" href="<%= export_kits_moderator_accounts_path %>.xlsx">
     <span class="btn-label"><em class="icon icon-cloud-download"></em></span>
     Export Excel
