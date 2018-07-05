@@ -7,7 +7,7 @@ class CommunicationPoll < ActiveRecord::Base
   belongs_to :user
 
   def ref_person
-    ["#{first_name} #{last_name}", role, email, phone, town.label].select {|f| !f.blank?}.join(' - ')
+    ["#{first_name} #{last_name}", role, email, phone, town ? town.label : ''].select {|f| !f.blank?}.join(' - ')
   end
 
   def full_address
