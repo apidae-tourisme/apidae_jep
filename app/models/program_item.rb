@@ -293,7 +293,7 @@ class ProgramItem < ActiveRecord::Base
             },
             informationsFeteEtManifestation: {
                 categories: build_categories(value[:categories]),
-                themes: build_themes(value),
+                themes: build_themes(value[:themes]),
                 portee: {id: 2352, elementReferenceType: 'FeteEtManifestationPortee'},
                 evenementGenerique: {id: 2388, elementReferenceType: 'FeteEtManifestationGenerique'},
                 typesManifestation: [{id: 1958, elementReferenceType: 'FeteEtManifestationType'}],

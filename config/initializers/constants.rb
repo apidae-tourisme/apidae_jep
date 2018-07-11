@@ -32,7 +32,7 @@ CRITERIA = {
       ITEM_ANIMATION => {
           "Intervention artistique" => ["Théâtre", "Concert", "Danse", "Lecture", "Conte"],
           "Conférence / Débat / Projection" => ["Conférence / Débat", "Projection"],
-          "Savoirs-faire" => ["Démonstration", "Dégustations"],
+          "Savoirs-faire" => ["Démonstration", "Dégustation"],
           "Animation participative" => ["Jeux", "Atelier"]
       },
       ITEM_EXPOSITION => ["Visite guidée", "Visite libre"]
@@ -140,7 +140,7 @@ APIDAE_CATEGORIES = {
     'Jeux' => 2112,
     'Visite guidée' => 2101,
     'Concert' => 2128,
-    'Conférence' => 2072,
+    'Conférence / Débat' => 2072,
     'Exposition' => 2080,
     'Projection' => 3818,
     'Spectacle' => 2091,
