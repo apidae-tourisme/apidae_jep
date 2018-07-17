@@ -85,6 +85,7 @@ class User::ProgramItemsController < User::UserController
   def duplicate
     @new_item = @item.dup
     @new_item.ordering ||= 1
+    @new_item.external_id = nil
     @new_item.external_status = nil
     @new_item.rev = 1
     @new_item.user_id = current_user.id
