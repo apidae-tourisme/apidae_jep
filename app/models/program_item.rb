@@ -429,7 +429,7 @@ class ProgramItem < ActiveRecord::Base
         booking_data[:organismes][0][:moyensCommunication] <<
             {type: {id: 205, elementReferenceType: 'MoyenCommunicationType'}, coordonnees: {fr: data_hash[:bookingWebsite]}}
       end
-      booking_data[:complement] = {libelleFr: (data_hash[:booking] ? 'Réservation recommandée' : 'Réservation obligatoire')}
+      booking_data[:complement] = {libelleFr: (data_hash[:booking] ? 'Réservation obligatoire' : 'Réservation recommandée')}
       booking_data[:complement][:libelleFr] += "\n#{data_hash[:bookingDetails]}" unless data_hash[:bookingDetails].blank?
       result[:reservation] = booking_data
     end
