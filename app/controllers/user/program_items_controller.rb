@@ -1,6 +1,12 @@
 class User::ProgramItemsController < User::UserController
-
+  before_action :check_auth
   before_action :set_program_item, only: [:edit, :update, :show, :destroy, :confirm, :duplicate]
+
+  def check_auth
+    if current_user.territory == ISERE
+      redirect_to user_dashboard_url, alert: "La saisie des offres pour l'Isère n'est plus disponible en ligne."
+    end
+  end
 
   def index
     @items = current_user.legal_entity.active_items.sort_by {|i| 1/i.id.to_f}
