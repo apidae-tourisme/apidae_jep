@@ -3,7 +3,7 @@
   <small><%= "#{@user.full_name} - " if current_moderator %><%= "Transmis le #{l(@poll.created_at)}" if @poll.persisted? %></small>
 </div>
 <div id="event_poll_wrapper">
-  <%= form_for(@poll, url: user_user_event_poll_path(@user.id), html: {id: 'event_poll_form', class: 'form-horizontal mb-xl pb-xl'}) do |f| %>
+  <%= form_for(@poll, url: user_user_event_polls_path(@user.id), html: {id: 'event_poll_form', class: 'form-horizontal mb-xl pb-xl'}) do |f| %>
       <div class="panel panel-default panel-flat">
         <div class="panel-body">
             <legend class="text-uppercase text-primary text-md">Bilan quantitatif</legend>
@@ -13,15 +13,15 @@
               nous faire part de commentaires spécifiques concernant une ou plusieurs de vos offres.<br/>
               <br/>
               Pour les monuments régulièrement ouverts à la visite, nous vous invitons à saisir le nombre d'entrées
-              enregistrées pendant une fin de semaine ordinaire, en l'occurrence samedi 9 et dimanche 10 juin 2018.
+              enregistrées pendant une fin de semaine ordinaire (par exemple samedi 9 et dimanche 10 juin 2018).
             </p>
 
             <% if @user.active_items.where(status: ProgramItem::STATUS_VALIDATED).any? %>
                 <% @user.active_items.where(status: ProgramItem::STATUS_VALIDATED).each_with_index do |offer, i| %>
                   <legend class="text-uppercase"><i class="fa <%= item_icon(offer.item_type) %> pr-sm"></i><%= offer.title %></legend>
                   <div class="row">
-                    <div class="col-sm-2 text-center form_entry text-primary">
-                      JEP<br/>2018
+                    <div class="col-sm-2 text-right form_entry text-primary">
+                      Nombre d'entrées enregistrées pendant les JEP 2018
                     </div>
                     <div class="col-sm-6 pl0">
                       <fieldset>
@@ -63,9 +63,8 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-sm-2 text-center form_entry text-primary">
-                      Week-end type<br/>
-                      9-10 Juin 2018
+                    <div class="col-sm-2 text-right form_entry text-primary">
+                      Nombre d'entrées enregistrées pendant une fin de semaine ordinaire
                     </div>
                     <div class="col-sm-6 pl0">
                       <fieldset>
@@ -120,7 +119,7 @@
             </div>
             <div class="form-group mt-xl mdy">
               <label class="col-sm-12">
-                Avez-vous des observations particulières concernant la thématique « La Métropole au fil de l’eau » et ses déclinaisons par la Métropole de Lyon ?
+                Avez-vous des observations particulières concernant la thématique nationale et les déclinaisons par la Métropole de Lyon ?
               </label>
               <div class="col-sm-12">
                 <%= f.text_area :theme_comments, class: 'form-control required', rows: 3,

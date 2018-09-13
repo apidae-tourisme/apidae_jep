@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :legal_entity
   has_many :program_items
   has_one :communication_poll
-  has_one :event_poll
+  has_many :event_polls
 
   accepts_nested_attributes_for :communication_poll
 
@@ -28,6 +28,10 @@ class User < ActiveRecord::Base
 
   def self.with_items(user_territory)
     joins(:program_items).where(users: {territory: user_territory}, program_items: {status: [ProgramItem::STATUS_VALIDATED]}).distinct
+  end
+
+  def active_poll
+    EventPoll.where("user_id = ? AND created_at >= ?", id, Date.new(EDITION, 1, 1)).first
   end
 
   def last_poll

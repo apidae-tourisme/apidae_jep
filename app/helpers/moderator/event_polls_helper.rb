@@ -1,7 +1,7 @@
 module Moderator::EventPollsHelper
   def poll_columns
     {
-        program_item: ['town', 'program_title', 'title', 'item_type', 'criteria', 'themes'],
+        program_item: ['town', 'title', 'item_type', 'criteria', 'themes'],
         event_poll: ['count_sat', 'count_sun', 'compare_sat', 'compare_sun', 'comments', 'poll_general_comments', 'poll_theme_comments'],
         user: ['full_name', 'email', 'telephone', 'entity_name']
     }
@@ -17,7 +17,7 @@ module Moderator::EventPollsHelper
             (val && val.is_a?(Array)) ? val.select {|v| !v.blank?}.map {|v| ALL_REFS[v] || v}.join(' | ') : val
           end
         when :event_poll
-          values += (user.event_poll ? cols.collect {|c| user.event_poll.send(c, item.id)} : cols.map {|c| ''})
+          values += (user.active_poll ? cols.collect {|c| user.active_poll.send(c, item.id)} : cols.map {|c| ''})
         else
           values += cols.collect {|c| user.send(c)}
       end

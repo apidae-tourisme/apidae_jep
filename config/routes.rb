@@ -60,7 +60,7 @@ Rails.application.routes.draw do
         patch 'update_communication', on: :collection, as: 'com_poll'
       end
       resources :users, only: [], path: 'organisateurs' do
-        resource :event_poll, path: 'questionnaire', only: [:new, :create, :show]
+        resource :event_polls, path: 'questionnaire', only: [:new, :create, :show]
       end
       get 'support', to: 'dashboard#support', path: 'support'
     end

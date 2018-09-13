@@ -18,7 +18,7 @@ class EventPoll < ActiveRecord::Base
 
   def comments(offer_id)
     unless offers_feedback.nil?
-      offers_feedback[offer_id.to_s]['comments']
+      offers_feedback[offer_id.to_s] && offers_feedback[offer_id.to_s]['comments'] ? offers_feedback[offer_id.to_s]['comments'] : nil
     end
   end
 

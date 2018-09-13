@@ -33,8 +33,8 @@
                     <td><%= account.email %></td>
                     <td><%= account.telephone %></td>
                     <td class="text-center">
-                      <% if account.event_poll %>
-                        <%= link_to 'Voir la réponse', moderator_event_poll_path(account.event_poll), class: 'btn btn-info' %>
+                      <% if account.active_poll %>
+                        <%= link_to 'Voir la réponse', moderator_event_poll_path(account.active_poll), class: 'btn btn-info' %>
                       <% else %>
                         <span class="label label-inverse">En attente</span>
                       <% end %>

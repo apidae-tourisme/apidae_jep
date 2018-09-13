@@ -3,7 +3,7 @@ class User::EventPollsController < ApplicationController
 
   def new
     @user = User.find(params[:user_id])
-    if @user.event_poll
+    if @user.active_poll
       redirect_to url_for(action: :show)
     else
       @poll = EventPoll.new(user_id: @user.id)
@@ -17,10 +17,10 @@ class User::EventPollsController < ApplicationController
 
   def show
     @user = User.find(params[:user_id])
-    if !@user.event_poll
+    @poll = @user.active_poll
+    if !@poll
       redirect_to url_for(action: :new)
     else
-      @poll = @user.last_poll
       @disabled = 'disabled'
     end
   end
