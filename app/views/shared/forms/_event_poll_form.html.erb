@@ -16,8 +16,8 @@
               enregistrées pendant une fin de semaine ordinaire (par exemple samedi 9 et dimanche 10 juin 2018).
             </p>
 
-            <% if @user.active_items.where(status: ProgramItem::STATUS_VALIDATED).any? %>
-                <% @user.active_items.where(status: ProgramItem::STATUS_VALIDATED).each_with_index do |offer, i| %>
+            <% if @user.active_items(EDITION).where(status: ProgramItem::STATUS_VALIDATED).any? %>
+                <% @user.active_items(EDITION).where(status: ProgramItem::STATUS_VALIDATED).each_with_index do |offer, i| %>
                   <legend class="text-uppercase"><i class="fa <%= item_icon(offer.item_type) %> pr-sm"></i><%= offer.title %></legend>
                   <div class="row">
                     <div class="col-sm-2 text-right form_entry text-primary">

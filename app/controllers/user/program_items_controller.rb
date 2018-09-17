@@ -9,14 +9,10 @@ class User::ProgramItemsController < User::UserController
   end
 
   def index
-    @items = current_user.legal_entity.active_items.sort_by {|i| 1/i.id.to_f}
+    @items = current_user.legal_entity.active_items(params[:year]).sort_by {|i| 1/i.id.to_f}
     unless params[:status].blank?
       @status = params[:status]
       @items = @items.select {|i| i.status == @status}
-    end
-    unless params[:year].blank?
-      @year = params[:year].to_i
-      @items = @items.select {|i| i.created_at >= Date.new(@year, 1, 1) && i.created_at < Date.new(@year + 1, 1, 1)}
     end
   end
 

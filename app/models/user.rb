@@ -27,7 +27,11 @@ class User < ActiveRecord::Base
   end
 
   def self.with_items(user_territory)
-    joins(:program_items).where(users: {territory: user_territory}, program_items: {status: [ProgramItem::STATUS_VALIDATED]}).distinct
+    joins(:program_items).where(users: {territory: user_territory},
+                                program_items: {
+                                    status: [ProgramItem::STATUS_VALIDATED],
+                                    created_at: (Date.new(EDITION, 1, 1)..Date.new(EDITION + 1, 1, 1))
+                                }).distinct
   end
 
   def active_poll
@@ -46,9 +50,11 @@ class User < ActiveRecord::Base
     legal_entity.label
   end
 
-  def active_items
+  def active_items(year)
+    creation_year = year.blank? ? year.to_i : EDITION
     active_ids = program_items.select("MAX(id) AS id").group(:reference)
-    program_items.where(id: active_ids).order(:id)
+    program_items.where(id: active_ids)
+        .where(created_at: (Date.new(creation_year, 1, 1)..Date.new(creation_year + 1, 1, 1))).order(:id)
   end
 
   def full_name
