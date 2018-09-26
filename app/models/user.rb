@@ -84,7 +84,7 @@ class User < ActiveRecord::Base
   end
 
   def offers(year)
-    legal_entity.active_items.select {|item| item.created_at.year == year}.group_by {|pi| pi.status}
+    legal_entity.active_items(year).group_by {|pi| pi.status}
   end
 
   def account_offers

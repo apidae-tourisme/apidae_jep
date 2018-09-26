@@ -33,7 +33,7 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
     end
     @town = Town.find_by_insee_code(@item.main_town_insee_code) if @item.main_town_insee_code
     @prev_item = ProgramItem.where(reference: @item.reference, rev: @item.rev - 1).first
-    @entity_items = @item.user.legal_entity.active_items.select {|itm| itm.validated?}
+    @entity_items = @item.user.legal_entity.active_items(EDITION).select {|itm| itm.validated?}
   end
 
   def update
