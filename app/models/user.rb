@@ -88,7 +88,8 @@ class User < ActiveRecord::Base
   end
 
   def account_offers
-    ProgramItem.active_versions.where(user_id: id, status: ProgramItem::STATUS_VALIDATED)
+    ProgramItem.active_versions.where(user_id: id, status: ProgramItem::STATUS_VALIDATED,
+                                      created_at: (Date.new(EDITION, 1, 1)..Date.new(EDITION + 1, 1, 1)))
   end
 
   def self.import_full(csv_file)
