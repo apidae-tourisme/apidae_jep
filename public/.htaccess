@@ -1,0 +1,8 @@
+# Allow CORS request
+Header set Access-Control-Allow-Origin "*"
+# Use of ETag is discouraged when Last-Modified is present
+Header unset ETag
+FileETag None
+# RFC says only cache for 1 year
+ExpiresActive On
+ExpiresDefault "access plus 1 year"

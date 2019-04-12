@@ -1,4 +1,4 @@
-class AddFieldsToPlaces < ActiveRecord::Migration
+class AddFieldsToPlaces < ActiveRecord::Migration[4.2]
   def change
     add_column :places, :uid, :uuid
     add_column :places, :country, :string

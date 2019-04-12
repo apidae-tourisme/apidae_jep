@@ -1,7 +1,7 @@
 <fieldset class="nested-fields">
   <div class="form-group">
     <% if f.object && f.object.picture && f.object.picture.exists? %>
-        <div class="col-sm-2 text-left"><%= image_tag f.object.picture %></div>
+        <div class="col-sm-2 text-left"><%= image_tag f.object.picture.url(:small) %></div>
         <%= f.hidden_field :picture_file_name %>
         <%= f.hidden_field :picture_content_type %>
         <%= f.hidden_field :picture_file_size %>

@@ -1,6 +1,6 @@
 class Moderator::ModeratorController < ApplicationController
-  before_filter :authenticate_moderator!
-  before_filter :is_active_moderator!
+  before_action :authenticate_moderator!
+  before_action :is_active_moderator!
   layout 'moderator'
 
   def is_active_moderator!

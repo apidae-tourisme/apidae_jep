@@ -1,4 +1,4 @@
-class AddColumnsToModerators < ActiveRecord::Migration
+class AddColumnsToModerators < ActiveRecord::Migration[4.2]
   def change
     add_column :moderators, :first_name, :string
     add_column :moderators, :last_name, :string

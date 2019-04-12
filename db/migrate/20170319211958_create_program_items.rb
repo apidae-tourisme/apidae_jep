@@ -1,4 +1,4 @@
-class CreateProgramItems < ActiveRecord::Migration
+class CreateProgramItems < ActiveRecord::Migration[4.2]
   def change
     create_table :program_items do |t|
       t.integer :program_id

@@ -1,6 +1,6 @@
 class User::UserController < ApplicationController
-  before_filter :authenticate_user!
-  before_filter :check_entity
+  before_action :authenticate_user!
+  before_action :check_entity
 
   layout 'user'
 

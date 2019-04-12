@@ -1,4 +1,4 @@
-class CreateEventPolls < ActiveRecord::Migration
+class CreateEventPolls < ActiveRecord::Migration[4.2]
   def change
     create_table :event_polls do |t|
       t.integer :user_id

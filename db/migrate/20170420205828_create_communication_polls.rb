@@ -1,4 +1,4 @@
-class CreateCommunicationPolls < ActiveRecord::Migration
+class CreateCommunicationPolls < ActiveRecord::Migration[4.2]
   def change
     create_table :communication_polls do |t|
       t.string :first_name

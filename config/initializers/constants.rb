@@ -1,7 +1,7 @@
 GRAND_LYON = "grand_lyon"
 ISERE = "isere"
 
-EDITION = 2018
+EDITION = 2019
 
 ITEM_VISITE = "visite"
 ITEM_PARCOURS = "parcours"

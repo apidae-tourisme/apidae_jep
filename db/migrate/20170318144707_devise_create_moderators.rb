@@ -1,4 +1,4 @@
-class DeviseCreateModerators < ActiveRecord::Migration
+class DeviseCreateModerators < ActiveRecord::Migration[4.2]
   def change
     create_table :moderators do |t|
       ## Database authenticatable

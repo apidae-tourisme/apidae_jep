@@ -1,0 +1,1303 @@
+[
+  {
+    "type": "STRUCTURE",
+    "id": 760958,
+    "nom": {
+      "libelleFr": "Apidae Tourisme"
+    },
+    "identifier": "SITRA2_STR_760958",
+    "state": "PUBLISHED",
+    "gestion": {
+      "dateCreation": "2016-01-30T14:24:23.884+0000",
+      "dateModification": "2018-04-04T14:56:33.737+0000",
+      "dateExportModification": "2019-03-09T00:10:09.039+0000",
+      "membreProprietaire": {
+        "type": {
+          "elementReferenceType": "MembreSitraType",
+          "id": 233
+        },
+        "nom": "Apidae Tourisme",
+        "dateCreation": "2016-01-30T14:31:09.650+0000",
+        "dateModification": "2019-04-04T14:50:00.275+0000",
+        "id": 1157
+      },
+      "signalerUnProblemeMails": [
+        "info@apidae-tourisme.com"
+      ]
+    },
+    "informations": {
+      "moyensCommunication": [
+        {
+          "identifiant": 31805199,
+          "type": {
+            "elementReferenceType": "MoyenCommunicationType",
+            "id": 204
+          },
+          "coordonnees": {
+            "fr": "info@apidae-tourisme.com"
+          }
+        },
+        {
+          "identifiant": 31805203,
+          "type": {
+            "elementReferenceType": "MoyenCommunicationType",
+            "id": 205
+          },
+          "coordonnees": {
+            "fr": "http://www.apidae-tourisme.com/"
+          }
+        }
+      ],
+      "informationsLegales": {}
+    },
+    "localisation": {
+      "adresse": {
+        "adresse1": "Rhône-Alpes Tourisme",
+        "adresse2": "8 Rue Montrochet",
+        "codePostal": "69002",
+        "etat": "France",
+        "commune": {
+          "id": 28739
+        }
+      },
+      "geolocalisation": {
+        "valide": true,
+        "geoJson": {
+          "type": "Point",
+          "coordinates": [
+            4.816458,
+            45.740365
+          ]
+        }
+      },
+      "perimetreGeographique": [
+        {
+          "id": 28739
+        }
+      ]
+    },
+    "descriptionTarif": {
+      "tarifsEnClairGenerationMode": "MANUEL",
+      "devise": "EUR",
+      "conditions": {}
+    },
+    "reservation": {},
+    "contacts": [
+      {
+        "identifiant": 12386587,
+        "referent": true,
+        "nom": "Feige",
+        "prenom": "Karine",
+        "fonction": {
+          "elementReferenceType": "ContactFonction",
+          "id": 458
+        }
+      }
+    ],
+    "territoires": [
+      {
+        "type": "TERRITOIRE",
+        "id": 458
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 44417
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 60439
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 62052
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 62171
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 67816
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 71617
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 72777
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 263522
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 324309
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 337343
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 658199
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 908439
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 5161474
+      }
+    ],
+    "informationsStructure": {
+      "entiteType": {
+        "elementReferenceType": "StructureType",
+        "id": 4009
+      }
+    },
+    "formatVersion": "v002"
+  },
+  {
+    "type": "STRUCTURE",
+    "id": 159051,
+    "nom": {
+      "libelleFr": "Isère Tourisme"
+    },
+    "identifier": "sitraSTR102566",
+    "state": "PUBLISHED",
+    "gestion": {
+      "dateCreation": "2005-06-28T12:31:03.890+0000",
+      "dateModification": "2018-04-17T11:58:58.076+0000",
+      "dateExportModification": "2018-04-17T11:58:58.132+0000",
+      "membreProprietaire": {
+        "type": {
+          "elementReferenceType": "MembreSitraType",
+          "id": 233
+        },
+        "nom": "Isère Tourisme",
+        "dateCreation": "2005-06-28T13:44:34.103+0000",
+        "dateModification": "2019-03-28T17:23:43.953+0000",
+        "departement": "38",
+        "id": 6,
+        "siteWeb": "http://www.isere-tourisme.com"
+      },
+      "signalerUnProblemeMails": [
+        "armelle.aujas@isere-tourisme.com",
+        "isaline.grand@isere-tourisme.com"
+      ]
+    },
+    "informations": {
+      "moyensCommunication": [
+        {
+          "identifiant": 5428764,
+          "type": {
+            "elementReferenceType": "MoyenCommunicationType",
+            "id": 201
+          },
+          "coordonnees": {
+            "fr": "04 76 00 33 82"
+          }
+        },
+        {
+          "identifiant": 11369545,
+          "type": {
+            "elementReferenceType": "MoyenCommunicationType",
+            "id": 204
+          },
+          "coordonnees": {
+            "fr": "info@isere-tourisme.com"
+          }
+        },
+        {
+          "identifiant": 11369546,
+          "type": {
+            "elementReferenceType": "MoyenCommunicationType",
+            "id": 205
+          },
+          "coordonnees": {
+            "fr": "http://www.alpes-isere.com"
+          }
+        },
+        {
+          "identifiant": 30703780,
+          "type": {
+            "elementReferenceType": "MoyenCommunicationType",
+            "id": 207
+          },
+          "coordonnees": {
+            "fr": "https://www.facebook.com/isere.tourisme/"
+          }
+        },
+        {
+          "identifiant": 30703781,
+          "type": {
+            "elementReferenceType": "MoyenCommunicationType",
+            "id": 207
+          },
+          "coordonnees": {
+            "fr": "https://www.facebook.com/skiezendecale/"
+          }
+        },
+        {
+          "identifiant": 30703782,
+          "type": {
+            "elementReferenceType": "MoyenCommunicationType",
+            "id": 205
+          },
+          "coordonnees": {
+            "fr": "http://www.skiez-en-decale.com"
+          }
+        },
+        {
+          "identifiant": 30703783,
+          "type": {
+            "elementReferenceType": "MoyenCommunicationType",
+            "id": 205
+          },
+          "coordonnees": {
+            "fr": "http://www.cyclo-alpes.com"
+          }
+        }
+      ],
+      "informationsLegales": {}
+    },
+    "localisation": {
+      "adresse": {
+        "adresse1": "Palais du Parlement",
+        "adresse2": "4 place saint André",
+        "codePostal": "38024",
+        "cedex": "cedex",
+        "commune": {
+          "id": 14884
+        }
+      },
+      "geolocalisation": {
+        "altitude": 200,
+        "valide": true,
+        "geoJson": {
+          "type": "Point",
+          "coordinates": [
+            5.728606,
+            45.193201
+          ]
+        }
+      },
+      "perimetreGeographique": [
+        {
+          "id": 14884
+        }
+      ],
+      "environnements": [
+        {
+          "elementReferenceType": "Environnement",
+          "id": 151
+        },
+        {
+          "elementReferenceType": "Environnement",
+          "id": 197
+        }
+      ]
+    },
+    "descriptionTarif": {
+      "tarifsEnClairGenerationMode": "MANUEL",
+      "devise": "EUR",
+      "conditions": {}
+    },
+    "reservation": {},
+    "criteresInternes": [
+      {
+        "id": 11567
+      }
+    ],
+    "contacts": [
+      {
+        "identifiant": 4410632,
+        "referent": true,
+        "civilite": {
+          "elementReferenceType": "ContactCivilite",
+          "id": 443
+        },
+        "nom": "Delaitre",
+        "prenom": "Vincent",
+        "titre": {
+          "libelleFr": "Directeur"
+        },
+        "fonction": {
+          "elementReferenceType": "ContactFonction",
+          "id": 458
+        }
+      },
+      {
+        "identifiant": 4410633,
+        "referent": false,
+        "civilite": {
+          "elementReferenceType": "ContactCivilite",
+          "id": 443
+        },
+        "nom": "Lecocq",
+        "prenom": "Eric",
+        "titre": {
+          "libelleFr": "Directeur-adjoint"
+        },
+        "fonction": {
+          "elementReferenceType": "ContactFonction",
+          "id": 458
+        }
+      }
+    ],
+    "territoires": [
+      {
+        "type": "TERRITOIRE",
+        "id": 2995
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 60439
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 75691
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 77826
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 100154
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 126608
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 329604
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 908439
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 4920302
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 5164412
+      }
+    ],
+    "informationsStructure": {
+      "entiteType": {
+        "elementReferenceType": "StructureType",
+        "id": 4009
+      }
+    },
+    "formatVersion": "v002"
+  },
+  {
+    "type": "STRUCTURE",
+    "id": 145004,
+    "nom": {
+      "libelleFr": "Lyon Tourisme et Congrès"
+    },
+    "identifier": "69ABOTS100032_struct",
+    "state": "PUBLISHED",
+    "gestion": {
+      "dateCreation": "2001-07-30T22:00:00.000+0000",
+      "dateModification": "2018-02-21T14:24:14.033+0000",
+      "dateExportModification": "2019-03-09T00:10:09.039+0000",
+      "membreProprietaire": {
+        "type": {
+          "elementReferenceType": "MembreSitraType",
+          "id": 233
+        },
+        "nom": "Lyon Tourisme et Congrès",
+        "dateCreation": "2005-06-28T17:09:44.123+0000",
+        "dateModification": "2019-02-20T09:55:47.431+0000",
+        "departement": "69",
+        "id": 9,
+        "siteWeb": "http://www.lyon-france.com"
+      },
+      "signalerUnProblemeMails": [
+        "seveillard@lyon-france.com",
+        "apidae@lyon-france.com",
+        "jroch@lyon-france.com",
+        "evenement@lyon-france.com"
+      ]
+    },
+    "informations": {
+      "moyensCommunication": [
+        {
+          "identifiant": 5851323,
+          "type": {
+            "elementReferenceType": "MoyenCommunicationType",
+            "id": 201
+          },
+          "coordonnees": {
+            "fr": "04 72 77 69 69"
+          }
+        },
+        {
+          "identifiant": 5851325,
+          "type": {
+            "elementReferenceType": "MoyenCommunicationType",
+            "id": 204
+          },
+          "coordonnees": {
+            "fr": "info@lyon-france.com"
+          }
+        },
+        {
+          "identifiant": 5851326,
+          "type": {
+            "elementReferenceType": "MoyenCommunicationType",
+            "id": 205
+          },
+          "coordonnees": {
+            "fr": "http://www.lyon-france.com"
+          }
+        },
+        {
+          "identifiant": 11698732,
+          "type": {
+            "elementReferenceType": "MoyenCommunicationType",
+            "id": 205
+          },
+          "coordonnees": {
+            "fr": "http://www.monweekendalyon.com"
+          }
+        },
+        {
+          "identifiant": 11698733,
+          "type": {
+            "elementReferenceType": "MoyenCommunicationType",
+            "id": 205
+          },
+          "coordonnees": {
+            "fr": "http://www.lyoncitygreeter.com"
+          }
+        },
+        {
+          "identifiant": 18905158,
+          "type": {
+            "elementReferenceType": "MoyenCommunicationType",
+            "id": 204
+          },
+          "coordonnees": {
+            "fr": "resa@lyon-france.com"
+          }
+        },
+        {
+          "identifiant": 27340717,
+          "type": {
+            "elementReferenceType": "MoyenCommunicationType",
+            "id": 205
+          },
+          "coordonnees": {
+            "fr": "http://www.visiterlyon.com"
+          },
+          "observation": {}
+        },
+        {
+          "identifiant": 59541773,
+          "type": {
+            "elementReferenceType": "MoyenCommunicationType",
+            "id": 205
+          },
+          "coordonnees": {
+            "fr": "https://www.lyoncitycard.com/"
+          }
+        }
+      ],
+      "informationsLegales": {
+        "siret": "77983225200018",
+        "codeApeNaf": "633 Z",
+        "modeGestion": {
+          "elementReferenceType": "ModeGestion",
+          "id": 134
+        }
+      }
+    },
+    "localisation": {
+      "adresse": {
+        "adresse1": "Place Bellecour",
+        "adresse2": "B.P. 2254",
+        "codePostal": "69002",
+        "cedex": "Cedex 02",
+        "commune": {
+          "id": 28739
+        }
+      },
+      "geolocalisation": {
+        "altitude": 172,
+        "complement": {
+          "libelleFr": "Métro ligne A ou D station Bellecour"
+        },
+        "valide": true,
+        "geoJson": {
+          "type": "Point",
+          "coordinates": [
+            4.832311,
+            45.757119
+          ]
+        }
+      },
+      "perimetreGeographique": [
+        {
+          "id": 28712
+        },
+        {
+          "id": 28584
+        },
+        {
+          "id": 28713
+        },
+        {
+          "id": 28585
+        },
+        {
+          "id": 28714
+        },
+        {
+          "id": 28716
+        },
+        {
+          "id": 28717
+        },
+        {
+          "id": 28718
+        },
+        {
+          "id": 28719
+        },
+        {
+          "id": 28591
+        },
+        {
+          "id": 28720
+        },
+        {
+          "id": 28721
+        },
+        {
+          "id": 28722
+        },
+        {
+          "id": 28594
+        },
+        {
+          "id": 28595
+        },
+        {
+          "id": 28723
+        },
+        {
+          "id": 28724
+        },
+        {
+          "id": 28725
+        },
+        {
+          "id": 28726
+        },
+        {
+          "id": 28727
+        },
+        {
+          "id": 28472
+        },
+        {
+          "id": 28728
+        },
+        {
+          "id": 28729
+        },
+        {
+          "id": 28730
+        },
+        {
+          "id": 28731
+        },
+        {
+          "id": 28476
+        },
+        {
+          "id": 28732
+        },
+        {
+          "id": 28477
+        },
+        {
+          "id": 28733
+        },
+        {
+          "id": 28734
+        },
+        {
+          "id": 28735
+        },
+        {
+          "id": 28736
+        },
+        {
+          "id": 28738
+        },
+        {
+          "id": 28610
+        },
+        {
+          "id": 28483
+        },
+        {
+          "id": 28739
+        },
+        {
+          "id": 28740
+        },
+        {
+          "id": 28741
+        },
+        {
+          "id": 28742
+        },
+        {
+          "id": 28487
+        },
+        {
+          "id": 28743
+        },
+        {
+          "id": 28744
+        },
+        {
+          "id": 28489
+        },
+        {
+          "id": 28745
+        },
+        {
+          "id": 28746
+        },
+        {
+          "id": 28633
+        },
+        {
+          "id": 28506
+        },
+        {
+          "id": 28636
+        },
+        {
+          "id": 28511
+        },
+        {
+          "id": 28512
+        },
+        {
+          "id": 28641
+        },
+        {
+          "id": 28514
+        },
+        {
+          "id": 28515
+        },
+        {
+          "id": 28644
+        },
+        {
+          "id": 28646
+        },
+        {
+          "id": 28647
+        },
+        {
+          "id": 28649
+        },
+        {
+          "id": 28523
+        },
+        {
+          "id": 28527
+        },
+        {
+          "id": 28529
+        },
+        {
+          "id": 28530
+        },
+        {
+          "id": 28531
+        },
+        {
+          "id": 28542
+        },
+        {
+          "id": 28673
+        },
+        {
+          "id": 28684
+        },
+        {
+          "id": 28558
+        },
+        {
+          "id": 28690
+        },
+        {
+          "id": 28696
+        },
+        {
+          "id": 28569
+        },
+        {
+          "id": 28699
+        },
+        {
+          "id": 28700
+        },
+        {
+          "id": 28447
+        },
+        {
+          "id": 28705
+        },
+        {
+          "id": 28710
+        }
+      ],
+      "environnements": [
+        {
+          "elementReferenceType": "Environnement",
+          "id": 151
+        },
+        {
+          "elementReferenceType": "Environnement",
+          "id": 180
+        },
+        {
+          "elementReferenceType": "Environnement",
+          "id": 183
+        }
+      ],
+      "territoiresAffectes": [
+        {
+          "type": "TERRITOIRE",
+          "id": 439
+        },
+        {
+          "type": "TERRITOIRE",
+          "id": 459
+        },
+        {
+          "type": "TERRITOIRE",
+          "id": 449
+        },
+        {
+          "type": "TERRITOIRE",
+          "id": 453
+        },
+        {
+          "type": "TERRITOIRE",
+          "id": 454
+        },
+        {
+          "type": "TERRITOIRE",
+          "id": 451
+        },
+        {
+          "type": "TERRITOIRE",
+          "id": 1110
+        },
+        {
+          "type": "TERRITOIRE",
+          "id": 456
+        }
+      ]
+    },
+    "descriptionTarif": {
+      "tarifsEnClairGenerationMode": "MANUEL",
+      "devise": "EUR",
+      "conditions": {}
+    },
+    "reservation": {},
+    "criteresInternes": [
+      {
+        "id": 11567
+      }
+    ],
+    "contacts": [
+      {
+        "identifiant": 1536258,
+        "referent": true,
+        "civilite": {
+          "elementReferenceType": "ContactCivilite",
+          "id": 443
+        },
+        "nom": "GAILLARD",
+        "prenom": "François",
+        "fonction": {
+          "elementReferenceType": "ContactFonction",
+          "id": 458
+        }
+      },
+      {
+        "identifiant": 1536255,
+        "referent": false,
+        "civilite": {
+          "elementReferenceType": "ContactCivilite",
+          "id": 443
+        },
+        "nom": "OCCELLI",
+        "prenom": "Olivier",
+        "titre": {
+          "libelleFr": "Directeur Marketing"
+        },
+        "fonction": {
+          "elementReferenceType": "ContactFonction",
+          "id": 463
+        }
+      },
+      {
+        "identifiant": 1676858,
+        "referent": false,
+        "civilite": {
+          "elementReferenceType": "ContactCivilite",
+          "id": 442
+        },
+        "nom": "THENET",
+        "prenom": "Blandine",
+        "fonction": {
+          "elementReferenceType": "ContactFonction",
+          "id": 471
+        }
+      },
+      {
+        "identifiant": 1536257,
+        "referent": false,
+        "civilite": {
+          "elementReferenceType": "ContactCivilite",
+          "id": 443
+        },
+        "nom": "VERRET",
+        "prenom": "Luc",
+        "fonction": {
+          "elementReferenceType": "ContactFonction",
+          "id": 472
+        }
+      },
+      {
+        "identifiant": 1676859,
+        "referent": false,
+        "civilite": {
+          "elementReferenceType": "ContactCivilite",
+          "id": 442
+        },
+        "nom": "DUCAUD",
+        "prenom": "Valérie",
+        "fonction": {
+          "elementReferenceType": "ContactFonction",
+          "id": 474
+        }
+      },
+      {
+        "identifiant": 11723625,
+        "referent": false,
+        "civilite": {
+          "elementReferenceType": "ContactCivilite",
+          "id": 443
+        },
+        "nom": "DACLIN",
+        "prenom": "Jean-Michel",
+        "fonction": {
+          "elementReferenceType": "ContactFonction",
+          "id": 460
+        }
+      }
+    ],
+    "territoires": [
+      {
+        "type": "TERRITOIRE",
+        "id": 439
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 441
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 442
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 443
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 444
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 445
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 449
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 450
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 451
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 452
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 453
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 454
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 455
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 456
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 458
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 459
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 677
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 964
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 1083
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 1110
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 3897
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 27326
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 44407
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 44411
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 44417
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 44586
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 44587
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 44589
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 44598
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 60439
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 62052
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 62171
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 64477
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 67816
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 71617
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 71633
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 72216
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 72777
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 263522
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 324303
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 324305
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 324309
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 337343
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 496744
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 603821
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 658199
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 908439
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 2815281
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 4772343
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 4911641
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 5161474
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 5164412
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 5173406
+      },
+      {
+        "type": "TERRITOIRE",
+        "id": 5173666
+      }
+    ],
+    "informationsStructure": {
+      "entiteType": {
+        "elementReferenceType": "StructureType",
+        "id": 4009
+      }
+    },
+    "formatVersion": "v002"
+  },
+  {
+    "type" : "STRUCTURE",
+    "id" : 158172,
+    "nom" : {
+      "libelleFr" : "Auvergne  Rhône-Alpes Tourisme"
+    },
+    "identifier" : "sitraSTR102571",
+    "state" : "PUBLISHED",
+    "gestion" : {
+      "dateCreation" : "2005-06-28T12:50:53.523+0000",
+      "dateModification" : "2019-02-21T16:08:03.364+0000",
+      "dateExportModification" : "2019-03-09T00:10:09.039+0000",
+      "membreProprietaire" : {
+        "type" : {
+          "elementReferenceType" : "MembreSitraType",
+          "id" : 233
+        },
+        "nom" : "Apidae Tourisme",
+        "dateCreation" : "2016-01-30T14:31:09.650+0000",
+        "dateModification" : "2019-04-04T14:50:00.275+0000",
+        "id" : 1157
+      },
+      "signalerUnProblemeMails" : [ "info@apidae-tourisme.com" ]
+    },
+    "informations" : {
+      "moyensCommunication" : [ {
+        "identifiant" : 5428769,
+        "type" : {
+          "elementReferenceType" : "MoyenCommunicationType",
+          "id" : 201
+        },
+        "coordonnees" : {
+          "fr" : "04 26 73 21 59"
+        }
+      }, {
+        "identifiant" : 5428771,
+        "type" : {
+          "elementReferenceType" : "MoyenCommunicationType",
+          "id" : 205
+        },
+        "coordonnees" : {
+          "fr" : "http://fr.auvergnerhonealpes-tourisme.com/",
+          "en" : "http://en.auvergnerhonealpes-tourisme.com/"
+        }
+      }, {
+        "identifiant" : 19232862,
+        "type" : {
+          "elementReferenceType" : "MoyenCommunicationType",
+          "id" : 204
+        },
+        "coordonnees" : {
+          "fr" : "info@rhonealpes-tourisme.com"
+        }
+      } ],
+      "informationsLegales" : { }
+    },
+    "localisation" : {
+      "adresse" : {
+        "adresse1" : "11B Quai Perrache",
+        "codePostal" : "69002",
+        "commune" : {
+          "id" : 28739
+        }
+      },
+      "geolocalisation" : {
+        "altitude" : 242,
+        "valide" : true,
+        "geoJson" : {
+          "type" : "Point",
+          "coordinates" : [ 4.828331, 45.746655 ]
+        }
+      },
+      "perimetreGeographique" : [ {
+        "id" : 28739
+      } ],
+      "territoiresAffectes" : [ {
+        "type" : "TERRITOIRE",
+        "id" : 439
+      }, {
+        "type" : "TERRITOIRE",
+        "id" : 459
+      }, {
+        "type" : "TERRITOIRE",
+        "id" : 456
+      } ]
+    },
+    "descriptionTarif" : {
+      "tarifsEnClairGenerationMode" : "MANUEL",
+      "devise" : "EUR",
+      "conditions" : { }
+    },
+    "reservation" : { },
+    "criteresInternes" : [ {
+      "id" : 11567
+    } ],
+    "territoires" : [ {
+      "type" : "TERRITOIRE",
+      "id" : 439
+    }, {
+      "type" : "TERRITOIRE",
+      "id" : 456
+    }, {
+      "type" : "TERRITOIRE",
+      "id" : 458
+    }, {
+      "type" : "TERRITOIRE",
+      "id" : 459
+    }, {
+      "type" : "TERRITOIRE",
+      "id" : 44417
+    }, {
+      "type" : "TERRITOIRE",
+      "id" : 60439
+    }, {
+      "type" : "TERRITOIRE",
+      "id" : 62052
+    }, {
+      "type" : "TERRITOIRE",
+      "id" : 62171
+    }, {
+      "type" : "TERRITOIRE",
+      "id" : 67816
+    }, {
+      "type" : "TERRITOIRE",
+      "id" : 71617
+    }, {
+      "type" : "TERRITOIRE",
+      "id" : 72777
+    }, {
+      "type" : "TERRITOIRE",
+      "id" : 263522
+    }, {
+      "type" : "TERRITOIRE",
+      "id" : 324309
+    }, {
+      "type" : "TERRITOIRE",
+      "id" : 337343
+    }, {
+      "type" : "TERRITOIRE",
+      "id" : 658199
+    }, {
+      "type" : "TERRITOIRE",
+      "id" : 908439
+    }, {
+      "type" : "TERRITOIRE",
+      "id" : 5161474
+    } ],
+    "informationsStructure" : {
+      "entiteType" : {
+        "elementReferenceType" : "StructureType",
+        "id" : 4009
+      }
+    },
+    "formatVersion" : "v002"
+  }
+]

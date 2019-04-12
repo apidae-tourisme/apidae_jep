@@ -1,4 +1,4 @@
-class CreateLegalEntities < ActiveRecord::Migration
+class CreateLegalEntities < ActiveRecord::Migration[4.2]
   def change
     create_table :legal_entities do |t|
       t.string :name

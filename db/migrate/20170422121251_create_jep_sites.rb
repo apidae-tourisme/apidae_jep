@@ -1,4 +1,4 @@
-class CreateJepSites < ActiveRecord::Migration
+class CreateJepSites < ActiveRecord::Migration[4.2]
   def change
     create_table :jep_sites do |t|
       t.text :description

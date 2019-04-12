@@ -17,7 +17,7 @@
             </div>
         <% else %>
         <p class="text-center">
-          L’interface de saisie des évènements des <strong>Journées européennes du patrimoine (JEP) 2018</strong>,
+          L’interface de saisie des évènements des <strong>Journées européennes du patrimoine (JEP) <%= EDITION %></strong>,
           pour la Métropole de Lyon et le Département de l’Isère !
         </p>
         <p class="alert alert-info">
@@ -26,7 +26,7 @@
         </p>
         <p class="text-center">
           Veuillez vous identifier pour saisir vos évènements.<br/>
-          <em>Pour ceux qui ont créé un compte en 2017, vous pouvez utiliser vos identifiants / mots de passe déjà créés.</em>
+          <em>Pour ceux qui ont créé un compte lors des éditions précédentes, vous pouvez utiliser vos identifiants / mots de passe déjà créés.</em>
         </p>
         <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'mb-lg'}) do |f| %>
           <div class="form-group has-feedback">

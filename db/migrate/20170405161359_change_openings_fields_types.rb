@@ -1,4 +1,4 @@
-class ChangeOpeningsFieldsTypes < ActiveRecord::Migration
+class ChangeOpeningsFieldsTypes < ActiveRecord::Migration[4.2]
   def change
     remove_column :item_openings, :duration
     remove_column :item_openings, :frequency

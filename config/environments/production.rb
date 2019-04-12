@@ -82,6 +82,9 @@ Rails.application.configure do
     {:time => event.time}
   end
 
+  # Note : Rails 5.2 - must use a queue for deliver_later calls
+  # config.active_job.queue_adapter     = :resque
+
   # Auth mailer environment-specific config
   config.action_mailer.default_url_options = { host: '' }
 

@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.2.8'
+gem 'rails', '~> 5.2.2'
 
 gem 'pg'
 gem 'activerecord-import'
@@ -23,14 +23,18 @@ gem 'axlsx', '= 2.0.1'
 gem 'axlsx_rails'
 
 gem 'sass-rails', '~> 5.0.1'
-gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
-
 gem 'bower-rails', '~> 0.9.2'
 
-gem 'sentry-raven'
+group :development do
+  gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
+end
+
+group :assets do
+  gem 'uglifier'
+end
 
 group :production do
-  gem 'therubyracer'
+  gem 'sentry-raven'
   gem 'lograge'
 end

@@ -1,5 +1,5 @@
 class Moderator::DashboardController < Moderator::ModeratorController
-  skip_before_filter :is_active_moderator!, only: [:inactive]
+  skip_before_action :is_active_moderator!, only: [:inactive]
 
   def index
     @year = params[:year].blank? ? EDITION : params[:year].to_i

@@ -19,7 +19,7 @@ class AttachedFile < ActiveRecord::Base
   store :data, accessors: [:credits], code: JSON
 
   before_post_process :transliterate_file_name
-  validates :credits, presence: true, unless: 'picture_file_name.nil?'
+  validates :credits, presence: true, unless: Proc.new {|af| af.picture_file_name.nil?}
 
   def transliterate_file_name
     extension = File.extname(picture_file_name).gsub(/^\.+/, '')

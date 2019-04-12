@@ -9,7 +9,7 @@
       </li>
       <% unless current_user.territory == ISERE %>
         <li class="<%= 'active' if controller?('user/program_items') %>">
-          <a href="<%= annual_user_program_items_url(year: 2018) %>" title="Programmations">
+          <a href="<%= annual_user_program_items_url(year: EDITION) %>" title="Programmations">
             <em class="icon-calendar"></em>
             <div class="text-sm">Mes offres</div>
           </a>

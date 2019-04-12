@@ -50,7 +50,7 @@
               <% end %>
           <% else %>
               <tr>
-                <td colspan="6" class="text-center">
+                <td colspan="<%= territory?(GRAND_LYON) ? 10 : 9 %>" class="text-center">
                   Aucune offre pour le moment.
                 </td>
               </tr>

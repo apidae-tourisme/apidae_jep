@@ -28,25 +28,25 @@ Rails.application.routes.draw do
 
   concern :programs_routes do
     resources :program_items, path: 'offres', as: 'items', only: [] do
-      get 'account', on: :collection, path: 'compte'
-      get 'entity', on: :collection, path: 'structure'
-      get 'export', on: :collection, path: 'export'
+      get :account, on: :collection, path: 'compte'
+      get :entity, on: :collection, path: 'structure'
+      get :export, on: :collection, path: 'export'
     end
 
     resources :program_items, path: 'offres' do
-      get 'confirm', on: :member, path: 'confirmation'
-      post 'duplicate', on: :member, as: 'duplicate'
-      patch 'reorder', on: :member, as: 'reorder'
-      get 'select_program', on: :member, as: 'select'
-      patch 'save_program', on: :member, as: 'save'
-      patch 'set_opening', on: :collection, as: 'opening'
-      get 'update_form', on: :collection, as: 'update_form'
-      get 'site_desc', on: :collection, as: 'site_desc'
+      get :confirm, on: :member, path: 'confirmation'
+      post :duplicate, on: :member, as: 'duplicate'
+      patch :reorder, on: :member, as: 'reorder'
+      get :select_program, on: :member, as: 'select'
+      patch :save_program, on: :member, as: 'save'
+      patch :set_opening, on: :collection, as: 'opening'
+      get :update_form, on: :collection, as: 'update_form'
+      get :site_desc, on: :collection, as: 'site_desc'
       get 'brouillons(/:year)', on: :collection, as: 'drafts', to: 'program_items#index', status: ProgramItem::STATUS_DRAFT
       get 'validations(/:year)', on: :collection, as: 'pending', to: 'program_items#index', status: ProgramItem::STATUS_PENDING
       get 'publiees(/:year)', on: :collection, as: 'validated', to: 'program_items#index', status: ProgramItem::STATUS_VALIDATED
       get 'rejetees(/:year)', on: :collection, as: 'rejected', to: 'program_items#index', status: ProgramItem::STATUS_REJECTED
-      match ':year', on: :collection, to: 'program_items#index', via: :get, as: 'annual', year: /201[78]/
+      match ':year', on: :collection, to: 'program_items#index', via: :get, as: 'annual', year: /201[789]/
     end
   end
 
@@ -54,15 +54,15 @@ Rails.application.routes.draw do
     scope(path_names: {new: 'creer', edit: 'modifier'}) do
       concerns :programs_routes
       resource :user, controller: 'account', path: 'compte', as: 'account', only: [:edit, :update] do
-        get 'search_entity', on: :collection, as: 'search_entity'
-        get 'towns', on: :collection, as: 'towns'
-        get 'communication', on: :collection
-        patch 'update_communication', on: :collection, as: 'com_poll'
+        get :search_entity, on: :collection, as: 'search_entity'
+        get :towns, on: :collection, as: 'towns'
+        get :communication, on: :collection
+        patch :update_communication, on: :collection, as: 'com_poll'
       end
       resources :users, only: [], path: 'organisateurs' do
         resource :event_polls, path: 'questionnaire', only: [:new, :create, :show]
       end
-      get 'support', to: 'dashboard#support', path: 'support'
+      get :support, to: 'dashboard#support', path: 'support'
     end
   end
 
@@ -70,16 +70,16 @@ Rails.application.routes.draw do
     scope(path_names: {new: 'creer', edit: 'modifier'}) do
       concerns :programs_routes
       resources :users, controller: 'accounts', path: 'comptes', as: 'accounts', only: [:index, :edit, :update] do
-        get 'list_com', on: :collection,  as: 'kits', path: 'supports'
-        get 'edit_com', on: :member, as: 'edit_kit', path: 'supports'
-        patch 'update_com', on: :member
-        get 'export', on: :collection, path: 'export'
-        get 'export_com', on: :collection, as: 'export_kits', path: 'export_supports'
-        patch 'notify_com', on: :collection
+        get :list_com, on: :collection,  as: 'kits', path: 'supports'
+        get :edit_com, on: :member, as: 'edit_kit', path: 'supports'
+        patch :update_com, on: :member
+        get :export, on: :collection, path: 'export'
+        get :export_com, on: :collection, as: 'export_kits', path: 'export_supports'
+        patch :notify_com, on: :collection
       end
       resources :event_polls, path: 'questionnaires', only: [:index, :show] do
-        get 'export', on: :collection
-        patch 'notify', on: :collection
+        get :export, on: :collection
+        patch :notify, on: :collection
       end
     end
   end

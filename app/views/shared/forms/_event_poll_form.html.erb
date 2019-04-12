@@ -1,5 +1,5 @@
 <div class="content-heading">
-  Questionnaire bilan - Journées Européennes du Patrimoine 2018
+  Questionnaire bilan - Journées Européennes du Patrimoine <%= EDITION %>
   <small><%= "#{@user.full_name} - " if current_moderator %><%= "Transmis le #{l(@poll.created_at)}" if @poll.persisted? %></small>
 </div>
 <div id="event_poll_wrapper">
@@ -9,7 +9,7 @@
             <legend class="text-uppercase text-primary text-md">Bilan quantitatif</legend>
             <p>
               Le formulaire ci-dessous vous permet de renseigner le nombre d'entrées enregistrées pendant les Journées
-              Européennes du Patrimoine 2018 pour chacune des offres saisies dans l'outil ApidaeJEP (donnez une estimation si vous n’avez pas de chiffre précis). Vous pouvez également
+              Européennes du Patrimoine <%= EDITION %> pour chacune des offres saisies dans l'outil ApidaeJEP (donnez une estimation si vous n’avez pas de chiffre précis). Vous pouvez également
               nous faire part de commentaires spécifiques concernant une ou plusieurs de vos offres.<br/>
               <br/>
               Pour les monuments régulièrement ouverts à la visite, nous vous invitons à saisir le nombre d'entrées
@@ -21,7 +21,7 @@
                   <legend class="text-uppercase"><i class="fa <%= item_icon(offer.item_type) %> pr-sm"></i><%= offer.title %></legend>
                   <div class="row">
                     <div class="col-sm-2 text-right form_entry text-primary">
-                      Nombre d'entrées enregistrées pendant les JEP 2018
+                      Nombre d'entrées enregistrées pendant les JEP <%= EDITION %>
                     </div>
                     <div class="col-sm-6 pl0">
                       <fieldset>
