@@ -1,15 +1,16 @@
 <div class="content-heading">
   <% if @previous_id %>
-      Modifier l'offre
-      <span class="label label-inverse text-normal vam ml"><%= "Réf. #{@item.reference}" %></span>
+    Modifier l'offre
+    <span class="label label-inverse text-normal vam ml"><%= "Réf. #{@item.reference}" %></span>
   <% else %>
-      Créer une offre
+    Créer une offre
   <% end %>
   &nbsp;<span class="label label-<%= t "program_item.color.#{@item.status}" %> text-normal vam"><%= t "program_item.status.#{@item.status}" %></span>
 </div>
 <%= render 'shared/forms/item_form', form_scope: :user, readonly: nil %>
 <% content_for :body_area do %>
-    <%= render 'shared/forms/item_form_scripts', readonly: nil,
-               update_form_path: update_form_user_program_items_path,
-               opening_form_path: opening_user_program_items_path %>
+  <%= render 'shared/forms/item_form_scripts', readonly: nil,
+             update_form_path: update_form_user_program_items_path,
+             opening_form_path: opening_user_program_items_path %>
+  <%= render 'shared/forms/openings_scripts' %>
 <% end %>

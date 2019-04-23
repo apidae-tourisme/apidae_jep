@@ -131,6 +131,7 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
   def set_program_item
     @item = ProgramItem.find(params[:id])
     @item.author = current_moderator.first_name
+    @item.set_openings
   end
 
   def opening_params

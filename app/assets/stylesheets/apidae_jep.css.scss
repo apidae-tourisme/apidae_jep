@@ -338,3 +338,65 @@ form .select2 .select2-selection__rendered::after {
   padding: 15px;
   border-right: 2px solid #3a3f51;
 }
+
+// MH styling
+ngb-modal-window.apidae_date.modal.fade {
+  opacity: 1;
+  font-size: 1.5rem;
+
+  ngb-timepicker fieldset input.form-control {
+    width: 5rem;
+  }
+
+  apidate-time-schedule form.submitted.ng-invalid ngb-timepicker.ng-invalid::after {
+    font-size: 1rem;
+  }
+
+  .modal-dialog {
+    transform: none;
+  }
+
+  .btn, .form-control {
+    font-size: 1.5rem;
+  }
+
+  .btn-sm {
+    font-size: 1.2rem;
+  }
+
+  h4, .h4 {
+    font-size: 2.2rem;
+  }
+
+  h5, .h5 {
+    font-size: 1.8rem;
+  }
+
+  h6, .h6 {
+    font-size: 1.5rem;
+  }
+
+  p {
+    font-size: 1.5rem;
+  }
+
+  .close {
+    font-size: 2rem;
+  }
+
+  .dropdown-menu {
+    font-size: 1.5rem;
+  }
+
+  apidate-time-period {
+    .card-body {
+      > .row:first-child, > h6, > hr, > :last-child {
+        display: none;
+      }
+
+      > .row:first-child + ul {
+        margin-top: 0 !important;
+      }
+    }
+  }
+}

@@ -11,7 +11,7 @@ class ProgramItem < ActiveRecord::Base
   accepts_nested_attributes_for :item_openings, allow_destroy: true
   accepts_nested_attributes_for :attached_files, allow_destroy: true, reject_if: proc {|attrs| attrs['picture'].blank? && attrs['picture_file_name'].blank? }
 
-  attr_accessor :territory
+  attr_accessor :territory, :openings
 
   STATUS_DRAFT = 'draft'
   STATUS_PENDING = 'pending'
@@ -73,10 +73,6 @@ class ProgramItem < ActiveRecord::Base
     Town.find_by_insee_code(main_town_insee_code).label if Town.find_by_insee_code(main_town_insee_code)
   end
 
-  def opening_text(opening)
-    openings.include?(opening) ? opening.as_text : ''
-  end
-
   def open_dates
     dates = []
     if item_openings.any?
@@ -123,6 +119,24 @@ class ProgramItem < ActiveRecord::Base
 
   def set_territory(member_ref)
     self.territory = TERRITORIES_BY_CODE[member_ref][Town.find_by_insee_code(main_town_insee_code).postal_code] if Town.find_by_insee_code(main_town_insee_code)
+  end
+
+  def set_openings
+    self.openings = {}
+    if external_id
+      obj = EventsImporter.load_apidae_event(external_id)
+      if obj
+        obj.openings.each do |o|
+          if o[:dateDebut] == o[:dateFin]
+            self.openings[o[:dateDebut]] = o[:identifiantTechnique]
+          end
+        end
+      end
+    end
+  end
+
+  def external_ref
+    external_id || "JEP-#{(Time.current.to_f * 1000).floor}"
   end
 
   def remote_save

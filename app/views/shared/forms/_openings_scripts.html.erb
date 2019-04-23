@@ -1,0 +1,31 @@
+<script type="text/javascript" src="<%= Rails.application.config.apidate_static_url %>/inline.bundle.js"></script>
+<script type="text/javascript" src="<%= Rails.application.config.apidate_static_url %>/polyfills.bundle.js"></script>
+<script type="text/javascript" src="<%= Rails.application.config.apidate_static_url %>/main.bundle.js"></script>
+<script type="text/javascript">
+    function displayOpeningsForm(date, externalId, externalRef) {
+        openApidateForm(
+            {
+                title: 'Journées du patrimoine 2019',
+                subtitle: moment(date).format('dddd D MMMM YYYY'),
+                type: 'apidae_period',
+                externalId: externalId,
+                externalType: 'FETE_ET_MANIFESTATION',
+                externalRef: externalRef,
+                startDate: date,
+                endDate: date,
+                closingDays: [],
+                userId: <%= @item.user.uid %>,
+                onCancel: function() {
+                    console.log('on cancel - length : ' + $("div.time-period").size());
+                }
+            }
+        );
+    }
+
+    function loadOpenings() {
+        $.ajax({
+            url: '<%= Rails.application.config.apidate_api_url %>/apidae_period?ref=""',
+            method: 'GET'
+        });
+    }
+</script>

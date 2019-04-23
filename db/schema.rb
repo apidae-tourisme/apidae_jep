@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2019_04_09_124224) do
     t.integer "program_item_id"
     t.string "picture_file_name"
     t.string "picture_content_type"
-    t.bigint "picture_file_size"
+    t.integer "picture_file_size"
     t.datetime "picture_updated_at"
     t.text "data"
     t.datetime "created_at", null: false

@@ -21,7 +21,7 @@ class User::ProgramItemsController < User::UserController
       @item = ProgramItem.new(item_type: ITEM_VISITE, free: true, booking: false,
                               accept_pictures: '0', user_id: current_user.id, rev: 1, status: ProgramItem::STATUS_DRAFT,
                               telephone: current_user.legal_entity.phone, email: current_user.legal_entity.email,
-                              website: current_user.legal_entity.website)
+                              website: current_user.legal_entity.website, openings: {})
     else
       @previous_id = params[:id]
       previous_version = ProgramItem.find(params[:id])
@@ -138,6 +138,7 @@ class User::ProgramItemsController < User::UserController
 
   def set_program_item
     @item = ProgramItem.find(params[:id])
+    @item.set_openings
   end
 
   def opening_params

@@ -115,4 +115,7 @@ Rails.application.configure do
       :client_secret => '',
       :profile_url => ''
   }
+
+  config.apidate_static_url = ''
+  config.apidate_api_url = ''
 end

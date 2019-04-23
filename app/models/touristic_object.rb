@@ -79,4 +79,8 @@ class TouristicObject
     contact_details
   end
 
+  def openings
+    @ouverture.blank? ? [] : @ouverture[:periodesOuvertures]
+  end
+
 end
