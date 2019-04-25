@@ -5,13 +5,14 @@ class ProgramItem < ActiveRecord::Base
   include WritableConcern
 
   belongs_to :user
+
   has_many :item_openings, dependent: :destroy
   has_many :attached_files, dependent: :destroy
 
   accepts_nested_attributes_for :item_openings, allow_destroy: true
   accepts_nested_attributes_for :attached_files, allow_destroy: true, reject_if: proc {|attrs| attrs['picture'].blank? && attrs['picture_file_name'].blank? }
 
-  attr_accessor :territory, :openings
+  attr_accessor :territory
 
   STATUS_DRAFT = 'draft'
   STATUS_PENDING = 'pending'
@@ -29,16 +30,23 @@ class ProgramItem < ActiveRecord::Base
                                     :main_transports, :alt_place, :alt_lat, :alt_lng, :alt_address,
                                     :alt_town_insee_code, :alt_postal_code, :alt_transports], coder: JSON
   store :rates_data, accessors: [:free, :rates_desc, :booking, :booking_details, :booking_telephone, :booking_email, :booking_website], coder: JSON
-  store :opening_data, accessors: [:openings_desc], coder: JSON
+  store :opening_data, accessors: [:openings_desc, :openings], coder: JSON
   store :contact_data, accessors: [:telephone, :email, :website], coder: JSON
 
   validates_presence_of :item_type, :title, :main_place, :main_lat, :main_lng, :main_address, :main_town_insee_code,
-                        :main_transports, :description, :accessibility, :item_openings
+                        :main_transports, :description, :accessibility
   validates :accept_pictures, acceptance: true
   validates_length_of :summary, maximum: 255
+  validate :openings_presence
 
   def last_revision
     ProgramItem.where(reference: reference).order(:rev).last
+  end
+
+  def openings_presence
+    if openings.blank? || openings.values.all? {|v| v.blank?}
+      errors.add('openings', 'missing')
+    end
   end
 
   def picture
@@ -122,7 +130,7 @@ class ProgramItem < ActiveRecord::Base
   end
 
   def set_openings
-    self.openings = {}
+    self.openings ||= {}
     if external_id
       obj = EventsImporter.load_apidae_event(external_id)
       if obj
@@ -137,6 +145,10 @@ class ProgramItem < ActiveRecord::Base
 
   def external_ref
     external_id || "JEP-#{(Time.current.to_f * 1000).floor}"
+  end
+
+  def opening_id(ref, date)
+    openings[date] || "#{ref}-#{date.gsub('-', '')}"
   end
 
   def remote_save

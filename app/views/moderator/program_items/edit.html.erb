@@ -3,22 +3,23 @@
   <span class="label label-inverse text-normal vam ml"><%= "Réf. #{@item.reference}" %></span>
   <span class="label label-<%= t "program_item.color.#{@item.status}" %> text-normal vam"><%= t "program_item.status.#{@item.status}" %></span>
   <% if @item.external_id %>
-  <span class="label label-primary text-normal vam"><%= "Id Apidae #{@item.external_id}" %></span>
+    <span class="label label-primary text-normal vam"><%= "Id Apidae #{@item.external_id}" %></span>
   <% end %>
 </div>
 <% unless @entity_items.blank? %>
-<div class="alert alert-info">
-  <p class="man text-uppercase pb-sm">Offres publiées pour cette structure :</p>
-  <ul>
-    <% @entity_items.each do |itm| %>
-      <li><%= link_to "#{itm.title}<em class='icon-arrow-right-circle pl'></em>".html_safe, moderator_program_item_path(itm), target: '_blank', class: 'text-white' %></li>
-    <% end %>
-  </ul>
-</div>
+  <div class="alert alert-info">
+    <p class="man text-uppercase pb-sm">Offres publiées pour cette structure :</p>
+    <ul>
+      <% @entity_items.each do |itm| %>
+        <li><%= link_to "#{itm.title}<em class='icon-arrow-right-circle pl'></em>".html_safe, moderator_program_item_path(itm), target: '_blank', class: 'text-white' %></li>
+      <% end %>
+    </ul>
+  </div>
 <% end %>
 <%= render 'shared/forms/item_form', form_scope: :moderator, readonly: nil %>
 <% content_for :body_area do %>
-    <%= render 'shared/forms/item_form_scripts', readonly: nil,
-               update_form_path: update_form_moderator_program_items_path,
-               opening_form_path: opening_moderator_program_items_path %>
+  <%= render 'shared/forms/item_form_scripts', readonly: nil,
+             update_form_path: update_form_moderator_program_items_path,
+             opening_form_path: opening_moderator_program_items_path %>
+  <%= render 'shared/forms/openings_scripts' %>
 <% end %>

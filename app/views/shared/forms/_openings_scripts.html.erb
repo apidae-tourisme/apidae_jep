@@ -15,17 +15,45 @@
                 endDate: date,
                 closingDays: [],
                 userId: <%= @item.user.uid %>,
-                onCancel: function() {
-                    console.log('on cancel - length : ' + $("div.time-period").size());
+                onSubmit: function() {
+                    $("#opening_" + date).val(externalId);
                 }
             }
         );
     }
 
+    function displayOpeningsDetails(date, externalId) {
+        openApidateDisplay({
+            title: 'Journées du patrimoine 2019',
+            subtitle: moment(date).format('dddd D MMMM YYYY'),
+            type: 'apidae_period',
+            externalId: externalId
+        });
+    }
+
+    // Note : singleorigin param is used to prevent Apache / CouchDB from setting multiple allow-origin headers
     function loadOpenings() {
+        var values = $.map($(".item_opening"), function(elt) {return $(elt).val();}).filter(function(val) {return val;});
         $.ajax({
-            url: '<%= Rails.application.config.apidate_api_url %>/apidae_period?ref=""',
-            method: 'GET'
+            url: '<%= Rails.application.config.apidate_api_url %>/apidae_period?singleorigin=true&ids=["' + values.join('","') + '"]',
+            method: 'GET',
+            contentType: 'application/json',
+            success: function(openings) {
+                if (openings) {
+                    for (var i = 0; i < openings.length; i++) {
+                        if (openings[i].startDate === openings[i].endDate) {
+                            var btn = $("#edit_opening_" + openings[i].startDate);
+                            var count = openings[i].timePeriods.length;
+                            if (btn.length && count) {
+                                btn.find("em").text(count > 1 ? (count + " horaires saisis.") : "1 horaire saisi.");
+                            }
+                        }
+                    }
+                }
+            },
+            error: function(error) {
+                console.log('openings loading failed : ' + error);
+            }
         });
     }
 </script>

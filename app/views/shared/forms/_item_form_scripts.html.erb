@@ -255,74 +255,6 @@
         }
     });
 
-    function parseTempIdentifier(elt) {
-        return elt.find("textarea").attr("id").split("program_item_item_openings_attributes_")[1].split("_")[0];
-    }
-
-    function bindOpeningsActions() {
-        $(".item_openings").find(".nested-fields").each(function() {
-            var src = $(this);
-            var identifier = parseTempIdentifier($(this));
-            var newIdentifier = new Date().getTime();
-
-            $(this).find("a.clone_opening").click(function() {
-                var srcHtml = src.clone().wrap('<p/>').parent().html();
-                var cloneHtml = srcHtml.replace(new RegExp('_' + identifier + '_', 'g'), '_' + newIdentifier + '_')
-                    .replace(new RegExp('\\[' + identifier + '\\]', 'g'), '[' + newIdentifier + ']');
-                $(cloneHtml).insertAfter(src);
-                bindOpeningsActions();
-            });
-            $(this).find("a.edit_opening").click(function() {
-                displayOpeningModal(identifier);
-            })
-        });
-    }
-
-    function displayOpeningModal(identifier, clearOnDismiss) {
-        var openingId = "program_item_item_openings_attributes_" + identifier;
-        var modal = $("#lg_modal");
-        modal.find("#lg_modal_title").html("Modifier la période d'ouverture");
-        modal.find("#lg_modal_body").html("<%= j(render 'shared/forms/opening_form', opening_form_path: opening_form_path) %>");
-        modal.modal();
-        modal.off('hide.bs.modal');
-        modal.drags({handle: '.modal-header'});
-        $("#starts_at").val($("#" + openingId + "_starts_at").val() ? moment($("#" + openingId + "_starts_at").val()).format('YYYY-MM-DD HH:mm') : '');
-        $("#ends_at").val($("#" + openingId + "_ends_at").val() ? moment($("#" + openingId + "_ends_at").val()).format('YYYY-MM-DD HH:mm') : '');
-        var duration = $("#" + openingId + "_duration").val();
-        $("#duration").val(duration ? moment(duration * 1000).utc().format('HH:mm') : '');
-        var frequency = $("#" + openingId + "_frequency").val();
-        $("#frequency").val(frequency ? moment(frequency * 1000).utc().format('HH:mm') : '');
-        $("#prefix").val(openingId);
-        initDateTimePicker("edit_start_date");
-        initDateTimePicker("edit_end_date");
-        initTimePicker("edit_duration");
-        initTimePicker("edit_frequency");
-        if(clearOnDismiss) {
-            $("#lg_modal").on('hide.bs.modal', function() {
-                var startsAt = $("#" + $(this).find("#prefix").val() + "_starts_at");
-                if(!startsAt.val()) {
-                    startsAt.parents("fieldset.nested-fields")[0].remove();
-                }
-            });
-        }
-        $("#edit_opening_form").submit(function(evt) {
-            var startsAt = $("#starts_at").val();
-            var endsAt = $("#ends_at").val();
-            if(startsAt) {
-                if(endsAt && startsAt > endsAt) {
-                    $("#edit_opening_error").html('<p class="text-center text-bold">Veuillez saisir une date de fin postérieure à la date de début.</p>');
-                    return false;
-                } else {
-                    $("#edit_opening_error").html("");
-                    return true;
-                }
-            } else {
-                $("#edit_opening_error").html('<p class="text-center text-bold">Veuillez saisir une date de début</p>');
-                return false;
-            }
-        })
-    }
-
     function toggleDisplay(selector, val) {
         var elt = $("#" + selector).find("input:checked");
         var descElt = $("." + selector);
@@ -370,7 +302,6 @@
     }
 
     $(function() {
-        bindOpeningsActions();
         var map = initMap('item_map', 8, 6);
         <% unless @item.main_lat.blank? || @item.main_lng.blank? %>
           <% if readonly %>
@@ -381,11 +312,6 @@
           <% end %>
         <% end %>
         $(".chosen-select.no-max").chosen({width: '95%'});
-        $(".item_openings").on("cocoon:after-insert", function (e, elt) {
-            var tmpIdentifier = parseTempIdentifier($(elt));
-            bindOpeningsActions();
-            displayOpeningModal(tmpIdentifier, true);
-        });
         $("#item_types").find("input[type=radio]").change(function() {
             toggleBuildingFields();
             $.ajax({
@@ -422,11 +348,11 @@
         });
 
         $.validator.addMethod('opening_presence', function(value, element) {
-            return $("fieldset.opening").length > 0;
-        }, "champ requis");
+            return $(".item_opening").filter(function() {return $(this).val();}).length > 0;
+        });
 
         $.validator.addMethod('accept_pictures', function(value, element) {
-            return $("fieldset.item_photos").find("fieldset.nested-fields:visible").length == 0 || value;
+            return $("fieldset.item_photos").find("fieldset.nested-fields:visible").length === 0 || value;
         });
 
         $("#program_item_form").validate({
@@ -434,7 +360,9 @@
                 if(element.is("input[type=checkbox]")) {
                     element.before(error);
                 } else if(element.is(':hidden')) {
-                    $("legend.openings").append(error);
+                    if(element.attr("id") === 'program_item_status') {
+                      $("legend.openings").append(error);
+                    }
                 } else {
                     element.after(error);
                 }
