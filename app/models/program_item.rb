@@ -1,5 +1,10 @@
 #encoding: UTF-8
 
+require 'open-uri'
+require 'events_importer'
+require 'touristic_object'
+require 'kafka'
+
 class ProgramItem < ActiveRecord::Base
   include LoggableConcern
   include WritableConcern
@@ -82,11 +87,7 @@ class ProgramItem < ActiveRecord::Base
   end
 
   def open_dates
-    dates = []
-    if item_openings.any?
-      dates = item_openings.collect {|o| o.starts_at.to_date.strftime('%F')}
-    end
-    dates.uniq
+    openings.blank? ? [] : openings.select {|k, v| !v.blank?}.keys
   end
 
   def validated_at
@@ -148,7 +149,7 @@ class ProgramItem < ActiveRecord::Base
   end
 
   def opening_id(ref, date)
-    openings[date] || "#{ref}-#{date.gsub('-', '')}"
+    openings[date].blank? ? "#{ref}-#{date.gsub('-', '')}" : openings[date]
   end
 
   def remote_save
@@ -157,6 +158,8 @@ class ProgramItem < ActiveRecord::Base
 
     if external_id || (response['id'] && update_attributes!(external_id: response['id'], external_status: response['status']))
       update_apidae_criteria(user.territory, build_criteria((themes || []) + (criteria || []) + (validation_criteria || [])))
+      bind_openings if rev == 1
+      touch_remote_obj
     end
   end
 
@@ -168,15 +171,15 @@ class ProgramItem < ActiveRecord::Base
       merged[:place] = {
           name: main_place, startingPoint: alt_place, address: main_address,
           postal_code: place_town.postal_code, latitude: main_lat, longitude: main_lng,
-          extraInfo: alt_place, external_id: place_town.external_id
+          extraInfo: main_transports, external_id: place_town.external_id
       }
     end
 
     unless desc_data.nil? || desc_data.empty?
       merged[:description] = {
           name: title,
-          shortDescription: (user.territory == GRAND_LYON ? summary : description[0..254]),
-          longDescription: (user.territory == GRAND_LYON ? description : ''),
+          shortDescription: summary,
+          longDescription: description,
           planners: event_planners,
           accessibility: accessibility,
           audience: themes,
@@ -203,7 +206,7 @@ class ProgramItem < ActiveRecord::Base
       }
     end
 
-    merged[:openings] = item_openings.to_a
+    merged[:openings] = openings
 
     merged
   end
@@ -279,6 +282,59 @@ class ProgramItem < ActiveRecord::Base
         "Structure organisatrice : #{user.legal_entity.name} (#{user.legal_entity.external_id.nil? ? 'Nouvelle structure' : ('Identifiant Apidae : ' + user.legal_entity.external_id.to_s)})"
   end
 
+  def bind_openings
+    try = 1
+    obj = nil
+    while obj.nil? && try < 5
+      sleep(2)
+      logger.debug "Retrieving obj #{external_id} - try #{try}..."
+      obj = EventsImporter.load_apidae_event(external_id)
+      try += 1
+    end
+    if obj
+      openings_map = {}
+      obj.openings.each do |o|
+        if o[:dateDebut] == o[:dateFin] && !openings[o[:dateDebut]].blank?
+          openings_map[o[:identifiantTechnique]] = openings[o[:dateDebut]]
+        end
+      end
+      kafka = Kafka.new([Rails.application.config.kafka_host], client_id: "jep_openings")
+      openings_map.each_pair do |remote_id, local_id|
+        logger.debug "Binding temp opening #{local_id} to period #{remote_id}"
+        kafka.deliver_message('{"operation":"UPDATE_PERIOD","periodId":"' + local_id.to_s + '","updatedObject":{"externalId":' + remote_id.to_s + ', "externalRef":' + external_id.to_s + '}}',
+                              topic: 'apidae_period')
+      end
+    else
+      logger.error "Remote object not found : #{external_id}"
+    end
+  end
+
+  def touch_remote_obj
+    logger.debug "Touching obj #{external_id} to refresh openings text"
+    sleep(5)
+    form_data = {
+        mode: WritableConcern::UPDATE,
+        id: external_id,
+        type: 'FETE_ET_MANIFESTATION',
+        skipValidation: 'true'
+    }
+    form_data[:fields] = '["root"]'
+    form_data[:root] ||= '{"type":"FETE_ET_MANIFESTATION"}'
+    form_data['root.fieldList'] = '[]'
+
+    openings_data = {
+        ouverture: {
+            periodeEnClairGenerationMode: 'AUTOMATIQUE'
+        }
+    }
+    merged_data = safe_merge(extract_as_hash(form_data[:root]), openings_data)
+    form_data[:root] = JSON.generate(merged_data)
+    impacted_fields = data_fields(openings_data, Array.new)
+    form_data['root.fieldList'] = merge_fields(form_data['root.fieldList'], impacted_fields)
+
+    save_to_apidae(user.territory, form_data, :api_url, :put)
+  end
+
   private
 
   def build_form_data(key, value)
@@ -352,7 +408,7 @@ class ProgramItem < ActiveRecord::Base
       when :openings
         converted_hash = {
             ouverture: {
-                periodeEnClair: {libelleFr: format_openings(value)},
+                periodeEnClair: {libelleFr: ''},
                 periodeEnClairGenerationMode: 'MANUEL',
                 periodesOuvertures: opening_times(value)
             }
@@ -472,22 +528,38 @@ class ProgramItem < ActiveRecord::Base
     {added: added, removed: removed}
   end
 
-  def opening_times(openings)
-    opening_times = []
-    openings_by_day = openings.group_by {|o| o.starts_at.to_date}
-    openings_by_day.each_pair do |date, ops|
-      ref_opening = ops.first
-      opening_time = {
-          dateDebut: date.strftime('%F'),
-          dateFin: date.strftime('%F'),
-          horaireOuverture: ref_opening.starts_at.strftime('%T'),
-          type: 'OUVERTURE_TOUS_LES_JOURS',
-          tousLesAns: false
-      }
-      opening_time[:horaireFermeture] = ref_opening.ends_at.strftime('%T') if ref_opening.ends_at
-      opening_times << opening_time
+  def opening_times(openings_data)
+    opening_periods = []
+    openings_data.each_pair do |date, id|
+      unless id.blank?
+        op = apidate_opening(id)
+        time_frames = op['timePeriods'].map {|tp| tp['timeFrames']}.flatten
+        unless time_frames.blank?
+          start_hour = time_frames.map {|tf| tf['startTime']}.min
+          end_hour = time_frames.map {|tf| tf['endTime'] || ''}.max
+
+          opening_period = {
+              dateDebut: date,
+              dateFin: date,
+              horaireOuverture: (start_hour + ':00'),
+              type: 'OUVERTURE_TOUS_LES_JOURS',
+              tousLesAns: false
+          }
+          opening_period[:horaireFermeture] = (end_hour + ':00') unless end_hour.blank?
+          opening_periods << opening_period
+        end
+      end
     end
-    opening_times
+    opening_periods
   end
 
+  def apidate_opening(id)
+    apidate_url = Rails.application.config.apidate_api_url + '/apidae_period'
+    logger.info "Retrieve openings : #{apidate_url}"
+    response = ''
+    open(apidate_url + '?id=' + CGI.escape('"' + id + '"')) { |f|
+      f.each_line {|line| response += line if line}
+    }
+    JSON.parse(response)
+  end
 end

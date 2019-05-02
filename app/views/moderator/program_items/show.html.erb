@@ -10,6 +10,7 @@
 </div>
 <%= render 'shared/forms/item_form', form_scope: :moderator, readonly: 'disabled' %>
 <% content_for :body_area do %>
+    <%= render 'shared/forms/openings_scripts' %>
     <%= render 'shared/forms/item_form_scripts', readonly: true,
                update_form_path: update_form_user_program_items_path,
                opening_form_path: opening_user_program_items_path %>

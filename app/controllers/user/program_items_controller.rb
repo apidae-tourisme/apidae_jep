@@ -10,6 +10,7 @@ class User::ProgramItemsController < User::UserController
 
   def index
     @items = current_user.legal_entity.active_items(params[:year]).sort_by {|i| 1/i.id.to_f}
+    @year = params[:year].blank? ? EDITION : params[:year].to_i
     unless params[:status].blank?
       @status = params[:status]
       @items = @items.select {|i| i.status == @status}
@@ -30,12 +31,13 @@ class User::ProgramItemsController < User::UserController
       @item.external_status = nil
       @item.rev += 1
       @item.reference = previous_version.reference
-      previous_version.item_openings.each do |o|
-        @item.item_openings << o.dup
-      end
+      # previous_version.item_openings.each do |o|
+      #   @item.item_openings << o.dup
+      # end
       previous_version.attached_files.each do |f|
         @item.attached_files << AttachedFile.new(program_item: @item, data: f.data, picture: f.picture, created_at: f.created_at)
       end
+      @item.set_openings
       @town = Town.find_by_insee_code(@item.main_town_insee_code) if @item.main_town_insee_code
     end
   end
@@ -92,6 +94,7 @@ class User::ProgramItemsController < User::UserController
     @new_item.rev = 1
     @new_item.user_id = current_user.id
     @new_item.status = ProgramItem::STATUS_DRAFT
+    @new_item.history = []
     @item.item_openings.each do |o|
       @new_item.item_openings << o.dup
     end
@@ -124,8 +127,8 @@ class User::ProgramItemsController < User::UserController
   end
 
   def site_desc
-    @place = Place.where(uid: "f10f8c48-875e-4194-bd7a-33dc2875efef").first
-    jep_site = JepSite.where(place_uid: "f10f8c48-875e-4194-bd7a-33dc2875efef").first
+    @place = Place.where(uid: params[:place_uid]).first
+    jep_site = JepSite.where(place_uid: params[:place_uid]).first
     @site_desc = (jep_site && jep_site.description) ? jep_site.description : ''
     @site_ages = (jep_site && jep_site.ages) ? jep_site.ages : []
   end

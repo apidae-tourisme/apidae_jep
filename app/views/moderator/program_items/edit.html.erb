@@ -18,8 +18,8 @@
 <% end %>
 <%= render 'shared/forms/item_form', form_scope: :moderator, readonly: nil %>
 <% content_for :body_area do %>
+  <%= render 'shared/forms/openings_scripts' %>
   <%= render 'shared/forms/item_form_scripts', readonly: nil,
              update_form_path: update_form_moderator_program_items_path,
              opening_form_path: opening_moderator_program_items_path %>
-  <%= render 'shared/forms/openings_scripts' %>
 <% end %>

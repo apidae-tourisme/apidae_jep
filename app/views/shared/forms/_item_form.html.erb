@@ -175,23 +175,22 @@
                 </div>
               </div>
           <% end %>
-          <div class="form-group mt-lg mdy">
-            <label class="col-sm-3 control-label">Description<%= help_button %><br/>(255 caractères max)</label>
-            <%= help_content("Veuillez vous limiter à 255 caractères") %>
+          <div class="form-group mt-lg">
+            <label class="col-sm-3 control-label">Description<%= help_button %></label>
+            <%= help_content("Description détaillée de l'offre") %>
             <div class="col-sm-9">
-              <%= item_form.text_area :description, class: 'form-control required', disabled: readonly, rows: 3, maxlength: (territory?(ISERE) ? 255 : 9999) %>
+              <%= item_form.text_area :description, class: 'form-control', disabled: readonly, rows: 3, maxlength: 9999 %>
               <%= render_previous(:description, 3) %>
             </div>
           </div>
-          <% if current_moderator && current_moderator.member_ref == GRAND_LYON %>
-          <div class="form-group mt-lg">
-            <label class="col-sm-3 control-label">Résumé</label>
+          <div class="form-group mt-lg mdy">
+            <label class="col-sm-3 control-label">Résumé<%= help_button %>(255 caractères max)</label>
+            <%= help_content("Veuillez vous limiter à 255 caractères") %>
             <div class="col-sm-9">
-              <%= item_form.text_area :summary, class: 'form-control', disabled: readonly, rows: 3, maxlength: 255 %>
+              <%= item_form.text_area :summary, class: 'form-control required', disabled: readonly, rows: 3, maxlength: 255 %>
               <%= render_previous(:summary, 3) %>
             </div>
           </div>
-          <% end %>
           <div class="form-group mt-lg mdy">
             <label class="col-sm-3 control-label mdy">Accessibilité<%= help_button %></label>
             <%= help_content("Si non accessible aux personnes en situation de handicap moteur, merci de cocher la case correspondante") %>
@@ -222,7 +221,8 @@
             <% ext_ref = @item.external_ref %>
             <% ['2019-09-20', '2019-09-21', '2019-09-22', '2019-09-23'].each do |d| %>
               <div class="col-sm-3 mt-lg">
-                <button id="edit_opening_<%= d %>" type="button" class="btn btn-lg btn-primary w100" onclick="displayOpeningsForm('<%= d %>', '<%= @item.opening_id(ext_ref, d) %>', '<%= ext_ref %>'); return false;">
+                <button id="edit_opening_<%= d %>" type="button" class="btn btn-lg btn-primary w100"
+                        onclick="displayOpeningsForm('<%= d %>', '<%= @item.opening_id(ext_ref, d) %>', '<%= ext_ref %>', '<%= readonly %>'); return false;">
                   <span class="text-uppercase"><%= l(Date.parse(d), format: :long) %></span><br/><em>Aucun horaire saisi.</em>
                 </button>
                 <%= hidden_field_tag "program_item[openings][#{d}]", @item.openings[d], id: "opening_#{d}", class: 'item_opening' %>

@@ -10,13 +10,14 @@ gem 'jbuilder', '~> 2.5'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 
 gem 'devise'
+gem 'oauth2', '1.2.0'
 gem 'omniauth', '1.3.2'
-# 1.3.1 specified as 1.4.0 is broken for now
 gem 'omniauth-oauth2', '1.3.1'
 gem 'paperclip'
 gem 'cocoon'
 gem 'remotipart', '~> 1.2'
 gem 'sitra_client'
+gem 'ruby-kafka'
 
 gem 'rubyzip', '= 1.0.0'
 gem 'axlsx', '= 2.0.1'

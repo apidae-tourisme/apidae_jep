@@ -127,6 +127,10 @@
             }
         }
 
+        function deDupFeatures() {
+
+        }
+
         geocoder.on('select', function (e) {
             updateFormFields(e.feature);
             clearMarkers();
@@ -141,12 +145,27 @@
         });
         geocoder.on('results', function (e) {
             if(e.results.features) {
-                if (e.results.features.length == 0) {
+                if (e.results.features.length === 0) {
                     $("#item_map").find(".leaflet-pelias-message")
                         .html('<em class="pr text-sm">Aucun résultat pour cette recherche.</em><button id="add_new_place" class="btn btn-labeled btn-default btn-sm"><i class="fa fa-plus pr-sm"></i>Ajouter un lieu</button>');
                 } else {
-                    $("#item_map").find(".leaflet-pelias-results > .leaflet-pelias-list")
-                        .before('<div class="leaflet-pelias-message"><em class="pr text-sm">Le lieu ne figure pas dans la liste ?</em><button id="add_new_place" class="btn btn-labeled btn-default btn-sm"><i class="fa fa-plus pr-sm"></i>Ajouter un lieu</button></div>');
+                    e.results.features.splice(0);
+                    var list = $("#item_map").find(".leaflet-pelias-results > .leaflet-pelias-list");
+                    list.before('<div class="leaflet-pelias-message"><em class="pr text-sm">Le lieu ne figure pas dans la liste ?</em><button id="add_new_place" class="btn btn-labeled btn-default btn-sm"><i class="fa fa-plus pr-sm"></i>Ajouter un lieu</button></div>');
+                    list.find("li.leaflet-pelias-result").each(function() {
+                        var txt = $(this).text(), prevTxt = $(this).prev().text();
+                        if (txt.length > prevTxt.length) {
+                            if (txt.includes(prevTxt.split(',')[0]) && txt.includes(prevTxt.split(',')[1])) {
+                                $(this).prev().hide();
+                                // console.log('hiding ' + prevTxt);
+                            }
+                        } else {
+                            if (prevTxt.includes(txt.split(',')[0]) && prevTxt.includes(txt.split(',')[1])) {
+                                $(this).hide();
+                                // console.log('hiding ' + txt);
+                            }
+                        }
+                    })
                 }
                 $("#add_new_place").click(function () {
                     toggleMapFields(true);
@@ -340,6 +359,8 @@
                 return handler.call(this, element, event);
             };
         }
+
+        loadOpenings();
 
         $.extend($.validator.messages, {
             required: "champ requis",

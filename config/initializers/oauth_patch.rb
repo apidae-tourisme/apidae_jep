@@ -24,7 +24,7 @@ module OAuth2
         opts[:headers] =  {'Content-Type' => 'application/x-www-form-urlencoded'}
         opts[:headers].merge!(headers) if headers
       else
-        opts[:headers] = params.delete(:headers)
+        opts[:headers] = params.delete(:headers) || {}
         opts[:headers].merge!({'Accept' => 'application/json'})
         opts[:params] = params
       end

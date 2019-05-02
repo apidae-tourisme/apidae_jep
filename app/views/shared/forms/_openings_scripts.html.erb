@@ -2,24 +2,29 @@
 <script type="text/javascript" src="<%= Rails.application.config.apidate_static_url %>/polyfills.bundle.js"></script>
 <script type="text/javascript" src="<%= Rails.application.config.apidate_static_url %>/main.bundle.js"></script>
 <script type="text/javascript">
-    function displayOpeningsForm(date, externalId, externalRef) {
-        openApidateForm(
-            {
-                title: 'Journées du patrimoine 2019',
-                subtitle: moment(date).format('dddd D MMMM YYYY'),
-                type: 'apidae_period',
-                externalId: externalId,
-                externalType: 'FETE_ET_MANIFESTATION',
-                externalRef: externalRef,
-                startDate: date,
-                endDate: date,
-                closingDays: [],
-                userId: <%= @item.user.uid %>,
-                onSubmit: function() {
-                    $("#opening_" + date).val(externalId);
+    function displayOpeningsForm(date, externalId, externalRef, readonly) {
+        if (readonly === 'disabled') {
+            displayOpeningsDetails(date, externalId);
+        } else {
+            openApidateForm(
+                {
+                    title: 'Journées du patrimoine 2019',
+                    subtitle: moment(date).format('dddd D MMMM YYYY'),
+                    type: 'apidae_period',
+                    externalId: externalId,
+                    externalType: 'FETE_ET_MANIFESTATION',
+                    externalRef: externalRef,
+                    startDate: date,
+                    endDate: date,
+                    closingDays: [],
+                    userId: <%= @item.user.uid %>,
+                    onSubmit: function() {
+                        $("#opening_" + date).val(externalId);
+                        loadOpenings();
+                    }
                 }
-            }
-        );
+            );
+        }
     }
 
     function displayOpeningsDetails(date, externalId) {
@@ -27,7 +32,12 @@
             title: 'Journées du patrimoine 2019',
             subtitle: moment(date).format('dddd D MMMM YYYY'),
             type: 'apidae_period',
-            externalId: externalId
+            externalId: externalId,
+            onLoad: function() {
+              $("apidate-details").find(".time-period > .card-body").each(function() {
+                  $(this).text($(this).text().replace(" tous les jours", ""));
+              })
+            }
         });
     }
 
