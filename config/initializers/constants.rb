@@ -11,9 +11,9 @@ ITEM_EXPOSITION = "exposition"
 ITEM_TYPES = [ITEM_VISITE, ITEM_PARCOURS, ITEM_ANIMATION, ITEM_EXPOSITION]
 
 THEMES = {
-    GRAND_LYON => ["Thématique 2018 - \"L'art du partage\"", "Le goût en partage", "Unesco", "Nouveauté",
+    GRAND_LYON => ["Thématique 2019 - \"Arts et divertissement\"", "Habiter", "150 ans Tony Garnier", "Nouveauté",
                    "En famille", "Jeunes (15-25 ans)", "Egalité"],
-    ISERE => ["Thématique 2018 - \"L'art du partage\"", "Famille", "Réservé aux enfants", "Antiquité",
+    ISERE => ["Thématique 2019 - \"Arts et divertissement\"", "Famille", "Réservé aux enfants", "Antiquité",
               "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique"]
 }
 THEMES_REFS = Hash[THEMES.values.flatten.collect {|th| [th.parameterize, th] }]
@@ -72,8 +72,8 @@ ALL_REFS = THEMES_REFS.merge(VALIDATION_CRITERIA_REFS).merge(CRITERIA_REFS).merg
 # APIDAE_CRITERIA = {
 #     'Nouveauté' => 7997,
 #     "Visite libre" => 10173,
-#     "Le goût en partage" => 13008,
-#     "Unesco" => 13010,
+#     "Habiter" => 13008,
+#     "150 ans Tony Garnier" => 13010,
 #     'Egalité' => 10161,
 #     'animation' => 10171,
 #     'parcours' => 10172,
@@ -88,7 +88,7 @@ ALL_REFS = THEMES_REFS.merge(VALIDATION_CRITERIA_REFS).merge(CRITERIA_REFS).merg
 # }
 #
 # APIDAE_TYPOLOGIES = {
-#     "Thématique 2018 - \"L'art du partage\"" => 5412
+#     "Thématique 2019 - \"Arts et divertissement\"" => 5412
 # }
 
 # Preprod
