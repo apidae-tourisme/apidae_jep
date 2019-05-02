@@ -7,20 +7,18 @@
           <div class="text-sm">Accueil</div>
         </a>
       </li>
-      <% unless current_user.territory == ISERE %>
-        <li class="<%= 'active' if controller?('user/program_items') %>">
-          <a href="<%= annual_user_program_items_url(year: EDITION) %>" title="Programmations">
-            <em class="icon-calendar"></em>
-            <div class="text-sm">Mes offres</div>
-          </a>
-        </li>
-        <li class="<%= 'active' if controller?('user/account') && action_name != 'communication' %>">
-          <a href="<%= url_for(controller: 'user/account', action: 'edit') %>" title="Gestion du compte">
-            <em class="icon-user"></em>
-            <div class="text-sm">Mon compte</div>
-          </a>
-        </li>
-      <% end %>
+      <li class="<%= 'active' if controller?('user/program_items') %>">
+        <a href="<%= annual_user_program_items_url(year: EDITION) %>" title="Programmations">
+          <em class="icon-calendar"></em>
+          <div class="text-sm">Mes offres</div>
+        </a>
+      </li>
+      <li class="<%= 'active' if controller?('user/account') && action_name != 'communication' %>">
+        <a href="<%= url_for(controller: 'user/account', action: 'edit') %>" title="Gestion du compte">
+          <em class="icon-user"></em>
+          <div class="text-sm">Mon compte</div>
+        </a>
+      </li>
       <li class="<%= 'active' if controller?('user/dashboard') && action_name == 'support' %>">
         <a href="<%= user_support_path %>" title="Aide">
           <em class="icon-question"></em>
@@ -34,13 +32,13 @@
           <div class="text-sm">Bilan</div>
         </a>
       </li>
-      <% end %>
       <li class="<%= 'active' if controller?('user/account') && action?('communication') %>">
         <a href="<%= communication_user_account_path %>" title="Supports de communication">
           <em class="icon-envelope-letter"></em>
           <div class="text-sm">Kits com</div>
         </a>
       </li>
+      <% end %>
     </ul>
   </nav>
 </div>
