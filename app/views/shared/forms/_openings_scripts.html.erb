@@ -17,7 +17,7 @@
                     startDate: date,
                     endDate: date,
                     closingDays: [],
-                    userId: <%= @item.user.uid %>,
+                    userId: <%= @item.user.uid || "JEP-#{@item.user.id}" %>,
                     onSubmit: function() {
                         $("#opening_" + date).val(externalId);
                         loadOpenings();

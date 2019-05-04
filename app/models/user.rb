@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
   end
 
   def active_items(year)
-    creation_year = year.blank? ? year.to_i : EDITION
+    creation_year = year.blank? ? EDITION : year.to_i
     active_ids = program_items.select("MAX(id) AS id").group(:reference)
     program_items.where(id: active_ids)
         .where(created_at: (Date.new(creation_year, 1, 1)..Date.new(creation_year + 1, 1, 1))).order(:id)

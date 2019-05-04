@@ -346,7 +346,8 @@ class ProgramItem < ActiveRecord::Base
                     adresse1: value[:address],
                     codePostal: value[:postal_code],
                     etat: 'France',
-                    commune: {id: value[:external_id]}
+                    commune: {id: value[:external_id]},
+                    nomDuLieu: value[:startingPoint]
                 },
                 geolocalisation: {
                     valide: true,
