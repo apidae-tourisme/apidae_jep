@@ -25,19 +25,22 @@
           <div class="text-sm">Aide</div>
         </a>
       </li>
+      <% if current_user.territory == GRAND_LYON && false %>
+        <!-- Disabled for now, will be enabled after the event -->
+        <li class="<%= 'active' if controller?('user/event_polls') %>">
+          <a href="<%= current_user.active_poll ? user_user_event_polls_path(current_user.id) : new_user_user_event_polls_path(current_user.id) %>" title="Questionnaire bilan">
+            <em class="icon-check"></em>
+            <div class="text-sm">Bilan</div>
+          </a>
+        </li>
+      <% end %>
       <% if current_user.territory == GRAND_LYON %>
-      <li class="<%= 'active' if controller?('user/event_polls') %>">
-        <a href="<%= current_user.active_poll ? user_user_event_polls_path(current_user.id) : new_user_user_event_polls_path(current_user.id) %>" title="Questionnaire bilan">
-          <em class="icon-check"></em>
-          <div class="text-sm">Bilan</div>
-        </a>
-      </li>
-      <li class="<%= 'active' if controller?('user/account') && action?('communication') %>">
-        <a href="<%= communication_user_account_path %>" title="Supports de communication">
-          <em class="icon-envelope-letter"></em>
-          <div class="text-sm">Kits com</div>
-        </a>
-      </li>
+        <li class="<%= 'active' if controller?('user/account') && action?('communication') %>">
+          <a href="<%= communication_user_account_path %>" title="Supports de communication">
+            <em class="icon-envelope-letter"></em>
+            <div class="text-sm">Kits com</div>
+          </a>
+        </li>
       <% end %>
     </ul>
   </nav>

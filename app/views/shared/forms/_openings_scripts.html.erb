@@ -39,6 +39,7 @@
               })
             }
         });
+    //    $.map($("apidate-time-period").find(".card.bg-light:last-child"), function(elt) {return $(elt).text()}).join("\n")
     }
 
     // Note : singleorigin param is used to prevent Apache / CouchDB from setting multiple allow-origin headers
@@ -50,12 +51,14 @@
             contentType: 'application/json',
             success: function(openings) {
                 if (openings) {
+                    $("[id^='edit_opening_']").each(function() {
+                        $(this).find("em").text("Aucun horaire saisi.");
+                    });
                     for (var i = 0; i < openings.length; i++) {
                         if (openings[i].startDate === openings[i].endDate) {
                             var btn = $("#edit_opening_" + openings[i].startDate);
-                            var count = openings[i].timePeriods.length;
-                            if (btn.length && count) {
-                                btn.find("em").text(count > 1 ? (count + " horaires saisis.") : "1 horaire saisi.");
+                            if (btn.length && openings[i].timePeriods.length) {
+                                btn.find("em").text($.map(openings[i].timePeriods, function(tp) {return timePeriod(tp);}).join("\n"));
                             }
                         }
                     }
@@ -65,5 +68,51 @@
                 console.log('openings loading failed : ' + error);
             }
         });
+    }
+
+    var types = {
+        opening: {singular: 'Ouverture', plural: 'Ouverture'},
+        last_entry: {singular: 'Dernière entrée', plural: 'Dernières entrées'},
+        ceremony: {singular: 'Cérémonie', plural: 'Cérémonies'},
+        guided_tour: {singular: 'Visite guidée', plural: 'Visites guidées'},
+        representation: {singular: 'Représentation', plural: 'Représentations'}
+    };
+
+    function timePeriod(tp) {
+        var type = types[tp.type];
+        var timeFramesText = textJoin(tp.timeFrames.map(function(tf) {return timeFrame(tf);}));
+        var singleTimeFrame = tp.timeFrames.length === 1
+            && (!tp.timeFrames[0].endTime || !tp.timeFrames[0].endTime.hour)
+            && (!tp.timeFrames[0].recurrence || !tp.timeFrames[0].recurrence.hour);
+        return [singleTimeFrame ? type.singular : type.plural, timeFramesText].join(" ") + ".";
+    }
+
+    function timeFrame(tf) {
+        var txt = "";
+        if (tf.startTime != null) {
+            if (tf.recurrence != null) {
+                txt += "toutes les " + duration(tf.recurrence) + " ";
+            }
+            if (tf.endTime != null) {
+                txt += "de " + tf.startTime.replace(':', 'h') + " à " + tf.endTime.replace(':', 'h');
+            } else {
+                txt += (tf.recurrence ? "à partir de " : "à ") + tf.startTime.replace(':', 'h');
+            }
+        }
+        return txt;
+    }
+
+    function textJoin(textFields) {
+        var validFields = textFields.filter(function(f) {return f.length > 0;});
+        if (validFields.length > 0) {
+            var last = validFields.pop();
+            return validFields.length > 0 ? (validFields.join(", ") + " et " + last) : last;
+        } else {
+            return "";
+        }
+    }
+
+    function duration(d) {
+        return (d.indexOf('00') === 0 ? '' : (+d.split(':')[0] + 'h')) + (d.indexOf('00') > 0 ? '' : +d.split(':')[1] + "mins");
     }
 </script>

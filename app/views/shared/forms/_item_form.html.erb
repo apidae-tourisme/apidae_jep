@@ -223,7 +223,8 @@
               <div class="col-sm-3 mt-lg">
                 <button id="edit_opening_<%= d %>" type="button" class="btn btn-lg btn-primary w100"
                         onclick="displayOpeningsForm('<%= d %>', '<%= @item.opening_id(ext_ref, d) %>', '<%= ext_ref %>', '<%= readonly %>'); return false;">
-                  <span class="text-uppercase"><%= l(Date.parse(d), format: :long) %></span><br/><em>Aucun horaire saisi.</em>
+                  <span class="text-uppercase"><strong><%= l(Date.parse(d), format: :long) %></strong></span><br/>
+                  <em class="pre">Aucun horaire saisi.</em>
                 </button>
                 <%= hidden_field_tag "program_item[openings][#{d}]", @item.openings[d], id: "opening_#{d}", class: 'item_opening' %>
               </div>
