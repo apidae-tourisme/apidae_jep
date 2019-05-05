@@ -45,6 +45,7 @@ class User::AccountController < User::UserController
   def update_communication
     @user = current_user
     if @user.update(user_params)
+      NotificationMailer.notify_com_summary(@user).deliver_later
       redirect_to user_dashboard_url, notice: "Le formulaire a bien été enregistré."
     else
       render :communication, notice: "Une erreur s'est produite lors de l'enregistrement du formulaire."

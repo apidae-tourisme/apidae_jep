@@ -1,0 +1,16 @@
+<p>
+  Madame, Monsieur,<br/>
+  <br/>
+  Nous avons bien pris en compte votre demande de supports de communication pour les Journées Européennes du Patrimoine 2019
+  de la Métropole de Lyon.<br/>
+  Voici ci-dessous un résumé de votre commande :<br/>
+  <br/>
+  <%= @user.communication_poll.communication_data.collect {|com| "#{I18n.t('com_kit.format.' + com[0])} : #{com[1]}"}.join("<br/>") %>
+  <br/>
+  Les quantités demandées seront ajustées en fonction des stocks disponibles.
+  Les livraisons commenceront la semaine du 26 août et se poursuivront jusqu’au 7 septembre.<br/>
+  <br/>
+  Nous restons à votre disposition pour tout renseignement complémentaire.
+  <br/>
+  L’équipe de coordination des JEP
+</p>

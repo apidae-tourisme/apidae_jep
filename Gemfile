@@ -18,6 +18,8 @@ gem 'cocoon'
 gem 'remotipart', '~> 1.2'
 gem 'sitra_client'
 gem 'ruby-kafka'
+gem 'delayed_job_active_record'
+gem 'daemons'
 
 gem 'rubyzip', '= 1.0.0'
 gem 'axlsx', '= 2.0.1'

@@ -45,6 +45,7 @@ module ApidaeJep
     config.publication_title = "ApidaeJEP 2019 - Offre validée"
     config.notify_poll_title = "Journées européennes du patrimoine de la Métropole de Lyon"
     config.notify_com_title = "Supports de communication JEP 2019"
+    config.notify_com_summary_title = "Votre commande de supports de communication JEP 2019"
 
     config.signature = {
         'grand_lyon' => {label: "L’équipe JEP pour la Métropole de Lyon", contact: "jep.metropole@grandlyon.com"},

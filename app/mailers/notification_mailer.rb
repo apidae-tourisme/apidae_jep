@@ -30,4 +30,9 @@ class NotificationMailer < ApplicationMailer
     @user = user
     mail(from: 'jep.metropole@grandlyon.com', to: user.email, subject: Rails.application.config.notify_com_title)
   end
+
+  def notify_com_summary(user)
+    @user = user
+    mail(from: 'jep.metropole@grandlyon.com', to: user.email, subject: Rails.application.config.notify_com_summary_title)
+  end
 end

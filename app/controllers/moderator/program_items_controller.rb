@@ -42,12 +42,12 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
       if @item.validated?
         if @item.save
           if @item.remote_save
-            NotificationMailer.publish(@item).deliver_now
+            NotificationMailer.publish(@item).deliver_later
             redirect_to moderator_program_items_url, notice: "L'offre a bien été enregistrée." and return
           end
         end
       elsif @item.save
-        NotificationMailer.reject(@item).deliver_now if @item.rejected?
+        NotificationMailer.reject(@item).deliver_later if @item.rejected?
         redirect_to moderator_program_items_url, notice: "L'offre a bien été mise à jour." and return
       end
     rescue Encoding::UndefinedConversionError => e
