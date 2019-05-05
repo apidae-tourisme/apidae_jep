@@ -449,6 +449,10 @@
       </div>
       <div id="submit_actions" class="panel-footer text-right">
         <%= link_to 'Retour', :back, class: 'btn btn-default' %>
+        <% if @item.persisted? && @item.draft? && current_user %>
+          <%= link_to "Supprimer le brouillon", user_program_item_path(@item), method: :delete, class: 'btn btn-danger ml',
+                      data: {confirm: "Voulez-vous supprimer ce brouillon ?"} %>
+        <% end %>
         <% if readonly && current_user %>
           <%= link_to "Modifier l'offre",
                       url_for(controller: current_user ? 'user/program_items' : 'moderator/program_items', action: ((@item.pending? || @item.draft?) ? :edit : :new), id: @item.id),

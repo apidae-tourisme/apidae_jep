@@ -81,6 +81,12 @@ class User::ProgramItemsController < User::UserController
   end
 
   def destroy
+    if @item.destroy
+      redirect_to user_program_items_url, notice: "Le brouillon a bien été supprimé."
+    else
+      flash.now[:alert] = "Une erreur est survenue lors de la suppression du brouillon."
+      render :index
+    end
   end
 
   def confirm

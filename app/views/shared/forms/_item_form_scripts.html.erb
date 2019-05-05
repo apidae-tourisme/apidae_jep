@@ -67,8 +67,13 @@
         });
     }
 
+    var mapCenter = [45.740410, 4.816417];
+    <% if territory?(ISERE) %>
+      mapCenter = [45.1864, 5.736474];
+    <% end %>
+
     function initMap(container, zoom, minZoom) {
-        var map = L.map(container, {zoomControl: false, zoom: zoom, minZoom: minZoom, scrollWheelZoom: false}).setView([45.740410, 4.816417]);
+        var map = L.map(container, {zoomControl: false, zoom: zoom, minZoom: minZoom, scrollWheelZoom: false}).setView(mapCenter);
         new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
         L.tileLayer('https://api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiamVhbmJhcHRpc3RldmlsYWluIiwiYSI6ImZiMTJmMDdjODI5NDRiYTcyMDgzNGJmOTA5NjU0NDg1In0.b6l-11X_ZtS_83CsFu-v9Q', {
             attribution: '&copy; Mapbox &copy; OpenStreetMap',
@@ -103,7 +108,7 @@
         function toggleMapFields(newPlace) {
             $("#map_fields").show();
             if(newPlace) {
-                updateFormFields({properties:{}, geometry:{coordinates:[4.816417, 45.740410]}});
+                updateFormFields({properties:{}, geometry:{coordinates:[mapCenter[1], mapCenter[0]]}});
                 $("#program_item_main_transports").val('');
                 $("#program_item_main_town_insee_code").val('').trigger('change');
                 $("#program_item_building_types").val('').trigger("chosen:updated");
@@ -125,10 +130,6 @@
             if(markers.length > 1) {
                 map.removeLayer(markers[0]);
             }
-        }
-
-        function deDupFeatures() {
-
         }
 
         geocoder.on('select', function (e) {
@@ -169,7 +170,7 @@
                 }
                 $("#add_new_place").click(function () {
                     toggleMapFields(true);
-                    updateMarker(map, 45.740410, 4.816417);
+                    updateMarker(map, mapCenter[0], mapCenter[1]);
                 });
             }
         });
@@ -184,87 +185,6 @@
         });
         <% end %>
         return map;
-    }
-
-    var pickerTooltips = {
-        today: "Aujourd'hui",
-        clear: "Supprimer",
-        close: "Fermer",
-        selectMonth: "Sélectionner un mois",
-        prevMonth: "Mois précédent",
-        nextMonth: "Mois suivant",
-        selectYear: "Sélectionner une année",
-        prevYear: "Année précédent",
-        nextYear: "Année suivant",
-        selectDecade: "Sélectionner une décennie",
-        prevDecade: "Décennie précédente",
-        nextDecade: "Décennie suivante",
-        prevCentury: "Siècle précédent",
-        nextCentury: 'Siècle suivant'
-    };
-
-    function pickerIcons(clearClass) {
-        return {
-            time: 'fa fa-clock-o',
-            date: 'fa fa-calendar',
-            up: 'fa fa-chevron-up',
-            down: 'fa fa-chevron-down',
-            previous: 'fa fa-chevron-left',
-            next: 'fa fa-chevron-right',
-            today: 'fa fa-crosshairs',
-            clear: 'fa text-bold icon-trash clear_picker ' + clearClass
-        };
-    }
-
-    function displayAsEmpty(picker, date) {
-        if(!date) {
-            picker.find("span.timepicker-hour").text('--');
-            picker.find("span.timepicker-minute").text('--');
-        }
-    }
-
-    function initDateTimePicker(wrapperElt) {
-        var datepicker = $("#" + wrapperElt).find(".datepicker");
-        datepicker.datetimepicker({
-            locale: 'fr',
-            viewDate: '2018-09-15',
-            minDate: '2018-09-14',
-            maxDate: '2018-09-17',
-            defaultDate: '2018-09-15',
-            useCurrent: false,
-            format: 'YYYY-MM-DD HH:mm',
-            sideBySide: true,
-            inline: true,
-            showClear: true,
-            toolbarPlacement: 'bottom',
-            icons: pickerIcons(wrapperElt),
-            tooltips: pickerTooltips
-        });
-        datepicker.on('dp.change', function(evt) {
-            displayAsEmpty(datepicker, evt.date);
-        });
-        displayAsEmpty(datepicker, datepicker.find("input.hidden").val());
-    }
-
-    function initTimePicker(wrapperElt) {
-        var timepicker = $("#" + wrapperElt).find(".datetimepicker");
-        timepicker.datetimepicker({
-            locale: 'fr',
-            viewDate: '2018-09-15',
-            defaultDate: '2018-09-15 00:00',
-            useCurrent: false,
-            format: 'HH:mm',
-            sideBySide: true,
-            inline: true,
-            showClear: true,
-            toolbarPlacement: 'bottom',
-            icons: pickerIcons(wrapperElt),
-            tooltips: pickerTooltips
-        });
-        timepicker.on('dp.change', function(evt) {
-            displayAsEmpty(timepicker, evt.date);
-        });
-        displayAsEmpty(timepicker, timepicker.find("input.hidden").val());
     }
 
     L.Marker = L.Marker.extend({
