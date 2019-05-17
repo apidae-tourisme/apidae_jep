@@ -13,7 +13,8 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
   end
 
   def export
-    @items = ProgramItem.in_status(current_moderator.member_ref, EDITION,
+    @year = params[:year].blank? ? EDITION : params[:year].to_i
+    @items = ProgramItem.in_status(current_moderator.member_ref, @year,
                                    ProgramItem::STATUS_PENDING, ProgramItem::STATUS_VALIDATED, ProgramItem::STATUS_REJECTED)
     respond_to do |format|
       format.xlsx {
