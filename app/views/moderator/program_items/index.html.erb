@@ -2,7 +2,7 @@
   <a href="<%= moderator_program_items_path(status: @status, year: 2019) %>" class="btn btn-info btn-oval <%= 'btn-outline' unless @year == 2019 %>">JEP 2019</a>
   <a href="<%= moderator_program_items_path(status: @status, year: 2018) %>" class="btn btn-info btn-oval <%= 'btn-outline' unless @year == 2018 %>">JEP 2018</a>
   <a href="<%= moderator_program_items_path(status: @status, year: 2017) %>" class="btn btn-info btn-oval mr <%= 'btn-outline' unless @year == 2017 %>">JEP 2017</a>
-  <a class="btn btn-labeled btn-primary" href="<%= export_moderator_items_path %>.xlsx">
+  <a class="btn btn-labeled btn-primary" href="<%= export_moderator_items_path %>.xlsx?year=<%= @year %>">
     <span class="btn-label"><em class="icon icon-cloud-download"></em></span>
     Export Excel
   </a>
