@@ -8,7 +8,12 @@ Voici ci-dessous un résumé de votre commande :
 <%= @user.communication_poll.communication_data.collect {|com| "#{I18n.t('com_kit.format.' + com[0])} : #{com[1]}"}.join("\n") %>
 
 Les quantités demandées seront ajustées en fonction des stocks disponibles.
-Les livraisons commenceront la semaine du 26 août et se poursuivront jusqu’au 7 septembre.
+Les livraisons auront lieu du semaine du 2 au 14 septembre 2019.
+Voici les informations de livraison que vous nous avez indiqué :
+<%= "#{@user.communication_poll.delivery_address} #{@user.communication_poll.delivery_town ? @user.communication_poll.delivery_town.label : ''}" %>
+<%= @user.communication_poll.delivery_comments %>
+
+En cas de changement de dernière minute concernant ces informations, merci de nous contacter à l'adresse jep.metropole@grandlyon.com.
 
 Nous restons à votre disposition pour tout renseignement complémentaire.
 
