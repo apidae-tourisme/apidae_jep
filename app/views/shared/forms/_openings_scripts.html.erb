@@ -18,7 +18,17 @@
                     endDate: date,
                     closingDays: [],
                     userId: <%= @item.user.uid || raw("'JEP-#{@item.user.id}'") %>,
+                    onLoad: function() {
+                        unselectWeekdays();
+                        $("apidate-time-schedule .modal-body > div > div:last-child > button").click(function() {
+                            setTimeout(unselectWeekdays, 500);
+                        });
+                    },
                     onSubmit: function() {
+                        $("#opening_" + date).val(externalId);
+                        loadOpenings();
+                    },
+                    onDismiss: function() {
                         $("#opening_" + date).val(externalId);
                         loadOpenings();
                     }
@@ -40,6 +50,11 @@
             }
         });
     //    $.map($("apidate-time-period").find(".card.bg-light:last-child"), function(elt) {return $(elt).text()}).join("\n")
+    }
+
+    // Note : workaround to unselect weekdays, to fix automatic text generation - to replace with a "single day" init option on MH side
+    function unselectWeekdays() {
+        $("apidate-time-period .weekdays + div > button:last-child").click();
     }
 
     // Note : singleorigin param is used to prevent Apache / CouchDB from setting multiple allow-origin headers
