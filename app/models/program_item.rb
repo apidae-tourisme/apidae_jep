@@ -134,7 +134,7 @@ class ProgramItem < ActiveRecord::Base
     self.openings ||= {}
     if external_id
       obj = EventsImporter.load_apidae_event(external_id)
-      if obj
+      if obj && obj.openings
         obj.openings.each do |o|
           if o[:dateDebut] == o[:dateFin]
             self.openings[o[:dateDebut]] = o[:identifiantTechnique]
