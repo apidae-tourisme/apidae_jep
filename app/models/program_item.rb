@@ -566,7 +566,7 @@ class ProgramItem < ActiveRecord::Base
         f.each_line {|line| response += line if line}
       }
       op = JSON.parse(response)
-    rescue HTTPError => e
+    rescue OpenURI::HTTPError => e
       if e.message && e.message.include?("404")
         logger.info "Ignoring missing opening #{id}"
       else
