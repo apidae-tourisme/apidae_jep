@@ -148,6 +148,10 @@ class ProgramItem < ActiveRecord::Base
     external_id || "JEP-#{(Time.current.to_f * 1000).floor}"
   end
 
+  def editable?
+    created_at.nil? || created_at >= Date.new(EDITION, 1, 1)
+  end
+
   def opening_id(ref, date)
     openings[date].blank? ? "#{ref}-#{date.gsub('-', '')}" : openings[date]
   end
