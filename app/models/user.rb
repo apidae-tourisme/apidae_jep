@@ -50,6 +50,10 @@ class User < ActiveRecord::Base
     legal_entity.label
   end
 
+  def editable?
+    created_at.nil? || created_at >= Date.new(EDITION, 1, 1)
+  end
+
   def active_items(year)
     creation_year = year.blank? ? EDITION : year.to_i
     active_ids = program_items.select("MAX(id) AS id").group(:reference)

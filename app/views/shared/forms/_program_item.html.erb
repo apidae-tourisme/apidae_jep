@@ -27,14 +27,16 @@
                         class: 'btn btn-labeled btn-default btn-block', title: 'Visualiser' %>
         <% end %>
         <% if current_user %>
+          <% if item.editable? %>
             <%= link_to '<span class="btn-label"><em class="icon-note"></em></span>Modifier'.html_safe,
                         url_for(controller: item_controller, action: ((item.pending? || item.draft?) ? :edit : :new), id: item.id),
                         class: 'btn btn-labeled btn-default btn-block', title: 'Modifier' %>
-            <%= link_to '<span class="btn-label"><em class="icon-docs"></em></span>Dupliquer'.html_safe,
-                        duplicate_user_program_item_path(item), method: :post,
-                        class: 'btn btn-labeled btn-default btn-block', title: 'Dupliquer' %>
+          <% end %>
+          <%= link_to '<span class="btn-label"><em class="icon-docs"></em></span>Dupliquer'.html_safe,
+                      duplicate_user_program_item_path(item), method: :post,
+                      class: 'btn btn-labeled btn-default btn-block', title: 'Dupliquer' %>
         <% end %>
-        <% if current_moderator %>
+        <% if current_moderator && item.editable? %>
             <%= link_to '<span class="btn-label"><em class="icon-note"></em></span>Modifier'.html_safe,
                         url_for(controller: item_controller, action: :edit, id: item.id),
                         class: 'btn btn-labeled btn-default btn-block', title: 'Modifier' %>

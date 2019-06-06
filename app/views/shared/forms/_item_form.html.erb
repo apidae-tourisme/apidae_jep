@@ -449,31 +449,33 @@
       </div>
       <div id="submit_actions" class="panel-footer text-right">
         <%= link_to 'Retour', :back, class: 'btn btn-default' %>
-        <% if @item.persisted? && @item.draft? && current_user %>
-          <%= link_to "Supprimer le brouillon", user_program_item_path(@item), method: :delete, class: 'btn btn-danger ml',
-                      data: {confirm: "Voulez-vous supprimer ce brouillon ?"} %>
-        <% end %>
-        <% if readonly && current_user %>
-          <%= link_to "Modifier l'offre",
-                      url_for(controller: current_user ? 'user/program_items' : 'moderator/program_items', action: ((@item.pending? || @item.draft?) ? :edit : :new), id: @item.id),
-                      class: 'btn btn-primary ml' %>
-        <% else %>
-          <% if current_moderator %>
-                <% if @item.pending? || @item.validated? %>
-                  <%= item_form.submit "Valider et publier #{@item.rev == 1 ? "l'offre" : 'la mise à jour'}", class: 'btn btn-success ml',
-                                       onclick: "setStatus('#{ProgramItem::STATUS_VALIDATED}')" %>
-                <% end %>
-                <% if @item.pending? %>
-                  <%= item_form.submit "Rejeter #{@item.rev == 1 ? "l'offre" : 'la mise à jour'}", class: 'btn btn-danger ml',
-                                       onclick: "setStatus('#{ProgramItem::STATUS_REJECTED}')" %>
-                <% end %>
-                <%= link_to "Supprimer l'offre", moderator_program_item_path(@item), method: :delete,
-                            class: 'btn btn-inverse ml', data: {confirm: "La suppression d'une offre est définitive. Êtes-vous sûr(e) ? - Note : la suppression n'est effective que sur ApidaeJEP et n'affecte pas les éventuelles publications dans la base de données Apidae"} %>
-          <% elsif current_user %>
-              <%= item_form.submit 'Enregistrer le brouillon', class: 'btn btn-inverse ml',
-                                   onclick: "setStatus('#{ProgramItem::STATUS_DRAFT}')", formnovalidate: 'formnovalidate' %>
-              <%= item_form.submit "Transmettre #{@item.rev == 1 ? "l'offre" : 'la mise à jour'} pour validation", class: 'btn btn-primary ml',
-                                   onclick: "setStatus('#{ProgramItem::STATUS_PENDING}')" %>
+        <% if @item.editable? %>
+          <% if @item.persisted? && @item.draft? && current_user %>
+            <%= link_to "Supprimer le brouillon", user_program_item_path(@item), method: :delete, class: 'btn btn-danger ml',
+                        data: {confirm: "Voulez-vous supprimer ce brouillon ?"} %>
+          <% end %>
+          <% if readonly && current_user %>
+            <%= link_to "Modifier l'offre",
+                        url_for(controller: current_user ? 'user/program_items' : 'moderator/program_items', action: ((@item.pending? || @item.draft?) ? :edit : :new), id: @item.id),
+                        class: 'btn btn-primary ml' %>
+          <% else %>
+            <% if current_moderator %>
+                  <% if @item.pending? || @item.validated? %>
+                    <%= item_form.submit "Valider et publier #{@item.rev == 1 ? "l'offre" : 'la mise à jour'}", class: 'btn btn-success ml',
+                                         onclick: "setStatus('#{ProgramItem::STATUS_VALIDATED}')" %>
+                  <% end %>
+                  <% if @item.pending? %>
+                    <%= item_form.submit "Rejeter #{@item.rev == 1 ? "l'offre" : 'la mise à jour'}", class: 'btn btn-danger ml',
+                                         onclick: "setStatus('#{ProgramItem::STATUS_REJECTED}')" %>
+                  <% end %>
+                  <%= link_to "Supprimer l'offre", moderator_program_item_path(@item), method: :delete,
+                              class: 'btn btn-inverse ml', data: {confirm: "La suppression d'une offre est définitive. Êtes-vous sûr(e) ? - Note : la suppression n'est effective que sur ApidaeJEP et n'affecte pas les éventuelles publications dans la base de données Apidae"} %>
+            <% elsif current_user %>
+                <%= item_form.submit 'Enregistrer le brouillon', class: 'btn btn-inverse ml',
+                                     onclick: "setStatus('#{ProgramItem::STATUS_DRAFT}')", formnovalidate: 'formnovalidate' %>
+                <%= item_form.submit "Transmettre #{@item.rev == 1 ? "l'offre" : 'la mise à jour'} pour validation", class: 'btn btn-primary ml',
+                                     onclick: "setStatus('#{ProgramItem::STATUS_PENDING}')" %>
+            <% end %>
           <% end %>
         <% end %>
       </div>
