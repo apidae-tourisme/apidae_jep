@@ -50,18 +50,20 @@ class LegalEntity < ActiveRecord::Base
           entities_hashes = JSON.parse(entities_json, symbolize_names: true)
           entities_hashes.each do |entity_data|
             if entity_data[:type] == 'STRUCTURE'
-              entity_town = Town.find_by_external_id(entity_data[:localisation][:adresse][:commune][:id])
-              if entity_town
-                LegalEntity.create!(
-                    name: entity_data[:nom][:libelleFr],
-                    adresse1: entity_data[:localisation][:adresse][:adresse1],
-                    adresse2: entity_data[:localisation][:adresse][:adresse2],
-                    adresse3: entity_data[:localisation][:adresse][:adresse3],
-                    town: entity_town,
-                    email: contact_info(entity_data[:informations][:moyensCommunication], 204),
-                    phone: contact_info(entity_data[:informations][:moyensCommunication], 201),
-                    website: contact_info(entity_data[:informations][:moyensCommunication], 205),
-                    external_id: entity_data[:id])
+              unless LegalEntity.find_by_external_id(entity_data[:id])
+                entity_town = Town.find_by_external_id(entity_data[:localisation][:adresse][:commune][:id])
+                if entity_town
+                  LegalEntity.create!(
+                      name: entity_data[:nom][:libelleFr],
+                      adresse1: entity_data[:localisation][:adresse][:adresse1],
+                      adresse2: entity_data[:localisation][:adresse][:adresse2],
+                      adresse3: entity_data[:localisation][:adresse][:adresse3],
+                      town: entity_town,
+                      email: contact_info(entity_data[:informations][:moyensCommunication], 204),
+                      phone: contact_info(entity_data[:informations][:moyensCommunication], 201),
+                      website: contact_info(entity_data[:informations][:moyensCommunication], 205),
+                      external_id: entity_data[:id])
+                end
               end
             end
           end
