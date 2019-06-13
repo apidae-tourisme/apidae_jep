@@ -16,7 +16,7 @@ class Moderator::AccountsController < Moderator::ModeratorController
 
   def update
     begin
-      if @user.update(user_params)
+      if set_entity && @user.update(user_params)
         redirect_url = url_for(action: :index)
         unless params[:item_id].blank?
           item = ProgramItem.find(params[:item_id])
@@ -91,6 +91,16 @@ class Moderator::AccountsController < Moderator::ModeratorController
   end
 
   private
+
+  def set_entity
+    entity_id = user_params[:legal_entity_attributes][:id]
+    if !entity_id.blank? && @user.legal_entity_id != entity_id.to_i
+      @user.legal_entity = LegalEntity.find(entity_id)
+      @user.save
+    else
+      true
+    end
+  end
 
   def set_user
     @user = User.find(params[:id])

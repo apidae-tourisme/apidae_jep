@@ -1,7 +1,7 @@
-require 'csv'
+  require 'csv'
 
 class User < ActiveRecord::Base
-  belongs_to :legal_entity
+  belongs_to :legal_entity, optional: true
   accepts_nested_attributes_for :legal_entity
   has_many :program_items
   has_one :communication_poll
