@@ -111,7 +111,7 @@ module Moderator::ProgramItemsHelper
 
   def exported_values(item)
     values = item_values(item, exported_columns[:item_0])
-    values << item.item_openings.collect {|o| format_opening(current_moderator.member_ref,o.description)}.join(' | ')
+    values << format_opening(current_moderator.member_ref, item.openings_text)
     values += item_values(item, exported_columns[:item_1])
     values << item.user.legal_entity.name
     values += item_values(item, exported_columns[:item_2])

@@ -38,7 +38,7 @@ class EventsImporter
   def self.import_apidae_event(user_email, apidae_id)
     user = User.find_by_email(user_email)
     if user
-      evt = load_apidae_event(apidae_id)
+      evt = load_apidae_events([apidae_id])
       if evt
         item = evt.to_program_item
         item.item_openings = event_openings(evt)
@@ -105,15 +105,16 @@ class EventsImporter
     apidae_events
   end
 
-  def self.load_apidae_event(id)
+  def self.load_apidae_events(ids, *fields)
+    response_fields = fields.blank? ? ['id', 'nom', 'gestion', 'presentation', 'illustrations', 'informations', 'ouverture',
+                                       '@informationsObjetTouristique', 'descriptionTarif', 'localisation',
+                                       'prestations', 'reservation', 'criteresInternes'] : fields
     SitraClient.configure(Rails.application.config.sitra_config)
     query = SitraClient.query({
-                                  identifiants: [id],
-                                  responseFields: ['id', 'nom', 'gestion', 'presentation', 'illustrations', 'informations', 'ouverture',
-                                                   '@informationsObjetTouristique', 'descriptionTarif', 'localisation',
-                                                   'prestations', 'reservation', 'criteresInternes']
+                                  identifiants: ids,
+                                  responseFields: response_fields
                               })
-    query[:results].first
+    ids.length == 1 ? query[:results].first : query[:results]
   end
 
   def self.node_value(node, key)

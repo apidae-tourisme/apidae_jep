@@ -83,4 +83,7 @@ class TouristicObject
     @ouverture.blank? ? [] : @ouverture[:periodesOuvertures]
   end
 
+  def openings_description
+    @ouverture[:periodeEnClair][:libelleFr] unless @ouverture.blank? || @ouverture[:periodeEnClair].blank?
+  end
 end

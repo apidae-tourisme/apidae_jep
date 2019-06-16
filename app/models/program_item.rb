@@ -35,7 +35,7 @@ class ProgramItem < ActiveRecord::Base
                                     :main_transports, :alt_place, :alt_lat, :alt_lng, :alt_address,
                                     :alt_town_insee_code, :alt_postal_code, :alt_transports], coder: JSON
   store :rates_data, accessors: [:free, :rates_desc, :booking, :booking_details, :booking_telephone, :booking_email, :booking_website], coder: JSON
-  store :opening_data, accessors: [:openings_desc, :openings], coder: JSON
+  store :opening_data, accessors: [:openings_desc, :openings, :openings_text], coder: JSON
   store :contact_data, accessors: [:telephone, :email, :website], coder: JSON
 
   validates_presence_of :item_type, :title, :main_place, :main_lat, :main_lng, :main_address, :main_town_insee_code,
@@ -133,16 +133,31 @@ class ProgramItem < ActiveRecord::Base
     self.territory = TERRITORIES_BY_CODE[member_ref][Town.find_by_insee_code(main_town_insee_code).postal_code] if Town.find_by_insee_code(main_town_insee_code)
   end
 
-  def set_openings
+  def set_openings(and_save = false)
     self.openings ||= {}
+    self.openings_text = nil
     if external_id
-      obj = EventsImporter.load_apidae_event(external_id)
+      obj = EventsImporter.load_apidae_events([external_id], 'id', 'ouverture')
       if obj && obj.openings
         obj.openings.each do |o|
           if o[:dateDebut] == o[:dateFin]
             self.openings[o[:dateDebut]] = o[:identifiantTechnique]
           end
         end
+        self.openings_text = obj.openings_description
+        self.save if and_save
+      end
+    end
+  end
+
+  def self.set_openings_texts(items)
+    remote_ids = items.map {|i| i.external_id}.select {|ext_id| !ext_id.blank?}.uniq
+    objs = EventsImporter.load_apidae_events(remote_ids, ['id', 'ouverture'])
+    items.each do |item|
+      item.openings_text = nil
+      unless item.external_id.blank?
+        obj = objs.find {|o| o.id.to_i == item.external_id}
+        item.openings_text = obj.openings_description if obj
       end
     end
   end
@@ -295,7 +310,7 @@ class ProgramItem < ActiveRecord::Base
     while obj.nil? && try < 5
       sleep(2)
       logger.debug "Retrieving obj #{external_id} - try #{try}..."
-      obj = EventsImporter.load_apidae_event(external_id)
+      obj = EventsImporter.load_apidae_events([external_id], 'id', 'ouverture')
       try += 1
     end
     if obj
@@ -340,6 +355,10 @@ class ProgramItem < ActiveRecord::Base
     form_data['root.fieldList'] = merge_fields(form_data['root.fieldList'], impacted_fields)
 
     save_to_apidae(user.territory, form_data, :api_url, :put)
+
+    sleep(5)
+
+    set_openings(true)
   end
 
   private
