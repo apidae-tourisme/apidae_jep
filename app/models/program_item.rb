@@ -320,14 +320,18 @@ class ProgramItem < ActiveRecord::Base
           openings_map[o[:identifiantTechnique]] = openings[o[:dateDebut]]
         end
       end
-      kafka = Kafka.new([Rails.application.config.kafka_host], client_id: "jep_openings")
-      openings_map.each_pair do |remote_id, local_id|
-        logger.debug "Binding temp opening #{local_id} to period #{remote_id}"
-        kafka.deliver_message('{"operation":"UPDATE_PERIOD","periodId":"' + local_id.to_s + '","updatedObject":{"externalId":' + remote_id.to_s + ', "externalRef":' + external_id.to_s + '}}',
-                              topic: 'apidae_period')
-      end
+      update_remote_ids(openings_map)
     else
       logger.error "Remote object not found : #{external_id}"
+    end
+  end
+
+  def update_remote_ids(openings_map)
+    kafka = Kafka.new([Rails.application.config.kafka_host], client_id: "jep_openings")
+    openings_map.each_pair do |remote_id, local_id|
+      logger.debug "Binding temp opening #{local_id} to period #{remote_id}"
+      kafka.deliver_message('{"operation":"UPDATE_PERIOD","periodId":"' + local_id.to_s + '","updatedObject":{"externalId":' + remote_id.to_s + ', "externalRef":' + external_id.to_s + '}}',
+                            topic: 'apidae_period')
     end
   end
 
@@ -359,6 +363,28 @@ class ProgramItem < ActiveRecord::Base
     sleep(5)
 
     set_openings(true)
+  end
+
+  def apidate_openings
+    ops = nil
+    unless external_id.blank?
+      apidate_url = Rails.application.config.apidate_api_url + '/apidae_period'
+      logger.info "Retrieve openings : #{apidate_url}?ref=#{CGI.escape('"' + external_id.to_s + '"')}"
+      begin
+        response = ''
+        open(apidate_url + '?ref=' + CGI.escape('"' + external_id.to_s + '"')) { |f|
+          f.each_line {|line| response += line if line}
+        }
+        ops = JSON.parse(response)
+      rescue OpenURI::HTTPError => e
+        if e.message && e.message.include?("404")
+          logger.error "No openings for ref #{external_id}"
+        else
+          raise
+        end
+      end
+    end
+    ops
   end
 
   private
