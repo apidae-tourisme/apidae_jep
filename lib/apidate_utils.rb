@@ -6,7 +6,7 @@ class ApidateUtils
                    .transform_values {|values| values.sort_by {|val| (1.0 / val["updatedAt"])}.first['externalId']}
     local_remote_ids = {}
     p.openings.each_pair do |date, opening_id|
-      local_remote_ids[opening_id] = ids_by_date[date]
+      local_remote_ids[opening_id] = ids_by_date[date] unless opening_id.blank?
     end
     p.update_remote_ids(local_remote_ids)
   end
