@@ -3,7 +3,7 @@ class ApidateUtils
     p = ProgramItem.find(item_id)
     ops = p.apidate_openings
     current_ids = p.openings.values.select {|id| !id.blank?}.map {|id| id.to_s}
-    if (current_ids & ops.map {|op| op['externalId'].to_s}).blank?
+    if ops && (current_ids & ops.map {|op| op['externalId'].to_s}).blank?
       ids_by_date = ops.group_by {|op| op['startDate']}
                      .transform_values {|values| values.sort_by {|val| (1.0 / val["updatedAt"])}.first['externalId']}
       local_remote_ids = {}
