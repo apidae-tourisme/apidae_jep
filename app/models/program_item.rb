@@ -110,7 +110,7 @@ class ProgramItem < ActiveRecord::Base
 
   def self.in_status(territory, year, *statuses)
     # Note : specific cases - switch from GL to Isere
-    switched_codes = ["69007", "69064", "69097", "69119", "69253", "69189", "69193", "69235", "69080", "69118", "69236"]
+    switched_codes = ["69007", "69064", "69097", "69119", "69253", "69189", "69193", "69235", "69080", "69118", "69236", "38544"]
     active_versions.where(created_at: (Date.new(year, 1, 1)..Date.new(year + 1, 1, 1)))
         .where("program_items.status IN (?)", statuses)
         .where("users.territory = ? #{territory == ISERE ? 'OR' : 'AND'} location_data::json->>'main_town_insee_code' #{'NOT' unless territory == ISERE} IN (?)", territory, switched_codes)

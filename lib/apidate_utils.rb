@@ -8,7 +8,6 @@ class ApidateUtils
   #     sleep(0.5)
   #   end
   # end
-
   def self.fix_apidate_openings(item_id)
     p = ProgramItem.find(item_id)
     ops = p.apidate_openings
