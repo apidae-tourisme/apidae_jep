@@ -1,4 +1,14 @@
 class ApidateUtils
+
+  # Usage example :
+  # ProgramItem.in_status(GRAND_LYON, 2019, ProgramItem::STATUS_PENDING, ProgramItem::STATUS_VALIDATED).each do |p|
+  #   if ApidateUtils.fix_apidate_openings(p.id)
+  #     sleep(3)
+  #   else
+  #     sleep(0.5)
+  #   end
+  # end
+
   def self.fix_apidate_openings(item_id)
     p = ProgramItem.find(item_id)
     ops = p.apidate_openings

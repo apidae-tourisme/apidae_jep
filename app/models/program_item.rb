@@ -329,7 +329,7 @@ class ProgramItem < ActiveRecord::Base
   def update_remote_ids(openings_map)
     kafka = Kafka.new([Rails.application.config.kafka_host], client_id: "jep_openings")
     openings_map.each_pair do |remote_id, local_id|
-      logger.debug "Binding temp opening #{local_id} to period #{remote_id}"
+      logger.debug "Offer #{id} - Binding temp opening #{local_id} to period #{remote_id}"
       kafka.deliver_message('{"operation":"UPDATE_PERIOD","periodId":"' + local_id.to_s + '","updatedObject":{"externalId":' + remote_id.to_s + ', "externalRef":' + external_id.to_s + '}}',
                             topic: 'apidae_period')
     end
