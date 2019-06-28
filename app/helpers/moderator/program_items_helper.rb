@@ -144,6 +144,12 @@ module Moderator::ProgramItemsHelper
         format_town(val)
       when 'updated_at', 'validated_at'
         format_date(val)
+      when 'building_age'
+        val.gsub('e', 'ᵉ')
+      when 'user_entity', 'event_planners'
+        val.capitalize
+      when 'rates_desc', 'booking_details'
+        val.gsub(/(\.)$/, '')
       else
         val
     end
@@ -159,10 +165,12 @@ module Moderator::ProgramItemsHelper
     if member_ref == GRAND_LYON
       formatted_openings = formatted_openings.downcase
       formatted_openings.gsub!(/(vendredi|samedi|dimanche|lundi)/) {|m| m.slice(0, 3) + '.'}
-      formatted_openings.gsub!(' septembre 2017', '')
-      formatted_openings.gsub!('minutes', 'min')
+      formatted_openings.gsub!(/(20|21|22|23) septembre 2019/, '')
+      formatted_openings.gsub!('minutes', 'min.')
       formatted_openings.gsub!(/(\d\sheures?)/) {|m| m.gsub(/(\sheures?)/, 'h')}
       formatted_openings.gsub!(/(heures?)/, 'h')
+      formatted_openings.gsub!(/(\s\s\s?)$/, ' ')
+      formatted_openings.gsub!(/(\.)$/, '')
     elsif member_ref == ISERE
       # open_days = formatted_openings.split("\n")
       # if open_days.length > 1
@@ -203,7 +211,7 @@ module Moderator::ProgramItemsHelper
                 'route' => 'rte', 'rez-de-chaussee' => 'rdc'}
     mappings_hash = Hash.new {|h, k| h[k] = mappings[k.downcase.parameterize]}
     formatted_address.gsub!(/(boulevard|avenue|chemin|impasse|cours|place|b(â|a)timent|mont(é|e)e|route|rue|rez.de.chauss(é|e)e)/i, mappings_hash)
-    formatted_address
+    formatted_address.capitalize
   end
 
   def format_phone(phone_number)
