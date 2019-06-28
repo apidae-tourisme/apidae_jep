@@ -144,7 +144,7 @@ module Moderator::ProgramItemsHelper
         format_town(val)
       when 'updated_at', 'validated_at'
         format_date(val)
-      when 'building_age'
+      when 'building_ages'
         val.gsub('e', 'ᵉ')
       when 'user_entity', 'event_planners'
         val.capitalize
@@ -169,7 +169,8 @@ module Moderator::ProgramItemsHelper
       formatted_openings.gsub!('minutes', 'min.')
       formatted_openings.gsub!(/(\d\sheures?)/) {|m| m.gsub(/(\sheures?)/, 'h')}
       formatted_openings.gsub!(/(heures?)/, 'h')
-      formatted_openings.gsub!(/(\s\s\s?)$/, ' ')
+      formatted_openings.gsub!(/(ouverture)/, '')
+      formatted_openings.gsub!(/(\s\s\s?)/, ' ')
       formatted_openings.gsub!(/(\.)$/, '')
     elsif member_ref == ISERE
       # open_days = formatted_openings.split("\n")
