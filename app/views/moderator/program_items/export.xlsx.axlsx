@@ -6,6 +6,13 @@ wrap = xlsx_package.workbook.styles.add_style alignment: {wrap_text: true}
 items_codes = Hash[Town.where(insee_code: @items.collect {|itm| itm.main_town_insee_code}.uniq).collect {|t| [t.insee_code, t.postal_code]}]
 unknown = []
 
+wb.add_worksheet(name: 'Toutes les offres') do |sheet|
+  sheet.add_row exported_columns.values.flatten.map {|v| I18n.t("export.program_item.#{v}")}
+  @items.to_a.sort_by {|i| i.main_town_insee_code}.each do |item|
+    sheet.add_row exported_values(item), style: wrap
+  end
+  sheet.column_widths *cols_width
+end
 if current_moderator.member_ref == ISERE
   TERRITORIES[current_moderator.member_ref].each_pair do |t, codes|
     wb.add_worksheet(name: t) do |sheet|
@@ -20,14 +27,6 @@ if current_moderator.member_ref == ISERE
         end
       end
     end
-  end
-else
-  wb.add_worksheet(name: 'Toutes les offres') do |sheet|
-    sheet.add_row exported_columns.values.flatten.map {|v| I18n.t("export.program_item.#{v}")}
-    @items.to_a.sort_by {|i| i.main_town_insee_code}.each do |item|
-      sheet.add_row exported_values(item), style: wrap
-    end
-    sheet.column_widths *cols_width
   end
 end
 

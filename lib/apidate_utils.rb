@@ -11,6 +11,7 @@ class ApidateUtils
   def self.fix_apidate_openings(item_id)
     p = ProgramItem.find(item_id)
     ops = p.apidate_openings
+    total = 0
     current_ids = p.openings.values.select {|id| !id.blank?}.map {|id| id.to_s}
     if ops && (current_ids & ops.map {|op| op['externalId'].to_s}).blank?
       ids_by_date = ops.group_by {|op| op['startDate']}
@@ -20,6 +21,8 @@ class ApidateUtils
         local_remote_ids[opening_id] = ids_by_date[date] unless (opening_id.blank? || ids_by_date[date].blank?)
       end
       p.update_remote_ids(local_remote_ids)
+      total += local_remote_ids.keys.length
     end
+    total
   end
 end
