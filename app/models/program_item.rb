@@ -84,7 +84,7 @@ class ProgramItem < ActiveRecord::Base
         ops = JSON.parse(response)
         ops.each do |opening|
           ext_id = opening['externalRef']
-          item = items_batch.find {|item| item.external_id && item.external_id.to_s == ext_id}
+          item = items_batch.find {|item| item.external_id && item.external_id.to_s == ext_id.to_s}
           if item
             item.openings_details << opening
           end
