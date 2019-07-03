@@ -4,6 +4,7 @@ class Api::ProgramItemsController < Api::ApiController
     @member_ref = params[:ref]
     unless @member_ref.blank?
       @items = ProgramItem.in_status(@member_ref, EDITION, ProgramItem::STATUS_VALIDATED)
+      ProgramItem.set_openings_details(@items)
     end
   end
 

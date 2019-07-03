@@ -35,7 +35,7 @@ class ProgramItem < ActiveRecord::Base
                                     :main_transports, :alt_place, :alt_lat, :alt_lng, :alt_address,
                                     :alt_town_insee_code, :alt_postal_code, :alt_transports], coder: JSON
   store :rates_data, accessors: [:free, :rates_desc, :booking, :booking_details, :booking_telephone, :booking_email, :booking_website], coder: JSON
-  store :opening_data, accessors: [:openings_desc, :openings, :openings_text], coder: JSON
+  store :opening_data, accessors: [:openings_desc, :openings, :openings_text, :openings_details], coder: JSON
   store :contact_data, accessors: [:telephone, :email, :website], coder: JSON
 
   validates_presence_of :item_type, :title, :main_place, :main_lat, :main_lng, :main_address, :main_town_insee_code,
@@ -66,6 +66,34 @@ class ProgramItem < ActiveRecord::Base
     end
     item.set_openings
     item
+  end
+
+  def self.set_openings_details(items)
+    items.each_slice(25) do |items_batch|
+      items_batch.each do |item|
+        item.openings_details ||= []
+      end
+      ids = items_batch.map {|item| item.openings.select {|k, v| !v.blank?}.values.flatten}.flatten.uniq.map {|op_id| op_id.to_s}
+      apidate_url = Rails.application.config.apidate_api_url + '/apidae_period'
+      logger.info "Retrieve openings : #{apidate_url}?ids=#{CGI.escape('["' + ids.join('","') + '"]')}"
+      begin
+        response = ''
+        open(apidate_url + '?ids=' + CGI.escape('["' + ids.join('","') + '"]')) { |f|
+          f.each_line {|line| response += line if line}
+        }
+        ops = JSON.parse(response)
+        ops.each do |opening|
+          ext_id = opening['externalRef']
+          item = items_batch.find {|item| item.external_id && item.external_id.to_s == ext_id}
+          if item
+            item.openings_details << opening
+          end
+        end
+      rescue OpenURI::HTTPError => e
+        logger.error "Could not retrieve openings details"
+        raise
+      end
+    end
   end
 
   def last_revision

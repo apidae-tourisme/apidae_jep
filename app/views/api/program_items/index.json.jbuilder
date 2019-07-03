@@ -39,13 +39,16 @@ json.program_items do
     json.openings do
       json.dates item.open_dates.sort
       json.values do
-        json.array!(item.item_openings.order(:starts_at)) do |o|
-          json.starts_at o.starts_at
-          json.ends_at o.ends_at
-          json.duration o.duration
-          json.frequency o.frequency
-          json.description o.as_text
+        json.array!(item.openings_details.sort_by {|d| d['startDate']}) do |o|
+          json.starts_at o['startDate']
         end
+        # json.array!(item.item_openings.order(:starts_at)) do |o|
+        #   json.starts_at o.starts_at
+        #   json.ends_at o.ends_at
+        #   json.duration o.duration
+        #   json.frequency o.frequency
+        #   json.description o.as_text
+        # end
       end
       json.description item.openings_desc
     end
