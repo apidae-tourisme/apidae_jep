@@ -78,7 +78,7 @@
       "openings": {
         "dates": ["2017-09-16"],
         "values": [
-          {"starts_at": "2017-09-16T10:00:00.000Z", "ends_at": null, "duration": 3600, "frequency": null: "description": "Samedi 16 Septembre 2017 à 10:00 - Durée : 1 heure"}
+          {"starts_at": "2017-09-16T10:00:00.000Z", "ends_at": null, "duration": 3600, "frequency": null, "description": "Samedi 16 Septembre 2017 à 10:00 - Durée : 1 heure"}
         ],
         "description": "Informations complémentaires sur les horaires et ouvertures"
       },
