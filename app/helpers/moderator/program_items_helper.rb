@@ -1,57 +1,5 @@
 module Moderator::ProgramItemsHelper
-  def building_ages
-    [
-        ['Préhistoire'], ['Antiquité'], ['VIe'], ['VIIe'], ['VIIIe'],
-        ['IXe'], ['Xe'], ['XIe'], ['XIIe'], ['XIIIe'], ['XIVe'], ['XVe'],
-        ['XVIe'], ['XVIIe'], ['XVIIIe'], ['XIXe'], ['XXe'], ['XXIe']
-    ]
-  end
-
-  def building_types
-    [
-        ["Château, hôtel urbain, palais, manoir"], ["Édifice religieux"], ["Édifice hospitalier"],
-        ["Édifice maritime et fluvial"], ["Édifice militaire, enceinte urbaine"],
-        ["Édifice industriel, scientifique et technique"], ["Édifice rural"], ["Édifice scolaire et éducatif"],
-        ["Espace naturel, parc, jardin"], ["Édifice commémoratif"], ["Lieu de pouvoir, édifice judiciaire"],
-        ["Lieu de spectacles, sports et loisirs"], ["Musée, salle d'exposition"], ["Site archéologique"],
-        ["Maison, appartement, atelier de personnes célèbres"], ["Archives"]
-    ]
-  end
-
-  def themes
-    THEMES[current_moderator.member_ref].collect { |t| [t, t.parameterize] }
-  end
-
-  def criteria(item_type, selected)
-    options = ''
-    crits = CRITERIA[current_moderator.member_ref][item_type]
-    if crits.is_a?(Hash)
-      crits.each_pair do |k, v|
-        options += generate_optgroup(k, v, selected)
-      end
-    else
-      options = generate_options(crits, selected)
-    end
-    options.html_safe
-  end
-
-  def validation_criteria
-    VALIDATION_CRITERIA[current_moderator.member_ref].collect { |t| [t, t.parameterize] }
-  end
-
-  def accessibility
-    ACCESSIBILITY[current_moderator.member_ref]
-  end
-
-  def generate_optgroup(label, options, selected)
-    '<optgroup label="' + label + '">' + generate_options(options, selected) + '</optgroup>'
-  end
-
-  def generate_options(options, selected)
-    options.collect {
-        |opt| '<option value="' + opt.parameterize + '"' + (selected && selected.include?(opt.parameterize) ? ' selected' : '') + '>' + opt + '</option>'
-    }.join('')
-  end
+  include ItemConcern
 
   def render_previous(attr, rows = 1)
     if @prev_item
@@ -81,10 +29,6 @@ module Moderator::ProgramItemsHelper
     else
       val.is_a?(Array) ? val.select {|v| !v.blank?}.map {|v| I18n.t("ref.#{v}") }.join(' | ') : val
     end
-  end
-
-  def entity_label(entity)
-    "#{entity.label} - Identifiant Apidae : #{entity.external_id}"
   end
 
   def exported_columns
@@ -232,14 +176,4 @@ module Moderator::ProgramItemsHelper
     formatted_town.gsub!(/(Lyon\s\d\p{Alpha}+)/) {|m| m.slice(0, 6)}
     formatted_town
   end
-
-  def default_opening(opening)
-    opening.starts_at = DateTime.new(2018, 9, 15, 10, 0, 0)
-    opening
-  end
-
-  def ellipsis(text)
-    text.length > 255 ? (text[0, 255] + '...') : text
-  end
-  
 end

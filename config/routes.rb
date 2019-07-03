@@ -56,6 +56,7 @@ Rails.application.routes.draw do
       resource :user, controller: 'account', path: 'compte', as: 'account', only: [:edit, :update] do
         get :search_entity, on: :collection, as: 'search_entity'
         get :towns, on: :collection, as: 'towns'
+        get :search, on: :collection, as: 'search'
         get :communication, on: :collection
         patch :update_communication, on: :collection, as: 'com_poll'
       end

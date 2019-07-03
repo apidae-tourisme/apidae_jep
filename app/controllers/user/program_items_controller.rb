@@ -19,27 +19,14 @@ class User::ProgramItemsController < User::UserController
 
   def new
     if params[:id].blank?
-      @item = ProgramItem.new(item_type: ITEM_VISITE, free: true, booking: false,
-                              accept_pictures: '0', user_id: current_user.id, rev: 1, status: ProgramItem::STATUS_DRAFT,
-                              telephone: current_user.legal_entity.phone, email: current_user.legal_entity.email,
-                              website: current_user.legal_entity.website, openings: {})
+      @item = ProgramItem.new_default(current_user)
     else
       @previous_id = params[:id]
       previous_version = ProgramItem.find(params[:id])
-      @item = previous_version.dup
-      @item.status = ProgramItem::STATUS_DRAFT
-      @item.external_status = nil
-      @item.rev += 1
-      @item.reference = previous_version.reference
-      # previous_version.item_openings.each do |o|
-      #   @item.item_openings << o.dup
-      # end
-      previous_version.attached_files.each do |f|
-        @item.attached_files << AttachedFile.new(program_item: @item, data: f.data, picture: f.picture, created_at: f.created_at)
-      end
-      @item.set_openings
+      @item = ProgramItem.build_from(previous_version)
       @town = Town.find_by_insee_code(@item.main_town_insee_code) if @item.main_town_insee_code
     end
+    render :new, layout: (current_moderator ? 'moderator' : 'user')
   end
 
   def create
@@ -52,27 +39,34 @@ class User::ProgramItemsController < User::UserController
         @item.save(validate: @item.status != ProgramItem::STATUS_DRAFT)
       end
       NotificationMailer.notify(@item).deliver_later if @item.pending?
-      if current_user.territory == GRAND_LYON && current_user.program_items.count == 1 && current_user.communication.nil?
-        redirect_to communication_user_account_path
+      if @item.user_id && @item.user.territory == GRAND_LYON && @item.user.program_items.count == 1 && @item.user.communication.nil?
+        redirect_to communication_user_account_path(user_id: @item.user_id)
+      elsif current_moderator
+        redirect_to moderator_program_items_url(status: @item.status), notice: "L'offre a bien été créée."
       else
         redirect_to confirm_user_program_item_url(@item)
       end
     else
-      render :new, notice: "Une erreur est survenue lors de la création de l'offre."
+      render :new, notice: "Une erreur est survenue lors de la création de l'offre.", layout: (current_moderator ? 'moderator' : 'user')
     end
   end
 
   def edit
     @town = Town.find_by_insee_code(@item.main_town_insee_code) if @item.main_town_insee_code
+    render :edit, layout: (current_moderator ? 'moderator' : 'user')
   end
 
   def update
     @item.attributes = item_params
     if @item.save(validate: @item.status != ProgramItem::STATUS_DRAFT)
       NotificationMailer.notify(@item).deliver_later if @item.pending?
-      redirect_to confirm_user_program_item_url(@item)
+      if current_moderator
+        redirect_to moderator_program_items_url(status: @item.status), notice: "L'offre a bien été mise à jour."
+      else
+        redirect_to confirm_user_program_item_url(@item)
+      end
     else
-      render :edit, notice: "Une erreur est survenue lors de la mise à jour de l'offre."
+      render :edit, notice: "Une erreur est survenue lors de la mise à jour de l'offre.", layout: (current_moderator ? 'moderator' : 'user')
     end
   end
 
@@ -82,10 +76,18 @@ class User::ProgramItemsController < User::UserController
 
   def destroy
     if @item.destroy
-      redirect_to user_program_items_url, notice: "Le brouillon a bien été supprimé."
+      if current_moderator
+        redirect_to moderator_program_items_url, notice: "Le brouillon a bien été supprimé."
+      else
+        redirect_to user_program_items_url, notice: "Le brouillon a bien été supprimé."
+      end
     else
-      flash.now[:alert] = "Une erreur est survenue lors de la suppression du brouillon."
-      render :index
+      if current_moderator
+        redirect_to moderator_program_items_url, alert: "Une erreur est survenue lors de la suppression du brouillon."
+      else
+        flash.now[:alert] = "Une erreur est survenue lors de la suppression du brouillon."
+        render :index
+      end
     end
   end
 

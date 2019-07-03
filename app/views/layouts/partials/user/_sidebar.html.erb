@@ -36,7 +36,7 @@
       <% end %>
       <% if current_user.territory == GRAND_LYON %>
         <li class="<%= 'active' if controller?('user/account') && action?('communication') %>">
-          <a href="<%= communication_user_account_path %>" title="Supports de communication">
+          <a href="<%= communication_user_account_path(current_user.id) %>" title="Supports de communication">
             <em class="icon-envelope-letter"></em>
             <div class="text-sm">Kits com</div>
           </a>

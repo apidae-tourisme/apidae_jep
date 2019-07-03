@@ -6,6 +6,8 @@
     <span class="btn-label"><em class="icon icon-cloud-download"></em></span>
     Export Excel
   </a>
+  <%= link_to '<span class="btn-label"><i class="fa fa-plus"></i></span>Saisir une offre'.html_safe, new_user_program_item_path,
+              class: 'btn btn-labeled btn-primary' %>
 </div>
 <h3>
   Offres
@@ -13,6 +15,8 @@
 <div class="row">
   <div class="col-lg-12">
     <div class="btn-group btn-group-justified mb-xl">
+      <%= link_to('Brouillons', moderator_program_items_path(status: ProgramItem::STATUS_DRAFT, year: @year),
+                  class: "text-md btn btn-lg btn-inverse #{@status == ProgramItem::STATUS_DRAFT ? 'text-bold' : 'text-alpha'}") %>
       <%= link_to('En validation', moderator_program_items_path(status: ProgramItem::STATUS_PENDING, year: @year),
                   class: "text-md btn btn-lg btn-warning #{@status == ProgramItem::STATUS_PENDING ? 'text-bold' : 'text-alpha'}") %>
       <%= link_to('Validées', moderator_program_items_path(status: ProgramItem::STATUS_VALIDATED, year: @year),

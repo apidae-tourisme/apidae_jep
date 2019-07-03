@@ -37,7 +37,7 @@
               <%= render_previous(:title) %>
             </div>
           </div>
-          <% if current_moderator %>
+          <% if current_moderator && !@item.draft? %>
           <div class="form-group mt-lg">
             <label class="col-sm-2 control-label">Identifiant Apidae<%= help_button %></label>
             <%= help_content("Identifiant de la fiche correspondante dans Apidae. A supprimer si la saisie ApidaeJEP est toujours rattachée à une fiche Apidae qui a été supprimée (message d'erreur \"Aucun objet ne correspond...\").") %>
@@ -356,16 +356,27 @@
         <fieldset>
           <legend class="text-uppercase text-primary">Suivi</legend>
           <% if current_moderator %>
-          <div class="row">
-            <label class="col-sm-3 control-label">Structure organisatrice</label>
-            <div class="col-sm-7">
-              <%= text_area_tag 'legal_entity_name', entity_label(@item.user.legal_entity), class: 'form-control', disabled: 'disabled' %>
-            </div>
-            <div class="col-sm-2">
-              <%= link_to '<em class="icon-note pr-sm"></em>Modifier'.html_safe, edit_moderator_account_path(@item.user.id, item_id: @item.id),
-                          class: 'btn btn-info' %>
-            </div>
-          </div>
+            <% if @item.user %>
+              <div class="row">
+                <label class="col-sm-3 control-label">Structure organisatrice</label>
+                <div class="col-sm-7">
+                  <%= text_area_tag 'legal_entity_name', entity_label(@item.user.legal_entity),
+                                    id: 'program_item_legal_entity_name', class: 'form-control', disabled: 'disabled' %>
+                </div>
+                <div class="col-sm-2">
+                  <%= link_to '<em class="icon-note pr-sm"></em>Modifier'.html_safe, edit_moderator_account_path(@item.user_id, item_id: @item.id),
+                              id: 'edit_program_item_legal_entity', class: 'btn btn-info' %>
+                </div>
+              </div>
+            <% end %>
+            <% if @item.draft? || @item.pending? %>
+              <div class="row mt-lg">
+                <label class="col-sm-3 control-label">Compte utilisateur</label>
+                <div class="col-sm-9">
+                  <%= item_form.select :user_id, [], {}, class: 'form-control select_user required', disabled: readonly %>
+                </div>
+              </div>
+            <% end %>
         </fieldset>
         <fieldset>
           <% end %>
@@ -440,7 +451,9 @@
             </div>
           </div>
         </fieldset>
-        <%= item_form.hidden_field :user_id %>
+        <% unless current_moderator %>
+          <%= item_form.hidden_field :user_id %>
+        <% end %>
         <%= item_form.hidden_field :rev %>
         <%= item_form.hidden_field :reference %>
         <%= item_form.hidden_field :place_desc_ref %>
@@ -450,7 +463,7 @@
       <div id="submit_actions" class="panel-footer text-right">
         <%= link_to 'Retour', :back, class: 'btn btn-default' %>
         <% if @item.editable? %>
-          <% if @item.persisted? && @item.draft? && current_user %>
+          <% if @item.persisted? && @item.draft? %>
             <%= link_to "Supprimer le brouillon", user_program_item_path(@item), method: :delete, class: 'btn btn-danger ml',
                         data: {confirm: "Voulez-vous supprimer ce brouillon ?"} %>
           <% end %>
@@ -468,13 +481,18 @@
                     <%= item_form.submit "Rejeter #{@item.rev == 1 ? "l'offre" : 'la mise à jour'}", class: 'btn btn-danger ml',
                                          onclick: "setStatus('#{ProgramItem::STATUS_REJECTED}')" %>
                   <% end %>
-                  <%= link_to "Supprimer l'offre", moderator_program_item_path(@item), method: :delete,
-                              class: 'btn btn-inverse ml', data: {confirm: "La suppression d'une offre est définitive. Êtes-vous sûr(e) ? - Note : la suppression n'est effective que sur ApidaeJEP et n'affecte pas les éventuelles publications dans la base de données Apidae"} %>
-            <% elsif current_user %>
+                  <% unless @item.draft? %>
+                    <%= link_to "Supprimer l'offre", moderator_program_item_path(@item), method: :delete,
+                                class: 'btn btn-inverse ml', data: {confirm: "La suppression d'une offre est définitive. Êtes-vous sûr(e) ? - Note : la suppression n'est effective que sur ApidaeJEP et n'affecte pas les éventuelles publications dans la base de données Apidae"} %>
+                  <% end %>
+            <% end %>
+            <% if current_user || @item.draft? %>
+              <% unless readonly %>
                 <%= item_form.submit 'Enregistrer le brouillon', class: 'btn btn-inverse ml',
                                      onclick: "setStatus('#{ProgramItem::STATUS_DRAFT}')", formnovalidate: 'formnovalidate' %>
-                <%= item_form.submit "Transmettre #{@item.rev == 1 ? "l'offre" : 'la mise à jour'} pour validation", class: 'btn btn-primary ml',
-                                     onclick: "setStatus('#{ProgramItem::STATUS_PENDING}')" %>
+              <% end %>
+              <%= item_form.submit "Transmettre #{@item.rev == 1 ? "l'offre" : 'la mise à jour'} pour validation", class: 'btn btn-primary ml',
+                                   onclick: "setStatus('#{ProgramItem::STATUS_PENDING}')" %>
             <% end %>
           <% end %>
         <% end %>

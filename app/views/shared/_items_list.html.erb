@@ -23,7 +23,7 @@
           <% if @items.any? %>
               <% @items.each do |item| %>
                   <tr>
-                    <td><%= item.reference.to_s + (item.external_id ? " (#{item.external_id})" : '') %><span class="hidden"><%= item.user.full_name %></span></td>
+                    <td><%= item.reference.to_s + (item.external_id ? " (#{item.external_id})" : '') %><span class="hidden"><%= item.user.full_name if item.user %></span></td>
                     <td>
                       <span class="hidden"><%= item.updated_at.to_i %></span><%= l(item.updated_at, format: :withtime) %>
                     </td>
@@ -35,7 +35,9 @@
                     <td><%= item.main_place %></td>
                     <% if territory?(GRAND_LYON) %>
                     <td class="text-center">
-                      <%= item.user.communication.nil? ? '?' : (item.user.communication ? link_to('Oui', edit_kit_moderator_account_path(item.user_id), class: 'btn btn-link') : 'Non') %>
+                      <% if item.user %>
+                        <%= item.user.communication.nil? ? '?' : (item.user.communication ? link_to('Oui', edit_kit_moderator_account_path(item.user_id), class: 'btn btn-link') : 'Non') %>
+                      <% end %>
                     </td>
                     <% end %>
                     <td class="text-center">
@@ -43,7 +45,7 @@
                                   moderator_program_item_path(item),
                                   class: 'btn btn-outline btn-sm btn-primary', title: 'Visualiser' %>
                       <%= link_to '<i class="icon-note"></i>'.html_safe,
-                                  edit_moderator_program_item_path(item),
+                                  item.draft? ? edit_user_program_item_path(item) : edit_moderator_program_item_path(item),
                                   class: 'btn btn-outline btn-sm btn-primary ml-sm', title: 'Modifier' %>
                     </td>
                   </tr>

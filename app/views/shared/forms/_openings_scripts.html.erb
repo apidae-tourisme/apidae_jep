@@ -17,7 +17,7 @@
                     startDate: date,
                     endDate: date,
                     closingDays: [],
-                    userId: <%= @item.user.uid || raw("'JEP-#{@item.user.id}'") %>,
+                    userId: <%= @item.user ? (@item.user.uid || raw("'JEP-#{@item.user.id}'")) : 'JEP-USER' %>,
                     onLoad: function() {
                         unselectWeekdays();
                         $("apidate-time-schedule .modal-body > div > div:last-child > button").click(function() {

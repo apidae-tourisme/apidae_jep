@@ -44,6 +44,30 @@ class ProgramItem < ActiveRecord::Base
   validates_length_of :summary, maximum: 255
   validate :openings_presence
 
+  def self.new_default(usr)
+    item = new(item_type: ITEM_VISITE, free: true, booking: false, accept_pictures: '0', user_id: (usr.id if usr), rev: 1,
+        status: ProgramItem::STATUS_DRAFT, openings: {})
+    if usr && usr.legal_entity
+      item.telephone = usr.legal_entity.phone
+      item.email = usr.legal_entity.email
+      item.website = usr.legal_entity.website
+    end
+    item
+  end
+
+  def self.build_from(prev_item)
+    item = prev_item.dup
+    item.status = ProgramItem::STATUS_DRAFT
+    item.external_status = nil
+    item.rev += 1
+    item.reference = prev_item.reference
+    prev_item.attached_files.each do |f|
+      item.attached_files << AttachedFile.new(program_item: item, data: f.data, picture: f.picture, created_at: f.created_at)
+    end
+    item.set_openings
+    item
+  end
+
   def last_revision
     ProgramItem.where(reference: reference).order(:rev).last
   end
@@ -112,9 +136,9 @@ class ProgramItem < ActiveRecord::Base
     # Note : specific cases - switch from GL to Isere
     switched_codes = ["69007", "69064", "69097", "69119", "69253", "69189", "69193", "69235", "69080", "69118", "69236", "38544"]
     active_versions.where(created_at: (Date.new(year, 1, 1)..Date.new(year + 1, 1, 1)))
+        .joins("LEFT JOIN users ON users.id = program_items.user_id")
         .where("program_items.status IN (?)", statuses)
-        .where("users.territory = ? #{territory == ISERE ? 'OR' : 'AND'} location_data::json->>'main_town_insee_code' #{'NOT' unless territory == ISERE} IN (?)", territory, switched_codes)
-        .joins("JOIN users ON users.id = program_items.user_id")
+        .where("program_items.user_id IS NULL OR (users.territory = ? #{territory == ISERE ? 'OR' : 'AND'} location_data::json->>'main_town_insee_code' #{'NOT' unless territory == ISERE} IN (?))", territory, switched_codes)
   end
 
   def self.validated

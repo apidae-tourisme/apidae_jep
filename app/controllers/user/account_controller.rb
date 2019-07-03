@@ -1,6 +1,6 @@
 class User::AccountController < User::UserController
   skip_before_action :check_entity
-  skip_before_action :authenticate_user!, only: [:towns, :search_entity]
+  skip_before_action :check_authentication, only: [:towns, :search_entity, :search]
 
   def edit
     @user = current_user
@@ -37,13 +37,20 @@ class User::AccountController < User::UserController
     end
   end
 
+  def search
+    @users = []
+    unless params[:pattern].blank?
+      @users = User.matching(URI.decode(params[:pattern]))
+    end
+  end
+
   def communication
-    @user = current_user
+    @user = User.find(params[:user_id])
     @user.communication_poll ||= CommunicationPoll.new(user_id: @user.id)
   end
 
   def update_communication
-    @user = current_user
+    @user = User.find(params[:user_id])
     if @user.update(user_params)
       NotificationMailer.notify_com_summary(@user).deliver_later
       redirect_to user_dashboard_url, notice: "Le formulaire a bien été enregistré."

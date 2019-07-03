@@ -92,6 +92,13 @@ class User < ActiveRecord::Base
                                       created_at: (Date.new(EDITION, 1, 1)..Date.new(EDITION + 1, 1, 1)))
   end
 
+  def self.matching(pattern)
+    where("trim(unaccent(replace(first_name, '-', ' '))) ILIKE trim(unaccent(replace(?, '-', ' '))) " +
+              " OR trim(unaccent(replace(last_name, '-', ' '))) ILIKE trim(unaccent(replace(?, '-', ' '))) " +
+              " OR trim(unaccent(replace(email, '-', ' '))) ILIKE trim(unaccent(replace(?, '-', ' ')))",
+          "%#{pattern}%", "%#{pattern}%", "%#{pattern}%").includes(:legal_entity)
+  end
+
   def self.import_full(csv_file)
     csv = CSV.new(File.new(csv_file), col_sep: ',', headers: :first_row)
     csv.each do |row|

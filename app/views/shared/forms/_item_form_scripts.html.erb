@@ -25,6 +25,45 @@
         selectTown.val(value).trigger('change');
     }
 
+    <% if current_moderator && (@item.draft? || @item.pending?) %>
+      var selectUser = $("select.select_user").select2({
+          language: "fr",
+          minimumInputLength: 2,
+          ajax: {
+              url: "<%= search_user_account_path %>",
+              delay: 500,
+              data: function (params) {
+                  var query = {
+                      pattern: encodeURIComponent(params.term),
+                      page: params.page
+                  };
+                  return query;
+              },
+              processResults: function (data) {
+                  return {
+                      results: data.users
+                  };
+              }
+          }
+      });
+      selectUser.on('select2:select', function (e) {
+          var data = e.params.data;
+          var editLink = $("#edit_program_item_legal_entity");
+          if (editLink.size()) {
+              $("#program_item_legal_entity_name").val(data.legal_entity);
+              editLink.attr("href", editLink.attr("href").replace(/comptes\/(\d+)/, 'comptes/' + data.id));
+          }
+          $("#program_item_telephone").val(data.telephone);
+          $("#program_item_email").val(data.email);
+          $("#program_item_website").val(data.website);
+          $("#entity_items_info").remove();
+      });
+      function setUserValue(value, label) {
+          $("select.select_user").append('<option value="' + value + '">' + label + '</option>');
+          selectUser.val(value).trigger('change');
+      }
+    <% end %>
+
     function updateFormFields(feature) {
         $("#program_item_main_place").val(feature.properties.name);
         $("#program_item_main_address").val([feature.properties.housenumber, feature.properties.street].join(' ').trim());
@@ -269,6 +308,10 @@
 
         <% if @town %>
           setTownValue('<%= @town.insee_code %>', '<%= @town.label %>');
+        <% end %>
+
+        <% if current_moderator && (@item.draft? || @item.pending?) && @item.user_id %>
+          setUserValue('<%= @item.user_id %>', '<%= @item.user.full_name %>');
         <% end %>
 
         function injectTrim(handler) {

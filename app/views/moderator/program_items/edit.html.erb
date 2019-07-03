@@ -7,7 +7,7 @@
   <% end %>
 </div>
 <% unless @entity_items.blank? %>
-  <div class="alert alert-info">
+  <div class="alert alert-info" id="entity_items_info">
     <p class="man text-uppercase pb-sm">Offres publiées pour cette structure :</p>
     <ul>
       <% @entity_items.each do |itm| %>
