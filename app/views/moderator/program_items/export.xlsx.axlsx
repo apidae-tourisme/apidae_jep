@@ -14,18 +14,28 @@ wb.add_worksheet(name: 'Toutes les offres') do |sheet|
   sheet.column_widths *cols_width
 end
 if current_moderator.member_ref == ISERE
-  TERRITORIES[current_moderator.member_ref].each_pair do |t, codes|
-    wb.add_worksheet(name: t) do |sheet|
-      sheet.add_row exported_columns.values.flatten.map {|v| I18n.t("export.program_item.#{v}")}
-      @items.each do |item|
-        if items_codes[item.main_town_insee_code]
-          if codes.include?(items_codes[item.main_town_insee_code])
-            sheet.add_row exported_values(item), style: wrap
-          end
-        else
-          unknown << item
+  sheets = {}
+  all_postal_codes = TERRITORIES[current_moderator.member_ref].values.flatten.uniq
+  all_insee_codes = INSEE_TERRITORIES.values.flatten.uniq
+  TERRITORIES[current_moderator.member_ref].keys.each do |t|
+    sheets[t] = wb.add_worksheet(name: t)
+    sheets[t].add_row exported_columns.values.flatten.map {|v| I18n.t("export.program_item.#{v}")}
+  end
+  @items.each do |item|
+    if all_insee_codes.include?(item.main_town_insee_code)
+      INSEE_TERRITORIES.each_pair do |t, insee_codes|
+        if insee_codes.include?(item.main_town_insee_code)
+          sheets[t].add_row exported_values(item), style: wrap
         end
       end
+    elsif items_codes[item.main_town_insee_code] && all_postal_codes.include?(item.main_town_insee_code)
+      TERRITORIES[current_moderator.member_ref].each_pair do |t, codes|
+        if codes.include?(items_codes[item.main_town_insee_code])
+          sheets[t].add_row exported_values(item), style: wrap
+        end
+      end
+    else
+      unknown << item
     end
   end
 end

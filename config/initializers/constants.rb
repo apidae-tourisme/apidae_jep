@@ -187,3 +187,13 @@ TERRITORIES = {
 }
 
 TERRITORIES_BY_CODE = Hash[TERRITORIES.collect {|k, v| [k, Hash[*v.invert.collect {|codes, t| codes.collect {|code| [code, t]}}.flatten]]}]
+
+INSEE_TERRITORIES = {
+    'Bièvre Valloire' => ['38065', '38118', '38194', '38332', '38437'],
+    'Isère Rhodanienne' => ['69064', '69189'],
+    'Voironnais Chartreuse' => ['73092', '38305'],
+    'Haut-Rhône Dauphinois' => ['38138', '38451', '38494', '38535', '38554'],
+    'Agglomération Grenobloise' => ['38150', '38279', '38364', '38474', '38528', '38529', '38562'],
+    'Sud Grésivaudan' => ['38338', '38248', '38450'],
+    'Vals du Dauphiné' => ['38296']
+}
