@@ -4,5 +4,6 @@
   car elles sont ensuites écrites dans Apidae sur le mauvais territoire, ce qui créé un blocage.
   - L'export des offres doit être basé sur les codes INSEE et pas sur les codes postaux comme actuellement (grille de
   correspondance à récupérer pour l'Isère)
+  - Mise à jour du fond de carte pour utiliser les tuiles Apidae
 
 
