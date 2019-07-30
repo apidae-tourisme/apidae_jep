@@ -6,70 +6,81 @@
 <h3>
   Bienvenue sur ApidaeJEP
 </h3>
-<div class="panel panel-info">
-  <div class="panel-body">
-    <p class="mb0">
-      Inscrivez ici vos offres évènements organisés à l'occasion des Journées européennes du patrimoine (JEP)
-      dans le territoire de la Métropole de Lyon ou dans le département de l'Isère.
-    </p>
-  </div>
-</div>
-<div class="pull-right">
-  <%= link_to '<span class="btn-label"><i class="fa fa-plus"></i></span>Saisir une offre'.html_safe, new_user_program_item_path,
-              class: 'btn btn-labeled btn-primary' %>
-</div>
-<h2 class="text-uppercase">Mes offres</h2>
-<div id="user_dashboard" class="row">
-  <div class="col-md-6 pr-sm">
-    <div class="panel widget bg-inverse">
-      <a class="row row-table" href="<%= drafts_user_program_items_path(status: ProgramItem::STATUS_DRAFT, year: @year) %>">
-        <div class="col-xs-4 text-center bg-inverse-dark pv-lg">
-          <em class="icon-note fa-2x"></em>
-        </div>
-        <div class="col-xs-8 pv-lg">
-          <div class="h1 m0 text-bold"><%= @offers.has_key?(ProgramItem::STATUS_DRAFT) ? @offers[ProgramItem::STATUS_DRAFT].count : 0 %></div>
-          <div class="text-uppercase">brouillons</div>
-        </div>
-      </a>
+<% unless current_user.territory == ISERE %>
+  <div class="panel panel-info">
+    <div class="panel-body">
+      <p class="mb0">
+        Inscrivez ici vos offres évènements organisés à l'occasion des Journées européennes du patrimoine (JEP)
+        dans le territoire de la Métropole de Lyon.
+      </p>
     </div>
   </div>
-  <div class="col-md-6 pl-sm">
-    <div class="panel widget bg-warning">
-      <a class="row row-table" href="<%= pending_user_program_items_path(status: ProgramItem::STATUS_PENDING, year: @year) %>">
-        <div class="col-xs-4 text-center bg-warning-dark pv-lg">
-          <em class="icon-hourglass fa-2x"></em>
-        </div>
-        <div class="col-xs-8 pv-lg">
-          <div class="h1 m0 text-bold"><%= @offers.has_key?(ProgramItem::STATUS_PENDING) ? @offers[ProgramItem::STATUS_PENDING].count : 0 %></div>
-          <div class="text-uppercase">en validation</div>
-        </div>
-      </a>
+<% end %>
+<% if current_user.territory == ISERE %>
+  <p class="alert alert-info">
+    <em class="icon-info pr-sm"></em>La saisie des Journées européennes du patrimoine sur la plateforme ApidaeJEP est désormais terminée..<br/>
+    <br/>
+    Vous pouvez cependant ajouter ou modifier des informations en vous adressant à l’office de tourisme dont vous dépendez afin que le programme en ligne soit mis à jour.
+  </p>
+<% end %>
+<% unless current_user.territory == ISERE %>
+  <div class="pull-right">
+    <%= link_to '<span class="btn-label"><i class="fa fa-plus"></i></span>Saisir une offre'.html_safe, new_user_program_item_path,
+                class: 'btn btn-labeled btn-primary' %>
+  </div>
+  <h2 class="text-uppercase">Mes offres</h2>
+  <div id="user_dashboard" class="row">
+    <div class="col-md-6 pr-sm">
+      <div class="panel widget bg-inverse">
+        <a class="row row-table" href="<%= drafts_user_program_items_path(status: ProgramItem::STATUS_DRAFT, year: @year) %>">
+          <div class="col-xs-4 text-center bg-inverse-dark pv-lg">
+            <em class="icon-note fa-2x"></em>
+          </div>
+          <div class="col-xs-8 pv-lg">
+            <div class="h1 m0 text-bold"><%= @offers.has_key?(ProgramItem::STATUS_DRAFT) ? @offers[ProgramItem::STATUS_DRAFT].count : 0 %></div>
+            <div class="text-uppercase">brouillons</div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-6 pl-sm">
+      <div class="panel widget bg-warning">
+        <a class="row row-table" href="<%= pending_user_program_items_path(status: ProgramItem::STATUS_PENDING, year: @year) %>">
+          <div class="col-xs-4 text-center bg-warning-dark pv-lg">
+            <em class="icon-hourglass fa-2x"></em>
+          </div>
+          <div class="col-xs-8 pv-lg">
+            <div class="h1 m0 text-bold"><%= @offers.has_key?(ProgramItem::STATUS_PENDING) ? @offers[ProgramItem::STATUS_PENDING].count : 0 %></div>
+            <div class="text-uppercase">en validation</div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-6 pr-sm">
+      <div class="panel widget bg-success">
+        <a class="row row-table" href="<%= validated_user_program_items_path(status: ProgramItem::STATUS_VALIDATED, year: @year) %>">
+          <div class="col-xs-4 text-center bg-success-dark pv-lg">
+            <em class="icon-like fa-2x"></em>
+          </div>
+          <div class="col-xs-8 pv-lg">
+            <div class="h1 m0 text-bold"><%= @offers.has_key?(ProgramItem::STATUS_VALIDATED) ? @offers[ProgramItem::STATUS_VALIDATED].count : 0 %></div>
+            <div class="text-uppercase">validées</div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-6 pl-sm">
+      <div class="panel widget bg-danger">
+        <a class="row row-table" href="<%= rejected_user_program_items_path(status: ProgramItem::STATUS_REJECTED, year: @year) %>">
+          <div class="col-xs-4 text-center bg-danger-dark pv-lg">
+            <em class="icon-dislike fa-2x"></em>
+          </div>
+          <div class="col-xs-8 pv-lg">
+            <div class="h1 m0 text-bold"><%= @offers.has_key?(ProgramItem::STATUS_REJECTED) ? @offers[ProgramItem::STATUS_REJECTED].count : 0 %></div>
+            <div class="text-uppercase">rejetées</div>
+          </div>
+        </a>
+      </div>
     </div>
   </div>
-  <div class="col-md-6 pr-sm">
-    <div class="panel widget bg-success">
-      <a class="row row-table" href="<%= validated_user_program_items_path(status: ProgramItem::STATUS_VALIDATED, year: @year) %>">
-        <div class="col-xs-4 text-center bg-success-dark pv-lg">
-          <em class="icon-like fa-2x"></em>
-        </div>
-        <div class="col-xs-8 pv-lg">
-          <div class="h1 m0 text-bold"><%= @offers.has_key?(ProgramItem::STATUS_VALIDATED) ? @offers[ProgramItem::STATUS_VALIDATED].count : 0 %></div>
-          <div class="text-uppercase">validées</div>
-        </div>
-      </a>
-    </div>
-  </div>
-  <div class="col-md-6 pl-sm">
-    <div class="panel widget bg-danger">
-      <a class="row row-table" href="<%= rejected_user_program_items_path(status: ProgramItem::STATUS_REJECTED, year: @year) %>">
-        <div class="col-xs-4 text-center bg-danger-dark pv-lg">
-          <em class="icon-dislike fa-2x"></em>
-        </div>
-        <div class="col-xs-8 pv-lg">
-          <div class="h1 m0 text-bold"><%= @offers.has_key?(ProgramItem::STATUS_REJECTED) ? @offers[ProgramItem::STATUS_REJECTED].count : 0 %></div>
-          <div class="text-uppercase">rejetées</div>
-        </div>
-      </a>
-    </div>
-  </div>
-</div>
+<% end %>
