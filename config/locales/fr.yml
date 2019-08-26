@@ -373,6 +373,7 @@ fr:
       email: Email
       telephone: Téléphone
       entity_name: Nom de la structure
+      entity_town: Commune de la structure
       entity_address: Adresse de la structure
       communication: Kit com
       offers_count: Nombre d'offres

@@ -47,7 +47,11 @@ class User < ActiveRecord::Base
   end
 
   def entity_name
-    legal_entity.label
+    legal_entity.name
+  end
+
+  def entity_town
+    legal_entity.town.label if legal_entity.town
   end
 
   def active_items(year)
