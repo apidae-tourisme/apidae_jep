@@ -39,15 +39,7 @@ json.program_items do
     json.openings do
       json.dates item.open_dates.sort
       json.values do
-        json.array!(item.openings_details.sort_by {|d| d['startDate']}) do |op|
-          op['timePeriods'].each do |tp|
-            tp['timeFrames'].each do |tf|
-              json.starts_at "#{op['startDate']}T#{tf['startTime']}:00.000Z"
-              json.ends_at "#{op['startDate']}T#{tf['endTime']}:00.000Z" if tf['endTime']
-              json.frequency tf['recurrence']
-            end
-          end
-        end
+        json.array! openings_values(item)
       end
       json.description item.openings_desc
     end
