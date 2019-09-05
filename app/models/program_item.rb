@@ -139,7 +139,7 @@ class ProgramItem < ActiveRecord::Base
   end
 
   def open_dates
-    openings.blank? ? [] : openings.select {|k, v| !v.blank?}.keys
+    openings.blank? ? [] : openings.select {|k, v| !v.blank? && !v.to_s.include?('-')}.keys
   end
 
   def validated_at
