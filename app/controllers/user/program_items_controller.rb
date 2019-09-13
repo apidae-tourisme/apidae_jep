@@ -3,7 +3,7 @@ class User::ProgramItemsController < User::UserController
   before_action :set_program_item, only: [:edit, :update, :show, :destroy, :confirm, :duplicate]
 
   def check_auth
-    if current_user.territory == ISERE
+    if current_user && current_user.territory == ISERE
       redirect_to user_dashboard_url, alert: "La saisie des offres pour l'Isère n'est plus disponible en ligne."
     end
   end
