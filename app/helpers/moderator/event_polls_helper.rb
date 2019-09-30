@@ -2,7 +2,7 @@ module Moderator::EventPollsHelper
   def poll_columns
     {
         program_item: ['town', 'title', 'item_type', 'criteria', 'themes'],
-        event_poll: ['count_sat', 'count_sun', 'compare_sat', 'compare_sun', 'comments', 'poll_general_comments', 'poll_theme_comments'],
+        event_poll: ['count_sat', 'count_sun', 'comments', 'poll_general_comments', 'poll_com_comments', 'poll_theme_comments'],
         user: ['full_name', 'email', 'telephone', 'entity_name']
     }
   end

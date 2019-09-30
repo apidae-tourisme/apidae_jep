@@ -1,5 +1,5 @@
 class EventPoll < ActiveRecord::Base
-  store :event_data, accessors: [:general_comments, :theme_comments], coder: JSON
+  store :event_data, accessors: [:general_comments, :theme_comments, :com_comments], coder: JSON
   store :offers_data, accessors: [:offers_feedback], coder: JSON
 
   belongs_to :user
@@ -44,5 +44,9 @@ class EventPoll < ActiveRecord::Base
 
   def poll_theme_comments(offer_id)
     theme_comments
+  end
+
+  def poll_com_comments(offer_id)
+    com_comments
   end
 end

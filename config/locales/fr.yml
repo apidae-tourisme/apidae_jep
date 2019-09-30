@@ -395,8 +395,9 @@ fr:
       compare_sat: Fréquentation 09/06
       compare_sun: Fréquentation 10/06
       comments: Commentaires
-      poll_general_comments: Commentaires qualitatifs
+      poll_general_comments: Commentaires organisation
       poll_theme_comments: Commentaires thématique
+      poll_com_comments: Commentaires communication
   date:
     abbr_day_names:
     - dim

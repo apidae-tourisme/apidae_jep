@@ -11,9 +11,6 @@
               Le formulaire ci-dessous vous permet de renseigner le nombre d'entrées enregistrées pendant les Journées
               Européennes du Patrimoine <%= EDITION %> pour chacune des offres saisies dans l'outil ApidaeJEP (donnez une estimation si vous n’avez pas de chiffre précis). Vous pouvez également
               nous faire part de commentaires spécifiques concernant une ou plusieurs de vos offres.<br/>
-              <br/>
-              Pour les monuments régulièrement ouverts à la visite, nous vous invitons à saisir le nombre d'entrées
-              enregistrées pendant une fin de semaine ordinaire (par exemple samedi 9 et dimanche 10 juin 2018).
             </p>
 
             <% if @user.active_items(EDITION).where(status: ProgramItem::STATUS_VALIDATED).any? %>
@@ -26,31 +23,31 @@
                     <div class="col-sm-6 pl0">
                       <fieldset>
                         <div class="form-group mt-lg">
-                          <div class="col-sm-5 text-right mt-sm">Samedi 15/09/2018</div>
+                          <div class="col-sm-5 text-right mt-sm">Samedi 21/09/2019</div>
                           <div class="col-sm-3 pl0">
-                            <%= text_field_tag "event_poll[offers_feedback][#{offer.id}][count][2018-09-15]", @poll.offer_count('2018-09-15', offer.id),
+                            <%= text_field_tag "event_poll[offers_feedback][#{offer.id}][count][2019-09-21]", @poll.offer_count('2019-09-21', offer.id),
                                                class: 'form-control item_count digits required', placeholder: "Nb d'entrées", disabled: @disabled %>
                           </div>
                           <div class="col-sm-1 mt-sm text-center p0">ou</div>
                           <div class="col-sm-3 pl0">
                             <label class="checkbox-inline c-checkbox ml0 mr-lg">
-                              <%= check_box_tag "event_poll[offers_feedback][#{offer.id}][closed][2018-09-15]", '1',
-                                                @poll.closed('2018-09-15', offer.id), class: 'item_closed', disabled: @disabled %>
+                              <%= check_box_tag "event_poll[offers_feedback][#{offer.id}][closed][2019-09-21]", '1',
+                                                @poll.closed('2019-09-21', offer.id), class: 'item_closed', disabled: @disabled %>
                               <span class="fa fa-check"></span>fermé(e)
                             </label>
                           </div>
                         </div>
                         <div class="form-group mt">
-                          <div class="col-sm-5 text-right mt-sm">Dimanche 16/09/2018</div>
+                          <div class="col-sm-5 text-right mt-sm">Dimanche 22/09/2019</div>
                           <div class="col-sm-3 pl0">
-                            <%= text_field_tag "event_poll[offers_feedback][#{offer.id}][count][2018-09-16]", @poll.offer_count('2018-09-16', offer.id),
+                            <%= text_field_tag "event_poll[offers_feedback][#{offer.id}][count][2019-09-22]", @poll.offer_count('2019-09-22', offer.id),
                                                class: 'form-control item_count digits required', placeholder: "Nb d'entrées", disabled: @disabled %>
                           </div>
                           <div class="col-sm-1 mt-sm text-center">ou</div>
                           <div class="col-sm-3 pl0">
                             <label class="checkbox-inline c-checkbox ml0 mr-lg">
-                              <%= check_box_tag "event_poll[offers_feedback][#{offer.id}][closed][2018-09-16]", '1',
-                                                @poll.closed('2018-09-16', offer.id), class: 'item_closed', disabled: @disabled %>
+                              <%= check_box_tag "event_poll[offers_feedback][#{offer.id}][closed][2019-09-22]", '1',
+                                                @poll.closed('2019-09-22', offer.id), class: 'item_closed', disabled: @disabled %>
                               <span class="fa fa-check"></span>fermé(e)
                             </label>
                           </div>
@@ -62,46 +59,6 @@
                                         placeholder: "Commentaires", rows: 4, disabled: @disabled %>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-sm-2 text-right form_entry text-primary">
-                      Nombre d'entrées enregistrées pendant une fin de semaine ordinaire
-                    </div>
-                    <div class="col-sm-6 pl0">
-                      <fieldset>
-                        <div class="form-group mt-lg">
-                          <div class="col-sm-5 text-right mt-sm">Samedi 09/06/2018</div>
-                          <div class="col-sm-3 pl0">
-                            <%= text_field_tag "event_poll[offers_feedback][#{offer.id}][count][2018-06-09]", @poll.offer_count('2018-06-09', offer.id),
-                                               class: 'form-control item_count digits required', placeholder: "Nb d'entrées", disabled: @disabled %>
-                          </div>
-                          <div class="col-sm-1 mt-sm text-center p0">ou</div>
-                          <div class="col-sm-3 pl0">
-                            <label class="checkbox-inline c-checkbox ml0 mr-lg">
-                              <%= check_box_tag "event_poll[offers_feedback][#{offer.id}][closed][2018-06-09]", '1',
-                                                @poll.closed('2018-06-09', offer.id), class: 'item_closed', disabled: @disabled %>
-                              <span class="fa fa-check"></span>fermé(e)
-                            </label>
-                          </div>
-                        </div>
-                        <div class="form-group mt">
-                          <div class="col-sm-5 text-right mt-sm">Dimanche 10/06/2018</div>
-                          <div class="col-sm-3 pl0">
-                            <%= text_field_tag "event_poll[offers_feedback][#{offer.id}][count][2018-06-10]", @poll.offer_count('2018-06-10', offer.id),
-                                               class: 'form-control item_count digits required', placeholder: "Nb d'entrées", disabled: @disabled %>
-                          </div>
-                          <div class="col-sm-1 mt-sm text-center">ou</div>
-                          <div class="col-sm-3 pl0">
-                            <label class="checkbox-inline c-checkbox ml0 mr-lg">
-                              <%= check_box_tag "event_poll[offers_feedback][#{offer.id}][closed][2018-06-10]", '1',
-                                                @poll.closed('2018-06-10', offer.id), class: 'item_closed', disabled: @disabled %>
-                              <span class="fa fa-check"></span>fermé(e)
-                            </label>
-                          </div>
-                        </div>
-                      </fieldset>
-                    </div>
-                    <div class="col-sm-4 pl0"></div>
-                  </div>
                 <% end %>
               <% end %>
 
@@ -109,21 +66,29 @@
             <legend class="text-uppercase text-primary text-md">Bilan qualitatif</legend>
             <div class="form-group mdy">
               <label class="col-sm-12">
-                Avez-vous des observations particulières concernant le déroulement de ces Journées ?
-                (organisation, qualité du programme, comportement du public, médias, autres...)
+                Avez-vous des observations particulières concernant l’organisation de ces Journées (inscription, coordination, déroulement...) ?
               </label>
               <div class="col-sm-12">
                 <%= f.text_area :general_comments, class: 'form-control required', rows: 3,
-                                placeholder: "Commentaires et observations", disabled: @disabled %>
+                                placeholder: "Commentaires et observations sur l'organisation", disabled: @disabled %>
               </div>
             </div>
             <div class="form-group mt-xl mdy">
               <label class="col-sm-12">
-                Avez-vous des observations particulières concernant la thématique nationale et les déclinaisons par la Métropole de Lyon ?
+                Avez-vous des observations particulières concernant la communication autour de ces Journées (programme, visuel, site internet...) ?
+              </label>
+              <div class="col-sm-12">
+                <%= f.text_area :com_comments, class: 'form-control required', rows: 3,
+                                placeholder: "Commentaires et observations sur la communication", disabled: @disabled %>
+              </div>
+            </div>
+            <div class="form-group mt-xl mdy">
+              <label class="col-sm-12">
+                Avez-vous des observations particulières concernant les différentes thématiques de ces Journées (thème « habiter », thème « art et divertissement », matrimoine...) ?
               </label>
               <div class="col-sm-12">
                 <%= f.text_area :theme_comments, class: 'form-control required', rows: 3,
-                                placeholder: "Commentaires et observations", disabled: @disabled %>
+                                placeholder: "Commentaires et observations sur la thématique", disabled: @disabled %>
               </div>
             </div>
           </fieldset>
