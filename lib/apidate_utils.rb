@@ -1,7 +1,7 @@
 class ApidateUtils
 
   # Usage example :
-  # ProgramItem.in_status(GRAND_LYON, 2019, ProgramItem::STATUS_PENDING, ProgramItem::STATUS_VALIDATED).each do |p|
+  # ProgramItem.in_status(GRAND_LYON, 2020, ProgramItem::STATUS_PENDING, ProgramItem::STATUS_VALIDATED).each do |p|
   #   if ApidateUtils.fix_apidate_openings(p.id)
   #     sleep(3)
   #   else

@@ -1,0 +1,6 @@
+/.idea
+/data
+/tmp
+/log/*
+/vendor
+/public/pictures

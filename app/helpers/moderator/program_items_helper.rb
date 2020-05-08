@@ -109,7 +109,7 @@ module Moderator::ProgramItemsHelper
     if member_ref == GRAND_LYON
       formatted_openings = formatted_openings.downcase
       formatted_openings.gsub!(/(vendredi|samedi|dimanche|lundi)/) {|m| m.slice(0, 3) + '.'}
-      formatted_openings.gsub!(/(20|21|22|23) septembre 2019/, '')
+      formatted_openings.gsub!(/(18|19|20|21) septembre 2020/, '')
       formatted_openings.gsub!('minutes', 'min.')
       formatted_openings.gsub!(/(\d\sheures?)/) {|m| m.gsub(/(\sheures?)/, 'h')}
       formatted_openings.gsub!(/(heures?)/, 'h')
@@ -140,7 +140,7 @@ module Moderator::ProgramItemsHelper
       "#{dates[0]} : #{hour}"
     else
       dates[0..-1].each {|d| d.downcase!}
-      dates[0..-2].each {|d| d.gsub!(' septembre 2016', '')}
+      dates[0..-2].each {|d| d.gsub!(' septembre 2020', '')}
       "#{dates[0..-2].join(', ')} et #{dates.last} #{hour}".capitalize
     end
   end

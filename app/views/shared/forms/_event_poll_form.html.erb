@@ -23,31 +23,31 @@
                     <div class="col-sm-6 pl0">
                       <fieldset>
                         <div class="form-group mt-lg">
-                          <div class="col-sm-5 text-right mt-sm">Samedi 21/09/2019</div>
+                          <div class="col-sm-5 text-right mt-sm">Samedi 19/09/2020</div>
                           <div class="col-sm-3 pl0">
-                            <%= text_field_tag "event_poll[offers_feedback][#{offer.id}][count][2019-09-21]", @poll.offer_count('2019-09-21', offer.id),
+                            <%= text_field_tag "event_poll[offers_feedback][#{offer.id}][count][2020-09-19]", @poll.offer_count('2020-09-19', offer.id),
                                                class: 'form-control item_count digits required', placeholder: "Nb d'entrées", disabled: @disabled %>
                           </div>
                           <div class="col-sm-1 mt-sm text-center p0">ou</div>
                           <div class="col-sm-3 pl0">
                             <label class="checkbox-inline c-checkbox ml0 mr-lg">
-                              <%= check_box_tag "event_poll[offers_feedback][#{offer.id}][closed][2019-09-21]", '1',
-                                                @poll.closed('2019-09-21', offer.id), class: 'item_closed', disabled: @disabled %>
+                              <%= check_box_tag "event_poll[offers_feedback][#{offer.id}][closed][2020-09-19]", '1',
+                                                @poll.closed('2020-09-19', offer.id), class: 'item_closed', disabled: @disabled %>
                               <span class="fa fa-check"></span>fermé(e)
                             </label>
                           </div>
                         </div>
                         <div class="form-group mt">
-                          <div class="col-sm-5 text-right mt-sm">Dimanche 22/09/2019</div>
+                          <div class="col-sm-5 text-right mt-sm">Dimanche 20/09/2020</div>
                           <div class="col-sm-3 pl0">
-                            <%= text_field_tag "event_poll[offers_feedback][#{offer.id}][count][2019-09-22]", @poll.offer_count('2019-09-22', offer.id),
+                            <%= text_field_tag "event_poll[offers_feedback][#{offer.id}][count][2020-09-20]", @poll.offer_count('2020-09-20', offer.id),
                                                class: 'form-control item_count digits required', placeholder: "Nb d'entrées", disabled: @disabled %>
                           </div>
                           <div class="col-sm-1 mt-sm text-center">ou</div>
                           <div class="col-sm-3 pl0">
                             <label class="checkbox-inline c-checkbox ml0 mr-lg">
-                              <%= check_box_tag "event_poll[offers_feedback][#{offer.id}][closed][2019-09-22]", '1',
-                                                @poll.closed('2019-09-22', offer.id), class: 'item_closed', disabled: @disabled %>
+                              <%= check_box_tag "event_poll[offers_feedback][#{offer.id}][closed][2020-09-20]", '1',
+                                                @poll.closed('2020-09-20', offer.id), class: 'item_closed', disabled: @disabled %>
                               <span class="fa fa-check"></span>fermé(e)
                             </label>
                           </div>
