@@ -3,7 +3,6 @@
 wb = xlsx_package.workbook
 xlsx_package.use_shared_strings = true
 wrap = xlsx_package.workbook.styles.add_style alignment: {wrap_text: true}
-items_codes = Hash[Town.where(insee_code: @items.collect {|itm| itm.main_town_insee_code}.uniq).collect {|t| [t.insee_code, t.postal_code]}]
 unknown = []
 
 wb.add_worksheet(name: 'Toutes les offres') do |sheet|
@@ -15,22 +14,15 @@ wb.add_worksheet(name: 'Toutes les offres') do |sheet|
 end
 if current_moderator.member_ref == ISERE
   sheets = {}
-  all_postal_codes = TERRITORIES[current_moderator.member_ref].values.flatten.uniq
-  all_insee_codes = INSEE_TERRITORIES.values.flatten.uniq
-  TERRITORIES[current_moderator.member_ref].keys.each do |t|
+  all_insee_codes = ISERE_TERRITORIES.values.flatten.uniq
+  ISERE_TERRITORIES.keys.each do |t|
     sheets[t] = wb.add_worksheet(name: t)
     sheets[t].add_row exported_columns.values.flatten.map {|v| I18n.t("export.program_item.#{v}")}
   end
   @items.each do |item|
     if all_insee_codes.include?(item.main_town_insee_code)
-      INSEE_TERRITORIES.each_pair do |t, insee_codes|
+      ISERE_TERRITORIES.each_pair do |t, insee_codes|
         if insee_codes.include?(item.main_town_insee_code)
-          sheets[t].add_row exported_values(item), style: wrap
-        end
-      end
-    elsif items_codes[item.main_town_insee_code] && all_postal_codes.include?(item.main_town_insee_code)
-      TERRITORIES[current_moderator.member_ref].each_pair do |t, codes|
-        if codes.include?(items_codes[item.main_town_insee_code])
           sheets[t].add_row exported_values(item), style: wrap
         end
       end

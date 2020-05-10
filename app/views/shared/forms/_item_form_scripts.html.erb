@@ -67,7 +67,7 @@
     function updateFormFields(feature) {
         $("#program_item_main_place").val(feature.properties.name);
         $("#program_item_main_address").val([feature.properties.housenumber, feature.properties.street].join(' ').trim());
-        var postalCodeId = (feature.properties.postalcode_gid && feature.properties.postalcode_gid.split(':').length == 3) ? feature.properties.postalcode_gid.split(':')[2] : null;
+        var postalCodeId = (feature.properties.postalcode_gid && feature.properties.postalcode_gid.split(':').length === 3) ? feature.properties.postalcode_gid.split(':')[2] : null;
         if(postalCodeId) {
           setTownValue(postalCodeId, feature.properties.locality);
         }
@@ -90,6 +90,27 @@
         map.setView([lat, lng], 15);
         bindDragToLatLng(marker);
     }
+
+    // function checkPosition(lat, lng) {
+    //     var validPosition = true;
+    //     try {
+    //         var posLat = parseFloat(lat), posLng = parseFloat(lng);
+    //         console.log('posLat : ' + posLat + ' - posLng : ' + posLng);
+    //         var minPos = {lng: 4.075927734375, lat: 44.21764696919354},
+    //             maxPos = {lng: 7.223510742187499, lat: 46.63057868059483};
+    //
+    //         if (posLat < minPos.lat || posLng < minPos.lng || posLat > maxPos.lat || posLng > maxPos.lng) {
+    //             validPosition = false;
+    //         }
+    //     } catch (e) {
+    //         console.error('Invalid coordinates : ' + lat + ' - ' + lng);
+    //         validPosition = false;
+    //     }
+    //     if (!validPosition) {
+    //         $('#program_item_main_lat').addClass('error');
+    //         $('#program_item_main_lng').addClass('error');
+    //     }
+    // }
 
     function setStatus(status) {
         $('#program_item_status').val(status);
@@ -328,7 +349,11 @@
         $.extend($.validator.messages, {
             required: "champ requis",
             email: "adresse email invalide",
-            url: "adresse web invalide"
+            url: "adresse web invalide",
+            number: "<i class='fa fa-warning'></i>",
+            min: "<i class='fa fa-warning'></i>",
+            max: "<i class='fa fa-warning'></i>",
+            maxlength: "255 caractères maximum"
         });
 
         $.validator.addMethod('opening_presence', function(value, element) {
@@ -357,7 +382,10 @@
             rules: {
                 "program_item[accessibility][]": {required: true, minlength: 1},
                 "program_item[status]": {opening_presence: true},
-                "program_item[accept_pictures]": {accept_pictures: true}
+                "program_item[accept_pictures]": {accept_pictures: true},
+                "program_item[main_lat]": {number: true, min: 44.21764696919354, max: 46.63057868059483},
+                "program_item[main_lng]": {number: true, min: 4.075927734375, max: 7.223510742187499},
+                "program_item[summary]": {maxlength: 254}
             },
             messages: {
                 "program_item[accessibility][]": "champ requis",

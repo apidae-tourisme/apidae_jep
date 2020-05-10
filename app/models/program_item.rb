@@ -162,7 +162,7 @@ class ProgramItem < ActiveRecord::Base
 
   def self.in_status(territory, year, *statuses)
     # Note : specific cases - switch from GL to Isere
-    switched_codes = ["69007", "69064", "69097", "69119", "69253", "69189", "69193", "69235", "69080", "69118", "69236", "38544"]
+    switched_codes = ['38446', '73092', '26270', '69064', '69007', '69097', '69119', '69189', '69193', '69235', '69118', '69080', '69236']
     active_versions.where(created_at: (Date.new(year, 1, 1)..Date.new(year + 1, 1, 1)))
         .joins("LEFT JOIN users ON users.id = program_items.user_id")
         .where("program_items.status IN (?)", statuses)
@@ -227,6 +227,14 @@ class ProgramItem < ActiveRecord::Base
   end
 
   def remote_save
+    if external_id
+      obj = EventsImporter.load_apidae_events([external_id], 'id')
+      if obj.nil?
+        logger.info("Removing obsolete Apidae reference #{external_id}")
+        self.external_id = nil
+      end
+    end
+
     form_data = build_multipart_form(merge_data)
     response = save_to_apidae(user.territory, form_data, :api_url, :put)
 
