@@ -220,7 +220,7 @@
                 }
             }
         });
-        <% if @user.legal_entity && @user.legal_entity.town_insee_code %>
+        <% if @user.legal_entity && @user.legal_entity.town %>
         setTownValue('<%= @user.legal_entity.town_insee_code %>', '<%= @user.legal_entity.town.label %>');
         <% end %>
 

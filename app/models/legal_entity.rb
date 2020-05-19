@@ -1,7 +1,7 @@
 class LegalEntity < ActiveRecord::Base
   store :address, accessors: [:adresse1, :adresse2, :adresse3], coder: JSON
   has_many :users
-  belongs_to :town, foreign_key: :town_insee_code, primary_key: :insee_code
+  belongs_to :town, foreign_key: :town_insee_code, primary_key: :insee_code, optional: true
 
   before_create :normalize_website_url
 
