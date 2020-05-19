@@ -27,7 +27,7 @@
                   <tr>
                     <td><%= account.full_name %></td>
                     <td><%= account.legal_entity_id ? account.legal_entity.name : 'Aucune' %></td>
-                    <td><%= account.legal_entity.town.label %></td>
+                    <td><%= account.legal_entity.town.label if account.legal_entity && account.legal_entity.town %></td>
                     <td><%= account.email %></td>
                     <td><%= account.telephone %></td>
                     <td><%= l(account.last_sign_in_at, format: :withtime) if account.last_sign_in_at %></td>
