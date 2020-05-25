@@ -68,48 +68,24 @@ ACCESSIBILITY_REFS = ACCESSIBILITY.values.inject(:merge)
 
 ALL_REFS = THEMES_REFS.merge(VALIDATION_CRITERIA_REFS).merge(CRITERIA_REFS).merge(ACCESSIBILITY_REFS)
 
-# Prod
-# APIDAE_CRITERIA = {
-#     'Nouveauté' => 7997,
-#     "Visite libre" => 10173,
-#     'Egalité' => 10161,
-#     'animation' => 10171,
-#     'parcours' => 10172,
-#     'Sous-thématique 1' => 10164,
-#     'Sous-thématique 2' => 10165,
-#     'Sous-thématique 3' => 10166,
-#     'Sous-thématique 4' => 10167,
-#     'Sous-thématique 5' => 10168,
-#     'Coup de coeur' => 7998,
-#     'Visites guidées de l\'Office du Tourisme' => 8778,
-#     'Balades urbaines du Musée Gadagne' => 8292
-# }
-#
-# APIDAE_TYPOLOGIES = {
-#     "Thématique 2020 - \"Patrimoine et Éducation\"" => 6180
-# }
-
-# Preprod
 APIDAE_CRITERIA = {
     'Nouveauté' => 7997,
-    "Visite libre" => 8767,
-    "Le goût en partage" => 8771,
-    "Unesco" => 8776,
-    'Egalité' => 8777,
-    'animation' => 8769,
-    'parcours' => 8768,
-    'Sous-thématique 1' => 8771,
-    'Sous-thématique 2' => 8772,
-    'Sous-thématique 3' => 8773,
-    'Sous-thématique 4' => 8774,
-    'Sous-thématique 5' => 8775,
+    "Visite libre" => 10173,
+    'Egalité' => 10161,
+    'animation' => 10171,
+    'parcours' => 10172,
+    'Sous-thématique 1' => 10164,
+    'Sous-thématique 2' => 10165,
+    'Sous-thématique 3' => 10166,
+    'Sous-thématique 4' => 10167,
+    'Sous-thématique 5' => 10168,
     'Coup de coeur' => 7998,
     'Visites guidées de l\'Office du Tourisme' => 8778,
     'Balades urbaines du Musée Gadagne' => 8292
 }
 
 APIDAE_TYPOLOGIES = {
-    "Thématique 2018 - \"L'art du partage\"" => 4927
+    "Thématique 2020 - \"Patrimoine et Éducation\"" => 6180
 }
 
 APIDAE_THEMES = {
