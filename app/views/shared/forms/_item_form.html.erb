@@ -354,6 +354,18 @@
           </div>
         </fieldset>
         <fieldset>
+          <div id="accept_safety" class="form-group mt-lg mdy">
+            <div class="col-sm-12">
+              <label class="checkbox-inline c-checkbox">
+                <%= check_box_tag 'program_item[accept_safety]', '1', @item.accept_safety == '1', disabled: readonly %>
+                <span class="fa fa-check"></span>Nous nous engageons à mettre en œuvre toutes les dispositions nécessaires
+                pour garantir la sécurité sanitaire et physique des visiteurs, selon les directives des autorités qui seront
+                en vigueur les 18, 19, 20 et 21 septembre 2020*
+              </label>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
           <legend class="text-uppercase text-primary">Suivi</legend>
           <% if current_moderator %>
             <% if @item.user %>

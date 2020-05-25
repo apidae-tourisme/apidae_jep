@@ -30,7 +30,7 @@ class ProgramItem < ActiveRecord::Base
   DIRECTION_DOWN = 'down'
 
   store :desc_data, accessors: [:place_desc, :place_desc_ref, :event_planners, :building_ages, :building_types, :accessibility,
-                                :audience, :criteria, :themes, :validation_criteria, :accept_pictures], coder: JSON
+                                :audience, :criteria, :themes, :validation_criteria, :accept_pictures, :accept_safety], coder: JSON
   store :location_data, accessors: [:main_place, :main_lat, :main_lng, :main_address, :main_town_insee_code,
                                     :main_transports, :alt_place, :alt_lat, :alt_lng, :alt_address,
                                     :alt_town_insee_code, :alt_postal_code, :alt_transports], coder: JSON
@@ -41,6 +41,7 @@ class ProgramItem < ActiveRecord::Base
   validates_presence_of :item_type, :title, :main_place, :main_lat, :main_lng, :main_address, :main_town_insee_code,
                         :main_transports, :summary, :accessibility
   validates :accept_pictures, acceptance: true
+  validates :accept_safety, acceptance: true
   validates_length_of :summary, maximum: 255
   validate :openings_presence
 
