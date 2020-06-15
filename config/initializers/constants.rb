@@ -126,6 +126,8 @@ APIDAE_CATEGORIES = {
     "Visite d'un site / monument" => 4546
 }
 
+APIDAE_COVID_DESC = 6143
+
 TERRITORIES = {
     GRAND_LYON => {
         'Ouest' => ['69410', '69260', '69290', '69570', '69130', '69340', '69890', '69760', '69380', '69280', '69450',

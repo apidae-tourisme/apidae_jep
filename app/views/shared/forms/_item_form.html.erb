@@ -364,6 +364,14 @@
               </label>
             </div>
           </div>
+          <div class="form-group mt-lg mdy">
+            <label class="col-sm-3 control-label">Dispositions spéciales Covid-19<%= help_button %></label>
+            <%= help_content("Veuillez indiquer les mesures mises en place en lien avec le contexte sanitaire") %>
+            <div class="col-sm-9">
+              <%= item_form.text_area :covid_desc, class: 'form-control required', disabled: readonly, rows: 3, placeholder: "Par ex: « Sur réservation uniquement », « X personnes maximum en même temps », « Port du masque obligatoire », etc..." %>
+              <%= render_previous(:covid_desc, 3) %>
+            </div>
+          </div>
         </fieldset>
         <fieldset>
           <legend class="text-uppercase text-primary">Suivi</legend>

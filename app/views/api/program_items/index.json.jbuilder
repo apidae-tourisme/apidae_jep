@@ -25,6 +25,7 @@ json.program_items do
       json.name item.title
       json.short_desc item.summary
       json.long_desc item.description
+      json.covid_desc item.covid_desc
       json.accessibility normalize_list(item.accessibility) || []
       json.audience normalize_list(item.audience) || []
       json.planners item.event_planners

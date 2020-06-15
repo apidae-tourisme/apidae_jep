@@ -30,7 +30,7 @@ class ProgramItem < ActiveRecord::Base
   DIRECTION_DOWN = 'down'
 
   store :desc_data, accessors: [:place_desc, :place_desc_ref, :event_planners, :building_ages, :building_types, :accessibility,
-                                :audience, :criteria, :themes, :validation_criteria, :accept_pictures, :accept_safety], coder: JSON
+                                :audience, :criteria, :themes, :validation_criteria, :accept_pictures, :accept_safety, :covid_desc], coder: JSON
   store :location_data, accessors: [:main_place, :main_lat, :main_lng, :main_address, :main_town_insee_code,
                                     :main_transports, :alt_place, :alt_lat, :alt_lng, :alt_address,
                                     :alt_town_insee_code, :alt_postal_code, :alt_transports], coder: JSON
@@ -39,7 +39,7 @@ class ProgramItem < ActiveRecord::Base
   store :contact_data, accessors: [:telephone, :email, :website], coder: JSON
 
   validates_presence_of :item_type, :title, :main_place, :main_lat, :main_lng, :main_address, :main_town_insee_code,
-                        :main_transports, :summary, :accessibility
+                        :main_transports, :summary, :covid_desc, :accessibility
   validates :accept_pictures, acceptance: true
   validates :accept_safety, acceptance: true
   validates_length_of :summary, maximum: 255
@@ -263,6 +263,7 @@ class ProgramItem < ActiveRecord::Base
           name: title,
           shortDescription: summary,
           longDescription: description,
+          covidDescription: covid_desc,
           planners: event_planners,
           accessibility: accessibility,
           audience: themes,
@@ -481,7 +482,10 @@ class ProgramItem < ActiveRecord::Base
             presentation: {
                 descriptifCourt: {libelleFr: value[:shortDescription]},
                 descriptifDetaille: {libelleFr: value[:longDescription]},
-                typologiesPromoSitra: build_typologies(value[:themes])
+                typologiesPromoSitra: build_typologies(value[:themes]),
+                descriptifsThematises: [
+                    {theme: {elementReferenceType: "DescriptifTheme", id: APIDAE_COVID_DESC}, description: {libelleFr: value[:covidDescription]}}
+                ]
             },
             prestations: {
                 tourismesAdaptes: accessibility_values(value[:accessibility]),

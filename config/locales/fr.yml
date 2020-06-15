@@ -89,6 +89,7 @@ fr:
         longitude: 'Longitude'
         address: 'Adresse'
         summary: 'Descriptif du lieu'
+        covid_desc: 'Dispositions Covid-19'
         extraInfo: 'Accès en transports en commun'
         startingPoint: 'Lieu de départ'
       description:
@@ -321,6 +322,7 @@ fr:
       title: Titre
       description: Description
       summary: Résumé
+      covid_desc: Dispositions Covid-19
       item_type: Catégorie
       place_desc: Description du lieu
       event_planners: Organisateurs associés
