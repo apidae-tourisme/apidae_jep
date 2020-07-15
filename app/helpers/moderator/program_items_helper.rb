@@ -35,7 +35,7 @@ module Moderator::ProgramItemsHelper
     {
         item_0: ['reference', 'rev', 'status', 'external_id', 'main_lat', 'main_lng', 'town', 'themes', 'main_place',
                'accessibility', 'validation_criteria', 'building_ages', 'building_types', 'place_desc', 'ordering',
-               'title', 'item_type', 'criteria', 'description', 'summary'],
+               'title', 'item_type', 'criteria', 'description', 'summary', 'accept_safety', 'covid_desc'],
         item_openings: ['opening_description'],
         item_1: ['openings_desc', 'free', 'rates_desc', 'booking', 'booking_details', 'booking_telephone',
                    'booking_email', 'booking_website', 'main_address', 'alt_place', 'main_transports', 'telephone',
@@ -49,8 +49,8 @@ module Moderator::ProgramItemsHelper
   end
 
   def cols_width
-    [nil, nil, nil, nil, nil, nil, nil, nil, nil, 100, nil, nil, nil, 100, nil, 100, nil, nil, 100, 100, 100, 100, nil,
-     100, nil, 100, nil, nil, nil, nil, nil, 100, nil, nil, nil, nil, 100, nil, nil, nil, 100, nil, nil]
+    [nil, nil, nil, nil, nil, nil, nil, nil, nil, 100, nil, nil, nil, 100, nil, 100, nil, nil, 100, 100, nil, 100, 100,
+     100, nil, 100, nil, 100, nil, nil, nil, nil, nil, 100, nil, nil, nil, nil, 100, nil, nil, nil, 100, nil, nil]
   end
 
   def exported_values(item)

@@ -322,6 +322,7 @@ fr:
       title: Titre
       description: Description
       summary: Résumé
+      accept_safety: Engagement Covid-19
       covid_desc: Dispositions Covid-19
       item_type: Catégorie
       place_desc: Description du lieu

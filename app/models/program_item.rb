@@ -183,7 +183,11 @@ class ProgramItem < ActiveRecord::Base
   end
 
   def set_territory(member_ref)
-    self.territory = TERRITORIES_BY_CODE[member_ref][Town.find_by_insee_code(main_town_insee_code).postal_code] if Town.find_by_insee_code(main_town_insee_code)
+    if member_ref == ISERE
+      self.territory = ISERE_TERRITORIES.find {|k, v| v.include?(main_town_insee_code)}.first if ISERE_TERRITORIES.find {|k, v| v.include?(main_town_insee_code)}
+    else
+      self.territory = TERRITORIES_BY_CODE[member_ref][Town.find_by_insee_code(main_town_insee_code).postal_code] if Town.find_by_insee_code(main_town_insee_code)
+    end
   end
 
   def set_openings(and_save = false)
