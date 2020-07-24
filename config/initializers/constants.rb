@@ -1,5 +1,6 @@
 GRAND_LYON = "grand_lyon"
 ISERE = "isere"
+SAUMUR = "saumur"
 
 EDITION = 2020
 
@@ -14,14 +15,17 @@ THEMES = {
     GRAND_LYON => ["Thématique 2020 - \"Patrimoine et Éducation\"", "Nouveauté",
                    "En famille", "Jeunes (15-25 ans)", "Egalité"],
     ISERE => ["Thématique 2020 - \"Patrimoine et Éducation\"", "Famille", "Réservé aux enfants", "Antiquité",
-              "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique"]
+              "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique"],
+    SAUMUR => ["Thématique 2020 - \"Patrimoine et Éducation\"", "Famille", "Réservé aux enfants", "Antiquité",
+                     "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique"]
 }
 THEMES_REFS = Hash[THEMES.values.flatten.collect {|th| [th.parameterize, th] }]
 
 VALIDATION_CRITERIA = {
     GRAND_LYON => ['Coup de coeur', 'Visites guidées de l\'Office du Tourisme', 'Balades urbaines du Musée Gadagne',
                    'Sous-thématique 1', 'Sous-thématique 2', 'Sous-thématique 3', 'Sous-thématique 4', 'Sous-thématique 5'],
-    ISERE => []
+    ISERE => [],
+    SAUMUR => ['Demeure privée']
 }
 VALIDATION_CRITERIA_REFS = Hash[VALIDATION_CRITERIA.values.flatten.collect {|th| [th.parameterize, th] }]
 
@@ -38,6 +42,14 @@ CRITERIA = {
       ITEM_EXPOSITION => ["Visite guidée", "Visite libre"]
     },
     ISERE => {
+        ITEM_VISITE => ["Visite guidée", "Visite libre"],
+        ITEM_PARCOURS => ["Visite guidée", "Visite libre"],
+        ITEM_ANIMATION => ["Concert", "Conférence / Débat", "Danse", "Dégustation", "Démonstration", "Goûter",
+                           "Atelier", "Jeu de piste / Chasse au trésor", "Marché", "Balade contée", "Cinéma", "Conte",
+                           "Dessin", "Loisirs créatifs", "Peinture", "Photographie"],
+        ITEM_EXPOSITION => ["Visite guidée", "Visite libre"]
+    },
+    SAUMUR => {
         ITEM_VISITE => ["Visite guidée", "Visite libre"],
         ITEM_PARCOURS => ["Visite guidée", "Visite libre"],
         ITEM_ANIMATION => ["Concert", "Conférence / Débat", "Danse", "Dégustation", "Démonstration", "Goûter",
@@ -62,6 +74,13 @@ ACCESSIBILITY = {
         'not_accessible' => "Non accessible en fauteuil roulant",
         'deaf_people' => "Personnes malentendantes ou sourdes",
         'blind_people' => "Personnes malvoyantes ou non voyantes"
+    },
+    SAUMUR => {
+        'fully_accessible' => "Personnes à mobilité réduite (accès total)",
+        'partly_accessible' => "Personnes à mobilité réduite (accès partiel)",
+        'not_accessible' => "Non accessible en fauteuil roulant",
+        'deaf_people' => "Personnes malentendantes ou sourdes",
+        'blind_people' => "Personnes malvoyantes ou non voyantes"
     }
 }
 ACCESSIBILITY_REFS = ACCESSIBILITY.values.inject(:merge)
@@ -81,7 +100,8 @@ APIDAE_CRITERIA = {
     'Sous-thématique 5' => 10168,
     'Coup de coeur' => 7998,
     'Visites guidées de l\'Office du Tourisme' => 8778,
-    'Balades urbaines du Musée Gadagne' => 8292
+    'Balades urbaines du Musée Gadagne' => 8292,
+    'Demeure privée' => 17728
 }
 
 APIDAE_TYPOLOGIES = {
@@ -159,7 +179,8 @@ TERRITORIES = {
         'Vercors' => ['38112', '38250', '38360', '38880'],
         'Voironnais-Chartreuse' => ['38850', '38490', '38140', '38500', '38380', '38340', '38620', '38430', '38960',
                                   '38134', '73670', '38210']
-    }
+    },
+    SAUMUR => {}
 }
 
 TERRITORIES_BY_CODE = Hash[TERRITORIES.collect {|k, v| [k, Hash[*v.invert.collect {|codes, t| codes.collect {|code| [code, t]}}.flatten]]}]

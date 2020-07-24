@@ -130,6 +130,8 @@
     var mapCenter = [45.740410, 4.816417];
     <% if territory?(ISERE) %>
       mapCenter = [45.1864, 5.736474];
+    <% elsif territory?(SAUMUR) %>
+      mapCenter = [47.2568107, -0.3074895];
     <% end %>
 
     function initMap(container, zoom, minZoom) {

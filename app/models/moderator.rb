@@ -27,6 +27,8 @@ class Moderator < ActiveRecord::Base
         GRAND_LYON
       elsif postal_code.start_with?('38') || postal_code.start_with?('73') || postal_code.start_with?('26')
         ISERE
+      elsif postal_code.start_with?('49')
+        SAUMUR
       else
         GRAND_LYON
       end
