@@ -302,8 +302,15 @@
 
             var url = this.options.url + '/autocomplete';
             var params = {
-                text: input
+                "text": input
             };
+            if (this.options.peliasParams['access-token']) {
+                params["access-token"] = this.options.peliasParams['access-token'];
+                params["boundary.circle.lon"] = this.options.peliasParams["boundary.circle.lon"];
+                params["boundary.circle.lat"] = this.options.peliasParams["boundary.circle.lat"];
+                params["boundary.circle.radius"] = this.options.peliasParams["boundary.circle.radius"];
+                params["sources"] = this.options.peliasParams["sources"];
+            }
 
             this.callPelias(url, params, 'autocomplete');
         }, API_RATE_LIMIT),

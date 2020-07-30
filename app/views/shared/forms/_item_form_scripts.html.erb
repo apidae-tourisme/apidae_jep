@@ -144,8 +144,9 @@
 
         <% unless readonly %>
         var geocoderOptions = {
-            url: 'https://places.apidae.net',
-            layers: ['venue', 'address', 'street'],
+            url: '<%= territory?(SAUMUR) ? "https://api.jawg.io/places/v1" : "https://places.apidae.net" %>',
+            peliasParams: JSON.parse('<%= raw(territory?(SAUMUR) ? JSON.generate({"access-token" => Rails.application.config.geocoder_token, "boundary.circle.lon" => -0.3074895, "boundary.circle.lat" => 47.2568107, "boundary.circle.radius" => 200, "sources" => "osm"}) : '{}') %>'),
+            layers: ['venue', 'address', 'street', 'postalcode'],
             position: 'topleft',
             expanded: true,
             overrideBbox: true,

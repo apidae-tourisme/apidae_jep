@@ -24,6 +24,7 @@ fr:
   territory:
     grand_lyon: "Métropole de Lyon"
     isere: "Département de l'Isère"
+    saumur: "Communauté d'agglomération Saumur Val de Loire"
   user:
     fields:
       name: 'Nom'
