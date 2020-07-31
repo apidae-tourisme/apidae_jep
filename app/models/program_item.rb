@@ -39,7 +39,7 @@ class ProgramItem < ActiveRecord::Base
   store :contact_data, accessors: [:telephone, :email, :website], coder: JSON
 
   validates_presence_of :item_type, :title, :main_place, :main_lat, :main_lng, :main_address, :main_town_insee_code,
-                        :main_transports, :summary, :covid_desc, :accessibility
+                        :main_transports, :summary, :accessibility
   validates :accept_pictures, acceptance: true
   validates :accept_safety, acceptance: true
   validates_length_of :summary, maximum: 255
