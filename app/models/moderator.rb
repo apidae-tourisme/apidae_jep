@@ -9,7 +9,7 @@ class Moderator < ActiveRecord::Base
     moderator.last_name = auth.info.last_name
     moderator.uid = auth.uid
     moderator.notification_email = auth.info.email
-    moderator.member_ref ||= compute_member_ref(auth.info.postal_code)
+    moderator.member_ref ||= compute_member_ref(auth.info.postal_code, auth.info.email)
     moderator.apidae_data = auth.info.apidae_hash
     moderator.save!
     moderator
@@ -21,13 +21,14 @@ class Moderator < ActiveRecord::Base
 
   private
 
-  def self.compute_member_ref(postal_code)
+  def self.compute_member_ref(postal_code, email)
+    moderators = Rails.application.config.moderators
     if postal_code
-      if postal_code.start_with?('69')
+      if postal_code.start_with?('69') || moderators[GRAND_LYON].include?(email)
         GRAND_LYON
-      elsif postal_code.start_with?('38') || postal_code.start_with?('73') || postal_code.start_with?('26')
+      elsif postal_code.start_with?('38') || postal_code.start_with?('73') || postal_code.start_with?('26') || moderators[ISERE].include?(email)
         ISERE
-      elsif postal_code.start_with?('49')
+      elsif postal_code.start_with?('49') || moderators[SAUMUR].include?(email)
         SAUMUR
       else
         GRAND_LYON

@@ -67,7 +67,5 @@ Rails.application.configure do
   }
 
   config.moderators = {
-      'grand_lyon' => ['admin@hotentic.com'],
-      'isere' => ['support@hotentic.com']
   }
 end
