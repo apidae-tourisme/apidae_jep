@@ -39,33 +39,31 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
   config.sitra_config = {
-      base_url: 'https://api.apidae-tourisme-recette.accelance.net/api/v002',
-      api_key: 'jI9h0Wrm',
-      site_identifier: '1831'
+      base_url: '',
+      api_key: '',
+      site_identifier: ''
   }
   config.oauth_config = {
-      auth_site: 'https://api.apidae-tourisme-recette.accelance.net',
-      token_path: '/oauth/token',
-      api_url: 'https://api.apidae-tourisme-recette.accelance.net/api/v002/ecriture/',
-      criteria_url: 'https://api.apidae-tourisme-recette.accelance.net/api/v002/criteres-internes/',
-      grand_lyon: {
-          client_id: '83373b93-6c45-4f20-896e-6c61b65c032e',
-          client_secret: 'luF2OrTc5g0Cqma'
-      },
-      isere: {
-          client_id: 'd6c7f113-7b45-4cad-8e5b-57871f595865',
-          client_secret: 'EYYlr20GJoowzmt'
-      }
+      auth_site: '',
+      token_path: '',
+      api_url: '',
+      criteria_url: '',
   }
 
   config.omniauth_config = {
-      :authorize_site => 'https://base.apidae-tourisme-recette.accelance.net',
-      :auth_site => 'https://api.apidae-tourisme-recette.accelance.net',
-      :client_id => '8d96b6c5-93ef-464e-a3be-34bb1da888c3',
-      :client_secret => '7MjOmvNcwCMWDiW',
-      :profile_url => '/api/v002/sso/utilisateur/profil'
+      authorize_site: '',
+      auth_site: '',
+      client_id: '',
+      client_secret: '',
+      profile_url: '',
   }
 
-  config.moderators = {
-  }
+  config.moderators = {}
+
+  config.apidate_static_url = ''
+  config.apidate_api_url = ''
+
+  config.kafka_host = ''
+
+  config.geocoder_token = ''
 end
