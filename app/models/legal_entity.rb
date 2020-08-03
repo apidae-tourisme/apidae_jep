@@ -1,5 +1,5 @@
 class LegalEntity < ActiveRecord::Base
-  store :address, accessors: [:adresse1, :adresse2, :adresse3], coder: JSON
+  store :address, accessors: [:adresse1, :adresse2, :adresse3, :latitude, :longitude], coder: JSON
   has_many :users
   belongs_to :town, foreign_key: :town_insee_code, primary_key: :insee_code, optional: true
 
@@ -50,20 +50,20 @@ class LegalEntity < ActiveRecord::Base
           entities_hashes = JSON.parse(entities_json, symbolize_names: true)
           entities_hashes.each do |entity_data|
             if entity_data[:type] == 'STRUCTURE'
-              unless LegalEntity.find_by_external_id(entity_data[:id])
-                entity_town = Town.find_by_external_id(entity_data[:localisation][:adresse][:commune][:id])
-                if entity_town
-                  LegalEntity.create!(
-                      name: entity_data[:nom][:libelleFr],
-                      adresse1: entity_data[:localisation][:adresse][:adresse1],
-                      adresse2: entity_data[:localisation][:adresse][:adresse2],
-                      adresse3: entity_data[:localisation][:adresse][:adresse3],
-                      town: entity_town,
-                      email: contact_info(entity_data[:informations][:moyensCommunication], 204),
-                      phone: contact_info(entity_data[:informations][:moyensCommunication], 201),
-                      website: contact_info(entity_data[:informations][:moyensCommunication], 205),
-                      external_id: entity_data[:id])
-                end
+              ent = LegalEntity.find_by_external_id(entity_data[:id]) || LegalEntity.new(external_id: entity_data[:id])
+              entity_town = Town.find_by_external_id(entity_data[:localisation][:adresse][:commune][:id])
+              if entity_town
+                ent.name = entity_data[:nom][:libelleFr]
+                ent.adresse1 = entity_data[:localisation][:adresse][:adresse1]
+                ent.adresse2 = entity_data[:localisation][:adresse][:adresse2]
+                ent.adresse3 = entity_data[:localisation][:adresse][:adresse3]
+                ent.town = entity_town
+                ent.email = contact_info(entity_data[:informations][:moyensCommunication], 204)
+                ent.phone = contact_info(entity_data[:informations][:moyensCommunication], 201)
+                ent.website = contact_info(entity_data[:informations][:moyensCommunication], 205)
+                ent.latitude = entity_data.dig(:localisation, :geolocalisation, :geoJson, :coordinates, 1)
+                ent.longitude = entity_data.dig(:localisation, :geolocalisation, :geoJson, :coordinates, 0)
+                ent.save!
               end
             end
           end

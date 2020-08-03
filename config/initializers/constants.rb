@@ -25,7 +25,7 @@ VALIDATION_CRITERIA = {
     GRAND_LYON => ['Coup de coeur', 'Visites guidées de l\'Office du Tourisme', 'Balades urbaines du Musée Gadagne',
                    'Sous-thématique 1', 'Sous-thématique 2', 'Sous-thématique 3', 'Sous-thématique 4', 'Sous-thématique 5'],
     ISERE => [],
-    SAUMUR => ['Demeure privée']
+    SAUMUR => ['Demeure privée', 'Site troglodyte']
 }
 VALIDATION_CRITERIA_REFS = Hash[VALIDATION_CRITERIA.values.flatten.collect {|th| [th.parameterize, th] }]
 
@@ -106,6 +106,10 @@ APIDAE_CRITERIA = {
 
 APIDAE_TYPOLOGIES = {
     "Thématique 2020 - \"Patrimoine et Éducation\"" => 6180
+}
+
+APIDAE_ENVIRONMENTS = {
+    "Site troglodyte" => 5894
 }
 
 APIDAE_THEMES = {

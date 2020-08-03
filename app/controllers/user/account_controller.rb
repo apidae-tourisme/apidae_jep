@@ -39,8 +39,13 @@ class User::AccountController < User::UserController
 
   def search
     @users = []
+    territory = current_user ? current_user.territory : (current_moderator ? current_moderator.member_ref : nil)
+
     unless params[:pattern].blank?
       @users = User.matching(URI.decode(params[:pattern]))
+    end
+    unless territory.nil?
+      @users = @users.where(territory: territory)
     end
   end
 

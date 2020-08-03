@@ -141,6 +141,15 @@ class User::ProgramItemsController < User::UserController
     @site_ages = (jep_site && jep_site.ages) ? jep_site.ages : []
   end
 
+  # Emulates a Pelias autocomplete search endpoint
+  def entities
+    @entities = []
+    unless params[:text].blank?
+      @entities = LegalEntity.where("town_insee_code ILIKE ?", "49%").matching(params[:text])
+                      .where('external_id IS NOT NULL').includes(:town)
+    end
+  end
+
   private
 
   def item_params

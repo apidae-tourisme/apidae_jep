@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       get :account, on: :collection, path: 'compte'
       get :entity, on: :collection, path: 'structure'
       get :export, on: :collection, path: 'export'
+      get :entities, on: :collection, path: 'structures/autocomplete'
     end
 
     resources :program_items, path: 'offres' do

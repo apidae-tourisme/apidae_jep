@@ -483,6 +483,9 @@ class ProgramItem < ActiveRecord::Base
       when :description
         converted_hash = {
             nom: {libelleFr: value[:name]},
+            localisation: {
+                environnements: build_environments(value[:categories])
+            },
             presentation: {
                 descriptifCourt: {libelleFr: value[:shortDescription]},
                 descriptifDetaille: {libelleFr: value[:longDescription]},
@@ -603,6 +606,16 @@ class ProgramItem < ActiveRecord::Base
       end
     end
     typologies
+  end
+
+  def build_environments(values = [])
+    environments = []
+    unless values.nil?
+      APIDAE_ENVIRONMENTS.each_pair do |env, id|
+        environments << {id: id, elementReferenceType: 'Environnement'} if values.include?(env.parameterize)
+      end
+    end
+    environments
   end
 
   def build_booking_data(data_hash = {})

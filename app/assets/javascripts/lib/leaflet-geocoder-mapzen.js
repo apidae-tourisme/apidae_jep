@@ -30,7 +30,7 @@
     var FULL_WIDTH_MARGIN = 20; // in pixels
     var FULL_WIDTH_TOUCH_ADJUSTED_MARGIN = 4; // in pixels
     var RESULTS_HEIGHT_MARGIN = 20; // in pixels
-    var API_RATE_LIMIT = 250; // in ms, throttled time between subsequent requests to API
+    var API_RATE_LIMIT = 1100; // in ms, throttled time between subsequent requests to API
 
     // Text strings in this geocoder.
     var TEXT_STRINGS = {
@@ -304,13 +304,6 @@
             var params = {
                 "text": input
             };
-            if (this.options.peliasParams['access-token']) {
-                params["access-token"] = this.options.peliasParams['access-token'];
-                params["boundary.circle.lon"] = this.options.peliasParams["boundary.circle.lon"];
-                params["boundary.circle.lat"] = this.options.peliasParams["boundary.circle.lat"];
-                params["boundary.circle.radius"] = this.options.peliasParams["boundary.circle.radius"];
-                params["sources"] = this.options.peliasParams["sources"];
-            }
 
             this.callPelias(url, params, 'autocomplete');
         }, API_RATE_LIMIT),
