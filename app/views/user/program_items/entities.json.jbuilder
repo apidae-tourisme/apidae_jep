@@ -11,7 +11,7 @@ json.features do
       json.website e.website
       json.layer 'venue'
       if e.town
-        json.postalcode_gid "X:X:#{e.town.postal_code}"
+        json.postalcode_gid "X:X:#{e.town.insee_code}"
         json.locality e.town.label
       end
     end
