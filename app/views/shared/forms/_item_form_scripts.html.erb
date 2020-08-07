@@ -181,13 +181,15 @@
             updateFormFields(e.feature);
             clearMarkers();
             toggleMapFields(false);
-            $.ajax({
-                url: '<%= site_desc_user_program_items_path %>',
-                method: 'GET',
-                data: {
-                    place_uid: e.feature.properties.id
-                }
-            });
+            <% unless territory?(SAUMUR) %>
+              $.ajax({
+                  url: '<%= site_desc_user_program_items_path %>',
+                  method: 'GET',
+                  data: {
+                      place_uid: e.feature.properties.id
+                  }
+              });
+            <% end %>
         });
         <% unless territory?(SAUMUR) %>
           geocoder.on('results', function (e) {

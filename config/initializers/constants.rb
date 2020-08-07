@@ -16,8 +16,8 @@ THEMES = {
                    "En famille", "Jeunes (15-25 ans)", "Egalité"],
     ISERE => ["Thématique 2020 - \"Patrimoine et Éducation\"", "Famille", "Réservé aux enfants", "Antiquité",
               "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique"],
-    SAUMUR => ["Thématique 2020 - \"Patrimoine et Éducation\"", "Famille", "Réservé aux enfants", "Antiquité",
-                     "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique"]
+    SAUMUR => ["Thématique 2020 - \"Patrimoine et Éducation\"", "JEP | Première ouverture", "Famille", "Réservé aux enfants", "Antiquité",
+                     "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique", "Œnologie"]
 }
 THEMES_REFS = Hash[THEMES.values.flatten.collect {|th| [th.parameterize, th] }]
 
@@ -101,7 +101,8 @@ APIDAE_CRITERIA = {
     'Coup de coeur' => 7998,
     'Visites guidées de l\'Office du Tourisme' => 8778,
     'Balades urbaines du Musée Gadagne' => 8292,
-    'Demeure privée' => 17728
+    'Demeure privée' => 17728,
+    'JEP | Première ouverture' => 17818
 }
 
 APIDAE_TYPOLOGIES = {
@@ -129,7 +130,8 @@ APIDAE_THEMES = {
     'Art contemporain' => 2159,
     'Artisanat' => 2069,
     'Littérature' => 2210,
-    'Historique' => 2206
+    'Historique' => 2206,
+    'Œnologie' => 2271
 }
 
 APIDAE_CATEGORIES = {
