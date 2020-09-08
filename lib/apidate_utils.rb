@@ -10,7 +10,7 @@ class ApidateUtils
   #     sleep(0.5)
   #   end
   # end
-  def self.fix_apidate_openings(item_id)
+  def self.fix_apidate_openings(item_id, dry_run = false)
     p = ProgramItem.find(item_id)
     ops = p.apidate_openings
     total = 0
@@ -22,7 +22,7 @@ class ApidateUtils
       p.openings.each_pair do |date, opening_id|
         local_remote_ids[opening_id] = ids_by_date[date] unless (opening_id.blank? || ids_by_date[date].blank?)
       end
-      p.update_remote_ids(local_remote_ids)
+      p.update_remote_ids(local_remote_ids, dry_run)
       total += local_remote_ids.keys.length
     end
     total

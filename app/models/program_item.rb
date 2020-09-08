@@ -386,18 +386,20 @@ class ProgramItem < ActiveRecord::Base
           openings_map[o[:identifiantTechnique]] = openings[o[:dateDebut]]
         end
       end
-      update_remote_ids(openings_map)
+      update_remote_ids(openings_map, false)
     else
       logger.error "Remote object not found : #{external_id}"
     end
   end
 
-  def update_remote_ids(openings_map)
+  def update_remote_ids(openings_map, dry_run)
     kafka = Kafka.new([Rails.application.config.kafka_host], client_id: "jep_openings")
     openings_map.each_pair do |remote_id, local_id|
       logger.debug "Offer #{id} - Binding temp opening #{local_id} to period #{remote_id}"
-      kafka.deliver_message('{"operation":"UPDATE_PERIOD","periodId":"' + local_id.to_s + '","updatedObject":{"externalId":' + remote_id.to_s + ', "externalRef":' + external_id.to_s + '}}',
-                            topic: 'apidae_period')
+      unless dry_run
+        kafka.deliver_message('{"operation":"UPDATE_PERIOD","periodId":"' + local_id.to_s + '","updatedObject":{"externalId":' + remote_id.to_s + ', "externalRef":' + external_id.to_s + '}}',
+                              topic: 'apidae_period')
+      end
     end
   end
 
