@@ -31,7 +31,7 @@ class ApidateUtils
   def self.sync_openings(item_id, force_sync, dry_run = false)
     synced_openings = {}
     p = ProgramItem.find(item_id)
-    if force_sync || p.updated_at > (Time.current - 1.hour)
+    if force_sync || p.updated_at > (Time.current - 55.minutes)
       p.set_openings(!dry_run)
       apidate_openings = p.apidate_openings || []
       local_ids = p.openings.values.select {|id| !id.blank?}.map {|id| id.to_s}

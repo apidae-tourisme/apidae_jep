@@ -1,9 +1,9 @@
 require './lib/apidate_utils.rb'
 
-# Syncs all offers for all territories (run once a day)
+# Syncs recently updated offers for all territories (run hourly)
 
 ProgramItem.in_status(GRAND_LYON, 2020, ProgramItem::STATUS_PENDING, ProgramItem::STATUS_VALIDATED).each do |p|
-  synced = ApidateUtils.sync_openings(p.id, true, false)
+  synced = ApidateUtils.sync_openings(p.id, false, false)
   if !synced.blank?
     sleep(2)
   else
@@ -12,7 +12,7 @@ ProgramItem.in_status(GRAND_LYON, 2020, ProgramItem::STATUS_PENDING, ProgramItem
 end
 
 ProgramItem.in_status(ISERE, 2020, ProgramItem::STATUS_PENDING, ProgramItem::STATUS_VALIDATED).each do |p|
-  synced = ApidateUtils.sync_openings(p.id, true, false)
+  synced = ApidateUtils.sync_openings(p.id, false, false)
   if !synced.blank?
     sleep(2)
   else
@@ -21,7 +21,7 @@ ProgramItem.in_status(ISERE, 2020, ProgramItem::STATUS_PENDING, ProgramItem::STA
 end
 
 ProgramItem.in_status(SAUMUR, 2020, ProgramItem::STATUS_PENDING, ProgramItem::STATUS_VALIDATED).each do |p|
-  synced = ApidateUtils.sync_openings(p.id, true, false)
+  synced = ApidateUtils.sync_openings(p.id, false, false)
   if !synced.blank?
     sleep(2)
   else
