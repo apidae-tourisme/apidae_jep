@@ -85,21 +85,9 @@
         });
     }
 
-    var types = {
-        opening: {singular: 'Ouverture', plural: 'Ouverture'},
-        last_entry: {singular: 'Dernière entrée', plural: 'Dernières entrées'},
-        ceremony: {singular: 'Cérémonie', plural: 'Cérémonies'},
-        guided_tour: {singular: 'Visite guidée', plural: 'Visites guidées'},
-        representation: {singular: 'Représentation', plural: 'Représentations'}
-    };
-
     function timePeriod(tp) {
-        var type = types[tp.type];
         var timeFramesText = textJoin(tp.timeFrames.map(function(tf) {return timeFrame(tf);}));
-        var singleTimeFrame = tp.timeFrames.length === 1
-            && (!tp.timeFrames[0].endTime || !tp.timeFrames[0].endTime.hour)
-            && (!tp.timeFrames[0].recurrence || !tp.timeFrames[0].recurrence.hour);
-        return [singleTimeFrame ? type.singular : type.plural, timeFramesText].join(" ") + ".";
+        return [tp.labels.fr, timeFramesText].join(" ") + ".";
     }
 
     function timeFrame(tf) {
