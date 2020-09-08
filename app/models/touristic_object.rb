@@ -30,6 +30,10 @@ class TouristicObject
     )
   end
 
+  def updated_at
+    Time.parse(@gestion[:dateModification]) unless @gestion.blank? || @gestion[:dateModification].blank?
+  end
+
   def retrieve_insee_code(town_name)
     matched_town = Town.where(name: town_name).first
     matched_town.insee_code if matched_town

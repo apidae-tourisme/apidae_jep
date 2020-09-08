@@ -193,18 +193,21 @@ class ProgramItem < ActiveRecord::Base
   def set_openings(and_save = false)
     self.openings ||= {}
     self.openings_text = nil
+    openings_updated = false
     if external_id
       obj = EventsImporter.load_apidae_events([external_id], 'id', 'ouverture')
       if obj && obj.openings
         obj.openings.each do |o|
-          if o[:dateDebut] == o[:dateFin]
+          if o[:dateDebut] == o[:dateFin] && self.openings[o[:dateDebut]] != o[:identifiantTechnique]
             self.openings[o[:dateDebut]] = o[:identifiantTechnique]
+            openings_updated = true
           end
         end
         self.openings_text = obj.openings_description
         self.save if and_save
       end
     end
+    openings_updated
   end
 
   def self.set_openings_texts(items)
@@ -395,7 +398,7 @@ class ProgramItem < ActiveRecord::Base
   def update_remote_ids(openings_map, dry_run)
     kafka = Kafka.new([Rails.application.config.kafka_host], client_id: "jep_openings")
     openings_map.each_pair do |remote_id, local_id|
-      logger.debug "Offer #{id} - Binding temp opening #{local_id} to period #{remote_id}"
+      logger.debug "Offer #{id} - Binding local period id #{local_id} to apidae period #{remote_id}"
       unless dry_run
         kafka.deliver_message('{"operation":"UPDATE_PERIOD","periodId":"' + local_id.to_s + '","updatedObject":{"externalId":' + remote_id.to_s + ', "externalRef":' + external_id.to_s + '}}',
                               topic: 'apidae_period')

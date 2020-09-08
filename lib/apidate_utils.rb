@@ -28,6 +28,29 @@ class ApidateUtils
     total
   end
 
+  def self.sync_openings(item_id, force_sync, dry_run = false)
+    synced_openings = {}
+    p = ProgramItem.find(item_id)
+    if force_sync || p.updated_at > (Time.current - 1.hour)
+      p.set_openings(!dry_run)
+      apidate_openings = p.apidate_openings || []
+      local_ids = p.openings.values.select {|id| !id.blank?}.map {|id| id.to_s}
+      remote_ids = apidate_openings.map {|op| op['externalId'].to_s}
+      ids_to_sync = local_ids - remote_ids
+      unless ids_to_sync.blank?
+        ids_by_date = apidate_openings.group_by {|op| op['startDate']}
+                          .transform_values {|values| values.sort_by {|val| (1.0 / val["updatedAt"])}.first['externalId']}
+        local_remote_ids = {}
+        p.openings.each_pair do |date, opening_id|
+          local_remote_ids[opening_id] = ids_by_date[date] unless (opening_id.blank? || ids_by_date[date].blank?)
+        end
+        p.update_remote_ids(local_remote_ids, dry_run)
+        synced_openings.merge! local_remote_ids
+      end
+    end
+    synced_openings
+  end
+
   def self.duplicate_apidate_entry(source_id, target_id, user_id)
     kafka = Kafka.new([Rails.application.config.kafka_host], client_id: "jep_openings")
     kafka.deliver_message('{"operation":"DUPLICATE_PERIOD","sourceObjectId":"' + source_id.to_s + '",' +
