@@ -7,7 +7,7 @@
           <div class="text-sm">Accueil</div>
         </a>
       </li>
-      <% unless current_user.territory == ISERE %>
+      <% unless current_user.territory == ISERE || current_user.territory == GRAND_LYON %>
         <li class="<%= 'active' if controller?('user/program_items') %>">
           <a href="<%= annual_user_program_items_url(year: EDITION) %>" title="Programmations">
             <em class="icon-calendar"></em>
@@ -36,7 +36,7 @@
           </a>
         </li>
       <% end %>
-      <% if current_user.territory == GRAND_LYON %>
+      <% if current_user.territory == GRAND_LYON && false %>
         <li class="<%= 'active' if controller?('user/account') && action?('communication') %>">
           <a href="<%= communication_user_account_path(user_id: current_user.id) %>" title="Supports de communication">
             <em class="icon-envelope-letter"></em>
