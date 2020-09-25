@@ -6,7 +6,14 @@ class EventPoll < ActiveRecord::Base
 
   def offer_count(date, offer_id)
     unless offers_feedback.nil?
-      offers_feedback[offer_id.to_s] && offers_feedback[offer_id.to_s]['count'] ? offers_feedback[offer_id.to_s]['count'][date] : nil
+      cnt = offers_feedback.dig(offer_id.to_s, 'count', date)
+      cnt || (offers_feedback.dig(offer_id.to_s, 'unknown', date) == '1' ? 'non renseigné' : 'fermé(e)')
+    end
+  end
+
+  def unknown(date, offer_id)
+    unless offers_feedback.nil?
+      offers_feedback[offer_id.to_s] && offers_feedback[offer_id.to_s]['unknown'] ? offers_feedback[offer_id.to_s]['unknown'][date] : nil
     end
   end
 
