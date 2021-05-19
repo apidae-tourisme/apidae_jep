@@ -219,7 +219,7 @@
           <legend class="text-uppercase text-primary mb0 openings">Horaires / ouverture*</legend>
           <div class="form-group">
             <% ext_ref = @item.external_ref %>
-            <% ['2020-09-18', '2020-09-19', '2020-09-20', '2020-09-21'].each do |d| %>
+            <% ['2021-09-17', '2021-09-18', '2021-09-19', '2021-09-20'].each do |d| %>
               <div class="col-sm-3 mt-lg">
                 <button id="edit_opening_<%= d %>" type="button" class="btn btn-lg btn-primary w100"
                         onclick="displayOpeningsForm('<%= d %>', '<%= @item.opening_id(ext_ref, d) %>', '<%= ext_ref %>', '<%= readonly %>'); return false;">
@@ -360,7 +360,7 @@
                 <%= check_box_tag 'program_item[accept_safety]', '1', @item.accept_safety == '1', disabled: readonly %>
                 <span class="fa fa-check"></span>Nous nous engageons à mettre en œuvre toutes les dispositions nécessaires
                 pour garantir la sécurité sanitaire et physique des visiteurs, selon les directives des autorités qui seront
-                en vigueur les 18, 19, 20 et 21 septembre 2020*
+                en vigueur les 17, 18, 19 et 20 septembre 2021*
               </label>
             </div>
           </div>
@@ -392,7 +392,7 @@
             <% end %>
             <% if @item.draft? || @item.pending? %>
               <div class="row mt-lg">
-                <label class="col-sm-3 control-label">Compte utilisateur</label>
+                <label class="col-sm-3 control-label">Compte utilisateur de l'organisateur</label>
                 <div class="col-sm-9">
                   <%= item_form.select :user_id, [], {}, class: 'form-control select_user required', disabled: readonly %>
                 </div>

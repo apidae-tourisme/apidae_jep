@@ -120,8 +120,8 @@
     function initMap(container, zoom, minZoom) {
         var map = L.map(container, {zoomControl: false, zoom: zoom, minZoom: minZoom, scrollWheelZoom: false}).setView(mapCenter);
         new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
-        L.tileLayer('https://api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiamVhbmJhcHRpc3RldmlsYWluIiwiYSI6ImZiMTJmMDdjODI5NDRiYTcyMDgzNGJmOTA5NjU0NDg1In0.b6l-11X_ZtS_83CsFu-v9Q', {
-            attribution: '&copy; Mapbox &copy; OpenStreetMap',
+        L.tileLayer('https://apidaemaps.apidae-tourisme.com/styles/osm-bright/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap',
             detectRetina: true
         }).addTo(map);
 

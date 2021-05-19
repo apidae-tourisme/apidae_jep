@@ -1,4 +1,5 @@
 <div class="pull-right">
+  <a href="<%= user_dashboard_path(year: 2021) %>" class="btn btn-info btn-oval <%= 'btn-outline' unless @year == 2021 %>">JEP 2021</a>
   <a href="<%= user_dashboard_path(year: 2020) %>" class="btn btn-info btn-oval <%= 'btn-outline' unless @year == 2020 %>">JEP 2020</a>
   <a href="<%= user_dashboard_path(year: 2019) %>" class="btn btn-info btn-oval <%= 'btn-outline' unless @year == 2019 %>">JEP 2019</a>
   <a href="<%= user_dashboard_path(year: 2018) %>" class="btn btn-info btn-oval <%= 'btn-outline' unless @year == 2018 %>">JEP 2018</a>
@@ -6,32 +7,14 @@
 <h3>
   Bienvenue sur ApidaeJEP
 </h3>
-<% unless current_user.territory == ISERE || current_user.territory == GRAND_LYON %>
-  <div class="panel panel-info">
-    <div class="panel-body">
-      <p class="mb0">
-        Inscrivez ici vos offres évènements organisés à l'occasion des Journées européennes du patrimoine (JEP)
-        dans le territoire de la Métropole de Lyon ou de la Communauté d'agglomération Saumur Val de Loire.
-      </p>
-    </div>
+<div class="panel panel-info">
+  <div class="panel-body">
+    <p class="mb0">
+      Inscrivez ici vos offres évènements organisés à l'occasion des Journées européennes du patrimoine (JEP)
+      dans <%= territory_label %>
+    </p>
   </div>
-<% end %>
-<% if current_user.territory == ISERE %>
-  <p class="alert alert-info">
-    <em class="icon-info pr-sm"></em>La saisie des Journées européennes du patrimoine sur la plateforme ApidaeJEP est désormais terminée.<br/>
-    <br/>
-    Vous pouvez cependant ajouter ou modifier des informations en vous adressant à l’office de tourisme dont vous dépendez afin que le programme en ligne soit mis à jour.
-  </p>
-<% elsif current_user.territory == GRAND_LYON %>
-  <p class="alert alert-info">
-    <em class="icon-info pr-sm"></em>Nous avons dû clore les inscriptions d’animations pour les Journées du Patrimoine dans la Métropole de Lyon pour transmettre une liste à jour des lieux et animations à la préfecture, conformément aux règles en vigueur.<br/>
-    Toute nouvelle inscription est désormais impossible. Si toutefois vous avez une modification à signaler (visite complète, animation annulée…), n’hésitez pas à nous contacter à <a href="mailto:jep.metropole@grandlyon.com">jep.metropole@grandlyon.com</a>,
-    nous pourrons apporter ce type de modifications à vos propositions.<br/>
-    <br/>
-    Merci de votre engagement au service du patrimoine !
-  </p>
-<% end %>
-<% unless current_user.territory == ISERE || current_user.territory == GRAND_LYON %>
+</div>
 <div class="pull-right">
   <%= link_to '<span class="btn-label"><i class="fa fa-plus"></i></span>Saisir une offre'.html_safe, new_user_program_item_path,
               class: 'btn btn-labeled btn-primary' %>
@@ -91,4 +74,3 @@
     </div>
   </div>
 </div>
-<% end %>

@@ -2,7 +2,7 @@ GRAND_LYON = "grand_lyon"
 ISERE = "isere"
 SAUMUR = "saumur"
 
-EDITION = 2020
+EDITION = 2021
 
 ITEM_VISITE = "visite"
 ITEM_PARCOURS = "parcours"
@@ -12,11 +12,11 @@ ITEM_EXPOSITION = "exposition"
 ITEM_TYPES = [ITEM_VISITE, ITEM_PARCOURS, ITEM_ANIMATION, ITEM_EXPOSITION]
 
 THEMES = {
-    GRAND_LYON => ["Thématique 2020 - \"Patrimoine et Éducation\"", "Nouveauté",
+    GRAND_LYON => ["Thématique 2021 - \"Patrimoine pour tous\"", "Nouveauté",
                    "En famille", "Jeunes (15-25 ans)", "Egalité"],
-    ISERE => ["Thématique 2020 - \"Patrimoine et Éducation\"", "Famille", "Réservé aux enfants", "Antiquité",
+    ISERE => ["Thématique 2021 - \"Patrimoine pour tous\"", "Famille", "Réservé aux enfants", "Antiquité",
               "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique"],
-    SAUMUR => ["Thématique 2020 - \"Patrimoine et Éducation\"", "JEP | Première ouverture", "Famille", "Réservé aux enfants", "Antiquité",
+    SAUMUR => ["Thématique 2021 - \"Patrimoine pour tous\"", "JEP | Première ouverture", "Famille", "Réservé aux enfants", "Antiquité",
                      "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique", "Œnologie"]
 }
 THEMES_REFS = Hash[THEMES.values.flatten.collect {|th| [th.parameterize, th] }]
@@ -54,7 +54,7 @@ CRITERIA = {
         ITEM_PARCOURS => ["Visite guidée", "Visite libre"],
         ITEM_ANIMATION => ["Concert", "Conférence / Débat", "Danse", "Dégustation", "Démonstration", "Goûter",
                            "Atelier", "Jeu de piste / Chasse au trésor", "Marché", "Balade contée", "Cinéma", "Conte",
-                           "Dessin", "Loisirs créatifs", "Peinture", "Photographie"],
+                           "Théâtre", "Dessin", "Loisirs créatifs", "Peinture", "Photographie"],
         ITEM_EXPOSITION => ["Visite guidée", "Visite libre"]
     }
 }
@@ -106,7 +106,7 @@ APIDAE_CRITERIA = {
 }
 
 APIDAE_TYPOLOGIES = {
-    "Thématique 2020 - \"Patrimoine et Éducation\"" => 6180
+    "Thématique 2021 - \"Patrimoine et Éducation\"" => 6445
 }
 
 APIDAE_ENVIRONMENTS = {
