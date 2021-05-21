@@ -12,11 +12,11 @@ ITEM_EXPOSITION = "exposition"
 ITEM_TYPES = [ITEM_VISITE, ITEM_PARCOURS, ITEM_ANIMATION, ITEM_EXPOSITION]
 
 THEMES = {
-    GRAND_LYON => ["Thématique 2021 - \"Patrimoine pour tous\"", "Nouveauté",
-                   "En famille", "Jeunes (15-25 ans)", "Egalité"],
-    ISERE => ["Thématique 2021 - \"Patrimoine pour tous\"", "Famille", "Réservé aux enfants", "Antiquité",
+    GRAND_LYON => ["Thématique métropole 2021 - Jeunesse", "Thématique nationale 2021 - \"Patrimoine pour tous\"", "Nouveauté",
+                   "En famille", "Egalité"],
+    ISERE => ["Thématique nationale 2021 - \"Patrimoine pour tous\"", "Famille", "Réservé aux enfants", "Antiquité",
               "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique"],
-    SAUMUR => ["Thématique 2021 - \"Patrimoine pour tous\"", "JEP | Première ouverture", "Famille", "Réservé aux enfants", "Antiquité",
+    SAUMUR => ["Thématique nationale 2021 - \"Patrimoine pour tous\"", "JEP | Première ouverture", "Famille", "Réservé aux enfants", "Antiquité",
                      "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique", "Œnologie"]
 }
 THEMES_REFS = Hash[THEMES.values.flatten.collect {|th| [th.parameterize, th] }]
@@ -102,11 +102,12 @@ APIDAE_CRITERIA = {
     'Visites guidées de l\'Office du Tourisme' => 8778,
     'Balades urbaines du Musée Gadagne' => 8292,
     'Demeure privée' => 17728,
-    'JEP | Première ouverture' => 17818
+    'JEP | Première ouverture' => 17818,
+    'Thématique métropole 2021 - Jeunesse' => 19807
 }
 
 APIDAE_TYPOLOGIES = {
-    "Thématique 2021 - \"Patrimoine et Éducation\"" => 6445
+    "Thématique nationale 2021 - \"Patrimoine pour tous\"" => 6445
 }
 
 APIDAE_ENVIRONMENTS = {
