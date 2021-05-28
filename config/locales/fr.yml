@@ -25,6 +25,7 @@ fr:
     grand_lyon: "Métropole de Lyon"
     isere: "Département de l'Isère"
     saumur: "Communauté d'agglomération Saumur Val de Loire"
+    dlva: "Durance Luberon Verdon Agglomération"
   user:
     fields:
       name: 'Nom'
@@ -223,6 +224,8 @@ fr:
   member:
     grandlyon: 'Grand Lyon'
     isere: 'Isère'
+    saumur: 'Saumur'
+    dlva: 'DLVA'
   export:
     grandlyon:
       demonstration: 'Démonstration'
