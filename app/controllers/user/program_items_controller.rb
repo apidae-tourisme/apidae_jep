@@ -144,8 +144,9 @@ class User::ProgramItemsController < User::UserController
   # Emulates a Pelias autocomplete search endpoint
   def entities
     @entities = []
+    territory_code = current_user.territory == SAUMUR ? "49%" : (current_user.territory == DLVA ? "04%" : "999%")
     unless params[:text].blank?
-      @entities = LegalEntity.where("town_insee_code ILIKE ?", "49%").matching(params[:text])
+      @entities = LegalEntity.where("town_insee_code ILIKE ?", territory_code).matching(params[:text])
                       .where('external_id IS NOT NULL').includes(:town)
     end
   end
