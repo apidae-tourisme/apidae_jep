@@ -30,6 +30,8 @@ class Moderator < ActiveRecord::Base
         ISERE
       elsif postal_code.start_with?('49') || moderators[SAUMUR].include?(email)
         SAUMUR
+      elsif postal_code.start_with?('04') || moderators[DLVA].include?(email)
+        DLVA
       else
         GRAND_LYON
       end

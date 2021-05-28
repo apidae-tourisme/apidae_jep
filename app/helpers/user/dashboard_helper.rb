@@ -7,6 +7,8 @@ module User::DashboardHelper
       lbl = "dans le territoire de la Métropole de Lyon."
     when SAUMUR
       lbl = "dans la Communauté d'agglomération Saumur Val de Loire."
+    when DLVA
+      lbl = "dans l'Agglomération Durance Luberon Verdon."
     else
       lbl = "."
     end

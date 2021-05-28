@@ -1,6 +1,7 @@
 GRAND_LYON = "grand_lyon"
 ISERE = "isere"
 SAUMUR = "saumur"
+DLVA = "dlva"
 
 EDITION = 2021
 
@@ -17,7 +18,9 @@ THEMES = {
     ISERE => ["Thématique nationale 2021 - \"Patrimoine pour tous\"", "Famille", "Réservé aux enfants", "Antiquité",
               "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique"],
     SAUMUR => ["Thématique nationale 2021 - \"Patrimoine pour tous\"", "JEP | Première ouverture", "Famille", "Réservé aux enfants", "Antiquité",
-                     "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique", "Œnologie"]
+                     "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique", "Œnologie"],
+    DLVA => ["Thématique nationale 2021 - \"Patrimoine pour tous\"", "Famille", "Réservé aux enfants", "Antiquité",
+              "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique"]
 }
 THEMES_REFS = Hash[THEMES.values.flatten.collect {|th| [th.parameterize, th] }]
 
@@ -25,7 +28,8 @@ VALIDATION_CRITERIA = {
     GRAND_LYON => ['Coup de coeur', 'Visites guidées de l\'Office du Tourisme', 'Balades urbaines du Musée Gadagne',
                    'Sous-thématique 1', 'Sous-thématique 2', 'Sous-thématique 3', 'Sous-thématique 4', 'Sous-thématique 5'],
     ISERE => [],
-    SAUMUR => ['Demeure privée', 'Site troglodyte']
+    SAUMUR => ['Demeure privée', 'Site troglodyte'],
+    DLVA => []
 }
 VALIDATION_CRITERIA_REFS = Hash[VALIDATION_CRITERIA.values.flatten.collect {|th| [th.parameterize, th] }]
 
@@ -56,6 +60,14 @@ CRITERIA = {
                            "Atelier", "Jeu de piste / Chasse au trésor", "Marché", "Balade contée", "Cinéma", "Conte",
                            "Théâtre", "Dessin", "Loisirs créatifs", "Peinture", "Photographie"],
         ITEM_EXPOSITION => ["Visite guidée", "Visite libre"]
+    },
+    DLVA => {
+      ITEM_VISITE => ["Visite guidée", "Visite libre"],
+      ITEM_PARCOURS => ["Visite guidée", "Visite libre"],
+      ITEM_ANIMATION => ["Concert", "Conférence / Débat", "Danse", "Dégustation", "Démonstration", "Goûter",
+                         "Atelier", "Jeu de piste / Chasse au trésor", "Marché", "Balade contée", "Cinéma", "Conte",
+                         "Dessin", "Loisirs créatifs", "Peinture", "Photographie"],
+      ITEM_EXPOSITION => ["Visite guidée", "Visite libre"]
     }
 }
 CRITERIA_REFS = Hash[CRITERIA.values.collect {|v| v.values.collect {|val| val.is_a?(Hash) ? val.values.flatten : val}.flatten}.flatten.uniq.collect {|crit| [crit.parameterize, crit]}]
@@ -81,6 +93,13 @@ ACCESSIBILITY = {
         'not_accessible' => "Non accessible en fauteuil roulant",
         'deaf_people' => "Personnes malentendantes ou sourdes",
         'blind_people' => "Personnes malvoyantes ou non voyantes"
+    },
+    DLVA => {
+      'fully_accessible' => "Personnes à mobilité réduite (accès total)",
+      'partly_accessible' => "Personnes à mobilité réduite (accès partiel)",
+      'not_accessible' => "Non accessible en fauteuil roulant",
+      'deaf_people' => "Personnes malentendantes ou sourdes",
+      'blind_people' => "Personnes malvoyantes ou non voyantes"
     }
 }
 ACCESSIBILITY_REFS = ACCESSIBILITY.values.inject(:merge)
@@ -187,7 +206,8 @@ TERRITORIES = {
         'Voironnais-Chartreuse' => ['38850', '38490', '38140', '38500', '38380', '38340', '38620', '38430', '38960',
                                   '38134', '73670', '38210']
     },
-    SAUMUR => {}
+    SAUMUR => {},
+    DLVA => {}
 }
 
 TERRITORIES_BY_CODE = Hash[TERRITORIES.collect {|k, v| [k, Hash[*v.invert.collect {|codes, t| codes.collect {|code| [code, t]}}.flatten]]}]

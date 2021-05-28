@@ -115,6 +115,8 @@
       mapCenter = [45.1864, 5.736474];
     <% elsif territory?(SAUMUR) %>
       mapCenter = [47.2568107, -0.3074895];
+    <% elsif territory?(DLVA) %>
+      mapCenter = [43.82431, 5.82786];
     <% end %>
 
     function initMap(container, zoom, minZoom) {
@@ -127,7 +129,7 @@
 
         <% unless readonly %>
         var geocoderOptions = {
-            url: '<%= territory?(SAUMUR) ? "/saisie/offres/structures" : "https://places.apidae.net" %>',
+            url: '<%= (territory?(SAUMUR) || territory?(DLVA)) ? "/saisie/offres/structures" : "https://places.apidae.net" %>',
             layers: ['venue', 'address', 'street', 'postalcode'],
             position: 'topleft',
             expanded: true,
@@ -181,7 +183,7 @@
             updateFormFields(e.feature);
             clearMarkers();
             toggleMapFields(false);
-            <% unless territory?(SAUMUR) %>
+            <% unless territory?(SAUMUR) || territory?(DLVA) %>
               $.ajax({
                   url: '<%= site_desc_user_program_items_path %>',
                   method: 'GET',
@@ -191,7 +193,7 @@
               });
             <% end %>
         });
-        <% unless territory?(SAUMUR) %>
+        <% unless territory?(SAUMUR) || territory?(DLVA) %>
           geocoder.on('results', function (e) {
               if(e.results.features) {
                   if (e.results.features.length === 0) {

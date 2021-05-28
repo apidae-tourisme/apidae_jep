@@ -78,6 +78,8 @@ class User < ActiveRecord::Base
         ISERE
       elsif legal_entity.town_insee_code.start_with?('49')
         SAUMUR
+      elsif legal_entity.town_insee_code.start_with?('04')
+        DLVA
       else
         logger.info("Unsupported INSEE code : #{legal_entity.town_insee_code} - Cannot find corresponding JEP territory")
         GRAND_LYON
