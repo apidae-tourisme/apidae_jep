@@ -271,6 +271,7 @@ class ProgramItem < ActiveRecord::Base
           shortDescription: summary,
           longDescription: description,
           covidDescription: covid_desc,
+          cultureDescription: place_desc,
           planners: event_planners,
           accessibility: accessibility,
           audience: themes,
@@ -496,7 +497,8 @@ class ProgramItem < ActiveRecord::Base
                 descriptifDetaille: {libelleFr: value[:longDescription]},
                 typologiesPromoSitra: build_typologies(value[:themes]),
                 descriptifsThematises: [
-                    {theme: {elementReferenceType: "DescriptifTheme", id: APIDAE_COVID_DESC}, description: {libelleFr: value[:covidDescription]}}
+                    {theme: {elementReferenceType: "DescriptifTheme", id: APIDAE_COVID_DESC}, description: {libelleFr: value[:covidDescription]}},
+                    {theme: {elementReferenceType: "DescriptifTheme", id: APIDAE_HISTORY_DESC}, description: {libelleFr: value[:cultureDescription]}}
                 ]
             },
             prestations: {
