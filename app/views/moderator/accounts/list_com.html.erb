@@ -27,7 +27,7 @@
           <% if @polls.any? %>
               <% @polls.each do |poll| %>
                   <tr>
-                    <td><%= l(poll.updated_at, format: :withtime)  %></td>
+                    <td><span class="hidden"><%= poll.updated_at.to_i %></span><%= l(poll.updated_at, format: :withtime)  %></td>
                     <td><%= poll.user.full_name %></td>
                     <td><%= poll.ref_person %></td>
                     <td class="pre"><%= poll.full_address %></td>

@@ -370,6 +370,7 @@ fr:
       user_telephone: Téléphone organisateur
       user_entity: Structure organisatrice
     communication_poll:
+      last_update: Mise à jour
       ref_person: Personne référente
       entity: Structure organisatrice
       full_address: Adresse de livraison

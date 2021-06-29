@@ -17,4 +17,8 @@ class CommunicationPoll < ActiveRecord::Base
   def entity
     user.legal_entity.name
   end
+
+  def last_update
+    I18n.localize(updated_at, format: :withtime)
+  end
 end
