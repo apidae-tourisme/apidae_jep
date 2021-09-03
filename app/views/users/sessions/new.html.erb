@@ -18,12 +18,30 @@
         <% else %>
         <p class="text-center">
           L’interface de saisie des évènements des <strong>Journées européennes du patrimoine (JEP) <%= EDITION %></strong>,
-          pour la Métropole de Lyon, le Département de l’Isère et la Communauté d'agglomération Saumur Val de Loire !
+          pour :
         </p>
+        <div id="intro_territories" class="row">
+          <p class="col-sm-6 mb-lg text-center">
+            la Métropole de Lyon<br/>
+            <img src="<%= image_path('logo-grand-lyon.png') %>" alt="logo grand lyon"/>
+          </p>
+          <p class="col-sm-6 mb-lg text-center">
+            le Département de l’Isère<br/>
+            <img src="<%= image_path('logo-isere.jpg') %>" alt="logo departement isere"/>
+          </p>
+          <p class="col-sm-6 mb-lg text-center">
+            la Communauté d'agglomération<br/>Saumur Val de Loire<br/>
+            <img src="<%= image_path('logo-saumur.png') %>" alt="logo saumur"/>
+          </p>
+          <p class="col-sm-6 mb-lg text-center">
+            l'Agglomération<br/>Durance Luberon Verdon<br/>
+            <img src="<%= image_path('logo-dlva.png') %>" alt="logo dlva"/>
+          </p>
+        </div>
         <p class="alert alert-info">
           <em class="icon-info pr-sm"></em><strong>Important</strong> : seule la saisie sur cet outil vous assurera
-          d’être présent dans les programmes JEP édités par la Métropole de Lyon, le Département de l’Isère et la
-          Communauté d'agglomération Saumur Val de Loire.
+          d’être présent dans les programmes JEP édités par la Métropole de Lyon, le Département de l’Isère, la
+          Communauté d'agglomération Saumur Val de Loire et l'Agglomération Durance Luberon Verdon.
         </p>
         <p class="text-center">
           Veuillez vous identifier pour saisir vos évènements.<br/>
@@ -84,13 +102,19 @@
       <div class="col-sm-4 mb">
         <a href="/partenaires#isere"><img src="<%= image_path('logo-isere.jpg') %>" alt="logo departement isere"/></a>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-4 mb">
         <a href="/partenaires#isere"><img src="<%= image_path('logo-isere-culture.png') %>" alt="logo culture isere"/></a>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-4 mb">
         <a href="/partenaires#isere"><img src="<%= image_path('logo-isere-tourisme.png') %>" alt="logo tourisme isere"/></a>
       </div>
-      <div class="col-sm-12">
+      <div class="col-sm-4">
+        <a href="/partenaires#dlva"><img src="<%= image_path('logo-destination-dlva.png') %>" alt="logo destination dlva"/></a>
+      </div>
+      <div class="col-sm-4">
+        <a href="/partenaires#dlva"><img src="<%= image_path('logo-dlva.png') %>" alt="logo dlva"/></a>
+      </div>
+      <div class="col-sm-4">
         <a href="/partenaires#apidae"><img src="<%= image_path('logo_apidae.svg') %>" alt="logo reseau apidae"/></a>
       </div>
     </div>

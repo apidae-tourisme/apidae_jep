@@ -61,10 +61,25 @@ nav.topnavbar .navbar-header .brand-logo-collapsed {
   margin-right: auto;
 }
 
-#user_login #partners img {
-  max-height: 40px;
-  max-width: 95%;
-  width: auto;
+#user_login {
+  #intro_territories {
+    p {
+      line-height: 1.1;
+    }
+
+    img {
+      max-height: 40px;
+      max-width: 95%;
+      width: auto;
+      margin-top: 5px;
+    }
+  }
+
+  #partners img {
+    max-height: 40px;
+    max-width: 95%;
+    width: auto;
+  }
 }
 
 #modal_window .modal-dialog > .modal-content {

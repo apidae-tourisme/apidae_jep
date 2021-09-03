@@ -51,7 +51,8 @@ module ApidaeJep
     config.signature = {
         'grand_lyon' => {label: "L’équipe JEP pour la Métropole de Lyon", contact: "jep.metropole@grandlyon.com"},
         'isere' => {label: "La Direction de la culture et du patrimoine, service du patrimoine culturel", contact: "dcp.pac@isere.fr"},
-        'saumur' => {label: "L’équipe JEP pour la Communauté d'agglomération Saumur Val de Loire", contact: "jep@ot-saumur.fr"}
+        'saumur' => {label: "L’équipe JEP pour la Communauté d'agglomération Saumur Val de Loire", contact: "jep@ot-saumur.fr"},
+        'dlva' => {label: "L’équipe JEP pour l'Agglomération Durance Luberon Verdon", contact: "v.marcuello@tourisme-dlva.fr"}
     }
     
     # setup bower components folder for lookup
