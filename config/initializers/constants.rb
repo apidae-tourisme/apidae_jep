@@ -108,7 +108,7 @@ ALL_REFS = THEMES_REFS.merge(VALIDATION_CRITERIA_REFS).merge(CRITERIA_REFS).merg
 
 APIDAE_CRITERIA = {
     'Nouveauté' => 7997,
-    "Visite libre" => 10173,
+    "Visite libre" => 4546,
     'Egalité' => 10161,
     'animation' => 10171,
     'parcours' => 10172,
@@ -168,8 +168,7 @@ APIDAE_CATEGORIES = {
     'Goûter' => 2123,
     'Marché' => 2083,
     'Théâtre' => 2134,
-    'Danse' => 2151,
-    "Visite d'un site / monument" => 4546
+    'Danse' => 2151
 }
 
 APIDAE_COVID_DESC = 6143

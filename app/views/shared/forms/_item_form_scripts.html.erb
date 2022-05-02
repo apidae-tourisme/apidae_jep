@@ -355,6 +355,10 @@
             return $("fieldset.item_photos").find("fieldset.nested-fields:visible").length === 0 || value;
         });
 
+        $.validator.addMethod('valid_phone', function(value, element) {
+            return /^\d{2} \d{2} \d{2} \d{2} \d{2}$/.test(value);
+        });
+
         $("#program_item_form").validate({
             errorPlacement: function errorPlacement(error, element) {
                 if(element.is("input[type=checkbox]")) {
@@ -374,6 +378,8 @@
                 "program_item[accessibility][]": {required: true, minlength: 1},
                 "program_item[status]": {opening_presence: true},
                 "program_item[accept_pictures]": {accept_pictures: true},
+                "program_item[telephone]": {valid_phone: true},
+                "program_item[booking_telephone]": {valid_phone: true},
                 "program_item[main_lat]": {number: true, min: 40, max: 50},
                 "program_item[main_lng]": {number: true, min: -2.5, max: 7.223510742187499},
                 "program_item[summary]": {maxlength: 254}
@@ -381,7 +387,9 @@
             messages: {
                 "program_item[accessibility][]": "champ requis",
                 "program_item[status]": "veuillez saisir au moins une période d'ouverture",
-                "program_item[accept_pictures]": "veuillez valider les conditions d'utilisations des photos"
+                "program_item[accept_pictures]": "veuillez valider les conditions d'utilisations des photos",
+                "program_item[telephone]": "au format : 01 02 03 04 05",
+                "program_item[booking_telephone]": "au format : 01 02 03 04 05"
             },
             submitHandler: function(form) {
                 displaySpinner();

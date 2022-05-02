@@ -282,7 +282,7 @@
           <div class="form-group mt-lg booking_toggle">
             <label class="col-sm-3 control-label">Téléphone (réservations)</label>
             <div class="col-sm-9">
-              <%= item_form.text_field :booking_telephone, class: 'form-control', disabled: readonly %>
+              <%= item_form.text_field :booking_telephone, class: 'form-control telephone', disabled: readonly, placeholder: "au format : 01 02 03 04 05" %>
               <%= render_previous(:booking_telephone) %>
             </div>
           </div>
@@ -334,7 +334,7 @@
           <div class="form-group">
             <label class="col-sm-3 control-label">Téléphone</label>
             <div class="col-sm-9">
-              <%= item_form.text_field :telephone, class: 'form-control', disabled: readonly %>
+              <%= item_form.text_field :telephone, class: 'form-control telephone', disabled: readonly, placeholder: "au format : 01 02 03 04 05" %>
               <%= render_previous(:telephone) %>
             </div>
           </div>
