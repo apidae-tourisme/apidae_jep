@@ -80,7 +80,7 @@ module WritableConcern
     end
     multipart_token = OAuth2::AccessToken.new(multipart_client, current_token.token)
     response = nil
-    unless Rails.env.development?
+    unless Rails.env.development? || ENV['APIDAE_DRY_RUN']
       response = multipart_token.request(verb, oauth_config[url_key]) do |req|
         req.headers['Content-Type'] = 'multipart/form-data'
         req.body = form_data
