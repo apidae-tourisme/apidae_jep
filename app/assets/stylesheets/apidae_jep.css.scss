@@ -355,6 +355,11 @@ form .select2 .select2-selection__rendered::after {
   border-right: 2px solid #3a3f51;
 }
 
+div.dataTables_wrapper input.table_search {
+  width: 100%;
+  height: 31px;
+}
+
 // MH styling
 ngb-modal-window.apidae_date.modal.fade {
   opacity: 1;

@@ -3,7 +3,7 @@ ISERE = "isere"
 SAUMUR = "saumur"
 DLVA = "dlva"
 
-EDITION = 2021
+EDITION = 2022
 
 ITEM_VISITE = "visite"
 ITEM_PARCOURS = "parcours"

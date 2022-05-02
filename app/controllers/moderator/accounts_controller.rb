@@ -7,6 +7,30 @@ class Moderator::AccountsController < Moderator::ModeratorController
     @accounts = User.where(territory: current_moderator.member_ref)
   end
 
+  def new
+    @user = User.new
+  end
+
+  def create
+    @user = User.new
+    if set_entity && set_attributes
+      @user.update(territory: @user.compute_territory)
+      if @user.legal_entity.external_id.nil?
+        begin
+          @user.legal_entity.remote_save(@user.territory)
+          redirect_to moderator_accounts_url, notice: "Le compte a bien été créé." and return
+        rescue OAuth2::Error => e
+          handle_remote_error(e)
+        end
+      else
+        redirect_to moderator_accounts_url, notice: "Le compte a bien été créé." and return
+      end
+    else
+      flash.now[:alert] = "Une erreur s'est produite lors de la création du compte."
+    end
+    render :new
+  end
+
   def edit
     unless params[:validate].blank?
       @validate = true
@@ -29,17 +53,7 @@ class Moderator::AccountsController < Moderator::ModeratorController
         end
       end
     rescue OAuth2::Error => e
-      Raven.capture_exception(e)
-      if e.response.parsed
-        logger.error "Apidae error : #{e.response.parsed['errorType']} - #{e.response.parsed['message']} - user : #{@user.id}"
-        error_msg = e.response.parsed['message']
-        error_msg = error_msg.split("\n").first if error_msg && error_msg.include?("\n")
-        flash.now[:alert] = "Une erreur s'est produite au cours de l'enregistrement dans la base " +
-            "de données Apidae. Le message fourni est le suivant : #{error_msg}"
-      else
-        logger.error "Apidae error : #{e.response} - user : #{@user.id}"
-        flash.now[:alert] = "Une erreur s'est produite au cours de l'enregistrement dans la base de données Apidae."
-      end
+      handle_remote_error(e)
     end
     render :edit
   end
@@ -96,7 +110,7 @@ class Moderator::AccountsController < Moderator::ModeratorController
     entity_id = user_params[:legal_entity_attributes][:id]
     if !entity_id.blank? && @user.legal_entity_id != entity_id.to_i
       @user.legal_entity = LegalEntity.find(entity_id)
-      @user.save
+      !@user.persisted? || @user.save
     else
       true
     end
@@ -106,7 +120,27 @@ class Moderator::AccountsController < Moderator::ModeratorController
     @user = User.find(params[:id])
   end
 
+  def set_attributes
+    @user.attributes = user_params
+    @user.password = Devise.friendly_token[0,20]
+    @user.save
+  end
+
   def user_params
     params.require(:user).permit!
+  end
+
+  def handle_remote_error(e)
+    Raven.capture_exception(e)
+    if e.response.parsed
+      logger.error "Apidae error : #{e.response.parsed['errorType']} - #{e.response.parsed['message']} - user : #{@user.id}"
+      error_msg = e.response.parsed['message']
+      error_msg = error_msg.split("\n").first if error_msg && error_msg.include?("\n")
+      flash.now[:alert] = "Une erreur s'est produite au cours de l'enregistrement dans la base " +
+        "de données Apidae. Le message fourni est le suivant : #{error_msg}"
+    else
+      logger.error "Apidae error : #{e.response} - user : #{@user.id}"
+      flash.now[:alert] = "Une erreur s'est produite au cours de l'enregistrement dans la base de données Apidae."
+    end
   end
 end

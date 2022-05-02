@@ -5,7 +5,7 @@
         <p class="help-block">Les champs marqués d'un <strong>*</strong> sont obligatoires.</p>
         <fieldset>
           <legend class="text-uppercase text-primary">Informations du compte<%= link_to('<em class="icon icon-arrow-right"></em>Voir les offres du compte'.html_safe,
-                                                                                        account_moderator_items_path(user_id: @user.id), class: 'btn btn-sm btn-link') if current_moderator %></legend>
+                                                                                        account_moderator_items_path(user_id: @user.id), class: 'btn btn-sm btn-link') if current_moderator && @user.persisted? %></legend>
           <div class="form-group mdy">
             <label class="col-sm-2 control-label">Nom</label>
             <div class="col-sm-4">
@@ -21,7 +21,7 @@
           <div class="form-group mdy">
             <label class="col-sm-2 control-label">Email</label>
             <div class="col-sm-4">
-              <%= user_form.text_field :email, class: 'form-control', readonly: 'readonly', disabled: 'disabled' %>
+              <%= user_form.text_field :email, class: 'form-control', readonly: ('readonly' if @user.persisted?), disabled: ('disabled' if @user.persisted?) %>
             </div>
             <label class="col-sm-2 control-label">Téléphone</label>
             <div class="col-sm-4">
@@ -41,32 +41,40 @@
             <fieldset>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Mode d'authentification</label>
-                <div class="col-sm-4">
-                  <%= text_field_tag 'auth_mode', @user.provider == 'apidae' ? 'Apidae' : 'ApidaeJEP',
-                                     class: 'form-control', readonly: 'readonly', disabled: 'disabled' %>
-                </div>
-                <label class="col-sm-2 control-label">Identifiant Apidae</label>
-                <div class="col-sm-4">
-                  <%= user_form.text_field :uid, class: 'form-control', readonly: 'readonly', disabled: 'disabled' %>
-                </div>
+                <% if @user.persisted? %>
+                  <div class="col-sm-4">
+                    <%= text_field_tag 'auth_mode', @user.provider == 'apidae' ? 'Apidae' : 'ApidaeJEP',
+                                       class: 'form-control', readonly: 'readonly', disabled: 'disabled' %>
+                  </div>
+                  <label class="col-sm-2 control-label">Identifiant Apidae</label>
+                  <div class="col-sm-4">
+                    <%= user_form.text_field :uid, class: 'form-control', readonly: 'readonly', disabled: 'disabled' %>
+                  </div>
+                <% else %>
+                  <div class="col-sm-4">
+                    <%= user_form.select :provider, options_for_select([['ApidaeJEP', nil], ["Apidae (si un compte Apidae associé à cet email existe)", 'apidae']]), {}, class: 'form-control' %>
+                  </div>
+                <% end %>
               </div>
             </fieldset>
-            <fieldset>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">Date de création</label>
-                <div class="col-sm-4">
-                  <%= user_form.datetime_select :created_at, {}, class: 'form-control', readonly: 'readonly', disabled: 'disabled' %>
+            <% if @user.persisted? %>
+              <fieldset>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Date de création</label>
+                  <div class="col-sm-4">
+                    <%= user_form.datetime_select :created_at, {}, class: 'form-control', readonly: 'readonly', disabled: 'disabled' %>
+                  </div>
+                  <label class="col-sm-2 control-label">Dernière connexion</label>
+                  <div class="col-sm-4">
+                    <%= user_form.datetime_select :last_sign_in_at, {}, class: 'form-control', readonly: 'readonly', disabled: 'disabled' %>
+                  </div>
                 </div>
-                <label class="col-sm-2 control-label">Dernière connexion</label>
-                <div class="col-sm-4">
-                  <%= user_form.datetime_select :last_sign_in_at, {}, class: 'form-control', readonly: 'readonly', disabled: 'disabled' %>
-                </div>
-              </div>
-            </fieldset>
+              </fieldset>
+            <% end %>
         <% end %>
         <fieldset>
           <legend class="text-uppercase text-primary mb-sm">Structure organisatrice<%= link_to('<em class="icon icon-arrow-right"></em>Voir les offres de la structure'.html_safe,
-                                                                                               entity_moderator_items_path(entity_id: @user.legal_entity_id), class: 'btn btn-sm btn-link') if current_moderator %></legend>
+                                                                                               entity_moderator_items_path(entity_id: @user.legal_entity_id), class: 'btn btn-sm btn-link') if current_moderator && @user.persisted? %></legend>
           <p class="help-block">
             Veuillez indiquer le nom de votre structure dans le champ de recherche ci-dessous. Vous pourrez ensuite
             modifier ses caractéristiques si nécessaire.<br/>
@@ -76,13 +84,14 @@
             <select id="search_entity" class="form-control col-sm-6"></select>
             <div id="add_new_entity" class="pt">
               <em class="pr">La structure ne figure pas dans la liste ?</em>
-              <%= link_to '<i class="fa fa-plus pr-sm"></i>Ajouter une structure'.html_safe, '#ok',
-                          class: 'btn btn-labeled btn-default btn-sm', data: {confirm: 'Remplacer la saisie actuelle ?'} %>
+              <button type="button" class="btn btn-labeled btn-default btn-sm" data-remote="true" data-confirm="Remplacer la saisie actuelle ?">
+                <i class="fa fa-plus pr-sm"></i>Ajouter une structure
+              </button>
             </div>
           </div>
         </fieldset>
         <fieldset id="entity_form_fields" style="<%= 'display: none;' unless @user.legal_entity_id %>">
-          <%= user_form.fields_for :legal_entity do |entity_form| %>
+          <%= user_form.fields_for(:legal_entity, @user.legal_entity || LegalEntity.new) do |entity_form| %>
               <div class="form-group mdy">
                 <label class="col-sm-2 control-label">Nom de la structure</label>
                 <div class="col-sm-10">
@@ -90,7 +99,6 @@
                                              placeholder: 'Nom de la structure organisatrice' %>
                 </div>
               </div>
-              <!-- Todo : a tester apres MEP & corriger export excel -->
               <% if current_moderator %>
                 <div class="form-group mt-lg">
                   <label class="col-sm-2 control-label">Identifiant Apidae</label>
@@ -154,6 +162,7 @@
             $("#user_legal_entity_attributes_phone").val(values.phone);
             $("#user_legal_entity_attributes_email").val(values.email);
             $("#user_legal_entity_attributes_website").val(values.website);
+            $("#user_legal_entity_attributes_external_id").val(values.external_id);
             $("#user_legal_entity_attributes_id").val(values.id);
         }
 

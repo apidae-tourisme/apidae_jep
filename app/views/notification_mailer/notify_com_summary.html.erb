@@ -1,14 +1,14 @@
 <p>
   Madame, Monsieur,<br/>
   <br/>
-  Nous avons bien pris en compte votre demande de supports de communication pour les Journées Européennes du Patrimoine 2021
+  Nous avons bien pris en compte votre demande de supports de communication pour les Journées Européennes du Patrimoine 2022
   de la Métropole de Lyon.<br/>
   Voici ci-dessous un résumé de votre commande :<br/>
   <br/>
   <%= raw @user.communication_poll.communication_data.collect {|com| "#{I18n.t('com_kit.format.' + com[0])} : #{com[1]}"}.join("<br/>") %>
   <br/>
   Les quantités demandées seront ajustées en fonction des stocks disponibles.<br/>
-  Les livraisons auront lieu du semaine du 2 au 14 septembre 2021.<br/>
+  Les livraisons auront lieu en semaine du 2 au 14 septembre 2022.<br/>
   Voici les informations de livraison que vous nous avez indiqué :<br/>
   <%= "#{@user.communication_poll.delivery_address} #{@user.communication_poll.delivery_town ? @user.communication_poll.delivery_town.label : ''}" %><br/>
   <%= @user.communication_poll.delivery_comments %><br/>

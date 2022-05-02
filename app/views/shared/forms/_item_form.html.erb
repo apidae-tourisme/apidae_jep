@@ -219,7 +219,7 @@
           <legend class="text-uppercase text-primary mb0 openings">Horaires / ouverture*</legend>
           <div class="form-group">
             <% ext_ref = @item.external_ref %>
-            <% ['2021-09-17', '2021-09-18', '2021-09-19', '2021-09-20'].each do |d| %>
+            <% ['2022-09-16', '2022-09-17', '2022-09-18', '2022-09-19'].each do |d| %>
               <div class="col-sm-3 mt-lg">
                 <button id="edit_opening_<%= d %>" type="button" class="btn btn-lg btn-primary w100"
                         onclick="displayOpeningsForm('<%= d %>', '<%= @item.opening_id(ext_ref, d) %>', '<%= ext_ref %>', '<%= readonly %>'); return false;">
@@ -360,15 +360,15 @@
                 <%= check_box_tag 'program_item[accept_safety]', '1', @item.accept_safety == '1', disabled: readonly %>
                 <span class="fa fa-check"></span>Nous nous engageons à mettre en œuvre toutes les dispositions nécessaires
                 pour garantir la sécurité sanitaire et physique des visiteurs, selon les directives des autorités qui seront
-                en vigueur les 17, 18, 19 et 20 septembre 2021*
+                en vigueur les 16, 17, 18 et 19 septembre 2022*
               </label>
             </div>
           </div>
-          <div class="form-group mt-lg <%= 'mdy' unless territory?(SAUMUR) %>">
+          <div class="form-group mt-lg">
             <label class="col-sm-3 control-label">Dispositions spéciales Covid-19<%= help_button %></label>
             <%= help_content("Veuillez indiquer les mesures mises en place en lien avec le contexte sanitaire") %>
             <div class="col-sm-9">
-              <%= item_form.text_area :covid_desc, class: 'form-control required', disabled: readonly, rows: 3,
+              <%= item_form.text_area :covid_desc, class: 'form-control', disabled: readonly, rows: 3,
                                       placeholder: "Par ex: « Sur réservation uniquement », « X personnes maximum en même temps », « Port du masque obligatoire », etc..." %>
               <%= render_previous(:covid_desc, 3) %>
             </div>

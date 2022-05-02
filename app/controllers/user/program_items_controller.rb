@@ -1,10 +1,10 @@
 class User::ProgramItemsController < User::UserController
-  before_action :check_auth
+  # before_action :check_auth
   before_action :set_program_item, only: [:edit, :update, :show, :destroy, :confirm, :duplicate]
 
   def check_auth
     if current_user && current_user.territory == ISERE
-      redirect_to user_dashboard_url, alert: "La saisie des offres pour les JEP 2021 n'est plus disponible en ligne."
+      redirect_to user_dashboard_url, alert: "La saisie des offres pour les JEP 2022 n'est plus disponible en ligne."
     end
   end
 

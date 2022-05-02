@@ -1,4 +1,5 @@
 <div class="pull-right">
+  <a href="<%= user_dashboard_path(year: 2022) %>" class="btn btn-info btn-oval <%= 'btn-outline' unless @year == 2022 %>">JEP 2022</a>
   <a href="<%= user_dashboard_path(year: 2021) %>" class="btn btn-info btn-oval <%= 'btn-outline' unless @year == 2021 %>">JEP 2021</a>
   <a href="<%= user_dashboard_path(year: 2020) %>" class="btn btn-info btn-oval <%= 'btn-outline' unless @year == 2020 %>">JEP 2020</a>
   <a href="<%= user_dashboard_path(year: 2019) %>" class="btn btn-info btn-oval <%= 'btn-outline' unless @year == 2019 %>">JEP 2019</a>
@@ -7,24 +8,13 @@
 <h3>
   Bienvenue sur ApidaeJEP
 </h3>
-<% unless current_user.territory == ISERE %>
 <div class="panel panel-info">
   <div class="panel-body">
     <p class="mb0">
-      Inscrivez ici vos offres évènements organisés à l'occasion des Journées européennes du patrimoine (JEP)
-      dans <%= territory_label %>
+      Inscrivez ici vos offres évènements organisés à l'occasion des Journées européennes du patrimoine (JEP)<%= territory_label %>
     </p>
   </div>
 </div>
-<% end %>
-<% if current_user.territory == ISERE %>
-  <p class="alert alert-info">
-    <em class="icon-info pr-sm"></em>La saisie des Journées européennes du patrimoine sur la plateforme ApidaeJEP est désormais terminée.<br/>
-    <br/>
-    Vous pouvez cependant ajouter ou modifier des informations en vous adressant à l’office de tourisme dont vous dépendez afin que le programme en ligne soit mis à jour.
-  </p>
-<% end %>
-<% unless current_user.territory == ISERE %>
 <div class="pull-right">
   <%= link_to '<span class="btn-label"><i class="fa fa-plus"></i></span>Saisir une offre'.html_safe, new_user_program_item_path,
               class: 'btn btn-labeled btn-primary' %>
@@ -84,4 +74,3 @@
     </div>
   </div>
 </div>
-<% end %>

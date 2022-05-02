@@ -71,7 +71,7 @@ Rails.application.routes.draw do
   namespace :moderator, path: 'validation' do
     scope(path_names: {new: 'creer', edit: 'modifier'}) do
       concerns :programs_routes
-      resources :users, controller: 'accounts', path: 'comptes', as: 'accounts', only: [:index, :edit, :update] do
+      resources :users, controller: 'accounts', path: 'comptes', as: 'accounts', only: [:index, :new, :create, :edit, :update] do
         get :list_com, on: :collection,  as: 'kits', path: 'supports'
         get :edit_com, on: :member, as: 'edit_kit', path: 'supports'
         patch :update_com, on: :member

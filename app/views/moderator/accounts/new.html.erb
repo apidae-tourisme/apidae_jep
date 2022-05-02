@@ -1,0 +1,11 @@
+<div class="content-heading">Nouveau compte</div>
+<% if alert %>
+  <div class="panel panel-danger">
+    <div class="panel-heading">
+      <p class="mb0">
+        <em class="icon-exclamation pr-sm"></em><%= alert %>
+      </p>
+    </div>
+  </div>
+<% end %>
+<%= render 'shared/forms/account_form', account_form_url: moderator_accounts_path %>

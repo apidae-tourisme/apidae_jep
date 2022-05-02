@@ -79,9 +79,12 @@ module WritableConcern
       conn.adapter Faraday.default_adapter
     end
     multipart_token = OAuth2::AccessToken.new(multipart_client, current_token.token)
-    response = multipart_token.request(verb, oauth_config[url_key]) do |req|
-      req.headers['Content-Type'] = 'multipart/form-data'
-      req.body = form_data
+    response = nil
+    unless Rails.env.development?
+      response = multipart_token.request(verb, oauth_config[url_key]) do |req|
+        req.headers['Content-Type'] = 'multipart/form-data'
+        req.body = form_data
+      end
     end
     result = {}
     if response && response.respond_to?(:parsed)

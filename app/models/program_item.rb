@@ -678,17 +678,12 @@ class ProgramItem < ActiveRecord::Base
         if op
           time_frames = op['timePeriods'].map {|tp| tp['timeFrames']}.flatten
           unless time_frames.blank?
-            start_hour = time_frames.map {|tf| tf['startTime']}.min
-            end_hour = time_frames.map {|tf| tf['endTime'] || ''}.max
-
             opening_period = {
                 dateDebut: date,
                 dateFin: date,
-                horaireOuverture: (start_hour + ':00'),
                 type: 'OUVERTURE_TOUS_LES_JOURS',
                 tousLesAns: false
             }
-            opening_period[:horaireFermeture] = (end_hour + ':00') unless end_hour.blank?
             opening_periods << opening_period
           end
         end

@@ -1,9 +1,11 @@
 function initDataTable(tableSelector, inverseOrdering, orderingCol) {
+    var t;
     $(tableSelector).each(function() {
         if ($(this).find("tbody tr").length > 0 && $(this).find("tbody tr").first().find("td").length > 1) {
-            $(this).dataTable({
+            t = $(this).dataTable({
                 paging: true,
                 ordering: true,
+                searching: true,
                 order: [(orderingCol || 0), inverseOrdering ? 'asc' : 'desc'],
                 info: true,
                 pageLength: 50,
@@ -36,6 +38,14 @@ function initDataTable(tableSelector, inverseOrdering, orderingCol) {
     $(tableSelector).on('page.dt', function () {
         window.scrollTo(0, 0);
     });
+    $(tableSelector + '_wrapper > div:first-child > div:last-child ').each(function() {
+        $(this).html('<input type="text" class="table_search form-control" placeholder="Rechercher (séparer les termes par des espaces)"/>');
+    });
+    $(tableSelector + '_wrapper .table_search').on('keyup change', function() {
+        var val = (this.value || '').replace(/\s+/g, '|').replace(/\|$/, '');
+        t.api().search(val, true, false).draw();
+    });
+    return t;
 }
 
 (function($) {
