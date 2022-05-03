@@ -23,7 +23,7 @@
           <% if @items.any? %>
               <% @items.each do |item| %>
                   <tr>
-                    <td><%= item.reference.to_s + (item.external_id ? " (#{item.external_id})" : '') %><span class="hidden"><%= item.user.full_name if item.user %></span></td>
+                    <td><%= item.reference.to_s + (item.external_id ? " (#{item.external_id})" : " (Non référencée)") %><span class="hidden"><%= item.user.full_name if item.user %></span></td>
                     <td>
                       <span class="hidden"><%= item.updated_at.to_i %></span><%= l(item.updated_at, format: :withtime) %>
                     </td>
