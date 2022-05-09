@@ -587,10 +587,9 @@ class ProgramItem < ActiveRecord::Base
 
   def build_categories(values = [])
     categories = []
-    unless values.nil?
-      APIDAE_CATEGORIES.each_pair do |cat, id|
-        categories << {id: id, elementReferenceType: 'FeteEtManifestationCategorie'} if values.include?(cat.parameterize)
-      end
+    cat_values = (values || []) + [item_type]
+    APIDAE_CATEGORIES.each_pair do |cat, id|
+      categories << {id: id, elementReferenceType: 'FeteEtManifestationCategorie'} if cat_values.include?(cat.parameterize)
     end
     categories
   end

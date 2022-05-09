@@ -35,7 +35,7 @@
 }
 
 .aside-collapsed .wrapper > .aside .aside-inner {
-  padding-top: 62px;
+  padding-top: 72px;
 }
 
 .text-xs {
@@ -46,13 +46,33 @@ a > em:hover, a.text-white:hover {
   text-decoration: none;
 }
 
-nav.topnavbar .navbar-header .brand-logo-collapsed {
-  padding: 14px 10px;
+nav.topnavbar .navbar-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 72px;
+
+  .navbar-brand {
+    float: none;
+  }
+
+  .brand-logo-collapsed {
+    padding: 14px 10px;
+  }
 }
 
 #user_navbar,
 #moderator_navbar {
-  line-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+
+  p {
+    line-height: 1;
+    flex: 1 0 auto;
+    margin-bottom: 0;
+  }
 }
 
 #user_login input.btn, #user_login a.btn, #user_login form {

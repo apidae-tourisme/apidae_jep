@@ -65,6 +65,11 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name.upcase if last_name}"
   end
 
+  def full_name_with_entity(details = false)
+    [full_name, details ? " (#{email})" : '', " - #{legal_entity ? legal_entity.label : 'Structure inconnue'}",
+     legal_entity && details ? " (#{legal_entity.external_id.blank? ? 'Nouvelle structure' : legal_entity.external_id.to_s})" : ''].join('')
+  end
+
   def offers_count
     program_items.count
   end

@@ -44,8 +44,8 @@ class User::AccountController < User::UserController
     unless params[:pattern].blank?
       users_query = User.joins("LEFT JOIN legal_entities ON users.legal_entity_id = legal_entities.id")
       @users = users_query.matching(URI.decode(params[:pattern]))
-                   .or(users_query.where("trim(unaccent(replace(legal_entities.name, '-', ' '))) ILIKE trim(unaccent(replace(?, '-', ' ')))",
-                                         "%#{URI.decode(params[:pattern])}%"))
+                   .or(users_query.where("(trim(unaccent(replace(legal_entities.name, '-', ' '))) ILIKE trim(unaccent(replace(?, '-', ' ')))) OR (legal_entities.external_id::text LIKE ?)",
+                                         "%#{URI.decode(params[:pattern])}%", "%#{URI.decode(params[:pattern])}%"))
     end
     unless territory.nil?
       @users = @users.where(territory: territory)

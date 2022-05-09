@@ -31,6 +31,8 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
   def edit
     if @item.user.legal_entity.external_id.nil?
       redirect_to edit_moderator_account_url(@item.user, validate: true, item_id: @item.id), notice: "Validation de la structure organisatrice requise"
+    elsif remote_entity(@item.user.legal_entity.external_id).nil?
+      redirect_to edit_moderator_account_url(@item.user, item_id: @item.id), alert: "La structure organisatrice de ce compte n'existe plus dans la base Apidae. Veuillez la modifier ou en créer une nouvelle."
     end
     @town = Town.find_by_insee_code(@item.main_town_insee_code) if @item.main_town_insee_code
     @prev_item = ProgramItem.where(reference: @item.reference, rev: @item.rev - 1).first
@@ -145,5 +147,11 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
     else
       ''
     end
+  end
+
+  def remote_entity(external_id)
+    SitraClient.configure(Rails.application.config.sitra_config)
+    query = SitraClient.query({identifiants: [external_id], responseFields: ['id', 'nom']})
+    (query[:results] || []).first
   end
 end

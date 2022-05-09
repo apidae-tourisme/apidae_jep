@@ -323,7 +323,7 @@
         <% end %>
 
         <% if current_moderator && (@item.draft? || @item.pending?) && @item.user_id %>
-          setUserValue('<%= @item.user_id %>', '<%= @item.user.full_name %>');
+          setUserValue('<%= @item.user_id %>', '<%= @item.user.full_name_with_entity %>');
         <% end %>
 
         function injectTrim(handler) {
