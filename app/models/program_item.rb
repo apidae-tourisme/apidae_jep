@@ -184,7 +184,8 @@ class ProgramItem < ActiveRecord::Base
 
   def set_territory(member_ref)
     if member_ref == ISERE
-      self.territory = ISERE_TERRITORIES.find {|k, v| v.include?(main_town_insee_code)}.first if ISERE_TERRITORIES.find {|k, v| v.include?(main_town_insee_code)}
+      t = TERRITORIES[ISERE].find {|k, v| v.include?(main_town_insee_code)}
+      self.territory = t.first if t
     else
       self.territory = TERRITORIES_BY_CODE[member_ref][Town.find_by_insee_code(main_town_insee_code).postal_code] if Town.find_by_insee_code(main_town_insee_code)
     end

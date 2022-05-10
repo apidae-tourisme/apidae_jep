@@ -14,14 +14,14 @@ wb.add_worksheet(name: 'Toutes les offres') do |sheet|
 end
 if current_moderator.member_ref == ISERE
   sheets = {}
-  all_insee_codes = ISERE_TERRITORIES.values.flatten.uniq
-  ISERE_TERRITORIES.keys.each do |t|
+  all_insee_codes = TERRITORIES[ISERE].values.flatten.uniq
+  TERRITORIES[ISERE].keys.each do |t|
     sheets[t] = wb.add_worksheet(name: t)
     sheets[t].add_row exported_columns.values.flatten.map {|v| I18n.t("export.program_item.#{v}")}
   end
   @items.each do |item|
     if all_insee_codes.include?(item.main_town_insee_code)
-      ISERE_TERRITORIES.each_pair do |t, insee_codes|
+      TERRITORIES[ISERE].each_pair do |t, insee_codes|
         if insee_codes.include?(item.main_town_insee_code)
           sheets[t].add_row exported_values(item), style: wrap
         end

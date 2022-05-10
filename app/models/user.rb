@@ -76,11 +76,11 @@ class User < ActiveRecord::Base
 
   def compute_territory
     if legal_entity_id && legal_entity.town_insee_code
-      if legal_entity.town_insee_code.start_with?('69')
-        GRAND_LYON
-      elsif legal_entity.town_insee_code.start_with?('38') || legal_entity.town_insee_code.start_with?('73') ||
-          legal_entity.town_insee_code.start_with?('26')
+      if legal_entity.town_insee_code.start_with?('38') || legal_entity.town_insee_code.start_with?('73') ||
+          legal_entity.town_insee_code.start_with?('26') || TERRITORIES[ISERE].values.flatten.include?(legal_entity.town_insee_code)
         ISERE
+      elsif legal_entity.town_insee_code.start_with?('69')
+        GRAND_LYON
       elsif legal_entity.town_insee_code.start_with?('49')
         SAUMUR
       elsif legal_entity.town_insee_code.start_with?('04')
