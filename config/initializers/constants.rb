@@ -121,7 +121,7 @@ APIDAE_CRITERIA = {
     'Balades urbaines du Musée Gadagne' => 8292,
     'Demeure privée' => 17728,
     'JEP | Première ouverture' => 17818,
-    'Thématique métropole 2022 - Migrations et immigration' => 19807
+    'Thématique métropole 2022 - Migrations et immigration' => 22742
 }
 
 APIDAE_TYPOLOGIES = {
