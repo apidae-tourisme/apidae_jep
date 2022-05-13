@@ -7,7 +7,6 @@
           <div class="text-sm">Accueil</div>
         </a>
       </li>
-      <% unless current_user.territory == ISERE %>
       <li class="<%= 'active' if controller?('user/program_items') %>">
         <a href="<%= annual_user_program_items_url(year: EDITION) %>" title="Programmations">
           <em class="icon-calendar"></em>
@@ -20,7 +19,6 @@
           <div class="text-sm">Mon compte</div>
         </a>
       </li>
-      <% end %>
       <li class="<%= 'active' if controller?('user/dashboard') && action_name == 'support' %>">
         <a href="<%= user_support_path %>" title="Aide">
           <em class="icon-question"></em>
