@@ -13,7 +13,7 @@ ITEM_EXPOSITION = "exposition"
 ITEM_TYPES = [ITEM_VISITE, ITEM_PARCOURS, ITEM_ANIMATION, ITEM_EXPOSITION]
 
 THEMES = {
-    GRAND_LYON => ["Thématique métropole 2022 - Jeunesse", "Thématique nationale 2022 - \"Patrimoine durable\"", "Nouveauté",
+    GRAND_LYON => ["Thématique métropole 2022 - Migrations et immigration", "Thématique nationale 2022 - \"Patrimoine durable\"", "Nouveauté",
                    "En famille", "Egalité"],
     ISERE => ["Thématique nationale 2022 - \"Patrimoine durable\"", "Famille", "Réservé aux enfants", "Antiquité",
               "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique"],
