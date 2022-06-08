@@ -248,11 +248,12 @@
     function toggleDisplay(selector, val) {
         var elt = $("#" + selector).find("input:checked");
         var descElt = $("." + selector);
-        if(elt.val() && elt.val() === val) {
+        if (elt.val() && elt.val() === val) {
             descElt.show();
         } else {
             descElt.hide();
             descElt.find("textarea").val('');
+            descElt.find("input[type='text']").val('');
         }
     }
 
