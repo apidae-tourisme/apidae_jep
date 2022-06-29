@@ -103,6 +103,7 @@ class User::ProgramItemsController < User::UserController
     @new_item.user_id = current_user.id
     @new_item.status = ProgramItem::STATUS_DRAFT
     @new_item.history = []
+    @new_item.openings = {}
     @item.item_openings.each do |o|
       @new_item.item_openings << o.dup
     end
