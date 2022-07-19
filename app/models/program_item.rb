@@ -497,10 +497,7 @@ class ProgramItem < ActiveRecord::Base
                 descriptifCourt: {libelleFr: value[:shortDescription]},
                 descriptifDetaille: {libelleFr: value[:longDescription]},
                 typologiesPromoSitra: build_typologies(value[:themes]),
-                descriptifsThematises: [
-                    {theme: {elementReferenceType: "DescriptifTheme", id: APIDAE_COVID_DESC}, description: (value[:covidDescription].blank? ? {} : {libelleFr: value[:covidDescription]})},
-                    {theme: {elementReferenceType: "DescriptifTheme", id: APIDAE_HISTORY_DESC}, description: (value[:cultureDescription].blank? ? {} : {libelleFr: value[:cultureDescription]})}
-                ]
+                descriptifsThematises: build_theme_descs(value)
             },
             prestations: {
                 tourismesAdaptes: accessibility_values(value[:accessibility]),
@@ -603,6 +600,13 @@ class ProgramItem < ActiveRecord::Base
       end
     end
     themes
+  end
+
+  def build_theme_descs(value)
+    theme_descs = []
+    theme_descs << {theme: {elementReferenceType: "DescriptifTheme", id: APIDAE_COVID_DESC}, description: {libelleFr: value[:covidDescription]}} unless value[:covidDescription].blank?
+    theme_descs << {theme: {elementReferenceType: "DescriptifTheme", id: APIDAE_HISTORY_DESC}, description: {libelleFr: value[:cultureDescription]}} unless value[:cultureDescription].blank?
+    theme_descs
   end
 
   def build_typologies(values = [])
