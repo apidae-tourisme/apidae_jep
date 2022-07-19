@@ -472,7 +472,7 @@ class ProgramItem < ActiveRecord::Base
                     codePostal: value[:postal_code],
                     etat: 'France',
                     commune: {id: value[:external_id]},
-                    nomDuLieu: value[:startingPoint]
+                    nomDuLieu: value[:startingPoint] || value[:name]
                 },
                 geolocalisation: {
                     valide: true,
@@ -498,8 +498,8 @@ class ProgramItem < ActiveRecord::Base
                 descriptifDetaille: {libelleFr: value[:longDescription]},
                 typologiesPromoSitra: build_typologies(value[:themes]),
                 descriptifsThematises: [
-                    {theme: {elementReferenceType: "DescriptifTheme", id: APIDAE_COVID_DESC}, description: {libelleFr: value[:covidDescription]}},
-                    {theme: {elementReferenceType: "DescriptifTheme", id: APIDAE_HISTORY_DESC}, description: {libelleFr: value[:cultureDescription]}}
+                    {theme: {elementReferenceType: "DescriptifTheme", id: APIDAE_COVID_DESC}, description: (value[:covidDescription].blank? ? {} : {libelleFr: value[:covidDescription]})},
+                    {theme: {elementReferenceType: "DescriptifTheme", id: APIDAE_HISTORY_DESC}, description: (value[:cultureDescription].blank? ? {} : {libelleFr: value[:cultureDescription]})}
                 ]
             },
             prestations: {
