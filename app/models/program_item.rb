@@ -694,11 +694,11 @@ class ProgramItem < ActiveRecord::Base
 
   def apidate_opening(id)
     apidate_url = Rails.application.config.apidate_api_url + '/apidae_period'
-    logger.info "Retrieve openings : #{apidate_url}?id=#{CGI.escape('"' + id + '"')}"
+    logger.info "Retrieve openings : #{apidate_url}?id=#{CGI.escape('"' + id.to_s + '"')}"
     op = nil
     begin
       response = ''
-      open(apidate_url + '?id=' + CGI.escape('"' + id + '"')) { |f|
+      open(apidate_url + '?id=' + CGI.escape('"' + id.to_s + '"')) { |f|
         f.each_line {|line| response += line if line}
       }
       op = JSON.parse(response)
