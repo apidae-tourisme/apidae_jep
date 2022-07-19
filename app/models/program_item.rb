@@ -472,7 +472,7 @@ class ProgramItem < ActiveRecord::Base
                     codePostal: value[:postal_code],
                     etat: 'France',
                     commune: {id: value[:external_id]},
-                    nomDuLieu: value[:startingPoint] || value[:name]
+                    nomDuLieu: value[:startingPoint].blank? ? value[:name] : value[:startingPoint]
                 },
                 geolocalisation: {
                     valide: true,

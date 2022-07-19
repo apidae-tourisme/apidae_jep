@@ -7,6 +7,7 @@ class BatchOperations
 
     items.each do |item|
       decorate_item(item)
+      sleep(3)
     end
   end
 
@@ -15,8 +16,10 @@ class BatchOperations
 
     unless item_files.include?(POSTER_FILE_NAME)
       Rails.logger.info "Decorating item #{item.id} - #{item.external_id}"
-      item.attached_files << AttachedFile.new(picture: URI.parse("https://jep.apidae-tourisme.com/#{POSTER_FILE_NAME}"),
-                                              credits: "Département de l'Isère")
+      af = AttachedFile.new(picture: open(URI.parse("https://jep.apidae-tourisme.com/#{POSTER_FILE_NAME}")),
+                            credits: "Département de l'Isère")
+      af.picture.instance_write(:file_name, POSTER_FILE_NAME)
+      item.attached_files << af
       item.save!
       item.remote_save
       Rails.logger.info "Finished decorating item #{item.id} - #{item.external_id}"
