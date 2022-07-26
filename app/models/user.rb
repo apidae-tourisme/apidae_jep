@@ -26,11 +26,11 @@ class User < ActiveRecord::Base
     user
   end
 
-  def self.with_items(user_territory)
+  def self.with_items(user_territory, year = EDITION)
     joins(:program_items).where(users: {territory: user_territory},
                                 program_items: {
                                     status: [ProgramItem::STATUS_VALIDATED],
-                                    created_at: (Date.new(EDITION, 1, 1)..Date.new(EDITION + 1, 1, 1))
+                                    created_at: (Date.new(year, 1, 1)..Date.new(year + 1, 1, 1))
                                 }).distinct
   end
 

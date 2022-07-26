@@ -76,7 +76,7 @@ class Moderator::AccountsController < Moderator::ModeratorController
   end
 
   def export
-    @accounts = User.where(territory: current_moderator.member_ref)
+    @accounts = params[:year].blank? ? User.where(territory: current_moderator.member_ref) : User.with_items(current_moderator.member_ref, params[:year].to_i)
     respond_to do |format|
       format.xlsx {
         response.headers['Content-Disposition'] = "attachment; filename=\"organisateurs-#{current_moderator.member_ref}-#{I18n.l(Time.current, format: :reference)}.xlsx\""
