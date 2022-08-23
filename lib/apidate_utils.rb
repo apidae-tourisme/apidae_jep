@@ -1,5 +1,3 @@
-require 'kafka'
-
 class ApidateUtils
 
   # Usage example :
@@ -52,8 +50,7 @@ class ApidateUtils
   end
 
   def self.duplicate_apidate_entry(source_id, target_id, user_id)
-    kafka = Kafka.new([Rails.application.config.kafka_host], client_id: "jep_openings")
-    kafka.deliver_message('{"operation":"DUPLICATE_PERIOD","sourceObjectId":"' + source_id.to_s + '",' +
+    DeliveryBoy.deliver('{"operation":"DUPLICATE_PERIOD","sourceObjectId":"' + source_id.to_s + '",' +
                           '"duplicatedObjectId":"' + target_id.to_s + '","userId":"' + user_id.to_s + '"}',
                           topic: 'apidae_period')
   end

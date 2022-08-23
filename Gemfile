@@ -17,7 +17,7 @@ gem 'paperclip'
 gem 'cocoon'
 gem 'remotipart', '~> 1.2'
 gem 'sitra_client'
-gem 'ruby-kafka'
+gem 'delivery_boy'
 gem 'delayed_job_active_record'
 gem 'daemons'
 

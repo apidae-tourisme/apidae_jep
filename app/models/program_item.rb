@@ -3,7 +3,6 @@
 require 'open-uri'
 require 'events_importer'
 require 'touristic_object'
-require 'kafka'
 
 class ProgramItem < ActiveRecord::Base
   include LoggableConcern
@@ -398,11 +397,10 @@ class ProgramItem < ActiveRecord::Base
   end
 
   def update_remote_ids(openings_map, dry_run)
-    kafka = Kafka.new([Rails.application.config.kafka_host], client_id: "jep_openings")
     openings_map.each_pair do |remote_id, local_id|
       logger.debug "Offer #{id} - Binding local period id #{local_id} to apidae period #{remote_id}"
       unless dry_run
-        kafka.deliver_message('{"operation":"UPDATE_PERIOD","periodId":"' + local_id.to_s + '","updatedObject":{"externalId":' + remote_id.to_s + ', "externalRef":' + external_id.to_s + '}}',
+        DeliveryBoy.deliver('{"operation":"UPDATE_PERIOD","periodId":"' + local_id.to_s + '","updatedObject":{"externalId":' + remote_id.to_s + ', "externalRef":' + external_id.to_s + '}}',
                               topic: 'apidae_period')
       end
     end
