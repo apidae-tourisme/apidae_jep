@@ -54,4 +54,8 @@ class ApidateUtils
                           '"duplicatedObjectId":"' + target_id.to_s + '","userId":"' + user_id.to_s + '"}',
                           topic: 'apidae_period')
   end
+
+  def self.test_kafka_delivery
+    DeliveryBoy.deliver('{"operation":"TEST"}', topic: 'apidae_period')
+  end
 end
