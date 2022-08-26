@@ -400,7 +400,7 @@ class ProgramItem < ActiveRecord::Base
     openings_map.each_pair do |remote_id, local_id|
       logger.debug "Offer #{id} - Binding local period id #{local_id} to apidae period #{remote_id}"
       unless dry_run
-        DeliveryBoy.deliver('{"operation":"UPDATE_PERIOD","sourceId":"' + local_id.to_s + '","payload":{"externalId":' + remote_id.to_s + ', "externalRef":' + external_id.to_s + '}}',
+        DeliveryBoy.deliver('{"operation":"UPDATE_PERIOD","sourceId":"' + local_id.to_s + '","payload":{"externalId":"' + remote_id.to_s + '","externalRef":"' + external_id.to_s + '"}}',
                               topic: 'apidae_period')
       end
     end
