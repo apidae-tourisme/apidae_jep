@@ -11,7 +11,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 
 gem 'devise'
 gem 'oauth2', '1.2.0'
-gem 'omniauth', '1.3.2'
+gem 'omniauth', '1.9.2'
 gem 'omniauth-oauth2', '1.3.1'
 gem 'paperclip'
 gem 'cocoon'
