@@ -64,7 +64,10 @@ class ProgramItem < ActiveRecord::Base
     prev_item.attached_files.each do |f|
       item.attached_files << AttachedFile.new(program_item: item, data: f.data, picture: f.picture, created_at: f.created_at)
     end
-    item.set_openings
+    item.load_remote_openings
+    # item.openings.each_pair do |d, o|
+    #   o['id'] = "#{item.external_ref}-#{d.gsub('-', '')}"
+    # end
     item
   end
 
@@ -190,37 +193,31 @@ class ProgramItem < ActiveRecord::Base
     end
   end
 
-  def set_openings(and_save = false)
-    self.openings ||= {}
-    self.openings_text = nil
-    openings_updated = false
+  def load_remote_openings
     if external_id
       obj = EventsImporter.load_apidae_events([external_id], 'id', 'ouverture')
       if obj && obj.openings
-        obj.openings.each do |o|
-          if o[:dateDebut] == o[:dateFin] && self.openings[o[:dateDebut]] != o[:identifiantTechnique]
-            self.openings[o[:dateDebut]] = o[:identifiantTechnique]
-            openings_updated = true
+        openings.each_pair do |d, op|
+          obj_opening = obj.openings.find {|o| o[:dateDebut] == d && o[:dateFin] == d}
+          if obj_opening
+            op['id'] = obj_opening[:identifiantTechnique]
           end
         end
-        self.openings_text = obj.openings_description
-        self.save if and_save
       end
     end
-    openings_updated
   end
 
-  def self.set_openings_texts(items)
-    remote_ids = items.map {|i| i.external_id}.select {|ext_id| !ext_id.blank?}.uniq
-    objs = EventsImporter.load_apidae_events(remote_ids, ['id', 'ouverture'])
-    items.each do |item|
-      item.openings_text = nil
-      unless item.external_id.blank?
-        obj = objs.find {|o| o.id.to_i == item.external_id}
-        item.openings_text = obj.openings_description if obj
-      end
-    end
-  end
+  # def self.set_openings_texts(items)
+  #   remote_ids = items.map {|i| i.external_id}.select {|ext_id| !ext_id.blank?}.uniq
+  #   objs = EventsImporter.load_apidae_events(remote_ids, ['id', 'ouverture'])
+  #   items.each do |item|
+  #     item.openings_text = nil
+  #     unless item.external_id.blank?
+  #       obj = objs.find {|o| o.id.to_i == item.external_id}
+  #       item.openings_text = obj.openings_description if obj
+  #     end
+  #   end
+  # end
 
   def external_ref
     external_id || "JEP-#{(Time.current.to_f * 1000).floor}"
@@ -231,7 +228,7 @@ class ProgramItem < ActiveRecord::Base
   end
 
   def opening_id(ref, date)
-    openings[date].blank? ? "#{ref}-#{date.gsub('-', '')}" : openings[date]
+    openings.dig(date, 'id').blank? ? "#{ref}-#{date.gsub('-', '')}" : openings.dig(date, 'id')
   end
 
   def remote_save
@@ -248,8 +245,8 @@ class ProgramItem < ActiveRecord::Base
 
     if external_id || (response['id'] && update_attributes!(external_id: response['id'], external_status: response['status']))
       update_apidae_criteria(user.territory, build_criteria((themes || []) + (criteria || []) + (validation_criteria || [])))
-      bind_openings if rev == 1
-      touch_remote_obj
+      # bind_openings if rev == 1
+      # touch_remote_obj
     end
   end
 
@@ -311,6 +308,7 @@ class ProgramItem < ActiveRecord::Base
         skipValidation: 'true'
     }
 
+    form_data[:expiration] = {dateExpiration: (Date.parse(openings.keys.sort.last) + 1.day).to_s, expirationAction: "MASQUER_AUTOMATIQUEMENT"} unless openings.blank?
     form_data[:fields] = '["root"]'
     form_data[:root] ||= '{"type":"FETE_ET_MANIFESTATION"}'
     form_data['root.fieldList'] = '[]'
@@ -504,7 +502,7 @@ class ProgramItem < ActiveRecord::Base
             informationsFeteEtManifestation: {
                 categories: build_categories(value[:categories]),
                 themes: build_themes(value[:themes]),
-                portee: {id: 2352, elementReferenceType: 'FeteEtManifestationPortee'},
+                portee: {id: 2351, elementReferenceType: 'FeteEtManifestationPortee'},
                 evenementGenerique: {id: 2388, elementReferenceType: 'FeteEtManifestationGenerique'},
                 typesManifestation: [{id: 1958, elementReferenceType: 'FeteEtManifestationType'}],
             }
@@ -602,7 +600,7 @@ class ProgramItem < ActiveRecord::Base
 
   def build_theme_descs(value)
     theme_descs = []
-    theme_descs << {theme: {elementReferenceType: "DescriptifTheme", id: APIDAE_COVID_DESC}, description: {libelleFr: value[:covidDescription]}} unless value[:covidDescription].blank?
+    # theme_descs << {theme: {elementReferenceType: "DescriptifTheme", id: APIDAE_COVID_DESC}, description: {libelleFr: value[:covidDescription]}} unless value[:covidDescription].blank?
     theme_descs << {theme: {elementReferenceType: "DescriptifTheme", id: APIDAE_HISTORY_DESC}, description: {libelleFr: value[:cultureDescription]}} unless value[:cultureDescription].blank?
     theme_descs
   end
@@ -631,7 +629,7 @@ class ProgramItem < ActiveRecord::Base
     result = {}
     if data_hash[:booking]
       booking_data = {}
-      booking_data[:organismes] = [
+      booking_data[:organismes] = [{
           structureReference: {
               id: user.legal_entity.external_id,
               type: 'STRUCTURE'
@@ -641,8 +639,8 @@ class ProgramItem < ActiveRecord::Base
               elementReferenceType: 'ReservationType',
               id: 475
           },
-          moyensCommunication: [],
-      ]
+          moyensCommunication: []
+                                   }]
       unless data_hash[:bookingPhone].blank?
         booking_data[:organismes][0][:moyensCommunication] <<
             {type: {id: 201, elementReferenceType: 'MoyenCommunicationType'}, coordonnees: {fr: data_hash[:bookingPhone]}}
@@ -672,22 +670,45 @@ class ProgramItem < ActiveRecord::Base
     {added: added, removed: removed}
   end
 
+  # obj_opening = {
+  #   "identifiant" => (!opening[:id].blank? && /^\d+$/.match?(opening[:id].to_s) ? opening[:id].to_i : nil),
+  #   "dateDebut" => start_date,
+  #   "dateFin" => end_date,
+  #   "tousLesAns" => opening[:each_year]
+  # }
+  # if opening[:apihours].blank?
+  #   obj_opening.merge!(week_days_openings(opening))
+  #   tf = (!opening[:time_periods].blank? && opening[:time_periods].first && !opening[:time_periods].first[:time_frames].blank?) ?
+  #          opening[:time_periods].first[:time_frames].first : nil
+  #   if tf
+  #     obj_opening["horaireOuverture"] = obj_time(tf[:start_time]) unless tf[:start_time].blank?
+  #     obj_opening["horaireFermeture"] = obj_time(tf[:end_time]) unless tf[:end_time].blank?
+  #   end
+  # else
+  #   time_periods = JSON.parse(opening[:apihours]).map {|tp| tp.except('description')}
+  #   obj_opening['type'] = 'OUVERTURE_SAUF'
+  #   obj_opening['timePeriods'] = time_periods
+  # end
+  #
+  # obj_opening.merge!("identifiantTechnique" => opening[:external_id].to_i) if !opening[:external_id].blank? && /^\d+$/.match?(opening[:external_id].to_s)
+  # obj_opening.merge!("complementHoraire" => opening[:details].transform_keys {|k| Apidae::ApidaeDataParser.localized_key(k.to_s).to_s}) unless opening[:details].blank?
+
   def opening_times(openings_data)
     opening_periods = []
-    openings_data.each_pair do |date, id|
-      unless id.blank?
-        op = apidate_opening(id)
-        if op
-          time_frames = op['timePeriods'].map {|tp| tp['timeFrames']}.flatten
-          unless time_frames.blank?
-            opening_period = {
-                dateDebut: date,
-                dateFin: date,
-                type: 'OUVERTURE_TOUS_LES_JOURS',
-                tousLesAns: false
-            }
-            opening_periods << opening_period
-          end
+    openings_data.each_pair do |date, op|
+      unless op.blank?
+        time_periods = JSON.parse(op).map {|tp| tp.except('description')}
+        unless time_periods.blank?
+          opening_period = {
+              dateDebut: date,
+              dateFin: date,
+              type: 'OUVERTURE_SAUF',
+              tousLesAns: false,
+              timePeriods: time_periods
+          }
+          opening_period.merge!(identifiantTechnique: op['id'].to_i) if !op['id'].blank? && /^\d+$/.match?(op['id'].to_s)
+          opening_period.merge!(complementHoraire: openings_desc) unless openings_desc.blank?
+          opening_periods << opening_period
         end
       end
     end

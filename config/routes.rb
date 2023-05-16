@@ -64,6 +64,8 @@ Rails.application.routes.draw do
       resources :users, only: [], path: 'organisateurs' do
         resource :event_polls, path: 'questionnaire', only: [:new, :create, :show]
       end
+      get :onboarding, to: 'dashboard#onboarding', path: 'onboarding'
+      post :submit_onboarding, to: 'dashboard#submit_onboarding'
       get :support, to: 'dashboard#support', path: 'support'
     end
   end

@@ -23,47 +23,47 @@
                     <div class="col-sm-7 pl0">
                       <fieldset>
                         <div class="form-group mt-lg">
-                          <div class="col-sm-3 text-right mt-sm">Samedi 17/09/2022</div>
+                          <div class="col-sm-3 text-right mt-sm">Samedi 16/09/2023</div>
                           <div class="col-sm-2 pl0">
-                            <%= text_field_tag "event_poll[offers_feedback][#{offer.id}][count][2022-09-17]", @poll.offer_count('2022-09-17', offer.id),
+                            <%= text_field_tag "event_poll[offers_feedback][#{offer.id}][count][2023-09-16]", @poll.offer_count('2023-09-16', offer.id),
                                                class: 'form-control item_count digits required', placeholder: "Nb d'entrées", disabled: @disabled %>
                           </div>
                           <div class="col-sm-1 mt-sm text-center p0">ou</div>
                           <div class="col-sm-3 pl0">
                             <label class="checkbox-inline c-checkbox ml0 mr-lg">
-                              <%= check_box_tag "event_poll[offers_feedback][#{offer.id}][unknown][2022-09-17]", '1',
-                                                @poll.unknown('2022-09-17', offer.id), class: 'item_unknown', disabled: @disabled %>
+                              <%= check_box_tag "event_poll[offers_feedback][#{offer.id}][unknown][2023-09-16]", '1',
+                                                @poll.unknown('2023-09-16', offer.id), class: 'item_unknown', disabled: @disabled %>
                               <span class="fa fa-check"></span>non renseigné
                             </label>
                           </div>
                           <div class="col-sm-1 mt-sm text-center p0">ou</div>
                           <div class="col-sm-2 pl0">
                             <label class="checkbox-inline c-checkbox ml0 mr-lg">
-                              <%= check_box_tag "event_poll[offers_feedback][#{offer.id}][closed][2022-09-17]", '1',
-                                                @poll.closed('2022-09-17', offer.id), class: 'item_closed', disabled: @disabled %>
+                              <%= check_box_tag "event_poll[offers_feedback][#{offer.id}][closed][2023-09-16]", '1',
+                                                @poll.closed('2023-09-16', offer.id), class: 'item_closed', disabled: @disabled %>
                               <span class="fa fa-check"></span>fermé(e)
                             </label>
                           </div>
                         </div>
                         <div class="form-group mt">
-                          <div class="col-sm-3 text-right mt-sm">Dimanche 18/09/2022</div>
+                          <div class="col-sm-3 text-right mt-sm">Dimanche 17/09/2023</div>
                           <div class="col-sm-2 pl0">
-                            <%= text_field_tag "event_poll[offers_feedback][#{offer.id}][count][2022-09-18]", @poll.offer_count('2022-09-18', offer.id),
+                            <%= text_field_tag "event_poll[offers_feedback][#{offer.id}][count][2023-09-17]", @poll.offer_count('2023-09-17', offer.id),
                                                class: 'form-control item_count digits required', placeholder: "Nb d'entrées", disabled: @disabled %>
                           </div>
                           <div class="col-sm-1 mt-sm text-center p0">ou</div>
                           <div class="col-sm-3 pl0">
                             <label class="checkbox-inline c-checkbox ml0 mr-lg">
-                              <%= check_box_tag "event_poll[offers_feedback][#{offer.id}][unknown][2022-09-18]", '1',
-                                                @poll.unknown('2022-09-18', offer.id), class: 'item_unknown', disabled: @disabled %>
+                              <%= check_box_tag "event_poll[offers_feedback][#{offer.id}][unknown][2023-09-17]", '1',
+                                                @poll.unknown('2023-09-17', offer.id), class: 'item_unknown', disabled: @disabled %>
                               <span class="fa fa-check"></span>non renseigné
                             </label>
                           </div>
                           <div class="col-sm-1 mt-sm text-center">ou</div>
                           <div class="col-sm-2 pl0">
                             <label class="checkbox-inline c-checkbox ml0 mr-lg">
-                              <%= check_box_tag "event_poll[offers_feedback][#{offer.id}][closed][2022-09-18]", '1',
-                                                @poll.closed('2022-09-18', offer.id), class: 'item_closed', disabled: @disabled %>
+                              <%= check_box_tag "event_poll[offers_feedback][#{offer.id}][closed][2023-09-17]", '1',
+                                                @poll.closed('2023-09-17', offer.id), class: 'item_closed', disabled: @disabled %>
                               <span class="fa fa-check"></span>fermé(e)
                             </label>
                           </div>

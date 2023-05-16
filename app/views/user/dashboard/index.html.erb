@@ -1,4 +1,5 @@
 <div class="pull-right">
+  <a href="<%= user_dashboard_path(year: 2023) %>" class="btn btn-info btn-oval <%= 'btn-outline' unless @year == 2023 %>">JEP 2023</a>
   <a href="<%= user_dashboard_path(year: 2022) %>" class="btn btn-info btn-oval <%= 'btn-outline' unless @year == 2022 %>">JEP 2022</a>
   <a href="<%= user_dashboard_path(year: 2021) %>" class="btn btn-info btn-oval <%= 'btn-outline' unless @year == 2021 %>">JEP 2021</a>
   <a href="<%= user_dashboard_path(year: 2020) %>" class="btn btn-info btn-oval <%= 'btn-outline' unless @year == 2020 %>">JEP 2020</a>
@@ -15,6 +16,20 @@
       Inscrivez ici vos offres évènements organisés à l'occasion des Journées européennes du patrimoine (JEP)
       dans <%= territory_label %>
     </p>
+    <div class="alert mt0 mb0">
+      <h4 class="mt-sm mb bg-primary alert"><em class="icon-info pr-sm"></em>Rappel des bonnes pratiques de saisie</h4>
+      <p>Afin de proposer l’information la plus lisible pour les visiteurs, nous vous demandons de veiller à respecter ces règles de saisie :</p>
+      <ul class="mt">
+        <li class="mt-sm">Le <strong>titre</strong> (ou <strong>nom</strong> en fonction de son intitulé en saisie) est <strong>la 1ère information visible sur votre manifestation</strong>. Il doit être suffisamment <strong>explicite</strong> pour en comprendre le contenu. Vous pouvez inclure le type de manifestation (exposition, visite guidée, concert, etc...). Seule la 1ère lettre du nom de la fiche et des noms propres doit être en majuscule.</li>
+        <li class="mt-sm"><strong>Une fiche par temps fort</strong> : si les temps forts sont <strong>indépendants</strong> les uns des autres, créez autant de fiches que de temps forts
+          (par ex. : vous proposez une visite guidée et un concert et ces deux animations ne sont pas liées, alors il faudra créer une fiche pour la visite guidée et une fiche pour le concert).<br/>
+          Si les temps forts sont <strong>liés</strong> : créez une fiche pour tous les temps forts (par ex. : si pour accéder au concert il faut impérativement avoir suivi la visite guidée au préalable, il faudra créer une seule fiche).
+        </li>
+        <li class="mt-sm">Un <strong>descriptif de qualité</strong> qui donne envie aux visiteurs de venir à votre animation.</li>
+        <li class="mt-sm">Les informations doivent être <strong>renseignées dans les champs correspondants</strong> : les horaires, les tarifs et
+          les moyens de communication (numéros de téléphone, site web, etc.) doivent être renseignés dans les champs correspondants et ne doivent pas être repris dans les descriptifs.</li>
+      </ul>
+    </div>
   </div>
 </div>
 <% end %>

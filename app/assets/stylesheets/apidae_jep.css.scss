@@ -46,6 +46,10 @@ a > em:hover, a.text-white:hover {
   text-decoration: none;
 }
 
+.uk-notify.uk-notify-top-center {
+  top: 70px;
+}
+
 nav.topnavbar .navbar-header {
   display: flex;
   align-items: center;
@@ -191,6 +195,14 @@ form .previous_val {
 
 #program_items .panel.widget {
   overflow: visible;
+}
+
+#program_items .onboarding_action {
+  line-height: 1.1;
+
+  span {
+    margin: 5px 0;
+  }
 }
 
 #edit_opening .date.datepicker, #edit_opening .date.datetimepicker {

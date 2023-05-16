@@ -4,7 +4,7 @@ class User::ProgramItemsController < User::UserController
 
   def check_auth
     if current_user && current_user.territory == ISERE
-      redirect_to user_dashboard_url, alert: "La saisie des offres pour les JEP 2022 n'est plus disponible en ligne."
+      redirect_to user_dashboard_url, alert: "La saisie des offres pour les JEP 2023 n'est plus disponible en ligne."
     end
   end
 
@@ -103,10 +103,12 @@ class User::ProgramItemsController < User::UserController
     @new_item.user_id = current_user.id
     @new_item.status = ProgramItem::STATUS_DRAFT
     @new_item.history = []
-    @new_item.openings = {}
-    @item.item_openings.each do |o|
-      @new_item.item_openings << o.dup
+    @new_item.openings.each_pair do |d, o|
+      o['id'] = "#{@new_item.external_ref}-#{d.gsub('-', '')}"
     end
+    # @item.item_openings.each do |o|
+    #   @new_item.item_openings << o.dup
+    # end
     if @new_item.save(validate: false)
       @new_item.reference = @new_item.id
       @new_item.save(validate: false)
@@ -161,7 +163,7 @@ class User::ProgramItemsController < User::UserController
 
   def set_program_item
     @item = ProgramItem.find(params[:id])
-    @item.set_openings
+    # @item.set_openings
   end
 
   def opening_params

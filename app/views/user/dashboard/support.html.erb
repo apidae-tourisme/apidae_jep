@@ -11,15 +11,6 @@
           <strong>Julie Léon</strong>,<br/>
           tél : 04 76 00 37 72,<br/>
           mail : <%= mail_to 'julie.leon@isere.fr' %>.
-      <% elsif current_user.territory == SAUMUR %>
-        Pour tous les évènements JEP concernant Saumur :<br/>
-        <em>prochainement disponible</em>,<br/>
-        tél : <em>prochainement disponible</em>,<br/>
-        mail : <em>prochainement disponible</em>.
-      <% elsif current_user.territory == DLVA %>
-        Pour tous les évènements JEP concernant Durance Luberon Verdon Agglomération :<br/>
-        <strong>Valérie Marcuello</strong>,<br/>
-        mail : <%= mail_to 'v.marcuello@tourisme-dlva.fr' %>.
       <% end %>
     </p>
     <a href="/guide_saisie_apidaejep.pdf" target="_blank" class="btn btn-primary btn-lg">

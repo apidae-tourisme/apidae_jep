@@ -41,12 +41,12 @@ module ApidaeJep
     config.action_mailer.raise_delivery_errors = true
 
     # Notification email config
-    config.notification_title = "ApidaeJEP 2022 - Nouvelle saisie"
-    config.rejection_title = "ApidaeJEP 2022 - Offre rejetée"
-    config.publication_title = "ApidaeJEP 2022 - Offre validée"
-    config.notify_poll_title = "Questionnaire bilan JEP 2022 – Métropole de Lyon"
-    config.notify_com_title = "Supports de communication JEP 2022"
-    config.notify_com_summary_title = "Votre commande de supports de communication JEP 2022"
+    config.notification_title = "ApidaeJEP 2023 - Nouvelle saisie"
+    config.rejection_title = "ApidaeJEP 2023 - Offre rejetée"
+    config.publication_title = "ApidaeJEP 2023 - Offre validée"
+    config.notify_poll_title = "Questionnaire bilan JEP 2023 – Métropole de Lyon"
+    config.notify_com_title = "Supports de communication JEP 2023"
+    config.notify_com_summary_title = "Votre commande de supports de communication JEP 2023"
 
     config.signature = {
         'grand_lyon' => {label: "L’équipe JEP pour la Métropole de Lyon", contact: "jep.metropole@grandlyon.com"},

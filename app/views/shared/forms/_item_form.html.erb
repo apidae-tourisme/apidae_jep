@@ -219,14 +219,16 @@
           <legend class="text-uppercase text-primary mb0 openings">Horaires / ouverture*</legend>
           <div class="form-group">
             <% ext_ref = @item.external_ref %>
-            <% ['2022-09-16', '2022-09-17', '2022-09-18', '2022-09-19'].each do |d| %>
-              <div class="col-sm-3 mt-lg">
-                <button id="edit_opening_<%= d %>" type="button" class="btn btn-lg btn-primary w100"
-                        onclick="displayOpeningsForm('<%= d %>', '<%= @item.opening_id(ext_ref, d) %>', '<%= ext_ref %>', '<%= readonly %>'); return false;">
+            <% ['2023-09-15', '2023-09-16', '2023-09-17', '2023-09-18'].each do |d| %>
+              <% opening_ref = @item.opening_id(ext_ref, d) %>
+              <div id="apidae_opening_<%= opening_ref %>" class="col-sm-3 mt-lg">
+                <button id="edit_apihours_<%= opening_ref %>" type="button" class="btn btn-lg btn-primary w100"
+                        onclick="displayOpeningsForm('<%= d %>', '<%= opening_ref %>', '<%= ext_ref %>', '<%= readonly %>'); return false;">
                   <span class="text-uppercase"><strong><%= l(Date.parse(d), format: :long) %></strong></span><br/>
                   <em class="pre">Aucun horaire saisi.</em>
                 </button>
-                <%= hidden_field_tag "program_item[openings][#{d}]", @item.openings[d], id: "opening_#{d}", class: 'item_opening' %>
+                <%= hidden_field_tag "program_item[openings][#{d}][id]", opening_ref, id: "apihours_opening_#{opening_ref}_id", class: 'item_opening' %>
+                <%= hidden_field_tag "program_item[openings][#{d}][value]", @item.openings.dig(d, 'value'), id: "apihours_opening_#{opening_ref}_value", class: 'apihours_opening' %>
               </div>
             <% end %>
           </div>
@@ -330,16 +332,18 @@
           </div>
         </fieldset>
         <fieldset>
-          <legend class="text-uppercase text-primary">Informations et renseignements</legend>
+          <legend class="text-uppercase text-primary">Informations et renseignements*</legend>
           <div class="form-group">
-            <label class="col-sm-3 control-label">Téléphone</label>
+            <label class="col-sm-3 control-label">Téléphone<%= help_button %></label>
+            <%= help_content("La saisie d'un numéro de téléphone est obligatoire (il peut être identique au téléphone utilisé pour les réservations)") %>
             <div class="col-sm-9">
               <%= item_form.text_field :telephone, class: 'form-control telephone', disabled: readonly, placeholder: "au format : 01 02 03 04 05" %>
               <%= render_previous(:telephone) %>
             </div>
           </div>
           <div class="form-group mt-lg">
-            <label class="col-sm-3 control-label">Email</label>
+            <label class="col-sm-3 control-label">Email<%= help_button %></label>
+            <%= help_content("La saisie d'une adresse email est obligatoire (elle peut être identique à l'adresse email utilisée pour les réservations)") %>
             <div class="col-sm-9">
               <%= item_form.text_field :email, class: 'form-control email', disabled: readonly %>
               <%= render_previous(:email) %>
@@ -350,27 +354,6 @@
             <div class="col-sm-9">
               <%= item_form.text_field :website, class: 'form-control url', disabled: readonly, placeholder: 'http://' %>
               <%= render_previous(:website) %>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div id="accept_safety" class="form-group mt-lg mdy">
-            <div class="col-sm-12">
-              <label class="checkbox-inline c-checkbox">
-                <%= check_box_tag 'program_item[accept_safety]', '1', @item.accept_safety == '1', disabled: readonly %>
-                <span class="fa fa-check"></span>Nous nous engageons à mettre en œuvre toutes les dispositions nécessaires
-                pour garantir la sécurité sanitaire et physique des visiteurs, selon les directives des autorités qui seront
-                en vigueur les 16, 17, 18 et 19 septembre 2022*
-              </label>
-            </div>
-          </div>
-          <div class="form-group mt-lg">
-            <label class="col-sm-3 control-label">Dispositions spéciales Covid-19<%= help_button %></label>
-            <%= help_content("Veuillez indiquer les mesures mises en place en lien avec le contexte sanitaire") %>
-            <div class="col-sm-9">
-              <%= item_form.text_area :covid_desc, class: 'form-control', disabled: readonly, rows: 3,
-                                      placeholder: "Par ex: « Sur réservation uniquement », « X personnes maximum en même temps », « Port du masque obligatoire », etc..." %>
-              <%= render_previous(:covid_desc, 3) %>
             </div>
           </div>
         </fieldset>

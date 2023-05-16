@@ -1,121 +1,131 @@
-<script type="text/javascript" src="<%= Rails.application.config.apidate_static_url %>/inline.bundle.js"></script>
-<script type="text/javascript" src="<%= Rails.application.config.apidate_static_url %>/polyfills.bundle.js"></script>
-<script type="text/javascript" src="<%= Rails.application.config.apidate_static_url %>/main.bundle.js"></script>
+<script type="text/javascript" src="https://form.apihours.apidae-tourisme.com/0.6.0/bundle.js"></script>
 <script type="text/javascript">
     function displayOpeningsForm(date, externalId, externalRef, readonly) {
         if (readonly === 'disabled') {
-            displayOpeningsDetails(date, externalId);
+            return false;
         } else {
-            openApidateForm(
-                {
-                    title: 'Journées du patrimoine 2022',
-                    subtitle: moment(date).format('dddd D MMMM YYYY'),
-                    type: 'apidae_period',
-                    externalId: externalId,
-                    externalType: 'FETE_ET_MANIFESTATION',
-                    externalRef: externalRef,
-                    startDate: date,
-                    endDate: date,
-                    closingDays: [],
-                    userId: <% if @item.user && @item.user.uid %><%= @item.user.uid %><% else %>'<%= @item.user ? "JEP-#{@item.user.id}" : "JEP-USER" %>'<% end %>,
-                    onLoad: function() {
-                        unselectWeekdays();
-                        $("apidate-time-schedule .modal-body > div > div:last-child > button").click(function() {
-                            setTimeout(unselectWeekdays, 500);
-                        });
-                    },
-                    onSubmit: function() {
-                        $("#opening_" + date).val(externalId);
-                        loadOpenings();
-                    },
-                    onDismiss: function() {
-                        $("#opening_" + date).val(externalId);
-                        loadOpenings();
-                    }
-                }
-            );
+            openApiHours('Journées du patrimoine 2023', externalId, 'FETE_ET_MANIFESTATION', date, date);
         }
     }
 
-    function displayOpeningsDetails(date, externalId) {
-        openApidateDisplay({
-            title: 'Journées du patrimoine 2022',
-            subtitle: moment(date).format('dddd D MMMM YYYY'),
-            type: 'apidae_period',
-            externalId: externalId,
-            onLoad: function() {
-              $("apidate-details").find(".time-period > .card-body").each(function() {
-                  $(this).text($(this).text().replace(" tous les jours", ""));
-              })
-            }
-        });
-    //    $.map($("apidate-time-period").find(".card.bg-light:last-child"), function(elt) {return $(elt).text()}).join("\n")
-    }
+    // function displayOpeningsDetails(date, externalId) {
+    //     openApidateDisplay({
+    //         title: 'Journées du patrimoine 2023',
+    //         subtitle: moment(date).format('dddd D MMMM YYYY'),
+    //         type: 'apidae_period',
+    //         externalId: externalId,
+    //         onLoad: function() {
+    //           $("apidate-details").find(".time-period > .card-body").each(function() {
+    //               $(this).text($(this).text().replace(" tous les jours", ""));
+    //           })
+    //         }
+    //     });
+    // //    $.map($("apidate-time-period").find(".card.bg-light:last-child"), function(elt) {return $(elt).text()}).join("\n")
+    // }
 
     // Note : workaround to unselect weekdays, to fix automatic text generation - to replace with a "single day" init option on MH side
-    function unselectWeekdays() {
-        $("apidate-time-period .weekdays + div > button:last-child").click();
-    }
+    // function unselectWeekdays() {
+    //     $("apidate-time-period .weekdays + div > button:last-child").click();
+    // }
 
     // Note : singleorigin param is used to prevent Apache / CouchDB from setting multiple allow-origin headers
     function loadOpenings() {
         var values = $.map($(".item_opening"), function(elt) {return $(elt).val();}).filter(function(val) {return val;});
-        $.ajax({
-            url: '<%= Rails.application.config.apidate_api_url %>/apidae_period?singleorigin=true&ids=["' + values.join('","') + '"]',
-            method: 'GET',
-            contentType: 'application/json',
-            success: function(openings) {
-                if (openings) {
-                    $("[id^='edit_opening_']").each(function() {
-                        $(this).find("em").text("Aucun horaire saisi.");
-                    });
-                    for (var i = 0; i < openings.length; i++) {
-                        if (openings[i].startDate === openings[i].endDate) {
-                            var btn = $("#edit_opening_" + openings[i].startDate);
-                            if (btn.length && openings[i].timePeriods.length) {
-                                btn.find("em").text($.map(openings[i].timePeriods, function(tp) {return timePeriod(tp);}).join("\n"));
-                            }
-                        }
-                    }
+        for (const v of values) {
+            loadApiHoursValue(v);
+        }
+    }
+
+    // function timePeriod(tp) {
+    //     var timeFramesText = textJoin(tp.timeFrames.map(function(tf) {return timeFrame(tf);}));
+    //     return [tp.labels.fr, timeFramesText].join(" ") + ".";
+    // }
+
+    // function timeFrame(tf) {
+    //     var txt = "";
+    //     if (tf.startTime != null) {
+    //         if (tf.recurrence != null) {
+    //             txt += "toutes les " + duration(tf.recurrence) + " ";
+    //         }
+    //         if (tf.endTime != null) {
+    //             txt += "de " + tf.startTime.replace(':', 'h') + " à " + tf.endTime.replace(':', 'h');
+    //         } else {
+    //             txt += (tf.recurrence ? "à partir de " : "à ") + tf.startTime.replace(':', 'h');
+    //         }
+    //     }
+    //     return txt;
+    // }
+    //
+    // function textJoin(textFields) {
+    //     var validFields = textFields.filter(function(f) {return f.length > 0;});
+    //     if (validFields.length > 0) {
+    //         var last = validFields.pop();
+    //         return validFields.length > 0 ? (validFields.join(", ") + " et " + last) : last;
+    //     } else {
+    //         return "";
+    //     }
+    // }
+    //
+    // function duration(d) {
+    //     return (d.indexOf('00') === 0 ? '' : (+d.split(':')[0] + 'h')) + (d.indexOf('00') > 0 ? '' : +d.split(':')[1] + "mins");
+    // }
+
+    function loadApiHoursValue(externalId) {
+        var inputElt = document.querySelector("#apihours_opening_" + externalId + "_value"),
+          buttonElt = document.querySelector("#edit_apihours_" + externalId + " em");
+        if (/^\d+$/.test(externalId)) {
+            apihours.loadApiHoursOpening(externalId).then(function(timeSchedule) {
+                if (timeSchedule && timeSchedule.length > 0) {
+                    inputElt.value = timeSchedule;
+                    buttonElt.innerHTML = timePeriodsAsText(timeSchedule);
                 }
+            });
+        } else if (inputElt.value) {
+            buttonElt.innerHTML = timePeriodsAsText(inputElt.value);
+        }
+    }
+
+    function openApiHours(offerTitle, externalId, externalType, startDate, endDate) {
+        const inputSelector = "#apihours_opening_" + externalId + "_value",
+          apiHoursInputElt = document.querySelector(inputSelector),
+          btnElt = document.querySelector("#edit_apihours_" + externalId + " em");
+
+
+        let options = {startDate: startDate, endDate: endDate};
+        if (/^\d+$/.test(externalId)) {
+            options.externalId = externalId;
+        } else {
+            options.externalType = externalType;
+        }
+        if (apiHoursInputElt.value) {
+            options.timePeriods = JSON.parse(apiHoursInputElt.value);
+        }
+        openApiHoursForm(offerTitle, options, {
+            onSubmit: function(timePeriods) {
+                apiHoursInputElt.value = timePeriods;
+                btnElt.innerHTML = timePeriodsAsText(timePeriods).replace(' tous les jours', '');
             },
-            error: function(error) {
-                console.log('openings loading failed : ' + error);
+            styles: {
+                mainBackground: '#ffffff',
+                mainColor: '#333333',
+                altBackground: '#dedede',
+                altColor: '#333333',
+                fontFamily: 'inherit',
+                headerImage: 'none'
             }
         });
     }
 
-    function timePeriod(tp) {
-        var timeFramesText = textJoin(tp.timeFrames.map(function(tf) {return timeFrame(tf);}));
-        return [tp.labels.fr, timeFramesText].join(" ") + ".";
-    }
-
-    function timeFrame(tf) {
-        var txt = "";
-        if (tf.startTime != null) {
-            if (tf.recurrence != null) {
-                txt += "toutes les " + duration(tf.recurrence) + " ";
-            }
-            if (tf.endTime != null) {
-                txt += "de " + tf.startTime.replace(':', 'h') + " à " + tf.endTime.replace(':', 'h');
-            } else {
-                txt += (tf.recurrence ? "à partir de " : "à ") + tf.startTime.replace(':', 'h');
-            }
-        }
-        return txt;
-    }
-
-    function textJoin(textFields) {
-        var validFields = textFields.filter(function(f) {return f.length > 0;});
-        if (validFields.length > 0) {
-            var last = validFields.pop();
-            return validFields.length > 0 ? (validFields.join(", ") + " et " + last) : last;
+    function timePeriodsAsText(timeSchedule) {
+        let ts = JSON.parse(timeSchedule || '[]');
+        if (ts.length > 0) {
+            return ts.map(function(tp) { return tp.description; }).join("<br/>");
         } else {
-            return "";
+            return 'Aucun horaire saisi.';
         }
     }
 
-    function duration(d) {
-        return (d.indexOf('00') === 0 ? '' : (+d.split(':')[0] + 'h')) + (d.indexOf('00') > 0 ? '' : +d.split(':')[1] + "mins");
+    function isValidDate(val) {
+        return /^\d{4}-\d{2}-\d{2}$/.test(val);
     }
 </script>

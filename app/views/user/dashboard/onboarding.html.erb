@@ -1,0 +1,58 @@
+<h3>
+  Bienvenue sur l'édition <%= EDITION %> de ApidaeJEP
+</h3>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <h4 class="mt-sm">Présélection de vos offres à reconduire :</h4>
+    <p>
+      Pour faciliter la saisie de votre programmation, <strong>vos offres de l'édition <%= EDITION - 1 %> ont été préselectionnées ci-dessous</strong>.<br/>
+      Nous vous invitons à passer cette liste en revue afin de sélectionner toutes les offres que vous souhaitez reconduire cette année.
+      Pour chaque offre sélectionnée, l'outil créera une nouvelle version <%= EDITION %> à l'état de brouillon, que vous pourrez ensuite
+      modifier depuis votre tableau de bord.<br/>
+      <em>Note : si vous ne sélectionnez pas une offre ici mais que vous souhaitez finalement la reconduire, vous pourrez toujours
+        la sélectionner via votre tableau de bord par la suite.</em>
+    </p>
+  </div>
+</div>
+<div id="program_items" class="row">
+  <%= form_tag(url_for(action: :submit_onboarding), method: :post) do %>
+    <% @items.each_with_index do |item, i| %>
+      <div class="col-sm-12">
+        <div class="panel widget">
+          <div class="row row-table row-flush">
+            <div class="col-xs-3">
+              <picture class="lateral-picture bg-gray-dark">
+                <% if item.picture %>
+                  <div class="bg-center" style="background-image: url(<%= item.picture %>); height: 100%;"></div>
+                <% else %>
+                  <div class="text-center pt-lg">
+                    <i class="fa fa-5x <%= item_icon(item.item_type) %>"></i>
+                  </div>
+                <% end %>
+              </picture>
+            </div>
+            <div class="col-xs-7 ph-lg">
+              <h3 class="mt">
+                <%= item.title.blank? ? "Offre #{i}" : item.title %>&nbsp;
+                <span class="label text-sm label-default text-gray-dark"><%= t "program_item.type.#{item.item_type}" %></span>
+                <span class="label text-sm text-normal label-<%= item_color(item.status) %>"><%= t "program_item.status.#{item.status}" %></span>
+              </h3>
+              <p class="pre"><%= ellipsis(item.description) unless item.description.blank? %></p>
+            </div>
+            <div class="col-xs-2 p-lg text-center onboarding_action">
+              <label class="checkbox-inline c-checkbox">
+                <%= check_box_tag "duplicated_offers[]", item.id, false, class: 'hidden' %>
+                <span class="fa fa-check"></span><br/>Cocher si l'offre est reconduite
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <div class="col-sm-12 mt mb-lg">
+      <div class="text-right">
+        <%= submit_tag 'Enregistrer ma présélection', class: 'btn btn-lg btn-primary ml', data: {disable_with: 'Veuillez patienter, enregistrement en cours...'} %>
+      </div>
+    </div>
+  <% end %>
+</div>
