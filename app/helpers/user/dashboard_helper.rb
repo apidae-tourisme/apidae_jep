@@ -1,4 +1,6 @@
 module User::DashboardHelper
+  include ::ItemConcern
+
   def territory_label
     case current_user.territory
     when ISERE
