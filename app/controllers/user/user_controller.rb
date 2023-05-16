@@ -20,7 +20,7 @@ class User::UserController < ApplicationController
   end
 
   def check_onboarding
-    if current_user && !current_user.onboarding
+    if current_user && current_user.legal_entity_id && !current_user.onboarding
       redirect_to user_onboarding_path
     end
   end
