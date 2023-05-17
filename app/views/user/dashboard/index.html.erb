@@ -9,7 +9,6 @@
 <h3>
   Bienvenue sur ApidaeJEP
 </h3>
-<% unless current_user.territory == ISERE %>
 <div class="panel panel-info">
   <div class="panel-body">
     <p class="mb0">
@@ -32,15 +31,6 @@
     </div>
   </div>
 </div>
-<% end %>
-<% if current_user.territory == ISERE %>
-  <p class="alert alert-info">
-    <em class="icon-info pr-sm"></em>La saisie des Journées européennes du patrimoine sur la plateforme ApidaeJEP est désormais terminée.<br/>
-    <br/>
-    Vous pouvez cependant ajouter ou modifier des informations en vous adressant à l’office de tourisme dont vous dépendez afin que le programme en ligne soit mis à jour.
-  </p>
-<% end %>
-<% unless current_user.territory == ISERE %>
 <div class="pull-right">
   <%= link_to '<span class="btn-label"><i class="fa fa-plus"></i></span>Saisir une offre'.html_safe, new_user_program_item_path,
               class: 'btn btn-labeled btn-primary' %>
@@ -100,4 +90,3 @@
     </div>
   </div>
 </div>
-<% end %>
