@@ -13,13 +13,13 @@ ITEM_EXPOSITION = "exposition"
 ITEM_TYPES = [ITEM_VISITE, ITEM_PARCOURS, ITEM_ANIMATION, ITEM_EXPOSITION]
 
 THEMES = {
-    GRAND_LYON => ["Thématique métropole 2022 - Migrations et immigration", "Thématique nationale 2022 - \"Patrimoine durable\"", "Nouveauté",
+    GRAND_LYON => ["Thématique métropole 2023 - Lumière", "Thématique nationale 2023 - \"Patrimoine vivant\"", "Nouveauté",
                    "En famille", "Egalité"],
-    ISERE => ["Thématique nationale 2022 - \"Patrimoine durable\"", "Famille", "Réservé aux enfants", "Antiquité",
+    ISERE => ["Thématique nationale 2023 - \"Patrimoine vivant\"", "Famille", "Réservé aux enfants", "Antiquité",
               "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique"],
-    SAUMUR => ["Thématique nationale 2022 - \"Patrimoine durable\"", "JEP | Première ouverture", "Famille", "Réservé aux enfants", "Antiquité",
+    SAUMUR => ["Thématique nationale 2023 - \"Patrimoine vivant\"", "JEP | Première ouverture", "Famille", "Réservé aux enfants", "Antiquité",
                      "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique", "Œnologie"],
-    DLVA => ["Thématique nationale 2022 - \"Patrimoine durable\"", "Famille", "Réservé aux enfants", "Antiquité",
+    DLVA => ["Thématique nationale 2023 - \"Patrimoine vivant\"", "Famille", "Réservé aux enfants", "Antiquité",
               "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique"]
 }
 THEMES_REFS = Hash[THEMES.values.flatten.collect {|th| [th.parameterize, th] }]
@@ -121,11 +121,11 @@ APIDAE_CRITERIA = {
     'Balades urbaines du Musée Gadagne' => 8292,
     'Demeure privée' => 17728,
     'JEP | Première ouverture' => 17818,
-    'Thématique métropole 2022 - Migrations et immigration' => 22742
+    'Thématique métropole 2023 - Lumière' => 22742
 }
 
 APIDAE_TYPOLOGIES = {
-    "Thématique nationale 2022 - \"Patrimoine durable\"" => 6778
+    "Thématique nationale 2023 - \"Patrimoine vivant\"" => 7063
 }
 
 APIDAE_ENVIRONMENTS = {

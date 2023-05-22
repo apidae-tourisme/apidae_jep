@@ -69,10 +69,13 @@
                 <fieldset>
                   <legend class="text-uppercase text-primary mb-sm">Informations sur la commande</legend>
                   <div class="help-block mb-lg">
-                    <em class="icon-info pr-sm"></em>La livraison se déroulera du 2 au 14 septembre 2023. Un seul passage
+                    <em class="icon-info pr-sm"></em>La livraison se déroulera du 28 Août au 8 septembre 2023. Un seul passage
                     sera effectué. Aussi nous vous demandons d'être précis sur l'adresse et le contact pour la livraison
                     et d'indiquer plusieurs plages horaires de livraison possibles. Enfin, nous vous informons qu'il s'agit
-                    d'une livraison uniquement. Nous vous laissons le soin de gérer la pose des panneaux de signalétique.
+                    d'une livraison uniquement. Nous vous laissons le soin de gérer la pose et la dépose des panneaux de signalétique.<br/>
+                    Nous vous demandons désormais de conserver ces panneaux de signalétique d’une année sur l’autre pour optimiser
+                    leur utilisation et minimiser notre impact environnemental. Ils comporteront un emplacement pour ajouter les
+                    informations dont vous aurez besoin.
                   </div>
                   <div class="form-group mdy">
                     <label class="col-sm-3 control-label">Adresse de livraison</label>
@@ -106,18 +109,14 @@
                   <div class="form-group mdy">
                     <label class="col-sm-4 control-label">Nombre de programmes papier</label>
                     <div class="col-sm-2">
-                      <%= poll_form.select :flyers, (0..20).collect {|i| i*50}, {}, class: 'form-control required digits' %>
+                      <%= poll_form.select :flyers, [0, 10, 50, 100], {}, class: 'form-control required digits' %>
                     </div>
                     <label class="col-sm-4 control-label">Nombre d'affiches 40 x 60 cm</label>
                     <div class="col-sm-2">
-                      <%= poll_form.text_field :posters1, class: 'form-control required digits' %>
+                      <%= poll_form.select :posters1, [0, 5, 10], {}, class: 'form-control required digits' %>
                     </div>
                   </div>
                   <div class="form-group mdy mt-lg">
-                    <label class="col-sm-4 control-label">Nombre d'affiches 120 x 176 cm</label>
-                    <div class="col-sm-2">
-                      <%= poll_form.text_field :posters2, class: 'form-control required digits' %>
-                    </div>
                     <label class="col-sm-4 control-label">Nombre de panneaux de signalétique 53 x 120 cm avec accroches</label>
                     <div class="col-sm-2">
                       <%= poll_form.text_field :signs, class: 'form-control required digits' %>
