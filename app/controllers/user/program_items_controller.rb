@@ -104,7 +104,11 @@ class User::ProgramItemsController < User::UserController
     @new_item.status = ProgramItem::STATUS_DRAFT
     @new_item.history = []
     @new_item.openings.each_pair do |d, o|
-      o['id'] = "#{@new_item.external_ref}-#{d.gsub('-', '')}"
+      if o.is_a?(Hash)
+        o['id'] = "#{@new_item.external_ref}-#{d.gsub('-', '')}"
+      else
+        @new_item.openings[d] = {'id' => "#{@new_item.external_ref}-#{d.gsub('-', '')}"}
+      end
     end
     # @item.item_openings.each do |o|
     #   @new_item.item_openings << o.dup
