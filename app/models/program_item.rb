@@ -696,8 +696,8 @@ class ProgramItem < ActiveRecord::Base
   def opening_times(openings_data)
     opening_periods = []
     openings_data.each_pair do |date, op|
-      unless op.blank?
-        time_periods = JSON.parse(op).map {|tp| tp.except('description')}
+      unless op.blank? || op['value'].blank?
+        time_periods = JSON.parse(op['value']).map {|tp| tp.except('description')}
         unless time_periods.blank?
           opening_period = {
               dateDebut: date,
