@@ -707,7 +707,7 @@ class ProgramItem < ActiveRecord::Base
               timePeriods: time_periods
           }
           opening_period.merge!(identifiantTechnique: op['id'].to_i) if !op['id'].blank? && /^\d+$/.match?(op['id'].to_s)
-          opening_period.merge!(complementHoraire: openings_desc) unless openings_desc.blank?
+          opening_period.merge!(complementHoraire: {libelleFr: openings_desc}) unless openings_desc.blank?
           opening_periods << opening_period
         end
       end
