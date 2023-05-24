@@ -25,8 +25,11 @@ THEMES = {
 THEMES_REFS = Hash[THEMES.values.flatten.collect {|th| [th.parameterize, th] }]
 
 VALIDATION_CRITERIA = {
-    GRAND_LYON => ['Coup de coeur', 'Visites guidées de l\'Office du Tourisme', 'Balades urbaines du Musée Gadagne',
-                   'Sous-thématique 1', 'Sous-thématique 2', 'Sous-thématique 3', 'Sous-thématique 4', 'Sous-thématique 5'],
+    GRAND_LYON => ['Coup de coeur', 'Egalité', 'Balades urbaines du Musée Gadagne',
+                   'Sous-thématique 1', 'Sous-thématique 2', 'Sous-thématique 3', 'Sous-thématique 4', 'Sous-thématique 5',
+                   'Sous-thématique 6', 'Sous-thématique 7', 'Sous-thématique 8', 'Sous-thématique 9', 'Sous-thématique 10',
+                   'Sous-thématique 11', 'Sous-thématique 12', 'Sous-thématique 13', 'Sous-thématique 14', 'Sous-thématique 15',
+                   'Sous-thématique 16', 'Sous-thématique 17', 'Sous-thématique 18', 'Sous-thématique 19', 'Sous-thématique 20'],
     ISERE => [],
     SAUMUR => ['Demeure privée', 'Site troglodyte'],
     DLVA => []
@@ -116,12 +119,27 @@ APIDAE_CRITERIA = {
     'Sous-thématique 3' => 10166,
     'Sous-thématique 4' => 10167,
     'Sous-thématique 5' => 10168,
+    'Sous-thématique 6' => 25187,
+    'Sous-thématique 7' => 25188,
+    'Sous-thématique 8' => 25189,
+    'Sous-thématique 9' => 25191,
+    'Sous-thématique 10' => 25192,
+    'Sous-thématique 11' => 25193,
+    'Sous-thématique 12' => 25194,
+    'Sous-thématique 13' => 25195,
+    'Sous-thématique 14' => 25196,
+    'Sous-thématique 15' => 25197,
+    'Sous-thématique 16' => 25198,
+    'Sous-thématique 17' => 25199,
+    'Sous-thématique 18' => 25200,
+    'Sous-thématique 19' => 25201,
+    'Sous-thématique 20' => 25202,
     'Coup de coeur' => 7998,
     'Visites guidées de l\'Office du Tourisme' => 8778,
     'Balades urbaines du Musée Gadagne' => 8292,
     'Demeure privée' => 17728,
     'JEP | Première ouverture' => 17818,
-    'Thématique métropole 2023 - Lumière' => 22742
+    'Thématique métropole 2023 - Lumière' => 25207
 }
 
 APIDAE_TYPOLOGIES = {
