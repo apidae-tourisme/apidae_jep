@@ -536,7 +536,7 @@ class ProgramItem < ActiveRecord::Base
         converted_hash = {
             ouverture: {
                 periodeEnClair: {libelleFr: ''},
-                periodeEnClairGenerationMode: 'MANUEL',
+                periodeEnClairGenerationMode: 'AUTOMATIQUE',
                 periodesOuvertures: opening_times(value)
             }
         }

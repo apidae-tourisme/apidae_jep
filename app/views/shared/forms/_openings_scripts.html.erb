@@ -119,7 +119,7 @@
     function timePeriodsAsText(timeSchedule) {
         let ts = JSON.parse(timeSchedule || '[]');
         if (ts.length > 0) {
-            return ts.map(function(tp) { return tp.description; }).join("<br/>").replace(' tous les jours', '');
+            return ts.map(function(tp) { return tp.description; }).join("<br/>").replace(/( tous les jours)/g, '');
         } else {
             return 'Aucun horaire saisi.';
         }

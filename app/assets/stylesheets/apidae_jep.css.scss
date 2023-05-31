@@ -283,7 +283,7 @@ form .previous_val {
   line-height: 24px;
 }
 
-#program_item_form legend.openings {
+#program_item_form legend.openings, #program_item_form legend.com_fields {
   position: relative;
 }
 
@@ -401,8 +401,17 @@ ngb-modal-window.apidae_date.modal.fade {
     width: 5rem;
   }
 
+  apidate-time-schedule .modal-header {
+    display: none;
+  }
+
   apidate-time-schedule form.submitted.ng-invalid ngb-timepicker.ng-invalid::after {
     font-size: 1rem;
+  }
+
+
+  apidate-time-schedule form .modal-footer > button:nth-child(2) {
+    display: none;
   }
 
   .modal-dialog {
