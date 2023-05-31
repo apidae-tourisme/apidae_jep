@@ -197,6 +197,7 @@ class ProgramItem < ActiveRecord::Base
     if external_id
       obj = EventsImporter.load_apidae_events([external_id], 'id', 'ouverture')
       if obj && obj.openings
+        openings.transform_values! {|v| v.is_a?(Hash) ? v : {'id' => v}}
         openings.each_pair do |d, op|
           obj_opening = obj.openings.find {|o| o[:dateDebut] == d && o[:dateFin] == d}
           if obj_opening

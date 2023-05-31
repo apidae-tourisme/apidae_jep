@@ -176,11 +176,13 @@
                 }
             }
         });
-        <% if @user.communication_poll.town_insee_code %>
-        setTownValue('<%= @user.communication_poll.town_insee_code %>', '<%= @user.communication_poll.town.label %>');
-        <% end %>
-        <% if @user.communication_poll.delivery_insee_code %>
-        setTownValue('<%= @user.communication_poll.delivery_insee_code %>', '<%= @user.communication_poll.delivery_town.label %>');
+        <% if @user.communication_poll %>
+          <% if @user.communication_poll.town_insee_code %>
+          setTownValue('<%= @user.communication_poll.town_insee_code %>', '<%= @user.communication_poll.town.label %>');
+          <% end %>
+          <% if @user.communication_poll.delivery_insee_code %>
+          setTownValue('<%= @user.communication_poll.delivery_insee_code %>', '<%= @user.communication_poll.delivery_town.label %>');
+          <% end %>
         <% end %>
 
         $.extend($.validator.messages, {
