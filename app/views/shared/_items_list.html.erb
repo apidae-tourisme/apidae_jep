@@ -36,7 +36,7 @@
                     <% if territory?(GRAND_LYON) %>
                     <td class="text-center">
                       <% if item.user %>
-                        <%= item.user.communication.nil? ? '?' : (item.user.communication ? link_to('Oui', edit_kit_moderator_account_path(item.user_id), class: 'btn btn-link') : 'Non') %>
+                        <%= (item.user.communication.nil? || item.user.communication_poll.nil?) ? '?' : (item.user.communication && item.user.communication_poll ? link_to('Oui', edit_kit_moderator_account_path(item.user_id), class: 'btn btn-link') : 'Non') %>
                       <% end %>
                     </td>
                     <% end %>
