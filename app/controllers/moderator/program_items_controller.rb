@@ -15,7 +15,7 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
   def export
     @year = params[:year].blank? ? EDITION : params[:year].to_i
     @items = ProgramItem.in_status(current_moderator.member_ref, @year,
-                                   ProgramItem::STATUS_PENDING, ProgramItem::STATUS_VALIDATED, ProgramItem::STATUS_REJECTED)
+                                   ProgramItem::STATUS_PENDING, ProgramItem::STATUS_VALIDATED, ProgramItem::STATUS_REJECTED).to_a
     ProgramItem.set_openings_texts(@items)
     respond_to do |format|
       format.xlsx {
