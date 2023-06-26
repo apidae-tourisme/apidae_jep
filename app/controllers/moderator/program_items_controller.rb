@@ -16,7 +16,9 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
     @year = params[:year].blank? ? EDITION : params[:year].to_i
     @items = ProgramItem.in_status(current_moderator.member_ref, @year,
                                    ProgramItem::STATUS_PENDING, ProgramItem::STATUS_VALIDATED, ProgramItem::STATUS_REJECTED).to_a
+    Rails.logger.info "Exporting #{@items.count} items"
     ProgramItem.set_openings_texts(@items)
+    Rails.logger.info "Set openings texts done on #{@items.count} items"
     respond_to do |format|
       format.xlsx {
         response.headers['Content-Disposition'] = "attachment; filename=\"offres-#{current_moderator.member_ref}-#{I18n.l(Time.current, format: :reference)}.xlsx\""
