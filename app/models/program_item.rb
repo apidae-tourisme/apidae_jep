@@ -210,11 +210,11 @@ class ProgramItem < ActiveRecord::Base
 
   def self.set_openings_texts(items)
     remote_ids = items.map {|i| i.external_id}.select {|ext_id| !ext_id.blank?}.uniq
-    objs = EventsImporter.load_apidae_events(remote_ids, ['id', 'ouverture'])
+    objs = EventsImporter.load_apidae_events(remote_ids, 'id', 'ouverture')
     items.each do |item|
       item.openings_text = nil
       unless item.external_id.blank?
-        obj = objs.find {|o| o.id.to_i == item.external_id}
+        obj = objs.is_a?(Array) ? objs.find {|o| o.id.to_i == item.external_id} : objs
         item.openings_text = obj.openings_description if obj
       end
     end
