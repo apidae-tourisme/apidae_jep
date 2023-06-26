@@ -216,7 +216,10 @@ class ProgramItem < ActiveRecord::Base
       item.openings_text = nil
       unless item.external_id.blank?
         obj = objs.is_a?(Array) ? objs.find {|o| o.id.to_i == item.external_id} : objs
-        item.openings_text = obj.openings_description if obj
+        if obj
+          item.openings_text = obj.openings_description
+          Rails.logger.info "Set opening text on #{obj.id} : #{obj.openings_description}"
+        end
       end
     end
   end
