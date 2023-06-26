@@ -113,7 +113,7 @@ class EventsImporter
     query = SitraClient.query({
                                   identifiants: ids,
                                   responseFields: response_fields
-                              })
+                              }, true)
     ids.length == 1 ? query[:results].first : query[:results]
   end
 
