@@ -208,17 +208,17 @@ class ProgramItem < ActiveRecord::Base
     end
   end
 
-  # def self.set_openings_texts(items)
-  #   remote_ids = items.map {|i| i.external_id}.select {|ext_id| !ext_id.blank?}.uniq
-  #   objs = EventsImporter.load_apidae_events(remote_ids, ['id', 'ouverture'])
-  #   items.each do |item|
-  #     item.openings_text = nil
-  #     unless item.external_id.blank?
-  #       obj = objs.find {|o| o.id.to_i == item.external_id}
-  #       item.openings_text = obj.openings_description if obj
-  #     end
-  #   end
-  # end
+  def self.set_openings_texts(items)
+    remote_ids = items.map {|i| i.external_id}.select {|ext_id| !ext_id.blank?}.uniq
+    objs = EventsImporter.load_apidae_events(remote_ids, ['id', 'ouverture'])
+    items.each do |item|
+      item.openings_text = nil
+      unless item.external_id.blank?
+        obj = objs.find {|o| o.id.to_i == item.external_id}
+        item.openings_text = obj.openings_description if obj
+      end
+    end
+  end
 
   def external_ref
     external_id || "JEP-#{(Time.current.to_f * 1000).floor}"
