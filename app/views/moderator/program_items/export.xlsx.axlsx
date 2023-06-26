@@ -7,7 +7,7 @@ unknown = []
 
 wb.add_worksheet(name: 'Toutes les offres') do |sheet|
   sheet.add_row exported_columns.values.flatten.map {|v| I18n.t("export.program_item.#{v}")}
-  @items.to_a.sort_by {|i| i.main_town_insee_code}.each do |item|
+  @items.sort_by {|i| i.main_town_insee_code}.each do |item|
     sheet.add_row exported_values(item), style: wrap
   end
   sheet.column_widths *cols_width
