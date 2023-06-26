@@ -212,6 +212,7 @@ class ProgramItem < ActiveRecord::Base
     remote_ids = items.map {|i| i.external_id}.select {|ext_id| !ext_id.blank?}.uniq
     Rails.logger.info "Set openings texts on #{remote_ids.count} remote ids"
     objs = EventsImporter.load_apidae_events(remote_ids, 'id', 'ouverture')
+    Rails.logger.info "Retrieved #{objs.count} objs"
     items.each do |item|
       item.openings_text = nil
       unless item.external_id.blank?
