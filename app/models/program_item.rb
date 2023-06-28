@@ -76,12 +76,12 @@ class ProgramItem < ActiveRecord::Base
       items_batch.each do |item|
         item.openings_details ||= []
       end
-      ids = items_batch.map {|item| item.openings.select {|k, v| !v.blank?}.values.flatten.map {|o| o['id']}}.flatten.uniq.map {|op_id| op_id.to_s}
+      ext_ids = items_batch.map {|item| item.external_id}.select {|ext_id| !ext_id.blank?}
       apidate_url = Rails.application.config.apidate_api_url + '/apidae_period'
-      logger.info "Retrieve openings : #{apidate_url}?ids=#{CGI.escape('["' + ids.join('","') + '"]')}"
+      logger.info "Retrieve openings : #{apidate_url}?refs=#{CGI.escape('["' + ext_ids.join('","') + '"]')}"
       begin
         response = ''
-        open(apidate_url + '?ids=' + CGI.escape('["' + ids.join('","') + '"]')) { |f|
+        open(apidate_url + '?ids=' + CGI.escape('["' + ext_ids.join('","') + '"]')) { |f|
           f.each_line {|line| response += line if line}
         }
         ops = JSON.parse(response)
