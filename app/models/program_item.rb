@@ -81,7 +81,7 @@ class ProgramItem < ActiveRecord::Base
       logger.info "Retrieve openings : #{apidate_url}?refs=#{CGI.escape('["' + ext_ids.join('","') + '"]')}"
       begin
         response = ''
-        open(apidate_url + '?ids=' + CGI.escape('["' + ext_ids.join('","') + '"]')) { |f|
+        open(apidate_url + '?refs=' + CGI.escape('["' + ext_ids.join('","') + '"]')) { |f|
           f.each_line {|line| response += line if line}
         }
         ops = JSON.parse(response)
