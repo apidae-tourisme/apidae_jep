@@ -72,7 +72,7 @@ class ProgramItem < ActiveRecord::Base
   end
 
   def self.set_openings_details(items)
-    items.each_slice(25) do |items_batch|
+    items.each_slice(15) do |items_batch|
       items_batch.each do |item|
         item.openings_details ||= []
       end
