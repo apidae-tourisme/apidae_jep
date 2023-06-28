@@ -86,10 +86,12 @@ class ProgramItem < ActiveRecord::Base
         }
         ops = JSON.parse(response)
         ops.each do |opening|
-          ext_id = opening['externalRef']
-          item = items_batch.find {|item| item.external_id && item.external_id.to_s == ext_id.to_s}
-          if item
-            item.openings_details << opening
+          if opening['startDate'].include?(EDITION.to_s)
+            ext_id = opening['externalRef']
+            item = items_batch.find {|item| item.external_id && item.external_id.to_s == ext_id.to_s}
+            if item
+              item.openings_details << opening
+            end
           end
         end
       rescue OpenURI::HTTPError => e
@@ -142,7 +144,7 @@ class ProgramItem < ActiveRecord::Base
   end
 
   def open_dates
-    openings.blank? ? [] : openings.select {|k, v| !v.blank? && !v['id'].to_s.include?('-') && openings_details.map {|od| od['startDate']}.include?(k)}.keys
+    openings.blank? ? [] : openings.select {|k, v| !v.blank? && !v['id'].to_s.include?('JEP') && openings_details.map {|od| od['startDate']}.include?(k)}.keys
   end
 
   def validated_at
