@@ -72,11 +72,11 @@ class ProgramItem < ActiveRecord::Base
   end
 
   def self.set_openings_details(items)
-    items.each_slice(15) do |items_batch|
+    items.each_slice(25) do |items_batch|
       items_batch.each do |item|
         item.openings_details ||= []
       end
-      ids = items_batch.map {|item| item.openings.select {|k, v| !v.blank?}.values.flatten}.flatten.uniq.map {|op_id| op_id.to_s}
+      ids = items_batch.map {|item| item.openings.select {|k, v| !v.blank?}.values.flatten.map {|o| o['id']}}.flatten.uniq.map {|op_id| op_id.to_s}
       apidate_url = Rails.application.config.apidate_api_url + '/apidae_period'
       logger.info "Retrieve openings : #{apidate_url}?ids=#{CGI.escape('["' + ids.join('","') + '"]')}"
       begin
