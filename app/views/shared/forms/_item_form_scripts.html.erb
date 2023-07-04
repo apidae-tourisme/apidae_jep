@@ -360,6 +360,10 @@
             return !value || /^\d{2} \d{2} \d{2} \d{2} \d{2}$/.test(value);
         });
 
+        $.validator.addMethod('valid_url', function(value, element) {
+            return !value || /^https?:\/\/.*$/.test(value);
+        });
+
         $.validator.addMethod('com_presence', function(value, element) {
             return $(".com_field").filter(function() {return $(this).val();}).length > 0;
         });
@@ -371,6 +375,8 @@
                 } else if(element.is(':hidden')) {
                     if(element.attr("id") === 'program_item_status') {
                       $("legend.openings").append(error);
+                    } else if (element.attr("id") === 'com_fields') {
+                      $("legend.com_fields").append(error);
                     }
                 } else {
                     element.after(error);
@@ -383,8 +389,10 @@
                 "program_item[accessibility][]": {required: true, minlength: 1},
                 "program_item[status]": {opening_presence: true},
                 "program_item[accept_pictures]": {accept_pictures: true},
-                "program_item[telephone]": {valid_phone: true, required: true},
-                "program_item[email]": {email: true, required: true},
+                "com_fields": {com_presence: true},
+                "program_item[telephone]": {valid_phone: true},
+                "program_item[email]": {email: true},
+                "program_item[website]": {valid_url: true},
                 "program_item[booking_telephone]": {valid_phone: true},
                 "program_item[main_lat]": {number: true, min: 40, max: 50},
                 "program_item[main_lng]": {number: true, min: -2.5, max: 7.223510742187499},
@@ -393,6 +401,7 @@
             messages: {
                 "program_item[accessibility][]": "champ requis",
                 "program_item[status]": "veuillez saisir au moins une période d'ouverture",
+                "com_fields": "veuillez saisir au moins un moyen de communication",
                 "program_item[accept_pictures]": "veuillez valider les conditions d'utilisations des photos",
                 "program_item[telephone]": "au format : 01 02 03 04 05",
                 "program_item[booking_telephone]": "au format : 01 02 03 04 05"

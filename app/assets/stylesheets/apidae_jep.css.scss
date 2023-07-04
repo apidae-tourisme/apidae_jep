@@ -299,7 +299,7 @@ form .previous_val {
 form select.error + small + div.chosen-container > ul.chosen-choices,
 form select.error + small + span.select2-container span.select2-selection,
 form input.error,
-form textarea.error {
+form textarea.error, input[name='com_fields'].error ~ div > div > input {
   background: rgb(251, 227, 228);
   border: 1px solid #fbc2c4;
   color: #8a1f11;

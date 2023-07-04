@@ -150,9 +150,6 @@
         </fieldset>
         <fieldset>
           <legend class="text-uppercase text-primary">Détails / description</legend>
-          <p class="help-block">
-            Un <strong>descriptif de qualité</strong> qui donne envie aux visiteurs de venir à votre animation. Le résumé doit être distinct de la description détaillée (pas de phrases tronquées ni de répétition).
-          </p>
           <div class="form-group mt">
             <label class="col-sm-3 control-label">Caractéristiques<%= help_button %></label>
             <%= help_content("Plusieurs choix possibles.") %>
@@ -188,6 +185,10 @@
             <%= help_content("Veuillez vous limiter à 255 caractères") %>
             <div class="col-sm-9">
               <%= item_form.text_area :summary, class: 'form-control required', disabled: readonly, rows: 3, maxlength: 255 %>
+              <p class="help-block">
+                Un descriptif de qualité qui donne envie aux visiteurs de venir à votre animation. Le résumé doit être distinct
+                de la description détaillée (pas de phrases tronquées ni de répétition).
+              </p>
               <%= render_previous(:summary, 3) %>
             </div>
           </div>
@@ -340,6 +341,7 @@
           </div>
         </fieldset>
         <fieldset>
+          <input type="hidden" name="com_fields" value="" id="com_fields"/>
           <legend class="text-uppercase text-primary com_fields">Informations et renseignements*</legend>
           <div class="form-group">
             <label class="col-sm-3 control-label">Téléphone<%= help_button %></label>
@@ -360,7 +362,7 @@
           <div class="form-group mt-lg">
             <label class="col-sm-3 control-label">Site web</label>
             <div class="col-sm-9">
-              <%= item_form.text_field :website, class: 'form-control url', disabled: readonly, placeholder: 'http://' %>
+              <%= item_form.text_field :website, class: 'form-control url com_field', disabled: readonly, placeholder: 'http://' %>
               <%= render_previous(:website) %>
             </div>
           </div>
