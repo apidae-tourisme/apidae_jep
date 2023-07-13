@@ -109,6 +109,7 @@ module Moderator::ProgramItemsHelper
     formatted_openings.gsub!(' tous les jours ', '')
     if member_ref == GRAND_LYON
       formatted_openings = formatted_openings.downcase
+      formatted_openings.gsub!(' tous les jours ', '')
       formatted_openings.gsub!(/(vendredi|samedi|dimanche|lundi)/) {|m| m.slice(0, 3) + '.'}
       formatted_openings.gsub!(/(14|15|16|17) septembre 2023/, '')
       formatted_openings.gsub!('minutes', 'min.')
@@ -118,6 +119,7 @@ module Moderator::ProgramItemsHelper
       formatted_openings.gsub!(/(\s\s\s?)/, ' ')
       formatted_openings.gsub!(/(\.)$/, '')
     elsif member_ref == ISERE
+      formatted_openings.gsub!(' tous les jours', '')
       # open_days = formatted_openings.split("\n")
       # if open_days.length > 1
       #   parsed_openings = {}
