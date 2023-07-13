@@ -106,7 +106,6 @@ module Moderator::ProgramItemsHelper
   def format_opening(member_ref, openings_desc)
     formatted_openings = openings_desc.blank? ? '' : openings_desc.strip
     formatted_openings.gsub!(':00', 'h')
-    formatted_openings.gsub!(' tous les jours ', '')
     if member_ref == GRAND_LYON
       formatted_openings = formatted_openings.downcase
       formatted_openings.gsub!(' tous les jours ', '')
@@ -119,7 +118,7 @@ module Moderator::ProgramItemsHelper
       formatted_openings.gsub!(/(\s\s\s?)/, ' ')
       formatted_openings.gsub!(/(\.)$/, '')
     elsif member_ref == ISERE
-      formatted_openings.gsub!(' tous les jours', '')
+      formatted_openings.gsub!(' tous les jours ', ' ')
       # open_days = formatted_openings.split("\n")
       # if open_days.length > 1
       #   parsed_openings = {}
