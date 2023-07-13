@@ -213,12 +213,23 @@ class ProgramItem < ActiveRecord::Base
   def self.set_openings_texts(items)
     remote_ids = items.map {|i| i.external_id}.select {|ext_id| !ext_id.blank?}.uniq
     Rails.logger.info "Set openings texts on #{remote_ids.count} remote ids"
-    objs = EventsImporter.load_apidae_events(remote_ids, 'id', 'ouverture')
+
+    objs = []
+    batch_size = 200
+    loop_count = 0
+    while (loop_count * batch_size) < remote_ids.count
+      from = loop_count * batch_size
+      to = (loop_count + 1) * batch_size
+      evts = EventsImporter.load_apidae_events(remote_ids[from...to], 'id', 'ouverture')
+      objs += (evts.is_a?(Array) ? evts : [evts])
+      loop_count += 1
+    end
     Rails.logger.info "Retrieved #{objs.count} objs"
+
     items.each do |item|
       item.openings_text = nil
       unless item.external_id.blank?
-        obj = objs.is_a?(Array) ? objs.find {|o| o.id.to_i == item.external_id} : objs
+        obj = objs.find {|o| o.id.to_i == item.external_id}
         if obj
           item.openings_text = obj.openings_description
           # Rails.logger.info "Set opening text on #{obj.id} : #{obj.openings_description}"
