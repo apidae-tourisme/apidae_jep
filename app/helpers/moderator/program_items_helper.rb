@@ -106,9 +106,9 @@ module Moderator::ProgramItemsHelper
   def format_opening(member_ref, openings_desc)
     formatted_openings = openings_desc.blank? ? '' : openings_desc.strip
     formatted_openings.gsub!(':00', 'h')
+    formatted_openings.gsub!(' tous les jours ', '')
     if member_ref == GRAND_LYON
       formatted_openings = formatted_openings.downcase
-      formatted_openings.gsub!(' tous les jours ', '')
       formatted_openings.gsub!(/(vendredi|samedi|dimanche|lundi)/) {|m| m.slice(0, 3) + '.'}
       formatted_openings.gsub!(/(14|15|16|17) septembre 2023/, '')
       formatted_openings.gsub!('minutes', 'min.')
