@@ -252,7 +252,7 @@ class ProgramItem < ActiveRecord::Base
     openings.dig(date, 'id').blank? ? "#{ref}-#{date.gsub('-', '')}" : openings.dig(date, 'id')
   end
 
-  def remote_save
+  def remote_save(skip_criteria = false)
     if external_id
       obj = EventsImporter.load_apidae_events([external_id], 'id')
       if obj.nil?
@@ -264,7 +264,7 @@ class ProgramItem < ActiveRecord::Base
     form_data = build_multipart_form(merge_data)
     response = save_to_apidae(user.territory, form_data, :api_url, :put)
 
-    if external_id || (response['id'] && update_attributes!(external_id: response['id'], external_status: response['status']))
+    if (external_id || (response['id'] && update_attributes!(external_id: response['id'], external_status: response['status']))) && !skip_criteria
       update_apidae_criteria(user.territory, build_criteria((themes || []) + (criteria || []) + (validation_criteria || [])))
       # bind_openings if rev == 1
       # touch_remote_obj
