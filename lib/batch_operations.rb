@@ -22,7 +22,7 @@ class BatchOperations
         af.picture.instance_write(:file_name, POSTER_FILE_NAME)
         item.attached_files << af
         item.save!
-        item.remote_save
+        item.remote_save(true)
         Rails.logger.info "Finished decorating item #{item.id} - #{item.external_id}"
       rescue OAuth2::Error => e
         Rails.logger.error "OAuth2::Error for item #{item.id} - #{item.external_id}"
