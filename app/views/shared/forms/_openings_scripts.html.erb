@@ -73,7 +73,7 @@
     function loadApiHoursValue(externalId) {
         var inputElt = document.querySelector("#apihours_opening_" + externalId + "_value"),
           buttonElt = document.querySelector("#edit_apihours_" + externalId + " em");
-        if (/^\d+$/.test(externalId)) {
+        if (/^\d+$/.test(externalId) && inputElt) {
             apihours.loadApiHoursOpening(externalId).then(function(timeSchedule) {
                 if (timeSchedule && timeSchedule.length > 0) {
                     inputElt.value = timeSchedule;

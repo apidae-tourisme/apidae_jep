@@ -248,8 +248,8 @@ class ProgramItem < ActiveRecord::Base
     created_at.nil? || created_at >= Date.new(EDITION, 1, 1)
   end
 
-  def opening_id(ref, date)
-    openings.dig(date, 'id').blank? ? "#{ref}-#{date.gsub('-', '')}" : openings.dig(date, 'id')
+  def opening_id(ref, date, val)
+    (openings.dig(date, 'id').blank? || val.blank? || val == '[]') ? "#{ref}-#{date.gsub('-', '')}" : openings.dig(date, 'id')
   end
 
   def remote_save(skip_criteria = false)

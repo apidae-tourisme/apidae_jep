@@ -229,7 +229,8 @@
           <div class="form-group">
             <% ext_ref = @item.external_ref %>
             <% ['2023-09-15', '2023-09-16', '2023-09-17', '2023-09-18'].each do |d| %>
-              <% opening_ref = @item.opening_id(ext_ref, d) %>
+              <% opening_val = @item.openings.dig(d, 'value') %>
+              <% opening_ref = @item.opening_id(ext_ref, d, opening_val) %>
               <div id="apidae_opening_<%= opening_ref %>" class="col-sm-3 mt-lg">
                 <button id="edit_apihours_<%= opening_ref %>" type="button" class="btn btn-lg btn-primary w100"
                         onclick="displayOpeningsForm('<%= d %>', '<%= opening_ref %>', '<%= ext_ref %>', '<%= readonly %>'); return false;">
@@ -237,7 +238,7 @@
                   <em class="pre">Aucun horaire saisi.</em>
                 </button>
                 <%= hidden_field_tag "program_item[openings][#{d}][id]", opening_ref, id: "apihours_opening_#{opening_ref}_id", class: 'item_opening' %>
-                <%= hidden_field_tag "program_item[openings][#{d}][value]", @item.openings.dig(d, 'value'), id: "apihours_opening_#{opening_ref}_value", class: 'apihours_opening' %>
+                <%= hidden_field_tag "program_item[openings][#{d}][value]", opening_val, id: "apihours_opening_#{opening_ref}_value", class: 'apihours_opening' %>
               </div>
             <% end %>
           </div>

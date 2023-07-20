@@ -153,8 +153,12 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
   end
 
   def remote_entity(external_id)
-    SitraClient.configure(Rails.application.config.sitra_config)
-    query = SitraClient.query({identifiants: [external_id], responseFields: ['id', 'nom']})
-    (query[:results] || []).first
+    if Rails.env.development? || ENV['APIDAE_DRY_RUN']
+      true
+    else
+      SitraClient.configure(Rails.application.config.sitra_config)
+      query = SitraClient.query({identifiants: [external_id], responseFields: ['id', 'nom']})
+      (query[:results] || []).first
+    end
   end
 end
