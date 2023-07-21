@@ -332,7 +332,7 @@ class ProgramItem < ActiveRecord::Base
     form_data[:expiration] = {dateExpiration: (Date.parse(openings.keys.sort.last) + 1.day).to_s, expirationAction: "MASQUER_AUTOMATIQUEMENT"} unless openings.blank?
     form_data[:fields] = '["root"]'
     form_data[:root] ||= '{"type":"FETE_ET_MANIFESTATION"}'
-    form_data['root.fieldList'] = '[]'
+    form_data['root.fieldList'] = openings.blank? ? '[]' : '["expiration.dateExpiration","expiration.expirationAction"]'
 
     data_hash.each_pair do |k, v|
       converted_data = build_form_data(k, v)
