@@ -5,6 +5,7 @@
         <%= f.hidden_field :picture_file_name %>
         <%= f.hidden_field :picture_content_type %>
         <%= f.hidden_field :picture_file_size %>
+        <%= f.hidden_field :created_at %>
     <% elsif !readonly %>
         <div class="col-sm-5"><%= f.file_field :picture, class: 'form-control' %></div>
     <% end %>
