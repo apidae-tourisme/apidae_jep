@@ -195,7 +195,7 @@ class ProgramItem < ActiveRecord::Base
     end
   end
 
-  def load_remote_openings
+  def load_remote_openings(and_save = false)
     if external_id
       obj = EventsImporter.load_apidae_events([external_id], 'id', 'ouverture')
       if obj && obj.openings
@@ -208,6 +208,7 @@ class ProgramItem < ActiveRecord::Base
         end
       end
     end
+    save if and_save
   end
 
   def self.set_openings_texts(items)
@@ -269,6 +270,10 @@ class ProgramItem < ActiveRecord::Base
       # bind_openings if rev == 1
       # touch_remote_obj
     end
+
+    sleep(1)
+
+    load_remote_openings(true)
   end
 
   def merge_data
