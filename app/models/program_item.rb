@@ -329,7 +329,6 @@ class ProgramItem < ActiveRecord::Base
         skipValidation: 'true'
     }
 
-    form_data[:expiration] = {dateExpiration: (Date.parse(openings.keys.sort.last) + 1.day).to_s, expirationAction: "MASQUER_AUTOMATIQUEMENT"} unless openings.blank?
     form_data[:fields] = '["root"]'
     form_data[:root] ||= '{"type":"FETE_ET_MANIFESTATION"}'
     form_data['root.fieldList'] = openings.blank? ? '[]' : '["expiration.dateExpiration","expiration.expirationAction"]'
@@ -338,6 +337,9 @@ class ProgramItem < ActiveRecord::Base
       converted_data = build_form_data(k, v)
       unless converted_data.empty?
         merged_data = safe_merge(extract_as_hash(form_data[:root]), converted_data)
+        unless openings.blank?
+          merged_data[:expiration] = {dateExpiration: (Date.parse(openings.keys.sort.last) + 1.day).to_s, expirationAction: "MASQUER_AUTOMATIQUEMENT"}
+        end
         form_data[:root] = JSON.generate(merged_data)
         impacted_fields = data_fields(converted_data, Array.new)
         form_data['root.fieldList'] = merge_fields(form_data['root.fieldList'], impacted_fields)

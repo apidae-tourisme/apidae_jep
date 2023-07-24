@@ -25,7 +25,7 @@ THEMES = {
 THEMES_REFS = Hash[THEMES.values.flatten.collect {|th| [th.parameterize, th] }]
 
 VALIDATION_CRITERIA = {
-    GRAND_LYON => ['Coup de coeur', 'Egalité', 'Balades urbaines du Musée Gadagne',
+    GRAND_LYON => ['Coup de coeur', "Visites guidées de l'Office du Tourisme", 'Balades urbaines du Musée Gadagne',
                    'Sous-thématique 1', 'Sous-thématique 2', 'Sous-thématique 3', 'Sous-thématique 4', 'Sous-thématique 5',
                    'Sous-thématique 6', 'Sous-thématique 7', 'Sous-thématique 8', 'Sous-thématique 9', 'Sous-thématique 10',
                    'Sous-thématique 11', 'Sous-thématique 12', 'Sous-thématique 13', 'Sous-thématique 14', 'Sous-thématique 15',
