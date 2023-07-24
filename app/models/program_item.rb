@@ -271,7 +271,7 @@ class ProgramItem < ActiveRecord::Base
       # touch_remote_obj
     end
 
-    sleep(1)
+    sleep(5)
 
     load_remote_openings(true)
   end
