@@ -73,25 +73,36 @@ class ProgramItem < ActiveRecord::Base
 
   def self.set_openings_details(items)
     items.each_slice(25) do |items_batch|
+      ext_ids = items_batch.map {|item| item.external_id}.select {|ext_id| !ext_id.blank?}
+      objs = EventsImporter.load_apidae_events(ext_ids, 'id', 'ouverture')
       items_batch.each do |item|
         item.openings_details ||= []
+        obj = objs.find {|o| o.id == item.external_id.to_s}
+        if obj && obj.openings
+          item.openings.transform_values! {|v| v.is_a?(Hash) ? v : {'id' => v}}
+          item.openings.each_pair do |d, op|
+            obj_opening = obj.openings.find {|o| o[:dateDebut] == d && o[:dateFin] == d}
+            if obj_opening
+              op['id'] = obj_opening[:identifiantTechnique]
+            end
+          end
+        end
       end
-      ext_ids = items_batch.map {|item| item.external_id}.select {|ext_id| !ext_id.blank?}
+
+      ops_ids = items_batch.map {|i| i.openings.select {|k, v| !v.blank? && /^\d+$/.match?(v['id'].to_s)}.values.map {|v| v['id'].to_s}}.flatten.uniq
       apidate_url = Rails.application.config.apidate_api_url + '/apidae_period'
       logger.info "Retrieve openings : #{apidate_url}?refs=#{CGI.escape('["' + ext_ids.join('","') + '"]')}"
       begin
         response = ''
-        open(apidate_url + '?refs=' + CGI.escape('["' + ext_ids.join('","') + '"]')) { |f|
+        open(apidate_url + '?ids=' + CGI.escape('["' + ops_ids.join('","') + '"]')) { |f|
           f.each_line {|line| response += line if line}
         }
         ops = JSON.parse(response)
         ops.each do |opening|
-          if opening['startDate'].include?(EDITION.to_s)
-            ext_id = opening['externalRef']
-            item = items_batch.find {|item| item.external_id && item.external_id.to_s == ext_id.to_s}
-            if item
-              item.openings_details << opening
-            end
+          ext_id = opening['externalRef']
+          item = items_batch.find {|item| item.external_id && item.external_id.to_s == ext_id.to_s}
+          if item
+            item.openings_details << opening
           end
         end
       rescue OpenURI::HTTPError => e
