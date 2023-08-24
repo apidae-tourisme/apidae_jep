@@ -13,8 +13,8 @@ module Api::ProgramItemsHelper
       op['timePeriods'].each do |tp|
         tp['timeFrames'].each do |tf|
           values << {
-              starts_at: "#{op['startDate']}T#{tf['startTime']}:00.000Z",
-              ends_at: tf['endTime'] ? "#{op['startDate']}T#{tf['endTime']}:00.000Z" : nil,
+              starts_at: "#{op['startDate']}T#{tf['startTime']}:00.000+02:00",
+              ends_at: tf['endTime'] ? "#{op['startDate']}T#{tf['endTime']}:00.000+02:00" : nil,
               frequency: tf['recurrence']
           }
         end

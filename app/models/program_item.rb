@@ -91,7 +91,7 @@ class ProgramItem < ActiveRecord::Base
 
       ops_ids = items_batch.map {|i| i.openings.select {|k, v| !v.blank? && /^\d+$/.match?(v['id'].to_s)}.values.map {|v| v['id'].to_s}}.flatten.uniq
       apidate_url = Rails.application.config.apidate_api_url + '/apidae_period'
-      logger.info "Retrieve openings : #{apidate_url}?refs=#{CGI.escape('["' + ext_ids.join('","') + '"]')}"
+      logger.info "Retrieve openings : #{apidate_url}?ids=#{CGI.escape('["' + ops_ids.join('","') + '"]')}"
       begin
         response = ''
         open(apidate_url + '?ids=' + CGI.escape('["' + ops_ids.join('","') + '"]')) { |f|
