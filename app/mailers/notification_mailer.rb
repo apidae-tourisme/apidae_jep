@@ -23,7 +23,7 @@ class NotificationMailer < ApplicationMailer
 
   def notify_poll(user)
     @user = user
-    mail(to: user.email, subject: Rails.application.config.notify_poll_title)
+    mail(to: user.email, reply_to: 'jep.metropole@grandlyon.com', subject: Rails.application.config.notify_poll_title)
   end
 
   def notify_com(user)
