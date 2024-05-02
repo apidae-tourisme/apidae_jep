@@ -110,7 +110,7 @@ module Moderator::ProgramItemsHelper
       formatted_openings = formatted_openings.downcase
       formatted_openings.gsub!(' tous les jours ', '')
       formatted_openings.gsub!(/(vendredi|samedi|dimanche|lundi)/) {|m| m.slice(0, 3) + '.'}
-      formatted_openings.gsub!(/(14|15|16|17) septembre 2023/, '')
+      formatted_openings.gsub!(/(20|21|22|23) septembre 2024/, '')
       formatted_openings.gsub!('minutes', 'min.')
       formatted_openings.gsub!(/(\d\sheures?)/) {|m| m.gsub(/(\sheures?)/, 'h')}
       formatted_openings.gsub!(/(heures?)/, 'h')
@@ -142,7 +142,7 @@ module Moderator::ProgramItemsHelper
       "#{dates[0]} : #{hour}"
     else
       dates[0..-1].each {|d| d.downcase!}
-      dates[0..-2].each {|d| d.gsub!(' septembre 2023', '')}
+      dates[0..-2].each {|d| d.gsub!(' septembre 2024', '')}
       "#{dates[0..-2].join(', ')} et #{dates.last} #{hour}".capitalize
     end
   end

@@ -3,7 +3,7 @@ ISERE = "isere"
 SAUMUR = "saumur"
 DLVA = "dlva"
 
-EDITION = 2023
+EDITION = 2024
 
 ITEM_VISITE = "visite"
 ITEM_PARCOURS = "parcours"
@@ -13,13 +13,13 @@ ITEM_EXPOSITION = "exposition"
 ITEM_TYPES = [ITEM_VISITE, ITEM_PARCOURS, ITEM_ANIMATION, ITEM_EXPOSITION]
 
 THEMES = {
-    GRAND_LYON => ["Thématique métropole 2023 - Lumière", "Thématique nationale 2023 - \"Patrimoine vivant\"", "Nouveauté",
+    GRAND_LYON => ["Thème JEP 2024 : Patrimoine des itinéraires, des réseaux et des connexions", "Nouveauté",
                    "En famille", "Egalité"],
-    ISERE => ["Thématique nationale 2023 - \"Patrimoine vivant\"", "Famille", "Réservé aux enfants", "Antiquité",
+    ISERE => ["Thème JEP 2024 : Patrimoine des itinéraires, des réseaux et des connexions", "Famille", "Réservé aux enfants", "Antiquité",
               "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique"],
-    SAUMUR => ["Thématique nationale 2023 - \"Patrimoine vivant\"", "JEP | Première ouverture", "Famille", "Réservé aux enfants", "Antiquité",
+    SAUMUR => ["Thème JEP 2024 : Patrimoine des itinéraires, des réseaux et des connexions", "JEP | Première ouverture", "Famille", "Réservé aux enfants", "Antiquité",
                      "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique", "Œnologie"],
-    DLVA => ["Thématique nationale 2023 - \"Patrimoine vivant\"", "Famille", "Réservé aux enfants", "Antiquité",
+    DLVA => ["Thème JEP 2024 : Patrimoine des itinéraires, des réseaux et des connexions", "Famille", "Réservé aux enfants", "Antiquité",
               "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique"]
 }
 THEMES_REFS = Hash[THEMES.values.flatten.collect {|th| [th.parameterize, th] }]
@@ -139,11 +139,11 @@ APIDAE_CRITERIA = {
     'Balades urbaines du Musée Gadagne' => 8292,
     'Demeure privée' => 17728,
     'JEP | Première ouverture' => 17818,
-    'Thématique métropole 2023 - Lumière' => 25207
+    # 'Thématique métropole 2023 - Lumière' => 25207
 }
 
 APIDAE_TYPOLOGIES = {
-    "Thématique nationale 2023 - \"Patrimoine vivant\"" => 7063
+    "Thème JEP 2024 : Patrimoine des itinéraires, des réseaux et des connexions" => 7277
 }
 
 APIDAE_ENVIRONMENTS = {

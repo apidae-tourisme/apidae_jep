@@ -30,11 +30,11 @@ class EventPoll < ActiveRecord::Base
   end
 
   def count_sat(offer_id)
-    offer_count('2023-09-16', offer_id)
+    offer_count('2024-09-21', offer_id)
   end
 
   def count_sun(offer_id)
-    offer_count('2023-09-17', offer_id)
+    offer_count('2024-09-22', offer_id)
   end
 
   def poll_general_comments(offer_id)
