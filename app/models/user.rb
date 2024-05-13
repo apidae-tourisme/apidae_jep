@@ -34,6 +34,10 @@ class User < ActiveRecord::Base
                                 }).distinct
   end
 
+  def creation_year
+    created_at.year
+  end
+
   def active_poll
     EventPoll.where("user_id = ? AND created_at >= ?", id, Date.new(EDITION, 1, 1)).first
   end
@@ -70,8 +74,22 @@ class User < ActiveRecord::Base
      legal_entity && details ? " (#{legal_entity.external_id.blank? ? 'Nouvelle structure' : legal_entity.external_id.to_s})" : ''].join('')
   end
 
+  def auth_provider
+    provider.blank? ? 'email' : provider
+  end
+
   def offers_count
     program_items.count
+  end
+
+  def offers_by_year
+    if @o_by_year.nil?
+      @o_by_year = {}
+      (2018..EDITION).to_a.each do |y|
+        @o_by_year[y] = program_items.where("created_at BETWEEN '#{y}-01-01' AND '#{y}-12-31'").count
+      end
+    end
+    @o_by_year
   end
 
   def compute_territory

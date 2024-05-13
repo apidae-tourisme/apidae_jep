@@ -12,10 +12,12 @@ module Moderator::AccountsHelper
   end
 
   def user_columns
-    ['full_name', 'email', 'telephone', 'entity_name', 'entity_town', 'entity_address', 'communication', 'offers_count', 'entity_apidae_id']
+    ['full_name', 'email', 'telephone', 'entity_name', 'entity_town', 'entity_address', 'communication', 'creation_year'] +
+      (2018..EDITION).to_a.map {|y| ['offers_by_year', y]} +
+      ['offers_count', 'gdpr_status', 'auth_provider', 'entity_apidae_id']
   end
 
   def user_values(usr)
-    user_columns.collect {|col| usr.send(col)}
+    user_columns.collect {|col| col.is_a?(Array) ? usr.send(col.first).dig(*col[1..-1]) : usr.send(col)}
   end
 end

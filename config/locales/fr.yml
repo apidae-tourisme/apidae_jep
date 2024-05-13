@@ -387,7 +387,18 @@ fr:
       entity_town: Commune de la structure
       entity_address: Adresse de la structure
       communication: Kit com
+      creation_year: Année de création
+      offers_by_year:
+        '2018': Offres 2018
+        '2019': Offres 2019
+        '2020': Offres 2020
+        '2021': Offres 2021
+        '2022': Offres 2022
+        '2023': Offres 2023
+        '2024': Offres 2024
       offers_count: Nombre d'offres
+      gdpr_status: Autorisation données
+      auth_provider: Authentification
       programs_count: Nombre de programmations
       entity_apidae_id: Id Entité Apidae
     event_poll:

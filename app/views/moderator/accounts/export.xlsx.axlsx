@@ -5,7 +5,7 @@ xlsx_package.use_shared_strings = true
 wrap = xlsx_package.workbook.styles.add_style alignment: {wrap_text: true}
 
 wb.add_worksheet(name: 'Organisateurs') do |sheet|
-  sheet.add_row user_columns.map {|v| I18n.t("export.user.#{v}")}
+  sheet.add_row user_columns.map {|v| v.is_a?(Array) ? I18n.t("export.user.#{v.join('.')}") : I18n.t("export.user.#{v}")}
   @accounts.each do |poll|
     sheet.add_row user_values(poll), style: wrap
   end
