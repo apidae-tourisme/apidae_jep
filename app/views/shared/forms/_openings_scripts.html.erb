@@ -101,6 +101,14 @@
             options.timePeriods = JSON.parse(apiHoursInputElt.value);
         }
         openApiHoursForm(offerTitle, options, {
+            onLoad: function() {
+                setTimeout(function() {
+                    const noWeekdayBtn = document.querySelector("ngb-modal-window.apidae_date.modal.fade apidate-time-period .card-body > .row:first-child > div:last-child > button:last-child");
+                    if (noWeekdayBtn) {
+                        noWeekdayBtn.click();
+                    }
+                }, 1000);
+            },
             onSubmit: function(timePeriods) {
                 apiHoursInputElt.value = timePeriods;
                 btnElt.innerHTML = timePeriodsAsText(timePeriods);

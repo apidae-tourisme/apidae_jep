@@ -384,14 +384,12 @@
                 </div>
               </div>
             <% end %>
-            <% if @item.draft? || @item.pending? %>
-              <div class="row mt-lg">
-                <label class="col-sm-3 control-label">Compte utilisateur de l'organisateur</label>
-                <div class="col-sm-9">
-                  <%= item_form.select :user_id, [], {}, class: 'form-control select_user required', disabled: readonly %>
-                </div>
+            <div class="row mt-lg">
+              <label class="col-sm-3 control-label">Compte utilisateur de l'organisateur</label>
+              <div class="col-sm-9">
+                <%= item_form.select :user_id, [], {}, class: 'form-control select_user required', disabled: readonly %>
               </div>
-            <% end %>
+            </div>
         </fieldset>
         <fieldset>
           <% end %>

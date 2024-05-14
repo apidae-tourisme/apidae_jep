@@ -368,6 +368,10 @@
             return $(".com_field").filter(function() {return $(this).val();}).length > 0;
         });
 
+        $.validator.methods.email = function(value, element) {
+            return this.optional(element) || /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);
+        }
+
         $("#program_item_form").validate({
             errorPlacement: function errorPlacement(error, element) {
                 if(element.is("input[type=checkbox]")) {
