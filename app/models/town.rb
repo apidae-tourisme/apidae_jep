@@ -17,7 +17,6 @@ class Town < ActiveRecord::Base
       town.postal_code = town_data[:codePostal]
       town.insee_code = town_data[:code]
       town.country = 'fr'
-      town.description = town_data[:complement]
       town.save!
     end
     result
