@@ -1,21 +1,33 @@
 <h3>
   Bienvenue sur l'édition <%= EDITION %> de ApidaeJEP
 </h3>
-<div class="panel panel-default">
-  <div class="panel-body">
-    <h4 class="mt-sm">Présélection de vos offres à reconduire :</h4>
-    <p>
-      Pour faciliter la saisie de votre programmation, <strong>vos offres de l'édition <%= EDITION - 1 %> ont été préselectionnées ci-dessous</strong>.<br/>
-      Nous vous invitons à passer cette liste en revue afin de sélectionner toutes les offres que vous souhaitez reconduire cette année.
-      Pour chaque offre sélectionnée, l'outil créera une nouvelle version <%= EDITION %> à l'état de brouillon, que vous pourrez ensuite
-      modifier depuis votre tableau de bord.<br/>
-      <em>Note : si vous ne sélectionnez pas une offre ici mais que vous souhaitez finalement la reconduire, vous pourrez toujours
-        la sélectionner via votre tableau de bord par la suite.</em>
-    </p>
+<%= form_tag(url_for(action: :submit_onboarding), method: :post) do %>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <h4 class="mt-sm">Présélection de vos offres à reconduire :</h4>
+      <p>
+        Pour faciliter la saisie de votre programmation, <strong>vos offres de l'édition <%= EDITION - 1 %> ont été préselectionnées ci-dessous</strong>.<br/>
+        Nous vous invitons à passer cette liste en revue afin de sélectionner toutes les offres que vous souhaitez reconduire cette année.
+        Pour chaque offre sélectionnée, l'outil créera une nouvelle version <%= EDITION %> à l'état de brouillon, que vous pourrez ensuite
+        modifier depuis votre tableau de bord.<br/>
+        <em>Note : si vous ne sélectionnez pas une offre ici mais que vous souhaitez finalement la reconduire, vous pourrez toujours
+          la sélectionner via votre tableau de bord par la suite.</em><br/>
+        <br/>
+        Nous profitons également de cette étape pour recueillir vos préférences en termes de communication de notre part :<br/>
+      </p>
+      <div id="gdpr_toggle" class="form-group mdy">
+        <div class="col-sm-12">
+          <label class="radio-inline c-radio mh">
+            <%= radio_button_tag 'user_gdpr', '1', false, required: true %>
+            <span class="fa fa-circle"></span>J’accepte de recevoir les informations de la Direction de la Culture <%= current_user.territory == ISERE ? "et du Patrimoine du Département de l’Isère" : "de la Métropole de Lyon" %></label>
+          <label class="radio-inline c-radio mh">
+            <%= radio_button_tag 'user_gdpr', '0', false, required: true %>
+            <span class="fa fa-circle"></span>Je ne souhaite pas recevoir les informations de la Direction de la Culture <%= current_user.territory == ISERE ? "et du Patrimoine du Département de l’Isère" : "de la Métropole de Lyon" %></label>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-<div id="program_items" class="row">
-  <%= form_tag(url_for(action: :submit_onboarding), method: :post) do %>
+  <div id="program_items" class="row">
     <% @items.each_with_index do |item, i| %>
       <div class="col-sm-12">
         <div class="panel widget">
@@ -54,5 +66,5 @@
         <%= submit_tag 'Valider et accéder à mon tableau de bord', class: 'btn btn-lg btn-primary ml', data: {disable_with: 'Veuillez patienter, enregistrement en cours...'} %>
       </div>
     </div>
-  <% end %>
-</div>
+  </div>
+<% end %>

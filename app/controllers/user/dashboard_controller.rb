@@ -26,7 +26,7 @@ class User::DashboardController < User::UserController
       dup_item.save
       Rails.logger.info "errors: #{dup_item.errors.full_messages}"
     end
-    @user.update(onboarding: '1')
+    @user.update(onboarding: '1', gdpr_status: params[:user_gdpr])
     redirect_to url_for(action: :index), notice: "La présélection de vos offres a bien été enregistrée."
   end
 

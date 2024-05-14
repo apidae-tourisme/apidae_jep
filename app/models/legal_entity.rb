@@ -50,20 +50,25 @@ class LegalEntity < ActiveRecord::Base
           entities_hashes = JSON.parse(entities_json, symbolize_names: true)
           entities_hashes.each do |entity_data|
             if entity_data[:type] == 'STRUCTURE'
-              ent = LegalEntity.find_by_external_id(entity_data[:id]) || LegalEntity.new(external_id: entity_data[:id])
-              entity_town = Town.find_by_external_id(entity_data[:localisation][:adresse][:commune][:id])
-              if entity_town
-                ent.name = entity_data[:nom][:libelleFr]
-                ent.adresse1 = entity_data[:localisation][:adresse][:adresse1]
-                ent.adresse2 = entity_data[:localisation][:adresse][:adresse2]
-                ent.adresse3 = entity_data[:localisation][:adresse][:adresse3]
-                ent.town = entity_town
-                ent.email = contact_info(entity_data[:informations][:moyensCommunication], 204)
-                ent.phone = contact_info(entity_data[:informations][:moyensCommunication], 201)
-                ent.website = contact_info(entity_data[:informations][:moyensCommunication], 205)
-                ent.latitude = entity_data.dig(:localisation, :geolocalisation, :geoJson, :coordinates, 1)
-                ent.longitude = entity_data.dig(:localisation, :geolocalisation, :geoJson, :coordinates, 0)
-                ent.save!
+              begin
+                ent = LegalEntity.find_by_external_id(entity_data[:id]) || LegalEntity.new(external_id: entity_data[:id])
+                entity_town = Town.find_by_external_id(entity_data[:localisation][:adresse][:commune][:id])
+                if entity_town
+                  ent.name = entity_data[:nom][:libelleFr]
+                  ent.adresse1 = entity_data[:localisation][:adresse][:adresse1]
+                  ent.adresse2 = entity_data[:localisation][:adresse][:adresse2]
+                  ent.adresse3 = entity_data[:localisation][:adresse][:adresse3]
+                  ent.town = entity_town
+                  ent.email = contact_info(entity_data[:informations][:moyensCommunication], 204)
+                  ent.phone = contact_info(entity_data[:informations][:moyensCommunication], 201)
+                  ent.website = contact_info(entity_data[:informations][:moyensCommunication], 205)
+                  ent.latitude = entity_data.dig(:localisation, :geolocalisation, :geoJson, :coordinates, 1)
+                  ent.longitude = entity_data.dig(:localisation, :geolocalisation, :geoJson, :coordinates, 0)
+                  ent.save!
+                end
+              rescue Exception => e
+                Rails.logger.error e
+                Rails.logger.error "Entity errors : #{ent.errors.full_messages}"
               end
             end
           end
