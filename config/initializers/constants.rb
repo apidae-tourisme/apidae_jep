@@ -16,11 +16,14 @@ THEMES = {
     GRAND_LYON => ["Thème JEP 2024 : Patrimoine des itinéraires, des réseaux et des connexions", "Nouveauté",
                    "En famille", "Egalité"],
     ISERE => ["Thème JEP 2024 : Patrimoine des itinéraires, des réseaux et des connexions", "Famille", "Réservé aux enfants", "Antiquité",
-              "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique"],
+              "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique", "Cinéma", "Conte",
+              "Dessin", "Loisirs créatifs", "Peinture", "Photographie"],
     SAUMUR => ["Thème JEP 2024 : Patrimoine des itinéraires, des réseaux et des connexions", "JEP | Première ouverture", "Famille", "Réservé aux enfants", "Antiquité",
-                     "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique", "Œnologie"],
+                     "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique", "Œnologie", "Cinéma", "Conte",
+               "Dessin", "Loisirs créatifs", "Peinture", "Photographie"],
     DLVA => ["Thème JEP 2024 : Patrimoine des itinéraires, des réseaux et des connexions", "Famille", "Réservé aux enfants", "Antiquité",
-              "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique"]
+              "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique", "Cinéma", "Conte",
+             "Dessin", "Loisirs créatifs", "Peinture", "Photographie"]
 }
 THEMES_REFS = Hash[THEMES.values.flatten.collect {|th| [th.parameterize, th] }]
 
@@ -38,39 +41,39 @@ VALIDATION_CRITERIA_REFS = Hash[VALIDATION_CRITERIA.values.flatten.collect {|th|
 
 CRITERIA = {
     GRAND_LYON => {
-      ITEM_VISITE => ["Visite guidée", "Visite libre"],
-      ITEM_PARCOURS => ["Parcours", "Croisière", "Visite guidée", "Visite libre"],
+      ITEM_VISITE => ["Visite guidée", "Visite libre", "Visite avec un support numérique"],
+      ITEM_PARCOURS => ["Parcours", "Croisière", "Visite guidée", "Visite libre", "Visite avec un support numérique"],
       ITEM_ANIMATION => {
-          "Intervention artistique" => ["Théâtre", "Concert", "Danse", "Lecture", "Conte"],
-          "Conférence / Débat / Projection" => ["Conférence / Débat", "Projection"],
+          "Intervention artistique" => ["Théâtre", "Concert", "Danse", "Lecture", "Conte", "Performance artistique"],
+          "Conférence / Débat / Projection" => ["Conférence / Débat / Rencontre", "Projection"],
           "Savoirs-faire" => ["Démonstration", "Dégustation"],
           "Animation participative" => ["Jeux", "Atelier"]
       },
-      ITEM_EXPOSITION => ["Visite guidée", "Visite libre"]
+      ITEM_EXPOSITION => ["Visite guidée", "Visite libre", "Visite avec un support numérique"]
     },
     ISERE => {
-        ITEM_VISITE => ["Visite guidée", "Visite libre"],
-        ITEM_PARCOURS => ["Visite guidée", "Visite libre"],
-        ITEM_ANIMATION => ["Concert", "Conférence / Débat", "Danse", "Dégustation", "Démonstration", "Goûter",
-                           "Atelier", "Jeu de piste / Chasse au trésor", "Marché", "Balade contée", "Cinéma", "Conte",
-                           "Dessin", "Loisirs créatifs", "Peinture", "Photographie"],
-        ITEM_EXPOSITION => ["Visite guidée", "Visite libre"]
+        ITEM_VISITE => ["Visite guidée", "Visite libre", "Visite avec un support numérique"],
+        ITEM_PARCOURS => ["Visite guidée", "Visite libre", "Visite avec un support numérique"],
+        ITEM_ANIMATION => ["Concert", "Conférence / Débat / Rencontre", "Danse", "Dégustation", "Démonstration", "Goûter",
+                           "Atelier / Initiation / Découverte", "Jeu de piste / Chasse au trésor", "Marché", "Balade contée",
+                           "Performance artistique", "Projection"],
+        ITEM_EXPOSITION => ["Visite guidée", "Visite libre", "Visite avec un support numérique"]
     },
     SAUMUR => {
-        ITEM_VISITE => ["Visite guidée", "Visite libre"],
-        ITEM_PARCOURS => ["Visite guidée", "Visite libre"],
-        ITEM_ANIMATION => ["Concert", "Conférence / Débat", "Danse", "Dégustation", "Démonstration", "Goûter",
-                           "Atelier", "Jeu de piste / Chasse au trésor", "Marché", "Balade contée", "Cinéma", "Conte",
-                           "Théâtre", "Dessin", "Loisirs créatifs", "Peinture", "Photographie"],
-        ITEM_EXPOSITION => ["Visite guidée", "Visite libre"]
+        ITEM_VISITE => ["Visite guidée", "Visite libre", "Visite avec un support numérique"],
+        ITEM_PARCOURS => ["Visite guidée", "Visite libre", "Visite avec un support numérique"],
+        ITEM_ANIMATION => ["Concert", "Conférence / Débat / Rencontre", "Danse", "Dégustation", "Démonstration", "Goûter",
+                           "Atelier / Initiation / Découverte", "Jeu de piste / Chasse au trésor", "Marché", "Balade contée",
+                           "Performance artistique", "Projection"],
+        ITEM_EXPOSITION => ["Visite guidée", "Visite libre", "Visite avec un support numérique"]
     },
     DLVA => {
-      ITEM_VISITE => ["Visite guidée", "Visite libre"],
-      ITEM_PARCOURS => ["Visite guidée", "Visite libre"],
-      ITEM_ANIMATION => ["Concert", "Conférence / Débat", "Danse", "Dégustation", "Démonstration", "Goûter",
-                         "Atelier", "Jeu de piste / Chasse au trésor", "Marché", "Balade contée", "Cinéma", "Conte",
-                         "Dessin", "Loisirs créatifs", "Peinture", "Photographie"],
-      ITEM_EXPOSITION => ["Visite guidée", "Visite libre"]
+      ITEM_VISITE => ["Visite guidée", "Visite libre", "Visite avec un support numérique"],
+      ITEM_PARCOURS => ["Visite guidée", "Visite libre", "Visite avec un support numérique"],
+      ITEM_ANIMATION => ["Concert", "Conférence / Débat / Rencontre", "Danse", "Dégustation", "Démonstration", "Goûter",
+                         "Atelier / Initiation / Découverte", "Jeu de piste / Chasse au trésor", "Marché", "Balade contée",
+                         "Performance artistique", "Projection"],
+      ITEM_EXPOSITION => ["Visite guidée", "Visite libre", "Visite avec un support numérique"]
     }
 }
 CRITERIA_REFS = Hash[CRITERIA.values.collect {|v| v.values.collect {|val| val.is_a?(Hash) ? val.values.flatten : val}.flatten}.flatten.uniq.collect {|crit| [crit.parameterize, crit]}]
@@ -173,12 +176,14 @@ APIDAE_THEMES = {
 
 APIDAE_CATEGORIES = {
     'Démonstration' => 3871,
-    'Atelier' => 2119,
+    'Atelier' => 5362,
+    'Atelier / Initiation / Découverte' => 5362,
     'Jeux' => 2112,
     'Visite guidée' => 2101,
     'Visite libre' => 4546,
     'visite' => 4546,
     'Concert' => 2128,
+    'Conférence / Débat / Rencontre' => 2072,
     'Conférence / Débat' => 2072,
     'Exposition' => 2080,
     'Projection' => 3818,
@@ -187,7 +192,9 @@ APIDAE_CATEGORIES = {
     'Goûter' => 2123,
     'Marché' => 2083,
     'Théâtre' => 2134,
-    'Danse' => 2151
+    'Danse' => 2151,
+    'Performance artistique' => 5651,
+    'Visite avec un support numérique' => 6206
 }
 
 APIDAE_COVID_DESC = 6143
