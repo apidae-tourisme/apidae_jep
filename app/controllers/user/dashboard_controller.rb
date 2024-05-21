@@ -12,10 +12,6 @@ class User::DashboardController < User::UserController
 
   def onboarding
     @items = @user.legal_entity.active_items(EDITION - 1).sort_by {|i| 1/i.id.to_f}
-    if @items.count == 0
-      @user.update(onboarding: '1')
-      redirect_to url_for(action: :index)
-    end
   end
 
   def submit_onboarding

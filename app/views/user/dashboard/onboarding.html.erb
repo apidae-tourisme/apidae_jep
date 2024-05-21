@@ -6,14 +6,20 @@
     <div class="panel-body">
       <h4 class="mt-sm">Présélection de vos offres à reconduire :</h4>
       <p>
-        Pour faciliter la saisie de votre programmation, <strong>vos offres de l'édition <%= EDITION - 1 %> ont été préselectionnées ci-dessous</strong>.<br/>
-        Nous vous invitons à passer cette liste en revue afin de sélectionner toutes les offres que vous souhaitez reconduire cette année.
-        Pour chaque offre sélectionnée, l'outil créera une nouvelle version <%= EDITION %> à l'état de brouillon, que vous pourrez ensuite
-        modifier depuis votre tableau de bord.<br/>
-        <em>Note : si vous ne sélectionnez pas une offre ici mais que vous souhaitez finalement la reconduire, vous pourrez toujours
-          la sélectionner via votre tableau de bord par la suite.</em><br/>
-        <br/>
-        Nous profitons également de cette étape pour recueillir vos préférences en termes de communication de notre part :<br/>
+        <% if @items.count > 0 %>
+          Pour faciliter la saisie de votre programmation, <strong>vos offres de l'édition <%= EDITION - 1 %> ont été préselectionnées ci-dessous</strong>.<br/>
+          Nous vous invitons à passer cette liste en revue afin de sélectionner toutes les offres que vous souhaitez reconduire cette année.
+          Pour chaque offre sélectionnée, l'outil créera une nouvelle version <%= EDITION %> à l'état de brouillon, que vous pourrez ensuite
+          modifier depuis votre tableau de bord.<br/>
+          <em>Note : si vous ne sélectionnez pas une offre ici mais que vous souhaitez finalement la reconduire, vous pourrez toujours
+            la sélectionner via votre tableau de bord par la suite.</em><br/>
+          <br/>
+        <% else %>
+          Nous n'avons pas trouvé d'offres issues de votre programmation pour l'édition <%= EDITION - 1 %>.
+          Si vous souhaitez reconduire une offre proposée lors d'une édition antérieure, vous pourrez toujours la sélectionner via votre tableau de bord par la suite.<br/>
+          <br/>
+        <% end %>
+        Nous profitons de cette étape pour recueillir vos préférences en termes de communication de notre part :<br/>
       </p>
       <div id="gdpr_toggle" class="form-group mdy">
         <div class="col-sm-12">
