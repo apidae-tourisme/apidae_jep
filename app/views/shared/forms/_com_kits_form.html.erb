@@ -69,7 +69,7 @@
                 <fieldset>
                   <legend class="text-uppercase text-primary mb-sm">Informations sur la commande</legend>
                   <div class="help-block mb-lg">
-                    <em class="icon-info pr-sm"></em>La livraison se déroulera du 28 Août au 8 septembre 2023. Un seul passage
+                    <em class="icon-info pr-sm"></em>La livraison se déroulera du 19 Août au 7 septembre 2024. Un seul passage
                     sera effectué. Aussi nous vous demandons d'être précis sur l'adresse et le contact pour la livraison
                     et d'indiquer plusieurs plages horaires de livraison possibles. Enfin, nous vous informons qu'il s'agit
                     d'une livraison uniquement. Nous vous laissons le soin de gérer la pose et la dépose des panneaux de signalétique.<br/>
@@ -117,9 +117,9 @@
                     </div>
                   </div>
                   <div class="form-group mdy mt-lg">
-                    <label class="col-sm-4 control-label">Nombre de panneaux de signalétique 53 x 120 cm avec accroches</label>
+                    <label class="col-sm-4 control-label">Nombre de panneaux de signalétique 80 x 120 cm avec accroches (2 panneaux max.)</label>
                     <div class="col-sm-2">
-                      <%= poll_form.text_field :signs, class: 'form-control required digits' %>
+                      <%= poll_form.number_field :signs, min: 0, max: 2, class: 'form-control required' %>
                     </div>
                   </div>
                 </fieldset>
