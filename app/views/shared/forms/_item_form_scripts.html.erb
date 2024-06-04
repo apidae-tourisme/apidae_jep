@@ -25,7 +25,7 @@
         selectTown.val(value).trigger('change');
     }
 
-    <% if current_moderator && (@item.draft? || @item.pending?) %>
+    <% if current_moderator %>
       var selectUser = $("select.select_user").select2({
           language: "fr",
           minimumInputLength: 2,
