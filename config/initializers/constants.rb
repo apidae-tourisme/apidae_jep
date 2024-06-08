@@ -176,8 +176,8 @@ APIDAE_THEMES = {
 
 APIDAE_CATEGORIES = {
     'Démonstration' => 3871,
-    'Atelier' => 5362,
-    'Atelier / Initiation / Découverte' => 5362,
+    'Atelier' => 5879,
+    'Atelier / Initiation / Découverte' => 5879,
     'Jeux' => 2112,
     'Visite guidée' => 2101,
     'Visite libre' => 4546,
