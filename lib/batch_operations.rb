@@ -30,8 +30,10 @@ class BatchOperations
         Rails.logger.info "Finished decorating item #{item.id} - #{item.external_id}"
       rescue OAuth2::Error => e
         Rails.logger.error "OAuth2::Error for item #{item.id} - #{item.external_id}"
+        Rails.logger.error e
       rescue Exception => e
         Rails.logger.error "Exception caught for item #{item.id} - #{item.external_id}"
+        Rails.logger.error e
       end
     end
   end
