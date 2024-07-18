@@ -17,9 +17,9 @@ class BatchOperations
     unless item_files.include?(POSTER_FILE_NAME)
       begin
         Rails.logger.info "Decorating item #{item.id} - #{item.external_id}"
-        previous_poster = item.attached_files.find {|af| af.picture_file_name == 'affiche-jep-isere-2023.jpg'}
-        if previous_poster
-          item.attached_files.delete(previous_poster)
+        previous_posters = item.attached_files.select {|af| ['affiche-jep-isere-2022.jpg', 'affiche-jep-isere-2023.jpg'].include?(af.picture_file_name)}
+        if previous_posters.any?
+          previous_posters.each {|p| item.attached_files.delete(p)}
         end
         af = AttachedFile.new(picture: open(URI.parse("https://jep.apidae-tourisme.com/#{POSTER_FILE_NAME}")),
                               credits: "Département de l'Isère")
