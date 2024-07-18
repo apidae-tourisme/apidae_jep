@@ -31,9 +31,11 @@ class BatchOperations
       rescue OAuth2::Error => e
         Rails.logger.error "OAuth2::Error for item #{item.id} - #{item.external_id}"
         Rails.logger.error e.to_s.encode('utf-8', :invalid => :replace, :undef => :replace, :replace => '_')
+        Rails.logger.debug e.backtrace.join("\n")
       rescue Exception => e
         Rails.logger.error "Exception caught for item #{item.id} - #{item.external_id}"
         Rails.logger.error e.to_s.encode('utf-8', :invalid => :replace, :undef => :replace, :replace => '_')
+        Rails.logger.debug e.backtrace.join("\n")
       end
     end
   end
