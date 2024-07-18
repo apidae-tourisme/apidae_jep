@@ -366,15 +366,20 @@ class ProgramItem < ActiveRecord::Base
     attached_files.each_with_index do |attachment, i|
       attachment_key = "attachment-#{i}"
       if attachment.picture
-        attachments[:illustrations] ||= []
-        form_data["multimedia.#{attachment_key}"] = Faraday::UploadIO.new(attachment.picture.path(:xlarge), attachment.picture_content_type)
-        attachments[:illustrations] << {
-            link: false,
-            type: 'IMAGE',
-            traductionFichiers: [{locale: 'fr', url: "MULTIMEDIA##{attachment_key}"}],
-            nom: {libelleFr: attachment.picture_file_name},
-            copyright: {libelleFr: attachment.credits}
-        }
+        begin
+          attachments[:illustrations] ||= []
+          form_data["multimedia.#{attachment_key}"] = Faraday::UploadIO.new(attachment.picture.path(:xlarge), attachment.picture_content_type)
+          attachments[:illustrations] << {
+              link: false,
+              type: 'IMAGE',
+              traductionFichiers: [{locale: 'fr', url: "MULTIMEDIA##{attachment_key}"}],
+              nom: {libelleFr: attachment.picture_file_name},
+              copyright: {libelleFr: attachment.credits}
+          }
+        rescue Exception => e
+          logger.error "Ignoring attachment #{attachment.picture_file_name} - missing file at path #{attachment.picture.path(:xlarge)}"
+          logger.error e
+        end
       end
     end
 
