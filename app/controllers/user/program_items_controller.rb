@@ -4,7 +4,7 @@ class User::ProgramItemsController < User::UserController
 
   def check_auth
     if current_user && current_user.territory == ISERE
-      redirect_to user_dashboard_url, alert: "La saisie des offres pour les JEP 2024 n'est plus disponible en ligne."
+      redirect_to user_dashboard_url, alert: "La saisie des offres pour les JEP 2025 n'est plus disponible en ligne."
     end
   end
 

@@ -1,4 +1,5 @@
 <div class="pull-right">
+  <a href="<%= moderator_program_items_path(status: @status, year: 2025) %>" class="btn btn-info btn-oval <%= 'btn-outline' unless @year == 2025 %>">JEP 2025</a>
   <a href="<%= moderator_program_items_path(status: @status, year: 2024) %>" class="btn btn-info btn-oval <%= 'btn-outline' unless @year == 2024 %>">JEP 2024</a>
   <a href="<%= moderator_program_items_path(status: @status, year: 2023) %>" class="btn btn-info btn-oval <%= 'btn-outline' unless @year == 2023 %>">JEP 2023</a>
   <a href="<%= moderator_program_items_path(status: @status, year: 2022) %>" class="btn btn-info btn-oval <%= 'btn-outline' unless @year == 2022 %>">JEP 2022</a>

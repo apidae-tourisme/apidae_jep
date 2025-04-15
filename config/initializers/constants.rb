@@ -3,7 +3,7 @@ ISERE = "isere"
 SAUMUR = "saumur"
 DLVA = "dlva"
 
-EDITION = 2024
+EDITION = 2025
 
 ITEM_VISITE = "visite"
 ITEM_PARCOURS = "parcours"
@@ -13,26 +13,23 @@ ITEM_EXPOSITION = "exposition"
 ITEM_TYPES = [ITEM_VISITE, ITEM_PARCOURS, ITEM_ANIMATION, ITEM_EXPOSITION]
 
 THEMES = {
-    GRAND_LYON => ["Thème JEP 2024 : Patrimoine des itinéraires, des réseaux et des connexions", "Nouveauté",
+    GRAND_LYON => ["Thème JEP 2025 : Patrimoine architectural", "Nouveauté",
                    "En famille", "Egalité"],
-    ISERE => ["Thème JEP 2024 : Patrimoine des itinéraires, des réseaux et des connexions", "Famille", "Réservé aux enfants", "Antiquité",
+    ISERE => ["Thème JEP 2025 : Patrimoine architectural", "Famille", "Réservé aux enfants", "Antiquité",
               "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique", "Cinéma", "Conte",
               "Dessin", "Loisirs créatifs", "Peinture", "Photographie"],
-    SAUMUR => ["Thème JEP 2024 : Patrimoine des itinéraires, des réseaux et des connexions", "JEP | Première ouverture", "Famille", "Réservé aux enfants", "Antiquité",
+    SAUMUR => ["Thème JEP 2025 : Patrimoine architectural", "JEP | Première ouverture", "Famille", "Réservé aux enfants", "Antiquité",
                      "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique", "Œnologie", "Cinéma", "Conte",
                "Dessin", "Loisirs créatifs", "Peinture", "Photographie"],
-    DLVA => ["Thème JEP 2024 : Patrimoine des itinéraires, des réseaux et des connexions", "Famille", "Réservé aux enfants", "Antiquité",
+    DLVA => ["Thème JEP 2025 : Patrimoine architectural", "Famille", "Réservé aux enfants", "Antiquité",
               "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique", "Cinéma", "Conte",
              "Dessin", "Loisirs créatifs", "Peinture", "Photographie"]
 }
 THEMES_REFS = Hash[THEMES.values.flatten.collect {|th| [th.parameterize, th] }]
 
 VALIDATION_CRITERIA = {
-    GRAND_LYON => ['Coup de coeur', "Visites guidées de l'Office du Tourisme", 'Balades urbaines du Musée Gadagne',
-                   'Sous-thématique 1', 'Sous-thématique 2', 'Sous-thématique 3', 'Sous-thématique 4', 'Sous-thématique 5',
-                   'Sous-thématique 6', 'Sous-thématique 7', 'Sous-thématique 8', 'Sous-thématique 9', 'Sous-thématique 10',
-                   'Sous-thématique 11', 'Sous-thématique 12', 'Sous-thématique 13', 'Sous-thématique 14', 'Sous-thématique 15',
-                   'Sous-thématique 16', 'Sous-thématique 17', 'Sous-thématique 18', 'Sous-thématique 19', 'Sous-thématique 20'],
+    GRAND_LYON => ['Insolite', 'Architecture remarquable', 'Musique/danse/spectacle vivant', 'Nature/parcs et jardins',
+                   'Patrimoine religieux', 'Médecine', 'Patrimoine scientifique, technique et industriel', 'Matrimoine'],
     ISERE => [],
     SAUMUR => ['Demeure privée', 'Site troglodyte'],
     DLVA => []
@@ -142,11 +139,18 @@ APIDAE_CRITERIA = {
     'Balades urbaines du Musée Gadagne' => 8292,
     'Demeure privée' => 17728,
     'JEP | Première ouverture' => 17818,
-    # 'Thématique métropole 2023 - Lumière' => 25207
+    'Insolite' => 29789,
+    'Architecture remarquable' => 29790,
+    'Musique/danse/spectacle vivant' => 29791,
+    'Nature/parcs et jardins' => 29792,
+    'Patrimoine religieux' => 29793,
+    'Médecine' => 29794,
+    'Patrimoine scientifique, technique et industriel' => 29795,
+    'Matrimoine' => 29796
 }
 
 APIDAE_TYPOLOGIES = {
-    "Thème JEP 2024 : Patrimoine des itinéraires, des réseaux et des connexions" => 7277
+  "Thème JEP 2025 : Patrimoine architectural" => 7466
 }
 
 APIDAE_ENVIRONMENTS = {

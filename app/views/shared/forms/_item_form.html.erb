@@ -228,7 +228,7 @@
           <legend class="text-uppercase text-primary mb0 openings">Horaires / ouverture*</legend>
           <div class="form-group">
             <% ext_ref = @item.external_ref %>
-            <% ['2024-09-20', '2024-09-21', '2024-09-22', '2024-09-23'].each do |d| %>
+            <% ['2025-09-19', '2025-09-20', '2025-09-21', '2025-09-22'].each do |d| %>
               <% opening_val = @item.openings.dig(d, 'value') %>
               <% opening_ref = @item.opening_id(ext_ref, d, opening_val) %>
               <div id="apidae_opening_<%= opening_ref %>" class="col-sm-3 mt-lg">

@@ -396,6 +396,7 @@ fr:
         '2022': Offres 2022
         '2023': Offres 2023
         '2024': Offres 2024
+        '2025': Offres 2025
       offers_count: Nombre d'offres
       gdpr_status: Autorisation données
       auth_provider: Authentification
