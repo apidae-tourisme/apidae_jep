@@ -1,10 +1,10 @@
 class User::ProgramItemsController < User::UserController
-  before_action :check_auth
+  # before_action :check_auth
   before_action :set_program_item, only: [:edit, :update, :show, :destroy, :confirm, :duplicate]
 
   def check_auth
     if current_user && current_user.territory == ISERE
-      redirect_to user_dashboard_url, alert: "La saisie des offres pour les JEP 2025 n'est plus disponible en ligne."
+      redirect_to user_dashboard_url, alert: "La saisie des offres pour les JEP #{EDITION} n'est plus disponible en ligne."
     end
   end
 
@@ -117,7 +117,7 @@ class User::ProgramItemsController < User::UserController
       @new_item.reference = @new_item.id
       @new_item.save(validate: false)
       @item.attached_files.each do |f|
-        AttachedFile.create(data: f.data, picture: f.picture, program_item_id: @new_item.id)
+        AttachedFile.create(data: f.data, picture: f.picture, program_item_id: @new_item.id) unless f.picture_file_name && f.picture_file_name.include?('affiche-jep-isere') && f.picture_file_name != "affiche-jep-isere-#{EDITION}.jpg"
       end
       redirect_to edit_user_program_item_url(@new_item), notice: "L'offre a bien été dupliquée."
     else

@@ -312,6 +312,16 @@
               <%= render_previous(:booking_website) %>
             </div>
           </div>
+          <% if current_user.territory == GRAND_LYON %>
+            <div id="accept_audience" class="form-group mt-lg mdy">
+              <div class="col-sm-12">
+                <label class="checkbox-inline c-checkbox">
+                  <%= check_box_tag 'program_item[accept_audience]', '1', @item.accept_audience == '1', disabled: readonly %>
+                  <span class="fa fa-check"></span>Ma structure est volontaire pour accueillir le vendredi des groupes de publics spécifiques type collèges ou QPV
+                </label>
+              </div>
+            </div>
+          <% end %>
         </fieldset>
         <fieldset class="item_photos">
           <legend class="text-uppercase text-primary mb-sm">Photos</legend>
@@ -343,7 +353,11 @@
         </fieldset>
         <fieldset>
           <input type="hidden" name="com_fields" value="" id="com_fields"/>
-          <legend class="text-uppercase text-primary com_fields">Informations et renseignements*</legend>
+          <legend class="text-uppercase text-primary com_fields mb-sm">Informations et renseignements*</legend>
+          <p class="help-block">
+            <strong>Attention</strong> : les informations de contact ci-dessous sont susceptibles d'être diffusées publiquement sur les supports
+            de communication des JEP (sites web, éditions papier...). Nous vous invitons à vérifier que ces informations sont bien adaptées à cet usage.
+          </p>
           <div class="form-group">
             <label class="col-sm-3 control-label">Téléphone<%= help_button %></label>
             <%= help_content("La saisie d'un numéro de téléphone est obligatoire (il peut être identique au téléphone utilisé pour les réservations)") %>

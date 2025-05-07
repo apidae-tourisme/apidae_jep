@@ -29,7 +29,7 @@ class ProgramItem < ActiveRecord::Base
   DIRECTION_DOWN = 'down'
 
   store :desc_data, accessors: [:place_desc, :place_desc_ref, :event_planners, :building_ages, :building_types, :accessibility,
-                                :audience, :criteria, :themes, :validation_criteria, :accept_pictures, :accept_safety, :covid_desc], coder: JSON
+                                :audience, :criteria, :themes, :validation_criteria, :accept_pictures, :accept_safety, :accept_audience, :covid_desc], coder: JSON
   store :location_data, accessors: [:main_place, :main_lat, :main_lng, :main_address, :main_town_insee_code,
                                     :main_transports, :alt_place, :alt_lat, :alt_lng, :alt_address,
                                     :alt_town_insee_code, :alt_postal_code, :alt_transports], coder: JSON
@@ -62,7 +62,7 @@ class ProgramItem < ActiveRecord::Base
     item.rev += 1
     item.reference = prev_item.reference
     prev_item.attached_files.each do |f|
-      item.attached_files << AttachedFile.new(program_item: item, data: f.data, picture: f.picture, created_at: f.created_at)
+      item.attached_files << AttachedFile.new(program_item: item, data: f.data, picture: f.picture, created_at: f.created_at) unless f.picture_file_name && f.picture_file_name.include?('affiche-jep-isere') && f.picture_file_name != "affiche-jep-isere-#{EDITION}.jpg"
     end
     item.load_remote_openings
     # item.openings.each_pair do |d, o|

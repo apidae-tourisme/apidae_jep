@@ -28,7 +28,7 @@ THEMES = {
 THEMES_REFS = Hash[THEMES.values.flatten.collect {|th| [th.parameterize, th] }]
 
 VALIDATION_CRITERIA = {
-    GRAND_LYON => ['Insolite', 'Architecture remarquable', 'Musique/danse/spectacle vivant', 'Nature/parcs et jardins',
+    GRAND_LYON => ['Coup de coeur', 'Insolite', 'Architecture remarquable', 'Musique/danse/spectacle vivant', 'Nature/parcs et jardins',
                    'Patrimoine religieux', 'Médecine', 'Patrimoine scientifique, technique et industriel', 'Matrimoine'],
     ISERE => [],
     SAUMUR => ['Demeure privée', 'Site troglodyte'],
@@ -164,6 +164,7 @@ APIDAE_THEMES = {
     'En vélo' => 2338,
     'Balade contée' => 2158,
     'Cinéma' => 2133,
+    'Danse' => 7457,
     'Dessin' => 2304,
     'Loisirs créatifs' => 2144,
     'Peinture' => 2232,
@@ -196,7 +197,7 @@ APIDAE_CATEGORIES = {
     'Goûter' => 2123,
     'Marché' => 2083,
     'Théâtre' => 2134,
-    'Danse' => 2151,
+    # 'Danse' => 2151,
     'Performance artistique' => 5651,
     'Visite avec un support numérique' => 6206
 }
