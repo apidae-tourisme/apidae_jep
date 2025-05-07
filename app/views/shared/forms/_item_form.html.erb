@@ -312,7 +312,7 @@
               <%= render_previous(:booking_website) %>
             </div>
           </div>
-          <% if current_user.territory == GRAND_LYON %>
+          <% if (current_user&.territory || current_moderator&.member_ref) == GRAND_LYON %>
             <div id="accept_audience" class="form-group mt-lg mdy">
               <div class="col-sm-12">
                 <label class="checkbox-inline c-checkbox">

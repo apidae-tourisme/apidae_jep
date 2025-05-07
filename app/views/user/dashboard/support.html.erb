@@ -4,13 +4,13 @@
     <p>
       <% if current_user.territory == GRAND_LYON %>
           Pour tous les évènements JEP concernant la Métropole de Lyon :<br/>
-          <strong>Antoine Coppo</strong>,<br/>
+          <strong>Manon Tristan</strong>,<br/>
           mail : <%= mail_to 'jep.metropole@grandlyon.com' %>.
       <% elsif current_user.territory == ISERE %>
           Pour tous les évènements JEP concernant l'Isère :<br/>
-          <strong>Julie Léon</strong>,<br/>
+          <strong>Louane Armando</strong>,<br/>
           tél : 04 76 00 37 72,<br/>
-          mail : <%= mail_to 'julie.leon@isere.fr' %>.
+          mail : <%= mail_to 'louane.armando@isere.fr' %>.
       <% end %>
     </p>
     <a href="/guide_saisie_apidaejep.pdf" target="_blank" class="btn btn-primary btn-lg">
