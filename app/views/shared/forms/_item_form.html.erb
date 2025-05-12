@@ -169,9 +169,9 @@
               <%= render_previous(:themes) %>
             </div>
           </div>
-          <% if current_moderator %>
+          <% if current_moderator || (current_user&.territory == GRAND_LYON && readonly && @item.validated?)  %>
               <div class="form-group mt">
-                <label class="col-sm-3 control-label">Critères validation</label>
+                <label class="col-sm-3 control-label">Critères de validation</label>
                 <div class="col-sm-9">
                   <%= item_form.select :validation_criteria, validation_criteria, {}, multiple: 'multiple',
                                        class: 'form-control chosen-select no-max', disabled: readonly,

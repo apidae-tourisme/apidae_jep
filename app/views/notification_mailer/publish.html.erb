@@ -5,7 +5,11 @@
   <br/>
   Titre offre : <%= @item.title %>
   <br/>
+  <% if @item.user&.territory == GRAND_LYON %>
+  Si vous souhaitez consulter l'offre validée sur ApidaeJEP et connaître la (ou les) thématique dans laquelle celle-ci sera référencée, veuillez suivre le lien suivant :<br/>
+  <% else %>
   Veuillez suivre le lien suivant pour consulter l'offre validée sur ApidaeJEP :<br/>
+  <% end %>
   <%= link_to "Consulter l'offre", user_program_item_url(@item) %><br/>
   <br/>
   Cordialement,<br/>

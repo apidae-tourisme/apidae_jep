@@ -4,7 +4,11 @@ Nous avons bien validé votre offre pour les JEP <%= EDITION %>.
 ---
 Titre offre : <%= @item.title %>
 ---
-Veuillez suivre le lien suivant pour consulter l'offre validée sur ApidaeJEP :
+<% if @item.user&.territory == GRAND_LYON %>
+  Si vous souhaitez consulter l'offre validée sur ApidaeJEP et connaître la (ou les) thématique dans laquelle celle-ci sera référencée, veuillez suivre le lien suivant :
+<% else %>
+  Veuillez suivre le lien suivant pour consulter l'offre validée sur ApidaeJEP :
+<% end %>
 <%= user_program_item_url(@item) %>
 
 Cordialement,
