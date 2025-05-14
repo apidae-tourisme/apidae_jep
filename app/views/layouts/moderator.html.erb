@@ -66,8 +66,9 @@
         var helpText = $(this).parents(".form-group").find(".help-block").text();
         var fieldLabel = $(this).parents("label").text();
         if(helpText.length > 0) {
-            modalWindow.find("#modal_title").append(fieldLabel);
-            modalWindow.find("#modal_body").append('<p class="pre">' + helpText + '</p>');
+            modalWindow.find("#modal_title").html(fieldLabel);
+            modalWindow.find("#modal_body").html('<div class="modal-body"><p class="pre">' + helpText + '</p></div>' +
+                '<div class="modal-footer text-right"><button id="close_help" type="button" class="btn btn-inverse">Fermer</button></div>');
             modalWindow.modal();
         }
     });
