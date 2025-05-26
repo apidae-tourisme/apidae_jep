@@ -9,6 +9,10 @@ class LegalEntity < ActiveRecord::Base
 
   validates_presence_of :name
 
+  def self.default_scope
+    where(status: 'active')
+  end
+
   def self.matching(pattern)
     LegalEntity.where("trim(unaccent(replace(name, '-', ' '))) ILIKE trim(unaccent(replace(?, '-', ' ')))", "%#{pattern}%")
   end
