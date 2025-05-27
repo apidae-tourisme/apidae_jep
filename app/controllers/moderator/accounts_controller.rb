@@ -4,7 +4,7 @@ class Moderator::AccountsController < Moderator::ModeratorController
   before_action :set_user, only: [:edit, :update, :edit_com, :update_com]
 
   def index
-    @accounts = User.where(territory: current_moderator.member_ref)
+    @accounts = User.where(territory: current_moderator.member_ref).joins(:legal_entity)
   end
 
   def new
