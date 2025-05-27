@@ -46,6 +46,7 @@ class LegalEntity < ActiveRecord::Base
   # Note - grouped JSON exports expected
   def self.import(json_dir)
     result = false
+    entities_ids = []
     if Dir.exist?(json_dir)
       Dir.foreach(json_dir) do |f|
         if f.end_with?('.json')
@@ -55,8 +56,9 @@ class LegalEntity < ActiveRecord::Base
           entities_hashes.each do |entity_data|
             if entity_data[:type] == 'STRUCTURE'
               begin
-                ent = LegalEntity.find_by_external_id(entity_data[:id]) || LegalEntity.new(external_id: entity_data[:id])
+                ent = LegalEntity.find_by_external_id(entity_data[:id]) || LegalEntity.unscoped.where(external_id: entity_data[:id]).first || LegalEntity.new(external_id: entity_data[:id])
                 entity_town = Town.find_by_external_id(entity_data[:localisation][:adresse][:commune][:id])
+                ent.status = 'active'
                 if entity_town
                   ent.name = entity_data[:nom][:libelleFr]
                   ent.adresse1 = entity_data[:localisation][:adresse][:adresse1]
@@ -69,6 +71,7 @@ class LegalEntity < ActiveRecord::Base
                   ent.latitude = entity_data.dig(:localisation, :geolocalisation, :geoJson, :coordinates, 1)
                   ent.longitude = entity_data.dig(:localisation, :geolocalisation, :geoJson, :coordinates, 0)
                   ent.save!
+                  entities_ids << ent.external_id
                 end
               rescue Exception => e
                 Rails.logger.error e
@@ -77,8 +80,12 @@ class LegalEntity < ActiveRecord::Base
             end
           end
         end
+        Rails.logger.info "Imported #{entities_ids.count} entities"
         result = true
       end
+      obsolete_entities_ids = LegalEntity.unscoped.where("external_id NOT IN (?)", entities_ids).selec(:id).to_a
+      obsolete_count = LegalEntity.unscoped.where(id: obsolete_entities_ids).update_all(status: 'archived')
+      Rails.logger.info "Archived #{obsolete_count} obsolete entities"
       result
     end
   end
