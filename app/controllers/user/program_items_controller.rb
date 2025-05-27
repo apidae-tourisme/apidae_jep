@@ -159,6 +159,20 @@ class User::ProgramItemsController < User::UserController
     end
   end
 
+  def places
+    territory = current_moderator ? current_moderator.member_ref : current_user.territory
+    @entities = territory_entities(territory, params[:text])[0..5]
+    geo_results = ''
+    focus_point = territory == ISERE ? [45.1864, 5.736474] : [45.740410, 4.816417]
+    url = "https://places.apidae.net/autocomplete?text=#{params[:text]}&focus.point.lat=#{focus_point.first}&focus.point.lon=#{focus_point.last}&layers=venue%2Caddress%2Cstreet%2Cpostalcode"
+    open(url) {|f|
+      f.each_line {|line| geo_results += line}
+    }
+    result = JSON.parse geo_results, symbolize_names: true
+    logger.info "search url: #{url} - entities count: #{@entities.count} - geo features count: #{(result[:features] || []).count}"
+    @features = @entities.map {|e| e.to_geojson_feature} + (result[:features] || [])
+  end
+
   private
 
   def item_params
@@ -180,5 +194,14 @@ class User::ProgramItemsController < User::UserController
     else
       ''
     end
+  end
+
+  def territory_entities(territory, pattern)
+    entities = []
+    unless params[:text].blank?
+      entities = LegalEntity.where(territory == GRAND_LYON ? "town_insee_code LIKE ?" : "town_insee_code NOT LIKE ?", "69%").matching(pattern)
+                             .where('external_id IS NOT NULL').includes(:town)
+    end
+    entities
   end
 end

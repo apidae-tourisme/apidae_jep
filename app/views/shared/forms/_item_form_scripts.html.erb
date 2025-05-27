@@ -129,7 +129,7 @@
 
         <% unless readonly %>
         var geocoderOptions = {
-            url: '<%= (territory?(SAUMUR) || territory?(DLVA)) ? "/saisie/offres/structures" : "https://places.apidae.net" %>',
+            url: '/saisie/offres/places',
             layers: ['venue', 'address', 'street', 'postalcode'],
             position: 'topleft',
             expanded: true,

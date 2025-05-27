@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_05_13_220446) do
+ActiveRecord::Schema.define(version: 2025_05_26_175322) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,7 +106,9 @@ ActiveRecord::Schema.define(version: 2024_05_13_220446) do
     t.datetime "updated_at", null: false
     t.integer "external_id"
     t.string "town_insee_code"
+    t.string "status", default: "active"
     t.index ["name"], name: "index_legal_entities_on_name"
+    t.index ["status"], name: "index_legal_entities_on_status"
   end
 
   create_table "moderators", id: :serial, force: :cascade do |t|

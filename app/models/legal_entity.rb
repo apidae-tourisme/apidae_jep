@@ -153,6 +153,26 @@ class LegalEntity < ActiveRecord::Base
     )
   end
 
+  def to_geojson_feature
+    {
+      properties: {
+        id: id,
+        name: name,
+        label: name,
+        street: street_address,
+        telephone: phone,
+        email: email,
+        website: website,
+        layer: 'venue',
+        postalcode_gid: "X:X:#{town&.insee_code}",
+        locality: town&.label
+      },
+      geometry: {
+        coordinates: [longitude, latitude]
+      }
+    }
+  end
+
   private
 
   def self.contact_info(contact_fields, field_id)
