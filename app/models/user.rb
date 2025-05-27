@@ -46,16 +46,23 @@ class User < ActiveRecord::Base
     EventPoll.where(user_id: id).order(id: :desc).first
   end
 
+  def unscoped_entity
+    if @unscoped_ent.nil?
+      @unscoped_ent = LegalEntity.unscoped.find(legal_entity_id)
+    end
+    @unscoped_ent
+  end
+
   def entity_address
-    legal_entity.address.values.join("\n")
+    unscoped_entity.address.values.join("\n")
   end
 
   def entity_name
-    legal_entity.name
+    unscoped_entity.name
   end
 
   def entity_town
-    legal_entity.town.label if legal_entity.town
+    unscoped_entity.town.label if unscoped_entity.town
   end
 
   def active_items(year)
@@ -70,8 +77,8 @@ class User < ActiveRecord::Base
   end
 
   def full_name_with_entity(details = false)
-    [full_name, details ? " (#{email})" : '', " - #{legal_entity ? legal_entity.label : 'Structure inconnue'}",
-     legal_entity && details ? " (#{legal_entity.external_id.blank? ? 'Nouvelle structure' : legal_entity.external_id.to_s})" : ''].join('')
+    [full_name, details ? " (#{email})" : '', " - #{unscoped_entity ? unscoped_entity.label : 'Structure inconnue'}",
+     unscoped_entity && details ? " (#{unscoped_entity.external_id.blank? ? 'Nouvelle structure' : unscoped_entity.external_id.to_s})" : ''].join('')
   end
 
   def auth_provider
@@ -93,29 +100,29 @@ class User < ActiveRecord::Base
   end
 
   def compute_territory
-    if legal_entity_id && legal_entity.town_insee_code
-      if legal_entity.town_insee_code.start_with?('38') || legal_entity.town_insee_code.start_with?('73') ||
-          legal_entity.town_insee_code.start_with?('26') || TERRITORIES[ISERE].values.flatten.include?(legal_entity.town_insee_code)
+    if legal_entity_id && unscoped_entity.town_insee_code
+      if unscoped_entity.town_insee_code.start_with?('38') || unscoped_entity.town_insee_code.start_with?('73') ||
+        unscoped_entity.town_insee_code.start_with?('26') || TERRITORIES[ISERE].values.flatten.include?(unscoped_entity.town_insee_code)
         ISERE
-      elsif legal_entity.town_insee_code.start_with?('69')
+      elsif unscoped_entity.town_insee_code.start_with?('69')
         GRAND_LYON
-      elsif legal_entity.town_insee_code.start_with?('49')
+      elsif unscoped_entity.town_insee_code.start_with?('49')
         SAUMUR
-      elsif legal_entity.town_insee_code.start_with?('04')
+      elsif unscoped_entity.town_insee_code.start_with?('04')
         DLVA
       else
-        logger.info("Unsupported INSEE code : #{legal_entity.town_insee_code} - Cannot find corresponding JEP territory")
+        logger.info("Unsupported INSEE code : #{unscoped_entity.town_insee_code} - Cannot find corresponding JEP territory")
         GRAND_LYON
       end
     end
   end
 
   def entity_apidae_id
-    legal_entity.external_id if legal_entity
+    unscoped_entity&.external_id
   end
 
   def offers(year)
-    legal_entity.active_items(year).group_by {|pi| pi.status}
+    unscoped_entity.active_items(year).group_by {|pi| pi.status}
   end
 
   def account_offers
