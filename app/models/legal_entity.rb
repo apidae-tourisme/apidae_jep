@@ -83,7 +83,7 @@ class LegalEntity < ActiveRecord::Base
         Rails.logger.info "Imported #{entities_ids.count} entities"
         result = true
       end
-      obsolete_entities_ids = LegalEntity.unscoped.where("external_id NOT IN (?)", entities_ids).selec(:id).to_a
+      obsolete_entities_ids = LegalEntity.unscoped.where("external_id NOT IN (?)", entities_ids).select(:id).to_a
       obsolete_count = LegalEntity.unscoped.where(id: obsolete_entities_ids).update_all(status: 'archived')
       Rails.logger.info "Archived #{obsolete_count} obsolete entities"
       result
