@@ -17,7 +17,8 @@ THEMES = {
                    "En famille", "Egalité"],
     ISERE => ["Thème JEP 2025 : Patrimoine architectural", "Famille", "Réservé aux enfants", "Antiquité",
               "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique", "Cinéma", "Conte",
-              "Dessin", "Loisirs créatifs", "Peinture", "Photographie"],
+              "Dessin", "Loisirs créatifs", "Peinture", "Photographie", "Sciences", "Environnement / Développement durable",
+              "Paysage", "Fleurs / Plantes"],
     SAUMUR => ["Thème JEP 2025 : Patrimoine architectural", "JEP | Première ouverture", "Famille", "Réservé aux enfants", "Antiquité",
                      "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique", "Œnologie", "Cinéma", "Conte",
                "Dessin", "Loisirs créatifs", "Peinture", "Photographie"],
@@ -176,7 +177,11 @@ APIDAE_THEMES = {
     'Artisanat' => 2069,
     'Littérature' => 2210,
     'Historique' => 2206,
-    'Œnologie' => 2271
+    'Œnologie' => 2271,
+    'Sciences' => 2293,
+    'Environnement / Développement durable' => 2282,
+    'Paysage' => 7153,
+    'Fleurs / Plantes' => 2188
 }
 
 APIDAE_CATEGORIES = {

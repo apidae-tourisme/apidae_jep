@@ -523,9 +523,6 @@ class ProgramItem < ActiveRecord::Base
                         coordinates: [value[:longitude], value[:latitude]]
                     }
                 }
-            },
-            informationsFeteEtManifestation: {
-                nomLieu: value[:name]
             }
         }
       when :description
