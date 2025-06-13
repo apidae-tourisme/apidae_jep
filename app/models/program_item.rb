@@ -266,7 +266,7 @@ class ProgramItem < ActiveRecord::Base
   end
 
   def remote_save(skip_criteria = false)
-    logger.info "remote_save ProgramItem #{id} - external_id #{external_id}"
+    logger.info "remote_save ProgramItem #{id} - external_id #{external_id} - skip_criteria #{skip_criteria}"
     if external_id
       obj = EventsImporter.load_apidae_events([external_id], 'id')
       if obj.nil?
@@ -284,7 +284,7 @@ class ProgramItem < ActiveRecord::Base
       # touch_remote_obj
     end
 
-    logger.info "sleep - wait for sync"
+    logger.info "sleep - wait for sync - external_id #{external_id} - external_status #{external_status}"
     sleep(5)
 
     load_remote_openings(true)
