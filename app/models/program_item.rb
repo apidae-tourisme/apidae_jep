@@ -207,6 +207,7 @@ class ProgramItem < ActiveRecord::Base
   end
 
   def load_remote_openings(and_save = false)
+    logger.info "load remote openings - external_id: #{external_id} - save: #{and_save}"
     if external_id
       obj = EventsImporter.load_apidae_events([external_id], 'id', 'ouverture')
       if obj && obj.openings
@@ -265,6 +266,7 @@ class ProgramItem < ActiveRecord::Base
   end
 
   def remote_save(skip_criteria = false)
+    logger.info "remote_save ProgramItem #{id} - external_id #{external_id}"
     if external_id
       obj = EventsImporter.load_apidae_events([external_id], 'id')
       if obj.nil?
@@ -282,6 +284,7 @@ class ProgramItem < ActiveRecord::Base
       # touch_remote_obj
     end
 
+    logger.info "sleep - wait for sync"
     sleep(5)
 
     load_remote_openings(true)

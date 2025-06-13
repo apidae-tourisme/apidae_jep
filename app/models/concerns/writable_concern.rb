@@ -90,7 +90,7 @@ module WritableConcern
     if response && response.respond_to?(:parsed)
       result = response.parsed
     end
-    logger.debug "remote save result : #{result}"
+    logger.info "remote save result : #{result}"
     result
   end
 
