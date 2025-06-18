@@ -23,11 +23,11 @@ class User < ActiveRecord::Base
     user.uid = auth.uid
     user.apidae_data = auth.info.apidae_hash
     user.save!
-    user
     if user.legal_entity_id && user.legal_entity.nil?
       archived_entity = LegalEntity.unscoped.where(id: user.legal_entity_id).first
       archived_entity.update(status: 'active') if archived_entity
     end
+    user
   end
 
   def self.with_items(user_territory, year = EDITION)
