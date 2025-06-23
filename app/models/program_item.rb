@@ -742,7 +742,7 @@ class ProgramItem < ActiveRecord::Base
     opening_periods = []
     openings_data.each_pair do |date, op|
       unless op.blank? || op['value'].blank?
-        time_periods = JSON.parse(op['value']).map {|tp| tp.except('description')}
+        time_periods = JSON.parse(op['value']).map {|tp| {'weekdays' => []}.merge(tp.except('description'))}
         unless time_periods.blank?
           opening_period = {
               dateDebut: date,
