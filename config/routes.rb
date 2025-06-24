@@ -76,6 +76,7 @@ Rails.application.routes.draw do
       concerns :programs_routes
       resources :users, controller: 'accounts', path: 'comptes', as: 'accounts', only: [:index, :new, :create, :edit, :update] do
         get :list_com, on: :collection,  as: 'kits', path: 'supports'
+        get :new_com, on: :member, as: 'new_kit', path: 'supports'
         get :edit_com, on: :member, as: 'edit_kit', path: 'supports'
         patch :update_com, on: :member
         get :export, on: :collection, path: 'export'

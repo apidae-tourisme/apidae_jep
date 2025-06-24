@@ -1,7 +1,7 @@
 require 'raven'
 
 class Moderator::AccountsController < Moderator::ModeratorController
-  before_action :set_user, only: [:edit, :update, :edit_com, :update_com]
+  before_action :set_user, only: [:edit, :update, :new_com, :edit_com, :update_com]
 
   def index
     @accounts = User.where(territory: current_moderator.member_ref).joins(:legal_entity)
@@ -62,6 +62,10 @@ class Moderator::AccountsController < Moderator::ModeratorController
     @polls = CommunicationPoll.where(user_id: User.where(territory: current_moderator.member_ref, communication: true).collect {|u| u.id})
     @users = User.with_items(GRAND_LYON)
     @users_without_com = @users.to_a.select {|usr| usr.communication_poll.nil?}
+  end
+
+  def new_com
+    @user.communication_poll ||= CommunicationPoll.new(user_id: @user.id)
   end
 
   def edit_com
