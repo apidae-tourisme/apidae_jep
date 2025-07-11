@@ -8,8 +8,10 @@
             Informations du compte
             <%= link_to('<em class="icon icon-arrow-right"></em>Voir les offres du compte'.html_safe,
                         account_moderator_items_path(user_id: @user.id), class: 'btn btn-sm btn-link') if current_moderator && @user.persisted? %>
-            <%= link_to('<em class="icon icon-arrow-right"></em>Renseigner les supports de com'.html_safe,
-                        new_kit_moderator_account_path(id: @user.id), class: 'btn btn-sm btn-link') if current_moderator && @user.persisted? %>
+            <% if current_moderator && current_moderator.member_ref == GRAND_LYON %>
+              <%= link_to('<em class="icon icon-arrow-right"></em>Renseigner les supports de com'.html_safe,
+                          new_kit_moderator_account_path(id: @user.id), class: 'btn btn-sm btn-link') if current_moderator && @user.persisted? %>
+            <% end %>
           </legend>
           <div class="form-group mdy">
             <label class="col-sm-2 control-label">Nom</label>
