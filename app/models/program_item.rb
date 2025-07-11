@@ -102,7 +102,7 @@ class ProgramItem < ActiveRecord::Base
           ext_id = opening['externalRef']
           item = items_batch.find {|item| item.external_id && item.external_id.to_s == ext_id.to_s}
           if item
-            item.openings_details << opening
+            item.openings_details << opening.merge({'startDate' => datetime_to_date(opening['startDate']), 'endDate' => datetime_to_date(opening['endDate'])})
           end
         end
       rescue OpenURI::HTTPError => e
@@ -110,6 +110,10 @@ class ProgramItem < ActiveRecord::Base
         raise
       end
     end
+  end
+
+  def datetime_to_date(datetime)
+    datetime.include?('T') ? DateTime.parse(datetime).localtime.to_date.to_s : datetime
   end
 
   def last_revision
