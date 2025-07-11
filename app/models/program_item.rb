@@ -112,7 +112,7 @@ class ProgramItem < ActiveRecord::Base
     end
   end
 
-  def datetime_to_date(datetime)
+  def self.datetime_to_date(datetime)
     datetime.include?('T') ? DateTime.parse(datetime).localtime.to_date.to_s : datetime
   end
 
