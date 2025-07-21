@@ -7,7 +7,7 @@ class BatchOperations
 
     items.each do |item|
       decorate_item(item)
-      sleep(1)
+      sleep(2)
     end
   end
 

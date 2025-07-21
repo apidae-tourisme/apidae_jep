@@ -4,7 +4,7 @@ class AttachedFile < ActiveRecord::Base
   has_attached_file :picture,
                     {
                         :styles => {
-                            :xlarge => ['1600x1200>', :jpg],
+                            :xlarge => ['1920x1920>', :jpg],
                             :large => ['1280x960>', :jpg],
                             :medium => ['800x600>', :jpg],
                             :small => ['320x240', :jpg],

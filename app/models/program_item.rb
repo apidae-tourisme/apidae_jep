@@ -304,7 +304,7 @@ class ProgramItem < ActiveRecord::Base
       end
     end
 
-    form_data = build_multipart_form({})
+    form_data = build_multipart_form({}, :original)
     logger.info "remote_save_attachments ProgramItem #{id} - form_data #{form_data}"
     save_to_apidae(user.territory, form_data, :api_url, :put)
   end
@@ -359,7 +359,7 @@ class ProgramItem < ActiveRecord::Base
     merged
   end
 
-  def build_multipart_form(data_hash)
+  def build_multipart_form(data_hash, image_format = :xlarge)
     form_data = {
         mode: external_id ? WritableConcern::UPDATE : WritableConcern::CREATE,
         id: (external_id if external_id),
@@ -391,7 +391,7 @@ class ProgramItem < ActiveRecord::Base
       if attachment.picture
         begin
           attachments[:illustrations] ||= []
-          form_data["multimedia.#{attachment_key}"] = Faraday::UploadIO.new(attachment.picture.path(:xlarge), attachment.picture_content_type)
+          form_data["multimedia.#{attachment_key}"] = Faraday::UploadIO.new(attachment.picture.path(image_format), attachment.picture_content_type)
           attachments[:illustrations] << {
               link: false,
               type: 'IMAGE',
@@ -400,7 +400,7 @@ class ProgramItem < ActiveRecord::Base
               copyright: {libelleFr: attachment.credits}
           }
         rescue Exception => e
-          logger.error "Ignoring attachment #{attachment.picture_file_name} - missing file at path #{attachment.picture.path(:xlarge)}"
+          logger.error "Ignoring attachment #{attachment.picture_file_name} - missing file at path #{attachment.picture.path(image_format)}"
           logger.error e
         end
       end
