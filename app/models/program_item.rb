@@ -294,6 +294,21 @@ class ProgramItem < ActiveRecord::Base
     load_remote_openings(true)
   end
 
+  def remote_save_attachments
+    logger.info "remote_save_attachments ProgramItem #{id} - external_id #{external_id}"
+    if external_id
+      obj = EventsImporter.load_apidae_events([external_id], 'id')
+      if obj.nil?
+        logger.info("Removing obsolete Apidae reference #{external_id}")
+        self.external_id = nil
+      end
+    end
+
+    form_data = build_multipart_form({})
+    logger.info "remote_save_attachments ProgramItem #{id} - form_data #{form_data}"
+    save_to_apidae(user.territory, form_data, :api_url, :put)
+  end
+
   def merge_data
     merged = {}
 
@@ -354,7 +369,7 @@ class ProgramItem < ActiveRecord::Base
 
     form_data[:fields] = '["root"]'
     form_data[:root] ||= '{"type":"FETE_ET_MANIFESTATION"}'
-    form_data['root.fieldList'] = openings.blank? ? '[]' : '["expiration.dateExpiration","expiration.expirationAction"]'
+    form_data['root.fieldList'] = (openings.blank? || data_hash.blank?) ? '[]' : '["expiration.dateExpiration","expiration.expirationAction"]'
     # form_data['root.fieldList'] = '[]'
 
     data_hash.each_pair do |k, v|
