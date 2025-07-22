@@ -561,6 +561,7 @@ class ProgramItem < ActiveRecord::Base
             },
             prestations: {
                 tourismesAdaptes: accessibility_values(value[:accessibility]),
+                surchargeTourismesAdaptes: true,
                 typesClientele: audience_values(value[:audience])
             },
             informationsFeteEtManifestation: {
