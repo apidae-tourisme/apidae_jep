@@ -48,6 +48,15 @@ function initDataTable(tableSelector, inverseOrdering, orderingCol) {
     return t;
 }
 
+function formatFloat(evt) {
+    if (evt.keyCode !== 38 && evt.keyCode !== 40 && evt.keyCode !== 37 && evt.keyCode !== 39) {
+        var elt = evt.target;
+        if (elt.value) {
+            elt.value = elt.value.replace(',', '.').replace('°', '');
+        }
+    }
+}
+
 (function($) {
     $.fn.drags = function(opt) {
 

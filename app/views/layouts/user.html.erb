@@ -73,7 +73,7 @@
           modalWindow.find("#modal_body").html('<div class="modal-body"><p class="pre">' + helpText + '</p></div>' +
               '<div class="modal-footer text-right"><button id="close_help" type="button" class="btn btn-inverse">Fermer</button></div>');
           modalWindow.modal();
-          $("#close_help").click(function() {
+          modalWindow.find(".modal-footer > button").click(function() {
               modalWindow.modal("hide");
               return false;
           });

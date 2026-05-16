@@ -110,8 +110,9 @@
                 }, 1000);
             },
             onSubmit: function(timePeriods) {
-                apiHoursInputElt.value = timePeriods;
-                btnElt.innerHTML = timePeriodsAsText(timePeriods);
+                const validTimePeriods = JSON.stringify(JSON.parse(timePeriods || '[]').filter(tp => tp.timeFrames?.length));
+                apiHoursInputElt.value = validTimePeriods;
+                btnElt.innerHTML = timePeriodsAsText(validTimePeriods);
             },
             styles: {
                 mainBackground: '#ffffff',

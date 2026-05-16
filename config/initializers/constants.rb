@@ -13,16 +13,16 @@ ITEM_EXPOSITION = "exposition"
 ITEM_TYPES = [ITEM_VISITE, ITEM_PARCOURS, ITEM_ANIMATION, ITEM_EXPOSITION]
 
 THEMES = {
-    GRAND_LYON => ["Thème JEP 2025 : Patrimoine architectural", "Nouveauté",
+    GRAND_LYON => ["Thème JEP 2026 : Le patrimoine lié à l’eau", "Nouveauté",
                    "En famille", "Egalité"],
-    ISERE => ["Thème JEP 2025 : Patrimoine architectural", "Famille", "Réservé aux enfants", "Antiquité",
+    ISERE => ["Thème JEP 2026 : Le patrimoine lié à l’eau", "Famille", "Réservé aux enfants", "Antiquité",
               "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique", "Cinéma", "Conte",
               "Dessin", "Loisirs créatifs", "Peinture", "Photographie", "Sciences", "Environnement / Développement durable",
               "Paysage", "Fleurs / Plantes"],
-    SAUMUR => ["Thème JEP 2025 : Patrimoine architectural", "JEP | Première ouverture", "Famille", "Réservé aux enfants", "Antiquité",
+    SAUMUR => ["Thème JEP 2026 : Le patrimoine lié à l’eau", "JEP | Première ouverture", "Famille", "Réservé aux enfants", "Antiquité",
                      "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique", "Œnologie", "Cinéma", "Conte",
                "Dessin", "Loisirs créatifs", "Peinture", "Photographie"],
-    DLVA => ["Thème JEP 2025 : Patrimoine architectural", "Famille", "Réservé aux enfants", "Antiquité",
+    DLVA => ["Thème JEP 2026 : Le patrimoine lié à l’eau", "Famille", "Réservé aux enfants", "Antiquité",
               "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique", "Cinéma", "Conte",
              "Dessin", "Loisirs créatifs", "Peinture", "Photographie"]
 }
@@ -151,7 +151,7 @@ APIDAE_CRITERIA = {
 }
 
 APIDAE_TYPOLOGIES = {
-  "Thème JEP 2025 : Patrimoine architectural" => 7466
+  "Thème JEP 2026 : Le patrimoine lié à l’eau" => 7466
 }
 
 APIDAE_ENVIRONMENTS = {

@@ -535,11 +535,11 @@ class ProgramItem < ActiveRecord::Base
                     codePostal: value[:postal_code],
                     etat: 'France',
                     commune: {id: value[:external_id]},
-                    nomDuLieu: value[:startingPoint].blank? ? value[:name] : value[:startingPoint]
+                    nomDuLieu: value[:name]
                 },
                 geolocalisation: {
                     valide: true,
-                    complement: {libelleFr: value[:extraInfo]},
+                    complement: {libelleFr: [value[:startingPoint], value[:extraInfo]].select {|v| !v.blank?}.join("\n")},
                     geoJson: {
                         type: 'Point',
                         coordinates: [value[:longitude], value[:latitude]]
