@@ -15,7 +15,7 @@ ITEM_TYPES = [ITEM_VISITE, ITEM_PARCOURS, ITEM_ANIMATION, ITEM_EXPOSITION]
 THEMES = {
     GRAND_LYON => ["Nouveauté",
                    "En famille", "Egalité"],
-    ISERE => ["Thème JEP 2026 : le patrimoine lié à l'eau", "Famille", "Réservé aux enfants", "Antiquité",
+    ISERE => ["Thème JEP 2026 en Isère : le patrimoine lié à l'eau", "Famille", "Réservé aux enfants", "Antiquité",
               "Archéologie", "Architecture", "Art contemporain", "Artisanat", "Littérature", "Historique", "Cinéma", "Conte",
               "Dessin", "Loisirs créatifs", "Peinture", "Photographie", "Sciences", "Environnement / Développement durable",
               "Paysage", "Fleurs / Plantes"],
@@ -148,7 +148,7 @@ APIDAE_CRITERIA = {
     'Médecine' => 29794,
     'Patrimoine scientifique, technique et industriel' => 29795,
     'Matrimoine' => 29796,
-    "Thème JEP 2026 : le patrimoine lié à l'eau" => 31807
+    "Thème JEP 2026 en Isère : le patrimoine lié à l'eau" => 31807
 }
 
 APIDAE_TYPOLOGIES = {
