@@ -1,5 +1,5 @@
 class User::ProgramItemsController < User::UserController
-  before_action :check_auth
+  # before_action :check_auth
   before_action :set_program_item, only: [:edit, :update, :show, :destroy, :confirm, :duplicate]
 
   def check_auth
