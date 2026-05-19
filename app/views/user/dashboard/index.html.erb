@@ -35,7 +35,7 @@
   </div>
 </div>
 <% end %>
-<% if current_user.territory == ISERE %>
+<% if false %>
   <p class="alert alert-info">
     <em class="icon-info pr-sm"></em>La saisie dans le cadre des Journées Européennes du Patrimoine en Isère est à présent clôturée. Aucun changement ne peut être apporté sur la brochure papier éditée en partenariat avec le Dauphiné Libéré.<br/>
     <br/>
@@ -44,7 +44,7 @@
     <em>Direction de la Culture et du Patrimoine de l’Isère</em>
   </p>
 <% end %>
-<% unless current_user.territory == ISERE %>
+<% unless true %>
 <div class="pull-right">
   <%= link_to '<span class="btn-label"><i class="fa fa-plus"></i></span>Saisir une offre'.html_safe, new_user_program_item_path,
               class: 'btn btn-labeled btn-primary' %>
