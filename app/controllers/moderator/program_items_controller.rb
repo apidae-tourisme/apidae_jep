@@ -72,9 +72,11 @@ class Moderator::ProgramItemsController < Moderator::ModeratorController
         logger.error "Apidae error : #{e.response} - item : #{@item.id}"
         flash.now[:alert] = "Une erreur s'est produite au cours de l'enregistrement dans la base de données Apidae."
       end
+      logger.debug e.backtrace.join("\n")
     rescue Exception => e
       Raven.capture_exception(e)
       logger.error "Exception caught : #{e}"
+      logger.debug e.backtrace.join("\n")
       flash.now[:alert] = "Une erreur est survenue lors de la mise à jour de l'offre."
     end
     @item.status = ProgramItem::STATUS_PENDING

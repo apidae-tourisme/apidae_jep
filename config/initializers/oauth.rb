@@ -9,7 +9,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   end
 
   on_failure do |env|
-    if env['omniauth.params'].present
+    if env['omniauth.params'].present?
       env['devise.mapping'] = Devise.mappings[:user] || Devise.mappings[:moderator]
     end
     Devise::OmniauthCallbacksController.action(:failure).call(env)
