@@ -504,24 +504,24 @@
             <% if current_moderator %>
                   <% if @item.pending? || @item.validated? %>
                     <%= item_form.submit "Valider et publier #{@item.rev == 1 ? "l'offre" : 'la mise à jour'}", class: 'btn btn-success ml',
-                                         onclick: "setStatus('#{ProgramItem::STATUS_VALIDATED}')" %>
+                                         onclick: "setStatus('#{ProgramItem::STATUS_VALIDATED}')", data: {'disable-with': 'Enregistrement en cours...'} %>
                   <% end %>
                   <% if @item.pending? %>
                     <%= item_form.submit "Rejeter #{@item.rev == 1 ? "l'offre" : 'la mise à jour'}", class: 'btn btn-danger ml',
-                                         onclick: "setStatus('#{ProgramItem::STATUS_REJECTED}')" %>
+                                         onclick: "setStatus('#{ProgramItem::STATUS_REJECTED}')", data: {'disable-with': 'Enregistrement en cours...'} %>
                   <% end %>
                   <% unless @item.draft? %>
                     <%= link_to "Supprimer l'offre", moderator_program_item_path(@item), method: :delete,
-                                class: 'btn btn-inverse ml', data: {confirm: "La suppression d'une offre est définitive. Êtes-vous sûr(e) ? - Note : la suppression n'est effective que sur ApidaeJEP et n'affecte pas les éventuelles publications dans la base de données Apidae"} %>
+                                class: 'btn btn-inverse ml', data: {'disable-with': 'Enregistrement en cours...', confirm: "La suppression d'une offre est définitive. Êtes-vous sûr(e) ? - Note : la suppression n'est effective que sur ApidaeJEP et n'affecte pas les éventuelles publications dans la base de données Apidae"} %>
                   <% end %>
             <% end %>
             <% if current_user || @item.draft? %>
               <% unless readonly %>
-                <%= item_form.submit 'Enregistrer le brouillon', class: 'btn btn-inverse ml',
-                                     onclick: "setStatus('#{ProgramItem::STATUS_DRAFT}')", formnovalidate: 'formnovalidate' %>
+                <%= item_form.submit 'Enregistrer le brouillon', class: 'btn btn-inverse ml', onclick: "setStatus('#{ProgramItem::STATUS_DRAFT}')",
+                                     formnovalidate: 'formnovalidate', data: {'disable-with': 'Enregistrement en cours...'} %>
               <% end %>
               <%= item_form.submit "Transmettre #{@item.rev == 1 ? "l'offre" : 'la mise à jour'} pour validation", class: 'btn btn-primary ml',
-                                   onclick: "setStatus('#{ProgramItem::STATUS_PENDING}')" %>
+                                   onclick: "setStatus('#{ProgramItem::STATUS_PENDING}')", data: {'disable-with': 'Enregistrement en cours...'} %>
             <% end %>
           <% end %>
         <% end %>
