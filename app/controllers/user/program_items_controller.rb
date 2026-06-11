@@ -164,7 +164,7 @@ class User::ProgramItemsController < User::UserController
     @entities = territory_entities(territory, params[:text])[0..5]
     geo_results = ''
     focus_point = territory == ISERE ? [45.1864, 5.736474] : [45.740410, 4.816417]
-    url = "https://places.apidae.net/autocomplete?text=#{params[:text].parameterize.gsub('-', ' ')}&focus.point.lat=#{focus_point.first}&focus.point.lon=#{focus_point.last}&layers=venue%2Caddress%2Cstreet%2Cpostalcode"
+    url = "https://places.jep.hotentic.com/autocomplete?text=#{params[:text].parameterize.gsub('-', ' ')}&focus.point.lat=#{focus_point.first}&focus.point.lon=#{focus_point.last}&layers=venue%2Caddress%2Cstreet%2Cpostalcode"
     open(url) {|f|
       f.each_line {|line| geo_results += line}
     }
