@@ -1,5 +1,5 @@
 class User::DashboardController < User::UserController
-  skip_before_action :check_onboarding, only: [:onboarding, :submit_onboarding]
+  # skip_before_action :check_onboarding, only: [:onboarding, :submit_onboarding]
   before_action :set_user
 
   def index
