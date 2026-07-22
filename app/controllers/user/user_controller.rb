@@ -1,7 +1,7 @@
 class User::UserController < ApplicationController
   before_action :check_authentication
   before_action :check_entity
-  before_action :check_onboarding
+  # before_action :check_onboarding
 
   layout 'user'
 
